@@ -3,7 +3,7 @@ import {
   View,
   Button
 } from 'react-native';
-
+ 
 function Signup(props): JSX.Element {
   return (
     <View>
