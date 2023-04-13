@@ -10,7 +10,7 @@ import {
     statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-import {ANDROID_CLIENT, WEB_CLIENT} from '@env'
+import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT} from '@env'
  
 function Login(props): JSX.Element {
   return (
@@ -21,8 +21,8 @@ function Login(props): JSX.Element {
 					GoogleSignin.configure({
 							offlineAccess: true,
 							androidClientId: ANDROID_CLIENT,
-							webClientId: WEB_CLIENT
-	//             iosClientId: 'ADD_YOUR_iOS_CLIENT_ID_HERE',
+							webClientId: WEB_CLIENT,
+	            iosClientId: IOS_CLIENT
 					});
 
 					GoogleSignin.hasPlayServices().then((hasPlayService) => {
