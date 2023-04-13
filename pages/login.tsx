@@ -5,48 +5,55 @@ import {
   StyleSheet
 } from 'react-native';
 
-import {
-    GoogleSignin,
-    statusCodes,
-} from '@react-native-google-signin/google-signin';
+import LoginButton from '../components/login/loginButton';
 
-import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT} from '@env'
- 
+// import {
+// 	GoogleSignin,
+//   statusCodes,
+// } from '@react-native-google-signin/google-signin';
+//
+// import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT} from '@env';
+
+{/*       <Button */}
+{/*         title = "Log in" */}
+{/*         onPress = {() => { */}
+{/* 					GoogleSignin.configure({ */}
+{/* 							offlineAccess: true, */}
+{/* 							androidClientId: ANDROID_CLIENT, */}
+{/* 							webClientId: WEB_CLIENT, */}
+{/* 	            iosClientId: IOS_CLIENT */}
+{/* 					}); */}
+
+{/* 					GoogleSignin.hasPlayServices().then((hasPlayService) => { */}
+{/* 									if (hasPlayService) { */}
+{/* 											 GoogleSignin.signIn().then((userInfo) => { */}
+{/* 																 console.log(JSON.stringify(userInfo)) */}
+{/* 											 }).catch((e) => { */}
+{/* 											 console.log("ERROR IS: " + JSON.stringify(e)); */}
+{/* 											 }) */}
+{/* 									} */}
+{/* 					}).catch((e) => { */}
+{/* 							console.log("ERROR IS: " + JSON.stringify(e)); */}
+{/* 							props.navigation.navigate('Challenge') */}
+{/* 					}) */}
+{/*         } */}
+
+{/* 				} */}
+{/*       />       */}
+
 function Login(props): JSX.Element {
   return (
     <View>
-      <Button
-        title = "login"
-        onPress = {() => {
-					GoogleSignin.configure({
-							offlineAccess: true,
-							androidClientId: ANDROID_CLIENT,
-							webClientId: WEB_CLIENT,
-	            iosClientId: IOS_CLIENT
-					});
+			<LoginButton
+				navigation = {props.navigation}
+				/>
 
-					GoogleSignin.hasPlayServices().then((hasPlayService) => {
-									if (hasPlayService) {
-											 GoogleSignin.signIn().then((userInfo) => {
-																 console.log(JSON.stringify(userInfo))
-											 }).catch((e) => {
-											 console.log("ERROR IS: " + JSON.stringify(e));
-											 })
-									}
-					}).catch((e) => {
-							console.log("ERROR IS: " + JSON.stringify(e));
-							props.navigation.navigate('Challenge')
-					})
-        }
-
-				}
-      />      
       <Button
         title = "signup"
         onPress = {() =>
           props.navigation.navigate('Signup')
         }
-      />
+      	/>
 
     </View>
   )
