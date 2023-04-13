@@ -1,20 +1,21 @@
 import React from 'react';
 import {
   View,
-  Button
+  Button,
+  StyleSheet
 } from 'react-native';
- 
-function Signup(props): JSX.Element {
+
+function Challenge(props): JSX.Element {
   return (
     <View>
       <Button
         title = "challenge"
         onPress = {() =>
-          props.navigation.navigate('Challenge')
+          props.navigation.navigate('Login')
         }
-      />      
+      />
     </View>
   )
 }
 
-export default Signup;
+export default Challenge;
