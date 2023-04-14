@@ -12,14 +12,21 @@ const styles = StyleSheet.create({
     width : '100%',
   },
 
-  button : {
-    alignItems : 'center',
-    width : '80%',
-    height : '15%',
-    borderRadius : 5,
-    backgroundColor : '#D9D9D9'
-  }
+  appButtonContainer: {
+    elevation: 8,
+    backgroundColor: "#009688",
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12
+  },
 
+  appButtonText: {
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase"
+  }
 });
 
 export { styles}

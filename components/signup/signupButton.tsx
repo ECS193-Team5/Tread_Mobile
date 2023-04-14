@@ -1,20 +1,22 @@
 import React from 'react';
 import {
 	TouchableOpacity,
-	Button
+	Button,
+	Text,
+	Pressable
 } from 'react-native';
 
-function signUpOnPress(navigation) {
-  navigation.navigate('Signup');
-}
+import {styles} from '../../css/login/Style';
 
-function SignUpButton(props): JSX.Element {
-  return (
-    <Button
-    title = 'Sign Up'
-    onPress = {() => signUpOnPress(props.navigation)}
-  />
-  )
+function SignUpButton({onPress}): JSX.Element {
+	return (
+		<Pressable 
+			onPress = {onPress}
+			style = {styles.appButtonContainer}
+		>
+			<Text style={styles.appButtonText}>Sign Up</Text>
+		</Pressable>
+	)
 }
 
 export default SignUpButton;

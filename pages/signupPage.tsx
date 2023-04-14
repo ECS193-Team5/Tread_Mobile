@@ -8,7 +8,7 @@ function Signup(props): JSX.Element {
   return (
     <View>
       <Button
-        title = "challenge"
+        title = "Sign up"
         onPress = {() =>
           props.navigation.navigate('Challenge')
         }
