@@ -49,7 +49,6 @@ function LoginButton(props): JSX.Element {
 	return (
 		<Button
 				title = 'Log in'
-// 				onPress = {() => console.log('pressed')}
 				onPress = {() => loginOnPress(props.navigation)}
 			/>
 	)

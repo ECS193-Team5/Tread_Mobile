@@ -2,9 +2,9 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import Login from './pages/login';
-import Signup from './pages/signup';
-import Challenge from './pages/challenges';
+import Login from './pages/loginPage';
+import Signup from './pages/signupPage';
+import Challenge from './pages/challengesPage';
  
 const Stack = createNativeStackNavigator();
 
