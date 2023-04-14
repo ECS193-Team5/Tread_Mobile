@@ -32,12 +32,13 @@ function Login(props): JSX.Element {
 		console.log('Configured Google sign in');	
 	}
 
-  const signInGoogle = function () {
+  const signInGoogle = function (target) {
 		GoogleSignin.hasPlayServices().then((hasPlayService) => {
 			console.log('Signing in');
 			if (hasPlayService) {
 				 GoogleSignin.signIn().then((userInfo) => {
 					 console.log(JSON.stringify(userInfo))
+           props.navigation.navigate(target)
 				 }).catch((e) => {
 					 console.log("ERROR IS A: " + JSON.stringify(e));
 				 })
@@ -49,14 +50,12 @@ function Login(props): JSX.Element {
 
   const handleOnPressLogIn = function () {
 		configureGoogleSignIn();
-    signInGoogle();
-    props.navigation.navigate('Challenge');
+    signInGoogle('Challenge');
   }
 
   const handleOnPressSignUp = function () {
 		configureGoogleSignIn();
-    signInGoogle();
-    props.navigation.navigate('Signup');
+    signInGoogle('Signup');
   }
 
   return (
