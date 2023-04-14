@@ -2,14 +2,14 @@ import React from 'react';
 import {
   View,
   Button,
-  StyleSheet
+  StyleSheet,
+  Text
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
 import LoginButton from '../components/login/loginButton';
 import SignUpButton from '../components/signup/signupButton';
-
 import {
 	GoogleSignin,
   statusCodes,
@@ -59,7 +59,7 @@ function Login(props): JSX.Element {
   }
 
   return (
-      <View>
+      <View style={styles.container}>
         <LinearGradient
           colors = {['#014421', '#000000']}
           style = {styles.linearGradient}
@@ -69,6 +69,7 @@ function Login(props): JSX.Element {
             onPress={handleOnPressLogIn}
           >
           </LoginButton>
+          <View style={styles.space}/>
           <SignUpButton
             onPress={handleOnPressSignUp}
           >  

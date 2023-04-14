@@ -12,9 +12,9 @@ function LoginButton({onPress}): JSX.Element {
 	return (
 		<Pressable 
 			onPress = {onPress}
-			style = {styles.appButtonContainer}
+			style = {styles.LoginButtonContainer}
 		>
-			<Text style={styles.appButtonText}>Log In</Text>
+			<Text style={styles.LoginButtonText}>Log In</Text>
 		</Pressable>
 	)
 }

@@ -1,32 +1,65 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  // container : {
-  //   alignItems : 'center',
-  //   justifyContent : 'center',
-  // },
+  container : {
+    paddingTop:(Platform.OS === 'ios') ? 20 : 0
+  },
   
   linearGradient : {
-    borderRadius : 5,
     height : '100%',
     width : '100%',
   },
 
-  appButtonContainer: {
-    elevation: 8,
-    backgroundColor: "#009688",
-    borderRadius: 10,
+  LoginButtonContainer: {
+    alignSelf : 'center',
+    position : 'relative',
+    width : '85%',
+    top : '75%',
+    backgroundColor: "#d9d9d9",
+    borderRadius: 30,
     paddingVertical: 10,
-    paddingHorizontal: 12
+    // paddingHorizontal: 3
   },
 
-  appButtonText: {
+  SignUpButtonContainer: {
+    alignSelf : 'center',
+    position : 'relative',
+    width : '85%',
+    top : '75%',
+    borderColor : '#FFFFFF',
+    borderRadius: 30,
+    borderWidth : 2,
+    paddingVertical: 10,
+    // paddingHorizontal: 3
+  },
+
+  LoginButtonText: {
     fontSize: 18,
-    color: "#fff",
+    color: "#012412",
     fontWeight: "bold",
     alignSelf: "center",
     textTransform: "uppercase"
+  },
+
+  SignUpButtonText: {
+    fontSize: 18,
+    color: "#ffffff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase"
+  },
+
+  space : {
+    width : '2%',
+    height : '2%'
+  },
+
+  line : { 
+    height: 1, 
+    backgroundColor: '#f9a800'
   }
+
+
 });
 
 export { styles}
