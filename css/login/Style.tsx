@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   	flex: 20,
   	alignItems: 'center',
   	justifyContent: 'flex-start'
-  h},
+  },
 
 //   LoginButtonContainer: {
 // //     alignSelf : 'center',
