@@ -12,9 +12,9 @@ function SignUpButton({onPress}): JSX.Element {
 	return (
 		<Pressable 
 			onPress = {onPress}
-			style = {styles.SignUpButtonContainer}
+			style = {styles.signupButton}
 		>
-			<Text style={styles.SignUpButtonText}>Sign Up</Text>
+			<Text style={styles.signupButtonText}>Sign Up</Text>
 		</Pressable>
 	)
 }
