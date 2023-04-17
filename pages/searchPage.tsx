@@ -2,17 +2,16 @@ import React from 'react';
 import {
   View,
   Button,
-  StyleSheet,
-  Image
+  StyleSheet
 } from 'react-native';
 
 import {styles} from "../css/login/Style"
-import NavBar from '../components/NavBar/NavBar';
-function ChallengesPage(props): JSX.Element {
+
+function SearchPage(props): JSX.Element {
   return (
     <View style = {styles.container}>
       <Button 
-        title = "challenge"
+        title = "search page"
         onPress = {() =>
           props.navigation.navigate('Login')
         }
@@ -21,4 +20,4 @@ function ChallengesPage(props): JSX.Element {
   )
 }
 
-export default ChallengesPage;
+export default SearchPage;

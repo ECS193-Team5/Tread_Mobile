@@ -8,39 +8,46 @@ const styles = StyleSheet.create({
     marginRight: '10%'
   },
   titleContainer: {
-//   	backgroundColor: 'green',
   	flex: 20,
-  	justifyContent: 'flex-end'
+  	justifyContent: 'flex-end',
   },
   formContainer: {
-  	flex: 35,
-  	justifyContent: 'space-around'
+    flex: 25,
+  	justifyContent: 'space-around',
   },
   checkContainer: {
-  	backgroundColor: 'blue',
-  	flex: 15
+  	flex: 8,
+    flexDirection: 'row',
+    paddingTop: 10,
   },
   signupContainer: {
-//   	backgroundColor: 'yellow',
-  	flex: 20,
-//   	alignItems: 'center'
+  	flex: 14,
   },
   signinContainer: {
-  	backgroundColor: 'black',
-  	flex: 10
+    flex: 10,
+    alignItems:'center'
   },
   title: {
   	color: '#014421',
   	fontSize: 32,
   	fontWeight: 400,
-  	fontFamily: 'inter'
+    paddingVertical : 30,
   },
   input: {
   	borderRadius: 50,
   	borderColor: '#9B9595',
   	borderWidth: 2,
   	paddingLeft: 25,
-  	color: '#9B9595'
+  	color: '#9B9595',
+    height : 55,
+    fontSize : 16
+  },
+  checkboxinput: {
+  	color: '#9B9595',
+    height : 55,
+    fontSize : 16,
+    paddingLeft : 10,
+    paddingRight: 10,
   },
   signupButton: {
   	backgroundColor: '#014421',

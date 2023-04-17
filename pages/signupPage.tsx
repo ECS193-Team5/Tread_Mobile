@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
-  Button,
   Text,
-  StyleSheet,
   TextInput,
-  Pressable
+  Pressable,
+  // CheckBox,
 } from 'react-native';
 
+
 import {styles} from '../css/signup/Style';
- 
+
+import CheckBox from '@react-native-community/checkbox';
+
 function Signup(props): JSX.Element {
+  const handleOnPress = function() {
+    props.navigation.navigate("Challenge")
+  }
+  
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
   return (
 		<View style = {styles.mainContainer}>
 			<View style = {styles.titleContainer}>
@@ -33,16 +40,37 @@ function Signup(props): JSX.Element {
 				/>
 			</View>
 			<View style = {styles.checkContainer}>
-			</View>
+      <CheckBox
+        disabled={false}
+        value={toggleCheckBox}
+        onValueChange={(newValue) => setToggleCheckBox(newValue)}
+        boxType = {'circle'}
+        onFillColor = '#014421'
+        onCheckColor= '#ffffff'
+        animationDuration={0.3}  
+        lineWidth = {2}
+      />
+      <Text style={styles.checkboxinput}>
+        By signing up you accept the
+        <Text style = {{color:"#014421"}}> Terms of service </Text>
+        and
+        <Text style = {{color:"#014421"}}> Privacy Policy</Text>
+      </Text>
+      </View>
 			<View style = {styles.signupContainer}>
-				<Pressable style = {styles.signupButton}>
+				<Pressable style = {styles.signupButton}
+          onPress = {handleOnPress}>
 					<Text style = {styles.signupText}>
 						Sign Up
 					</Text>
 				</Pressable>
 			</View>
 			<View style = {styles.signinContainer}>
-			</View>
+      <Text style={styles.checkboxinput}>
+        Already have an account ?
+        <Text style = {{color:"#014421"}}> Sign in </Text>
+      </Text>
+      </View>
 		</View>
   )
 }

@@ -2,7 +2,7 @@ import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container : {
-    paddingTop:(Platform.OS === 'ios') ? 20 : 0
+    paddingTop:(Platform.OS === 'ios') ? 50 : 0
   },
   
   linearGradient : {
@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#d9d9d9",
     borderRadius: 30,
     paddingVertical: 10,
-    // paddingHorizontal: 3
   },
 
   SignUpButtonContainer: {

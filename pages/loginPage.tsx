@@ -59,7 +59,7 @@ function Login(props): JSX.Element {
   }
 
   return (
-      <View style={styles.container}>
+      <View >
         <LinearGradient
           colors = {['#014421', '#000000']}
           style = {styles.linearGradient}
