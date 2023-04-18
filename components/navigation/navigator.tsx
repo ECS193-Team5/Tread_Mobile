@@ -1,14 +1,11 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Image} from 'react-native'
 
 import Login from '../../pages/loginPage';
 import Signup from '../../pages/signupPage';
-import CurrentChallenge from '../../pages/currentChallengesPage';
-
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
+import Challenge from '../../pages/ChallengesPage';
 import LeaguesPage from '../../pages/leaguesPage';
 import AddPage from '../../pages/addPage';
 import SearchPage from '../../pages/searchPage';
@@ -24,7 +21,7 @@ const NestedPages = createNativeStackNavigator();
 function ChallengesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "CurrentChallenges" component={CurrentChallenge} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Challenges" component={Challenge} options={{ headerShown: false }}/>
     <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false }}/>
   </Stack.Navigator>
   )

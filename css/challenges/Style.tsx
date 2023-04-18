@@ -1,6 +1,5 @@
 import { Platform, StyleSheet } from 'react-native';
 
-
 const styles = StyleSheet.create({
   container : {
     paddingTop:(Platform.OS === 'ios') ? 50 : 0,
@@ -25,21 +24,33 @@ const styles = StyleSheet.create({
   },
 
   tabswitchContainer : {
-    backgroundColor : "yellow",
-    flex: 15,
+    flex: 12,
+    width : "100%",
+    justifyContent : 'center',
+    alignItems : 'center'
   },
 
-  swapChallengeContainer : {
+  ChallengesContainer : {
     backgroundColor : "black",
     flex: 40,
   },
 
-  textStyle : {
+  seperator : {
+    borderWidth : 0.5,
+    borderColor : "#F9A800",
+    alignSelf: 'stretch',
+    justifyContent : 'center',
+    margin : 20,
+  },
+
+  TitleText : {
     fontWeight : "700",
     fontSize : 32.5,
     lineHeight : 34,
     color : "#014421"
-  }
+  },
+
+
 });
 
 export { styles}
