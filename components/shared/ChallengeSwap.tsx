@@ -15,7 +15,7 @@ function ChallengesSwap({onPress,text, available, imageURL}): JSX.Element {
       onPress = {onPress}
     >
       <LinearGradient
-      colors={['rgba(1, 63, 33,1)', 'rgba(1, 63, 33,0.5)', 'rgb(1, 93, 0)']}
+      colors={['rgba(1, 63, 33,1)', 'rgba(1, 63, 33,0.5)', 'rgb(1, 100, 0)']}
       style = {[cardStyles.ChallengeSwapCardContainer]}
       >
       <View style = {cardStyles.ImageSection}>

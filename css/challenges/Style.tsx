@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container : {
     paddingTop:(Platform.OS === 'ios') ? 50 : 0,
-    // backgroundColor : "red",
+    backgroundColor : "#E0E7E3",
     flex :1
   },
 
@@ -33,6 +33,13 @@ const styles = StyleSheet.create({
   ChallengesContainer : {
     backgroundColor : "black",
     flex: 40,
+  },
+
+  ScrollViewContainer : {
+    // flex : 1,
+    alignItems : "center",
+    // height : 
+
   },
 
   seperator : {

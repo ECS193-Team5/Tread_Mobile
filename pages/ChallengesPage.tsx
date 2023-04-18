@@ -4,7 +4,8 @@ import {
   Button,
   StyleSheet,
   Image,
-  Pressable
+  Pressable,
+  ScrollView
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
@@ -12,6 +13,8 @@ import IncomingSwap from '../components/shared/IncomingSwap';
 import ChallengesSwap from '../components/shared/ChallengeSwap';
 import {styles} from "../css/challenges/Style"
 import {cardStyles} from "../css/cards/Style"
+import ChallengeCard from '../components/shared/ChallengeCard';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function ChallengesPage(props): JSX.Element {
   const [titleName, setTitleName] = useState("Current Challenges")
@@ -57,12 +60,19 @@ function ChallengesPage(props): JSX.Element {
         />
       </View>
       
-      <View style = {styles.seperator}>
+      <View style = {styles.seperator}/>
 
-      </View>
       <View style = {styles.ChallengesContainer}>
+          <ScrollView contentContainerStyle = {styles.ScrollViewContainer}>
+            <ChallengeCard text = "1"/>
+            <ChallengeCard text = "2"/>
+            <ChallengeCard text = "3"/>
+            <ChallengeCard text = "4"/>
+            <ChallengeCard text = "5"/>
+          </ScrollView>
+      </View> 
+
       
-      </View>
     </View>
   )
 }

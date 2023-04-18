@@ -9,29 +9,41 @@ const cardStyles = StyleSheet.create({
     flexDirection : 'row',
   },
   
+  ChallengeCardContainer : {
+    height : "50%",
+    backgroundColor : "#FFFFFF",
+    width : "90%",
+    borderRadius : 20,
+    flexDirection : 'row',
+    marginBottom: 20
+  },
+
+  seperator : {
+    borderWidth : 0.5,
+    borderColor : "#F9A800",
+    // alignSelf: 'stretch',
+    justifyContent : 'center',
+    alignSelf : 'center',
+    height : "70%",
+    // margin : 20,
+  },
+
   shadowProp: {
     shadowColor: "#000",
     shadowOffset: {
         width: 0,
         height: 7,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 9.11,
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
     
     elevation: 14,
   },
 
-  CardContainer : {
-    flex : 20,
-    backgroundColor : "white",
-    width : "90%",
-    borderRadius : 20
-  },
-
   ImageSection : {
-    flex : 45,
-    alignItems : "flex-end",
-    justifyContent : "center"
+    flex : 40,
+    alignItems : "center",
+    justifyContent : "center",
   },
 
   ChallengeSwapTextContainer : {
@@ -39,7 +51,13 @@ const cardStyles = StyleSheet.create({
     flexDirection : 'column',
     alignItems : "flex-start",
     justifyContent : "center",
-    marginHorizontal : 20,
+  },
+
+  ChallengeCardTextContainer : {
+    flex : 100,
+    flexDirection : 'row',
+    alignItems : "center",
+    marginHorizontal : 2,
   },
 
   ChallengeTypeText : {
@@ -55,6 +73,15 @@ const cardStyles = StyleSheet.create({
     fontSize : 17,
     lineHeight : 18,
     color : "#F9A800"
+  },
+
+  ChallengeNameText : {
+    fontWeight : "500",
+    fontSize : 13,
+    lineHeight : 16,
+    color : "#014421",
+    // alignSelf : "center",
+    marginHorizontal : 10,
   }
 });
 
