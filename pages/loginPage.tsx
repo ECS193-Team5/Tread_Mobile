@@ -65,18 +65,52 @@ function Login(props): JSX.Element {
           style = {styles.linearGradient}
           start = {{x:1, y: 0}}
         >
-          <LoginButton
-            onPress={handleOnPressLogIn}
-          >
-          </LoginButton>
-          <View style={styles.space}/>
-          <SignUpButton
-            onPress={handleOnPressSignUp}
-          >  
-          </SignUpButton>
+					<View style = {styles.mainContainer}>
+						<View style = {styles.titleContainer}>
+							<Text style = {styles.titleText}>
+								Tread
+							</Text>
+						</View>
+						<View style = {styles.loginContainer}>
+							<LoginButton
+								onPress={handleOnPressLogIn}
+							>
+							</LoginButton>
+						</View>
+						<View style = {styles.separatorContainer}>
+						    <View style = {styles.outsideSeparator}>
+						    </View>
+						    <View style = {styles.middleSeparator}>
+						        <Text style = {styles.orText}>
+						            or
+						        </Text>
+						    </View>
+						    <View style = {styles.outsideSeparator}>
+						    </View>
+						</View>
+						<View style = {styles.signUpContainer}>
+							<SignUpButton
+								onPress={handleOnPressSignUp}
+							>
+							</SignUpButton>
+
+						</View>
+
+					</View>
+
         </LinearGradient>
       </View>
   )
 }
+
+{/*           <LoginButton */}
+{/*             onPress={handleOnPressLogIn} */}
+{/*           > */}
+{/*           </LoginButton> */}
+{/*           <View style={styles.space}/> */}
+{/*           <SignUpButton */}
+{/*             onPress={handleOnPressSignUp} */}
+{/*           >   */}
+{/*           </SignUpButton> */}
 
 export default Login;
