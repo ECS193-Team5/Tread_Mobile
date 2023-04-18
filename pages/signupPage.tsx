@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   // CheckBox,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {styles} from '../css/signup/Style';
 
@@ -16,8 +17,50 @@ function Signup(props): JSX.Element {
   const handleOnPress = function() {
     props.navigation.navigate("Challenge")
   }
+
+  const checkValidName = function(name) {
+		return name.length > 0
+  }
   
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [userName, setUserName] = useState("");
+
+  const [validDisplayName, setValidDisplayName] = useState(false);
+  const [validUserName, setValidUserName] = useState(false);
+  const [displayNameStyle, setDisplayStyle] = useState(styles.invalidInput);
+  const [userNameStyle, setUserStyle] = useState(styles.invalidInput);
+
+	useEffect(() => {
+		getEmail();
+	}, []);
+
+	const getEmail = async () => {
+		try {
+			const item = await AsyncStorage.getItem('email');
+			setEmail(item);
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	useEffect(() => {
+		if(checkValidName(displayName)) {
+			setValidDisplayName(true);
+		} else {
+			setValidDisplayName(false);
+		}
+	}, [displayName]);
+
+	useEffect(() => {
+		if(checkValidName(userName)) {
+			setValidUserName(true);
+		} else {
+			setValidUserName(false);
+		}
+	}, [userName]);
+
   return (
 		<View style = {styles.mainContainer}>
 			<View style = {styles.titleContainer}>
@@ -27,16 +70,19 @@ function Signup(props): JSX.Element {
 			</View>
 			<View style = {styles.formContainer}>
 				<TextInput
-					placeholder = "email@gmail.com"
-					style = {styles.input}
+					placeholder = {email}
+					style = {styles.validInput}
+					editable = {false}
 				/>
 				<TextInput
 					placeholder = "Display Name"
-					style = {styles.input}
+					style = {validDisplayName ? styles.validInput : styles.invalidInput}
+					onChangeText = {setDisplayName}
 				/>
 				<TextInput
 					placeholder = "Username"
-					style = {styles.input}
+					style = {validUserName ? styles.validInput : styles.invalidInput}
+					onChangeText = {setUserName}
 				/>
 			</View>
 			<View style = {styles.checkContainer}>
@@ -58,7 +104,8 @@ function Signup(props): JSX.Element {
       </Text>
       </View>
 			<View style = {styles.signupContainer}>
-				<Pressable style = {styles.signupButton}
+				<Pressable style = {validUserName && validDisplayName && toggleCheckBox ? styles.validSignupButton : styles.invalidSignupButton}
+					disabled = {!(validUserName && validDisplayName && toggleCheckBox)}
           onPress = {handleOnPress}>
 					<Text style = {styles.signupText}>
 						Sign Up

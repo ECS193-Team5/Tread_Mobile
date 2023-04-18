@@ -33,15 +33,26 @@ const styles = StyleSheet.create({
   	fontWeight: 400,
     paddingVertical : 30,
   },
-  input: {
+  validInput: {
   	borderRadius: 50,
   	borderColor: '#9B9595',
   	borderWidth: 2,
   	paddingLeft: 25,
-  	color: '#9B9595',
+//   	color: '#9B9595',
     height : 55,
     fontSize : 16
   },
+
+  invalidInput: {
+    borderRadius: 50,
+    borderColor: '#C65656',
+    borderWidth: 2,
+    paddingLeft: 25,
+//     color: '#C65656',
+    height : 55,
+    fontSize : 16
+  },
+
   checkboxinput: {
   	color: '#9B9595',
     height : 55,
@@ -49,8 +60,14 @@ const styles = StyleSheet.create({
     paddingLeft : 10,
     paddingRight: 10,
   },
-  signupButton: {
+  validSignupButton: {
   	backgroundColor: '#014421',
+  	height: '35%',
+  	borderRadius: 50,
+  	justifyContent: 'center'
+  },
+  invalidSignupButton: {
+  	backgroundColor: '#9B9595',
   	height: '35%',
   	borderRadius: 50,
   	justifyContent: 'center'
