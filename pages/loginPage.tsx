@@ -78,6 +78,15 @@ function Login(props): JSX.Element {
 							</LoginButton>
 						</View>
 						<View style = {styles.separatorContainer}>
+						    <View style = {styles.outsideSeparator}>
+						    </View>
+						    <View style = {styles.middleSeparator}>
+						        <Text style = {styles.orText}>
+						            or
+						        </Text>
+						    </View>
+						    <View style = {styles.outsideSeparator}>
+						    </View>
 						</View>
 						<View style = {styles.signUpContainer}>
 							<SignUpButton

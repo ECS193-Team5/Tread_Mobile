@@ -39,7 +39,28 @@ const styles = StyleSheet.create({
 
   separatorContainer : {
   	flex: 10,
-  	backgroundColor: 'green'
+  	flexDirection: 'row',
+  	alignItems: 'center'
+//   	backgroundColor: 'green'
+  },
+
+  outsideSeparator: {
+    flex: 40,
+    backgroundColor: '#F9A800',
+    height: '1%'
+  },
+
+  middleSeparator: {
+    flex: 20,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  orText: {
+    fontSize: 15,
+    fontWeight: 400,
+    color: '#F9A800'
   },
 
   signUpContainer: {
