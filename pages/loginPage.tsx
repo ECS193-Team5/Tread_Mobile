@@ -37,8 +37,10 @@ function Login(props): JSX.Element {
 			console.log('Signing in');
 			if (hasPlayService) {
 				 GoogleSignin.signIn().then((userInfo) => {
-					 console.log(JSON.stringify(userInfo))
-           props.navigation.navigate(target)
+// 					 console.log(JSON.stringify(userInfo['user']['email']))
+           props.navigation.navigate(target, {
+           	email: userInfo['user']['email']
+           })
 				 }).catch((e) => {
 					 console.log("ERROR IS A: " + JSON.stringify(e));
 				 })
