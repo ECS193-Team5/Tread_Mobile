@@ -29,12 +29,12 @@ function Signup(props): JSX.Element {
 
   const [validDisplayName, setValidDisplayName] = useState(false);
   const [validUserName, setValidUserName] = useState(false);
+  const [displayNameStyle, setDisplayStyle] = useState(styles.invalidInput);
+  const [userNameStyle, setUserStyle] = useState(styles.invalidInput);
 
-// 	console.log(props.route.params["email"])
 	useEffect(() => {
 		getEmail();
-		console.log(email);
-	});
+	}, []);
 
 	const getEmail = async () => {
 		try {
@@ -71,17 +71,17 @@ function Signup(props): JSX.Element {
 			<View style = {styles.formContainer}>
 				<TextInput
 					placeholder = {email}
-					style = {styles.input}
+					style = {styles.validInput}
 					editable = {false}
 				/>
 				<TextInput
 					placeholder = "Display Name"
-					style = {styles.input}
+					style = {validDisplayName ? styles.validInput : styles.invalidInput}
 					onChangeText = {setDisplayName}
 				/>
 				<TextInput
 					placeholder = "Username"
-					style = {styles.input}
+					style = {validUserName ? styles.validInput : styles.invalidInput}
 					onChangeText = {setUserName}
 				/>
 			</View>
@@ -104,7 +104,7 @@ function Signup(props): JSX.Element {
       </Text>
       </View>
 			<View style = {styles.signupContainer}>
-				<Pressable style = {styles.signupButton}
+				<Pressable style = {validUserName && validDisplayName && toggleCheckBox ? styles.validSignupButton : styles.invalidSignupButton}
 					disabled = {!(validUserName && validDisplayName && toggleCheckBox)}
           onPress = {handleOnPress}>
 					<Text style = {styles.signupText}>
