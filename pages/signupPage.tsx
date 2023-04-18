@@ -7,6 +7,7 @@ import {
   // CheckBox,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {styles} from '../css/signup/Style';
 
@@ -22,6 +23,7 @@ function Signup(props): JSX.Element {
   }
   
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [userName, setUserName] = useState("");
 
@@ -29,6 +31,19 @@ function Signup(props): JSX.Element {
   const [validUserName, setValidUserName] = useState(false);
 
 // 	console.log(props.route.params["email"])
+	useEffect(() => {
+		getEmail();
+		console.log(email);
+	});
+
+	const getEmail = async () => {
+		try {
+			const item = await AsyncStorage.getItem('email');
+			setEmail(item);
+		} catch (err) {
+			console.log(err);
+		}
+	}
 
 	useEffect(() => {
 		if(checkValidName(displayName)) {
@@ -55,7 +70,7 @@ function Signup(props): JSX.Element {
 			</View>
 			<View style = {styles.formContainer}>
 				<TextInput
-					placeholder = {props.route.params["email"]}
+					placeholder = {email}
 					style = {styles.input}
 					editable = {false}
 				/>

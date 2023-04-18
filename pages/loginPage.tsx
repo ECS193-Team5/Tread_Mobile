@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import LoginButton from '../components/login/loginButton';
 import SignUpButton from '../components/signup/signupButton';
@@ -36,18 +37,25 @@ function Login(props): JSX.Element {
 		GoogleSignin.hasPlayServices().then((hasPlayService) => {
 			console.log('Signing in');
 			if (hasPlayService) {
-				 GoogleSignin.signIn().then((userInfo) => {
+				GoogleSignin.signIn().then((userInfo) => {
 // 					 console.log(JSON.stringify(userInfo['user']['email']))
-           props.navigation.navigate(target, {
-           	email: userInfo['user']['email']
-           })
-				 }).catch((e) => {
-					 console.log("ERROR IS A: " + JSON.stringify(e));
-				 })
+					storeEmail(userInfo['user']['email']);
+					props.navigation.navigate(target);
+				}).catch((e) => {
+					console.log("ERROR IS A: " + JSON.stringify(e));
+				})
 			}
 		}).catch((e) => {
 				console.log("ERROR IS B: " + JSON.stringify(e));
 		})	
+	}
+
+	const storeEmail = async (email) => {
+		try {
+			await AsyncStorage.setItem('email', email)
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
   const handleOnPressLogIn = function () {
