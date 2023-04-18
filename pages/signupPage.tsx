@@ -7,6 +7,7 @@ import {
   // CheckBox,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {styles} from '../css/signup/Style';
 
@@ -16,8 +17,50 @@ function Signup(props): JSX.Element {
   const handleOnPress = function() {
     props.navigation.navigate("Challenge")
   }
+
+  const checkValidName = function(name) {
+		return name.length > 0
+  }
   
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [userName, setUserName] = useState("");
+
+  const [validDisplayName, setValidDisplayName] = useState(false);
+  const [validUserName, setValidUserName] = useState(false);
+
+// 	console.log(props.route.params["email"])
+	useEffect(() => {
+		getEmail();
+		console.log(email);
+	});
+
+	const getEmail = async () => {
+		try {
+			const item = await AsyncStorage.getItem('email');
+			setEmail(item);
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	useEffect(() => {
+		if(checkValidName(displayName)) {
+			setValidDisplayName(true);
+		} else {
+			setValidDisplayName(false);
+		}
+	}, [displayName]);
+
+	useEffect(() => {
+		if(checkValidName(userName)) {
+			setValidUserName(true);
+		} else {
+			setValidUserName(false);
+		}
+	}, [userName]);
+
   return (
 		<View style = {styles.mainContainer}>
 			<View style = {styles.titleContainer}>
@@ -27,16 +70,19 @@ function Signup(props): JSX.Element {
 			</View>
 			<View style = {styles.formContainer}>
 				<TextInput
-					placeholder = "email@gmail.com"
+					placeholder = {email}
 					style = {styles.input}
+					editable = {false}
 				/>
 				<TextInput
 					placeholder = "Display Name"
 					style = {styles.input}
+					onChangeText = {setDisplayName}
 				/>
 				<TextInput
 					placeholder = "Username"
 					style = {styles.input}
+					onChangeText = {setUserName}
 				/>
 			</View>
 			<View style = {styles.checkContainer}>
@@ -59,6 +105,7 @@ function Signup(props): JSX.Element {
       </View>
 			<View style = {styles.signupContainer}>
 				<Pressable style = {styles.signupButton}
+					disabled = {!(validUserName && validDisplayName && toggleCheckBox)}
           onPress = {handleOnPress}>
 					<Text style = {styles.signupText}>
 						Sign Up
