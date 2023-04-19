@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import LoginButton from '../components/login/loginButton';
 import SignUpButton from '../components/signup/signupButton';
@@ -36,16 +37,25 @@ function Login(props): JSX.Element {
 		GoogleSignin.hasPlayServices().then((hasPlayService) => {
 			console.log('Signing in');
 			if (hasPlayService) {
-				 GoogleSignin.signIn().then((userInfo) => {
-					 console.log(JSON.stringify(userInfo))
-           props.navigation.navigate(target)
-				 }).catch((e) => {
-					 console.log("ERROR IS A: " + JSON.stringify(e));
-				 })
+				GoogleSignin.signIn().then((userInfo) => {
+// 					 console.log(JSON.stringify(userInfo['user']['email']))
+					storeEmail(userInfo['user']['email']);
+					props.navigation.navigate(target);
+				}).catch((e) => {
+					console.log("ERROR IS A: " + JSON.stringify(e));
+				})
 			}
 		}).catch((e) => {
 				console.log("ERROR IS B: " + JSON.stringify(e));
 		})	
+	}
+
+	const storeEmail = async (email) => {
+		try {
+			await AsyncStorage.setItem('email', email)
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
   const handleOnPressLogIn = function () {
@@ -65,18 +75,52 @@ function Login(props): JSX.Element {
           style = {styles.linearGradient}
           start = {{x:1, y: 0}}
         >
-          <LoginButton
-            onPress={handleOnPressLogIn}
-          >
-          </LoginButton>
-          <View style={styles.space}/>
-          <SignUpButton
-            onPress={handleOnPressSignUp}
-          >  
-          </SignUpButton>
+					<View style = {styles.mainContainer}>
+						<View style = {styles.titleContainer}>
+							<Text style = {styles.titleText}>
+								Tread
+							</Text>
+						</View>
+						<View style = {styles.loginContainer}>
+							<LoginButton
+								onPress={handleOnPressLogIn}
+							>
+							</LoginButton>
+						</View>
+						<View style = {styles.separatorContainer}>
+						    <View style = {styles.outsideSeparator}>
+						    </View>
+						    <View style = {styles.middleSeparator}>
+						        <Text style = {styles.orText}>
+						            or
+						        </Text>
+						    </View>
+						    <View style = {styles.outsideSeparator}>
+						    </View>
+						</View>
+						<View style = {styles.signUpContainer}>
+							<SignUpButton
+								onPress={handleOnPressSignUp}
+							>
+							</SignUpButton>
+
+						</View>
+
+					</View>
+
         </LinearGradient>
       </View>
   )
 }
+
+{/*           <LoginButton */}
+{/*             onPress={handleOnPressLogIn} */}
+{/*           > */}
+{/*           </LoginButton> */}
+{/*           <View style={styles.space}/> */}
+{/*           <SignUpButton */}
+{/*             onPress={handleOnPressSignUp} */}
+{/*           >   */}
+{/*           </SignUpButton> */}
 
 export default Login;
