@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   	borderColor: '#9B9595',
   	borderWidth: 2,
   	paddingLeft: 25,
-  	color: '#000000',
+//   	color: '#9B9595',
     height : 55,
     fontSize : 16
   },
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     borderColor: '#C65656',
     borderWidth: 2,
     paddingLeft: 25,
-    color: '#000000',
+//     color: '#C65656',
     height : 55,
     fontSize : 16
   },

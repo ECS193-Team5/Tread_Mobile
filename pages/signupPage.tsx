@@ -19,22 +19,43 @@ function Signup(props): JSX.Element {
   }
 
   const checkValidName = function(name) {
-		return name.length > 0
+		console.log(name)
+    return name.length > 0
   }
   
+
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [email, setEmail] = useState("Placeholder");
+  const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [userName, setUserName] = useState("");
 
-  const [validDisplayName, setValidDisplayName] = useState(false);
-  const [validUserName, setValidUserName] = useState(false);
+  const [validDisplayName, setValidDisplayName] = useState(true);
+  const [validUserName, setValidUserName] = useState(true);
+
   const [displayNameStyle, setDisplayStyle] = useState(styles.invalidInput);
   const [userNameStyle, setUserStyle] = useState(styles.invalidInput);
-
-	useEffect(() => {
+	
+  useEffect(() => {
 		getEmail();
 	}, []);
+
+  const handleDisplayNameChange = function(item) {
+    setDisplayName(item)
+		if(checkValidName(item)) {
+			setValidDisplayName(true);
+		} else {
+			setValidDisplayName(false);
+		}
+  }
+
+  const handleUserNameChange = function(item) {
+    setUserName(item)
+		if(checkValidName(item)) {
+			setValidUserName(true);
+		} else {
+			setValidUserName(false);
+		}
+  }
 
 	const getEmail = async () => {
 		try {
@@ -45,22 +66,6 @@ function Signup(props): JSX.Element {
 			console.log(err);
 		}
 	}
-
-	useEffect(() => {
-		if(checkValidName(displayName)) {
-			setValidDisplayName(true);
-		} else {
-			setValidDisplayName(false);
-		}
-	}, [displayName]);
-
-	useEffect(() => {
-		if(checkValidName(userName)) {
-			setValidUserName(true);
-		} else {
-			setValidUserName(false);
-		}
-	}, [userName]);
 
   return (
 		<View style = {styles.mainContainer}>
@@ -80,13 +85,13 @@ function Signup(props): JSX.Element {
 					placeholder = "Display Name"
           placeholderTextColor= "grey"
 					style = {validDisplayName ? styles.validInput : styles.invalidInput}
-					onChangeText = {setDisplayName}
+					onChangeText = {handleDisplayNameChange}
 				/>
 				<TextInput
 					placeholder = "Username"
           placeholderTextColor= "grey"
 					style = {validUserName ? styles.validInput : styles.invalidInput}
-					onChangeText = {setUserName}
+					onChangeText = {handleUserNameChange}
 				/>
 			</View>
 			<View style = {styles.checkContainer}>

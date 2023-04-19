@@ -2,7 +2,6 @@ import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	navBarStyle: {
-
 		height : (Platform.OS === 'android') ? 70 : 85,
 		overflow : 'hidden',
 		borderTopLeftRadius: 40,
