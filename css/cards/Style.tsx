@@ -14,7 +14,7 @@ const cardStyles = StyleSheet.create({
     width : "90%",
     borderRadius : 20,
     flexDirection : 'row',
-    marginBottom: 20
+    marginBottom: "4.6%",
   },
 
   seperator : {
@@ -54,7 +54,7 @@ const cardStyles = StyleSheet.create({
     flex : 100,
     flexDirection : 'row',
     alignItems : "center",
-    marginHorizontal : 2,
+    marginHorizontal : "0.5%"
   },
 
   ChallengeTypeText : {
@@ -62,7 +62,7 @@ const cardStyles = StyleSheet.create({
     fontSize : 32.5,
     lineHeight : 34,
     color : "white",
-    marginVertical : 5
+    marginVertical : "2%"
   },
 
   ChallengeCountText : {
@@ -77,8 +77,7 @@ const cardStyles = StyleSheet.create({
     fontSize : 13,
     lineHeight : 16,
     color : "#014421",
-    marginHorizontal : -10,
-    padding : 52
+    margin : "28%"
   }
 });
 

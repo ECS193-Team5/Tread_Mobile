@@ -26,7 +26,7 @@ function ChallengeCard({text}): JSX.Element {
           <Text style = {cardStyles.ChallengeNameText}>{text}</Text>
         </View>
         <View>
-          <Text style = {cardStyles.ChallengeNameText}> Progress </Text>
+          <Text> Progress </Text>
         </View>
       </View>
     </View>

@@ -2,7 +2,7 @@ import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container : {
-    paddingTop:(Platform.OS === 'ios') ? 50 : 0,
+    paddingTop:(Platform.OS === 'ios') ? "12%" : 0,
     backgroundColor : "#E0E7E3",
     flex :1
     
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     borderColor : "#F9A800",
     alignSelf: 'stretch',
     justifyContent : 'center',
-    margin : 20,
+    margin : "4.5%",
   },
 
   TitleText : {
