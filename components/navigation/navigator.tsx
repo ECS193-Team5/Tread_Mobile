@@ -93,14 +93,14 @@ function ShowTabs(){
       tabBarActiveTintColor: '#F9A800',
       tabBarInactiveTintColor: '#9B9595',
       tabBarStyle : { 
-        height :90 , 
-        // overflow : 'hidden',
+        height :85 , 
+        overflow : 'hidden',
         borderRadius : 40,
         position: 'absolute',
         borderColor : "#014421",
-        borderWidth : 1,
+        borderWidth : 0.5,
         borderTopColor : "#014421",
-        borderTopWidth :1
+        borderTopWidth :0.5
       },
     })
   }

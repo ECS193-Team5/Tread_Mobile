@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 
   ChallengesContainer : {
     flex: 40,
+    marginBottom : "19%"
   },
 
   FlatListContainer : {
@@ -54,6 +55,9 @@ const styles = StyleSheet.create({
     color : "#014421"
   },
 
+  TabNavigatorPlaceHolder : {
+    flex : 20
+  }
 
 });
 
