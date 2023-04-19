@@ -94,7 +94,7 @@ function ShowTabs(){
       },
       tabBarActiveTintColor: '#F9A800',
       tabBarInactiveTintColor: '#9B9595',
-      tabBarStyle : {styles},
+      tabBarStyle : styles.navBarStyle,
     })
   }
   > 
