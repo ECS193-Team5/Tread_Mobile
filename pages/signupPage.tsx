@@ -23,7 +23,7 @@ function Signup(props): JSX.Element {
   }
   
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("Placeholder");
   const [displayName, setDisplayName] = useState("");
   const [userName, setUserName] = useState("");
 
@@ -39,7 +39,8 @@ function Signup(props): JSX.Element {
 	const getEmail = async () => {
 		try {
 			const item = await AsyncStorage.getItem('email');
-			setEmail(item);
+			console.log(item)
+      setEmail(item);
 		} catch (err) {
 			console.log(err);
 		}
@@ -72,15 +73,18 @@ function Signup(props): JSX.Element {
 				<TextInput
 					placeholder = {email}
 					style = {styles.validInput}
+          placeholderTextColor = "#014421"
 					editable = {false}
 				/>
 				<TextInput
 					placeholder = "Display Name"
+          placeholderTextColor= "grey"
 					style = {validDisplayName ? styles.validInput : styles.invalidInput}
 					onChangeText = {setDisplayName}
 				/>
 				<TextInput
 					placeholder = "Username"
+          placeholderTextColor= "grey"
 					style = {validUserName ? styles.validInput : styles.invalidInput}
 					onChangeText = {setUserName}
 				/>
