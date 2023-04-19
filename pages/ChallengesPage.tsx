@@ -26,7 +26,7 @@ const renderChallenge = ({item}) => {
 }
 
 function ChallengesPage(props): JSX.Element {
-  const [titleName, setTitleName] = useState("Current Challenges")
+  const [titleName, setTitleName] = useState("Current")
   const [availableCount, setAvailableCount] = useState(10)
   const [isCurrent, setIsCurrent] = useState(false)
   const [challengeImage, setChallengeImage] = useState("https://imgur.com/2BHAmsN.png")
@@ -36,11 +36,11 @@ function ChallengesPage(props): JSX.Element {
   const handleOnPressSwap = function(){
     setIsCurrent(!isCurrent)
     if (isCurrent === false) {
-      setTitleName("Weekly Challenges")
+      setTitleName("Weekly")
       setAvailableCount(7)
       setChallengeImage("https://imgur.com/j33n2DQ.png") 
     } else {
-      setTitleName("Current Challenges")
+      setTitleName("Current")
       setAvailableCount(10) 
       setChallengeImage("https://imgur.com/2BHAmsN.png") 
     }
@@ -61,13 +61,13 @@ function ChallengesPage(props): JSX.Element {
       </View>
       
       <View style = {styles.titleContainer}>
-        <Text style = {styles.TitleText}>{titleName}</Text>
+        <Text style = {styles.TitleText}>Challenges</Text>
       </View>
 
       <View style = {[styles.tabswitchContainer, cardStyles.shadowProp]}>
         <ChallengesSwap
           onPress = {handleOnPressSwap}
-          text = {titleName.split(' ')[0]}
+          text = {titleName}
           available = {availableCount}
           imageURL = {challengeImage}
         />
