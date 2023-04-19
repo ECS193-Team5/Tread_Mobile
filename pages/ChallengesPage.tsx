@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Image,
   Pressable,
-  ScrollView
+  ScrollView,
+  FlatList
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
@@ -15,12 +16,22 @@ import {styles} from "../css/challenges/Style"
 import {cardStyles} from "../css/cards/Style"
 import ChallengeCard from '../components/shared/ChallengeCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import LinearGradient from 'react-native-linear-gradient';
+
+const renderChallenge = ({item}) => {
+  return (
+  // <Text style = {styles.TitleText}>Current Challenges</Text>
+  <ChallengeCard text = {item}/>
+  )
+}
 
 function ChallengesPage(props): JSX.Element {
   const [titleName, setTitleName] = useState("Current Challenges")
   const [availableCount, setAvailableCount] = useState(10)
   const [isCurrent, setIsCurrent] = useState(false)
   const [challengeImage, setChallengeImage] = useState("https://imgur.com/2BHAmsN.png")
+
+
 
   const handleOnPressSwap = function(){
     setIsCurrent(!isCurrent)
@@ -37,6 +48,8 @@ function ChallengesPage(props): JSX.Element {
   
   // Check for invitations and update icon, but for now
   var imageUrl = "https://imgur.com/ULlEPhH.png"
+
+  const ChallengeData = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
 
   return (
     <View style = {styles.container}>
@@ -63,13 +76,11 @@ function ChallengesPage(props): JSX.Element {
       <View style = {styles.seperator}/>
 
       <View style = {styles.ChallengesContainer}>
-          <ScrollView contentContainerStyle = {styles.ScrollViewContainer}>
-            <ChallengeCard text = "1"/>
-            <ChallengeCard text = "2"/>
-            <ChallengeCard text = "3"/>
-            <ChallengeCard text = "4"/>
-            <ChallengeCard text = "5"/>
-          </ScrollView>
+        <FlatList
+          data = {ChallengeData}
+          renderItem = {renderChallenge}
+          contentContainerStyle = {styles.FlatListContainer}
+        />
       </View> 
 
       

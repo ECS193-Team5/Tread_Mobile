@@ -1,4 +1,4 @@
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Image} from 'react-native'
@@ -94,8 +94,14 @@ function ShowTabs(){
       tabBarInactiveTintColor: '#9B9595',
       tabBarStyle : { 
         height :90 , 
-        borderRadius : 40, 
-        overflow : 'hidden'},
+        // overflow : 'hidden',
+        borderRadius : 40,
+        position: 'absolute',
+        borderColor : "#014421",
+        borderWidth : 1,
+        borderTopColor : "#014421",
+        borderTopWidth :1
+      },
     })
   }
   > 

@@ -10,7 +10,6 @@ const cardStyles = StyleSheet.create({
   },
   
   ChallengeCardContainer : {
-    height : "50%",
     backgroundColor : "#FFFFFF",
     width : "90%",
     borderRadius : 20,
@@ -21,11 +20,9 @@ const cardStyles = StyleSheet.create({
   seperator : {
     borderWidth : 0.5,
     borderColor : "#F9A800",
-    // alignSelf: 'stretch',
     justifyContent : 'center',
     alignSelf : 'center',
     height : "70%",
-    // margin : 20,
   },
 
   shadowProp: {
@@ -80,8 +77,8 @@ const cardStyles = StyleSheet.create({
     fontSize : 13,
     lineHeight : 16,
     color : "#014421",
-    // alignSelf : "center",
-    marginHorizontal : 10,
+    marginHorizontal : -10,
+    padding : 52
   }
 });
 

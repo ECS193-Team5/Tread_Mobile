@@ -3,14 +3,17 @@ import {
 	Pressable,
   Image,
   View,
-  Text
+  Text,
+  StatusBar
 } from 'react-native';
 
 import {cardStyles} from "../../css/cards/Style"
-
 function ChallengeCard({text}): JSX.Element {
 	return (
-    <View style = {cardStyles.ChallengeCardContainer}>
+    <View style = {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
+      <StatusBar
+        barStyle="dark-content"
+      />
       <View style = {cardStyles.ImageSection}>
         <Image style ={{width :30, height : 30}}
           source={{uri: "https://imgur.com/nFRNXOB.png"}}/>

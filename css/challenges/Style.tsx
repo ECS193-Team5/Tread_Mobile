@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     paddingTop:(Platform.OS === 'ios') ? 50 : 0,
     backgroundColor : "#E0E7E3",
     flex :1
+    
   },
 
   topRightClickContainer : {
@@ -31,15 +32,11 @@ const styles = StyleSheet.create({
   },
 
   ChallengesContainer : {
-    backgroundColor : "black",
     flex: 40,
   },
 
-  ScrollViewContainer : {
-    // flex : 1,
+  FlatListContainer : {
     alignItems : "center",
-    // height : 
-
   },
 
   seperator : {
