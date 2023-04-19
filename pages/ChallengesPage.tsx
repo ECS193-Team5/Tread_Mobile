@@ -49,7 +49,7 @@ function ChallengesPage(props): JSX.Element {
   // Check for invitations and update icon, but for now
   var imageUrl = "https://imgur.com/ULlEPhH.png"
 
-  const ChallengeData = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+  const ChallengeData = ['1gasdghsahgafhgasdghjasghjdsfghjfghj','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
 
   return (
     <View style = {styles.container}>
