@@ -77,7 +77,7 @@ const cardStyles = StyleSheet.create({
     fontSize : 13,
     lineHeight : 16,
     color : "#014421",
-    margin : "28%"
+    padding : "19%"
   }
 });
 

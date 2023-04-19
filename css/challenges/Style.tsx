@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
 
   topRightClickContainer : {
-    flex: 5,
+    flex: 4,
     width : "90%",
   	alignItems: 'flex-end',
     alignSelf : 'center',
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
 
   titleContainer : {
-    flex: 5,
+    flex: 6,
     width : "90%",
   	alignItems: 'flex-start',
     alignSelf : 'center',
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 
   ChallengesContainer : {
     flex: 40,
-    marginBottom : "19%"
+    marginBottom : "7.5%"
   },
 
   FlatListContainer : {
