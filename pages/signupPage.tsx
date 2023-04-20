@@ -26,7 +26,8 @@ function Signup(props): JSX.Element {
   }
 
 	const checkToken = async () => {
-		const fcmToken = await messaging().getToken();
+		await messaging().registerDeviceForRemoteMessages();
+		const fcmToken = await messaging().getToken({vapidKey: "BDXZrQCKEnAfnJWh6oIbEYKTuogSmiNl4gKVIDNmOEabzRt2BpAVIV4Znb7OgKzWJAz9eLOKde6YhWLpAdw1EZ0"});
 		if (fcmToken) {
 			console.log(fcmToken);
 		}
