@@ -1,47 +1,6 @@
 import { Platform, StyleSheet } from 'react-native';
 
 const modalstyle = StyleSheet.create({
-  // centeredView: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   marginTop: 22,
-  // },
-  // modalView: {
-  //   margin: 20,
-  //   backgroundColor: 'white',
-  //   borderRadius: 20,
-  //   padding: 35,
-  //   alignItems: 'center',
-  //   shadowColor: '#000',
-  //   shadowOffset: {
-  //     width: 0,
-  //     height: 2,
-  //   },
-  //   shadowOpacity: 0.25,
-  //   shadowRadius: 4,
-  //   elevation: 5,
-  // },
-  // button: {
-  //   borderRadius: 20,
-  //   padding: 10,
-  //   elevation: 2,
-  // },
-  // buttonOpen: {
-  //   backgroundColor: '#F194FF',
-  // },
-  // buttonClose: {
-  //   backgroundColor: '#2196F3',
-  // },
-  // textStyle: {
-  //   color: 'white',
-  //   fontWeight: 'bold',
-  //   textAlign: 'center',
-  // },
-  // modalText: {
-  //   marginBottom: 15,
-  //   textAlign: 'center',
-  // },
 
   container : {
     backgroundColor : "#E0E7E3",
@@ -55,14 +14,23 @@ const modalstyle = StyleSheet.create({
 
   PopUpTextContainer : {
     flex: 5,
-    backgroundColor : 'brown',
-    borderRadius : 40
+    borderRadius : 40,
+    alignItems : 'center',
+    justifyContent : 'center'
   },
 
   PopUpChallengeDescriptionContainer : {
     flex: 9,
-    backgroundColor : 'red',
-    borderRadius : 40
+    width : "80%",
+    borderRadius : 40,
+    alignItems : 'flex-start',
+    alignSelf : 'center',
+    justifyContent : 'center'
+  },
+
+  ChallengeInfoIndividualContainer : {
+    flex : 10,
+    alignContent : 'flex-start',
   },
 
   seperator : {
@@ -74,7 +42,7 @@ const modalstyle = StyleSheet.create({
     marginVertical : "2.5%"
   },
 
-  ProgressBarContainer : {
+  ProgressContainer : {
     flex : 60, 
     backgroundColor :'green',
     borderRadius : 40
@@ -83,6 +51,24 @@ const modalstyle = StyleSheet.create({
   FlatListContainer : {
     alignItems : "center",
   },
+
+  TitleTextStyle : {
+    fontWeight : 600,
+    fontSize : 20,
+    color : "#014421"
+  },
+
+  InfoTypeTextStyle : {
+    fontWeight : 500,
+    fontSize : 15,
+    color : "#014421"
+  },
+
+  InfoTextStyle : {
+    fontWeight : 300,
+    fontSize : 15,
+    color : "#014421"
+  }
 });
 
 export {modalstyle} 

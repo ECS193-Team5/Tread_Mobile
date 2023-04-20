@@ -42,7 +42,7 @@ function ChallengeCard({text}): JSX.Element {
         isVisible={modalVisible}
         hasBackdrop = {true}
         backdropColor = 'black'
-        style = {{margin : 0}}
+        style = {{margin : 2}}
       >
         <ChallengeModalPopUp 
           handleOnPress = {handleOnPress}
