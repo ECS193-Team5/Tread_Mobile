@@ -16,7 +16,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT} from '@env';
+import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, BACKEND_URL} from '@env';
 
 import {styles} from '../css/login/Style';
 
@@ -38,9 +38,14 @@ function Login(props): JSX.Element {
 			console.log('Signing in');
 			if (hasPlayService) {
 				GoogleSignin.signIn().then((userInfo) => {
-// 					 console.log(JSON.stringify(userInfo['user']['email']))
-					storeEmail(userInfo['user']['email']);
-					props.navigation.navigate(target);
+//           console.log(JSON.stringify(userInfo))
+          storeInfo(userInfo['user']['email'], userInfo['idToken'])
+          .then((res) => {
+     				const token = getToken();
+     				console.log(token)
+          });
+
+// 					props.navigation.navigate(target);
 				}).catch((e) => {
 					console.log("ERROR IS A: " + JSON.stringify(e));
 				})
@@ -50,13 +55,54 @@ function Login(props): JSX.Element {
 		})	
 	}
 
-	const storeEmail = async (email) => {
-		try {
+  const storeInfo = async (email, token) => {
+    console.log('storing info')
+//     console.log(email)
+//     console.log(token)
+    try {
 			await AsyncStorage.setItem('email', email)
-		} catch (err) {
-			console.log(err)
-		}
-	}
+			await AsyncStorage.setItem('token', String(token))
+    } catch (err) {
+      console.log(err)
+    }
+
+    console.log('stored info')
+  }
+
+// 	const storeEmail = async (email) => {
+// 		try {
+// 			await AsyncStorage.setItem('email', email)
+// 		} catch (err) {
+// 			console.log(err)
+// 		}
+// 	}
+//
+// 	const storeToken =  async (token) => {
+// 	  console.log('Storing token')
+// // 	  console.log(String(token))
+// 		try {
+// 			await AsyncStorage.setItem('token', String(token))
+// 		} catch (err) {
+// 			console.log(err)
+// 		}
+// 		console.log('Stored token')
+// 	}
+
+  const getToken = async () => {
+    console.log('Getting token')
+    try {
+      const item = await AsyncStorage.getItem('token');
+      console.log(item)
+
+      return String(item)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const login = async () => {
+
+  }
 
   const handleOnPressLogIn = function () {
 		configureGoogleSignIn();
