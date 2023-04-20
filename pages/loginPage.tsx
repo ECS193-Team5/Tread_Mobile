@@ -9,12 +9,15 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 import LoginButton from '../components/login/loginButton';
 import SignUpButton from '../components/signup/signupButton';
 import {
 	GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+
+import axios from 'axios';
 
 import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, BACKEND_URL} from '@env';
 
@@ -33,18 +36,18 @@ function Login(props): JSX.Element {
 		console.log('Configured Google sign in');	
 	}
 
-  const signInGoogle = function (target) {
+  const signInGoogle = function () {
 		GoogleSignin.hasPlayServices().then((hasPlayService) => {
 			console.log('Signing in');
 			if (hasPlayService) {
 				GoogleSignin.signIn().then((userInfo) => {
-//           console.log(JSON.stringify(userInfo))
+          console.log(JSON.stringify(userInfo))
           storeInfo(userInfo['user']['email'], userInfo['idToken'])
           .then((res) => {
-     				const token = getToken();
-     				console.log(token)
+//      				const token = getToken();
+//      				console.log(token)
+							login();
           });
-
 // 					props.navigation.navigate(target);
 				}).catch((e) => {
 					console.log("ERROR IS A: " + JSON.stringify(e));
@@ -57,8 +60,6 @@ function Login(props): JSX.Element {
 
   const storeInfo = async (email, token) => {
     console.log('storing info')
-//     console.log(email)
-//     console.log(token)
     try {
 			await AsyncStorage.setItem('email', email)
 			await AsyncStorage.setItem('token', String(token))
@@ -69,31 +70,12 @@ function Login(props): JSX.Element {
     console.log('stored info')
   }
 
-// 	const storeEmail = async (email) => {
-// 		try {
-// 			await AsyncStorage.setItem('email', email)
-// 		} catch (err) {
-// 			console.log(err)
-// 		}
-// 	}
-//
-// 	const storeToken =  async (token) => {
-// 	  console.log('Storing token')
-// // 	  console.log(String(token))
-// 		try {
-// 			await AsyncStorage.setItem('token', String(token))
-// 		} catch (err) {
-// 			console.log(err)
-// 		}
-// 		console.log('Stored token')
-// 	}
-
   const getToken = async () => {
     console.log('Getting token')
     try {
       const item = await AsyncStorage.getItem('token');
-      console.log(item)
-
+//       console.log(item)
+			console.log('Got token')
       return String(item)
     } catch (err) {
       console.log(err);
@@ -101,17 +83,45 @@ function Login(props): JSX.Element {
   }
 
   const login = async () => {
+  	console.log('Logging in');
+		const token = await getToken();
+// 		console.log(token)
+
+		var config = {
+      method: 'post',
+      url: BACKEND_URL + 'auth/login/google',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Authorization: token,
+        Accept: 'application/json',
+      }
+    };
+
+      axios(config)
+			.then((response) => {
+				const hasUsername = response.data['hasUsername'];
+// 				console.log(response.data['hasUsername']);
+				if(hasUsername) {
+					props.navigation.navigate('Challenge')
+				} else {
+					props.navigation.navigate('Signup')
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
 
   }
 
   const handleOnPressLogIn = function () {
 		configureGoogleSignIn();
-    signInGoogle('Challenge');
+    signInGoogle();
   }
 
   const handleOnPressSignUp = function () {
 		configureGoogleSignIn();
-    signInGoogle('Signup');
+    signInGoogle();
   }
 
   return (

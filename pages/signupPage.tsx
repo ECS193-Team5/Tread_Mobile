@@ -10,18 +10,27 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {styles} from '../css/signup/Style';
+import messaging from '@react-native-firebase/messaging';
 
 import CheckBox from '@react-native-community/checkbox';
 
 function Signup(props): JSX.Element {
   const handleOnPress = function() {
-    props.navigation.navigate("Challenge")
+  	checkToken();
+//     props.navigation.navigate("Challenge")
   }
 
   const checkValidName = function(name) {
 		console.log(name)
     return name.length > 0
   }
+
+	const checkToken = async () => {
+		const fcmToken = await messaging().getToken();
+		if (fcmToken) {
+			console.log(fcmToken);
+		}
+	}
   
 
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
