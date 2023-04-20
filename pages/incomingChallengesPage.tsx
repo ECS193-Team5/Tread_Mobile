@@ -5,7 +5,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-import ChallengesSwap from '../components/shared/ChallengeSwap';
+import ChallengesSwap from '../components/Challenges/ChallengeSwap';
 import {styles} from "../css/challenges/Style"
 import {cardStyles} from "../css/cards/Style"
 import IncomingSwap from '../components/shared/IncomingSwap';

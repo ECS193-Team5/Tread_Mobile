@@ -11,16 +11,14 @@ import {
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
 
-import ChallengesSwap from '../components/shared/ChallengeSwap';
+import ChallengesSwap from '../components/Challenges/ChallengeSwap';
 import {styles} from "../css/challenges/Style"
 import {cardStyles} from "../css/cards/Style"
-import ChallengeCard from '../components/shared/ChallengeCard';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
+import ChallengeCard from '../components/Challenges/ChallengeCard';
+
 
 const renderChallenge = ({item}) => {
   return (
-  // <Text style = {styles.TitleText}>Current Challenges</Text>
   <ChallengeCard text = {item}/>
   )
 }
