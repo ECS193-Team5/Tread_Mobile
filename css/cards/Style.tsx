@@ -15,7 +15,7 @@ const cardStyles = StyleSheet.create({
     borderRadius : 20,
     flexDirection : 'row',
     marginBottom: "4.6%",
-    paddingVertical : "5%"
+    paddingVertical : "6%"
   },
 
   seperator : {
@@ -23,7 +23,7 @@ const cardStyles = StyleSheet.create({
     borderColor : "#F9A800",
     justifyContent : 'center',
     alignSelf : 'center',
-    height : "110%",
+    height : "130%",
   },
 
   shadowProp: {
@@ -45,7 +45,7 @@ const cardStyles = StyleSheet.create({
   },
 
   ImageContainer : {
-    flex : 32,
+    flex : 35,
     flexDirection:'row',
     alignItems : "center",
     justifyContent : "center",
@@ -66,7 +66,7 @@ const cardStyles = StyleSheet.create({
   },
 
   ChallengeProgressContainer : {
-    flex : 60,
+    flex : 55,
   },
 
   ChallengeNameContainer : {

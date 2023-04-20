@@ -19,7 +19,6 @@ const ImageStyles = StyleSheet.create({
   },
 
   third : {
-    // alignContent : 'center', 
     justifyContent: 'center',
     width :39, 
     height : 39 , 

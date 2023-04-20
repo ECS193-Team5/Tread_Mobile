@@ -17,11 +17,7 @@ import {cardStyles} from "../css/cards/Style"
 import ChallengeCard from '../components/Challenges/ChallengeCard';
 
 
-const renderChallenge = ({item}) => {
-  return (
-  <ChallengeCard text = {item}/>
-  )
-}
+
 
 function ChallengesPage(props): JSX.Element {
   const [titleName, setTitleName] = useState("Current")
@@ -30,7 +26,12 @@ function ChallengesPage(props): JSX.Element {
   const [challengeImage, setChallengeImage] = useState("https://imgur.com/2BHAmsN.png")
 
 
-
+  const renderChallenge = ({item}) => {
+    return (
+    <ChallengeCard 
+      text = {item}/>
+    )
+  }
   const handleOnPressSwap = function(){
     setIsCurrent(!isCurrent)
     if (isCurrent === false) {

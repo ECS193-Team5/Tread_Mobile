@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
     paddingTop:(Platform.OS === 'ios') ? "12%" : 0,
     backgroundColor : "#E0E7E3",
     flex :1
-    
   },
 
   topRightClickContainer : {
