@@ -48,6 +48,8 @@ function ChallengesPage(props): JSX.Element {
   // Check for invitations and update icon, but for now
   var imageUrl = "https://imgur.com/ULlEPhH.png"
 
+  // one backend call here to get all challenges //accepted challenges
+  // pass data to each challenge card with ID
   const ChallengeData = ['1gasdghsahgafhgasdghjasghjdsfghjfghj','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
 
   return (
