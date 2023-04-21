@@ -48,8 +48,6 @@ function ChallengesPage(props): JSX.Element {
 
   // one backend call here to get all challenges //accepted challenges
   // pass data to each challenge card with ID
-  // const ChallengeData = ['1gasdghsahgafhgasdghjasghjdsfghjfghj','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
-
   const ChallengeData = [
     {
       "_id": "642f81a350e4b483053a9cc1",
