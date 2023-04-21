@@ -117,23 +117,30 @@ function Login(props): JSX.Element {
 
 // 		console.log(token);
 //     console.log(deviceToken);
+//     var FormData = require('form-data');
+//     var data = new FormData();
+
+//     data.append('deviceToken', deviceToken);
 		var config = {
       method: 'post',
       url: BACKEND_URL + 'auth/login/google',
       withCredentials: true,
       credentials: 'include',
       headers: {
-        Authorization: token,
+        'Authorization': token,
         Accept: 'application/json',
-      }
+//         ...data.getHeaders()
+      },
+//       data: data
 //       },
-//       data: {
-//         'deviceToken': deviceToken
-//       }
+      data: {
+        'deviceToken': deviceToken
+      }
     };
 
     axios(config)
     .then((response) => {
+      console.log(response.data)
       const hasUsername = response.data['hasUsername'];
 // 				console.log(response.data['hasUsername']);
       if(hasUsername) {
@@ -145,6 +152,13 @@ function Login(props): JSX.Element {
     .catch(function (error) {
       console.log(error);
     });
+//     axios(config)
+//     .then(function (response) {
+//       console.log(JSON.stringify(response.data));
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//     });
   }
 
   const handleOnPressLogIn = function () {
