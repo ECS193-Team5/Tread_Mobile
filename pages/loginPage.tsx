@@ -8,7 +8,7 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import messaging from '@react-native-firebase/messaging';
 
 import LoginButton from '../components/login/loginButton';
 import SignUpButton from '../components/signup/signupButton';
@@ -24,6 +24,18 @@ import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, BACKEND_URL} from '@env';
 import {styles} from '../css/login/Style';
 
 function Login(props): JSX.Element {
+
+	const checkToken = async () => {
+	  console.log('Registering device');
+		await messaging().registerDeviceForRemoteMessages();
+		const fcmToken = await messaging().getToken({vapidKey: "BDXZrQCKEnAfnJWh6oIbEYKTuogSmiNl4gKVIDNmOEabzRt2BpAVIV4Znb7OgKzWJAz9eLOKde6YhWLpAdw1EZ0"});
+		console.log(fcmToken);
+		console.log('FCM token')
+		if (fcmToken) {
+		  console.log('Setting token')
+      await AsyncStorage.setItem('fcmToken', fcmToken)
+ 		}
+	}
 
   const configureGoogleSignIn = function() {
 		console.log('Configuring Google sign in');
@@ -47,6 +59,7 @@ function Login(props): JSX.Element {
 //      				const token = getToken();
 //      				console.log(token)
 							login();
+//             props.navigation.navigate('Signup')
           });
 // 					props.navigation.navigate(target);
 				}).catch((e) => {
@@ -63,6 +76,7 @@ function Login(props): JSX.Element {
     try {
 			await AsyncStorage.setItem('email', email)
 			await AsyncStorage.setItem('token', String(token))
+			await checkToken();
     } catch (err) {
       console.log(err)
     }
@@ -82,11 +96,27 @@ function Login(props): JSX.Element {
     }
   }
 
+  const getFCM = async () => {
+    console.log('Getting FCM token')
+    try {
+      const item = await AsyncStorage.getItem('fcmToken');
+//       console.log(item)
+			console.log('Got FCM token')
+			console.log(item)
+      return String(item)
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
+
   const login = async () => {
   	console.log('Logging in');
 		const token = await getToken();
-// 		console.log(token)
+		const deviceToken = await getFCM();
 
+// 		console.log(token);
+//     console.log(deviceToken);
 		var config = {
       method: 'post',
       url: BACKEND_URL + 'auth/login/google',
@@ -96,22 +126,25 @@ function Login(props): JSX.Element {
         Authorization: token,
         Accept: 'application/json',
       }
+//       },
+//       data: {
+//         'deviceToken': deviceToken
+//       }
     };
 
-      axios(config)
-			.then((response) => {
-				const hasUsername = response.data['hasUsername'];
+    axios(config)
+    .then((response) => {
+      const hasUsername = response.data['hasUsername'];
 // 				console.log(response.data['hasUsername']);
-				if(hasUsername) {
-					props.navigation.navigate('Challenge')
-				} else {
-					props.navigation.navigate('Signup')
-				}
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-
+      if(hasUsername) {
+        props.navigation.navigate('Challenge')
+      } else {
+        props.navigation.navigate('Signup')
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   const handleOnPressLogIn = function () {

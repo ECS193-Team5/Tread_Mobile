@@ -10,7 +10,6 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {styles} from '../css/signup/Style';
-import messaging from '@react-native-firebase/messaging';
 
 import CheckBox from '@react-native-community/checkbox';
 
@@ -24,15 +23,6 @@ function Signup(props): JSX.Element {
 		console.log(name)
     return name.length > 0
   }
-
-	const checkToken = async () => {
-		await messaging().registerDeviceForRemoteMessages();
-		const fcmToken = await messaging().getToken({vapidKey: "BDXZrQCKEnAfnJWh6oIbEYKTuogSmiNl4gKVIDNmOEabzRt2BpAVIV4Znb7OgKzWJAz9eLOKde6YhWLpAdw1EZ0"});
-		if (fcmToken) {
-			console.log(fcmToken);
-		}
-	}
-  
 
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [email, setEmail] = useState("");
