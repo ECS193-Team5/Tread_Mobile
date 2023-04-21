@@ -14,15 +14,40 @@ import { modalstyle } from '../../css/challenges/modalStyle';
 import ChallengeCard from './ChallengeCard';
 import ProgressCard from './ProgressCard';
 
-const ChallengeData = ['1gasdghsahgafhgasdghjasghjdsfghjfghj','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']
+// output of getLeaderboard Info with the convertProgress and makeLeaderBoardObj function applied
+// IssuedChallengesObj.js from the web frontend
+const ProgressInfo = [
+  {
+      "level": 1,
+      "name": "batman#6380",
+      "complete": 10018.243243243243,
+      "score": 44481
+  },
+  {
+      "level": 2,
+      "name": "batman#9320",
+      "complete": 50,
+      "score": 0
+  },
+  {
+      "level": 3,
+      "name": "Kauboy#8925",
+      "complete": 20,
+      "score": 0
+  }
+]
 
-const renderProgress = () => {
-  return (
-  <ProgressCard/>
-  )
-}
+function ChallengeModalPopUp({Challenge}) {
+  
+  const renderProgress = ({item}) => {
+    return (
+    <ProgressCard
+      Progress = {item}/>
+    )
+  }
 
-function ChallengeModalPopUp({handleOnPress}) {
+  var time_left = ((new Date(Challenge.dueDate)-new Date(Challenge.issueDate))/(1000*60*60*24))
+
   return(
     <View style={modalstyle.container}>
       <View style = {modalstyle.PopUpTextContainer}>
@@ -31,19 +56,19 @@ function ChallengeModalPopUp({handleOnPress}) {
       <View style = {modalstyle.PopUpChallengeDescriptionContainer}>
         <View style = {modalstyle.ChallengeInfoIndividualContainer}> 
           <Text style = {modalstyle.InfoTypeTextStyle}>Description       :     
-            <Text style = {modalstyle.InfoTextStyle}>      Do 250 Pushups</Text>
+            <Text style = {modalstyle.InfoTextStyle}> {"     " + Challenge.exercise.exerciseName + " " + Challenge.exercise.amount + " " + Challenge.exercise.unit}</Text>
           </Text>
         </View>
         
         <View style = {modalstyle.ChallengeInfoIndividualContainer}> 
           <Text style = {modalstyle.InfoTypeTextStyle}>Assigned by      :     
-            <Text style = {modalstyle.InfoTextStyle}>      Bob Jones</Text>
+            <Text style = {modalstyle.InfoTextStyle}>{"      " + Challenge.sentUser}</Text>
           </Text>
         </View>
         
         <View style = {modalstyle.ChallengeInfoIndividualContainer}> 
           <Text style = {modalstyle.InfoTypeTextStyle}>Time Left           :     
-            <Text style = {modalstyle.InfoTextStyle}>      2d 3h</Text>
+            <Text style = {modalstyle.InfoTextStyle}>{"      " + time_left + "d"}</Text>
           </Text>
         </View>
       </View>
@@ -57,7 +82,7 @@ function ChallengeModalPopUp({handleOnPress}) {
 
       <View style = {modalstyle.ProgressContainer}>
       <FlatList
-        data = {ChallengeData}
+        data = {ProgressInfo}
         renderItem = {renderProgress}
         contentContainerStyle = {modalstyle.FlatListContainer}
       />

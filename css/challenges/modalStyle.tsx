@@ -44,7 +44,6 @@ const modalstyle = StyleSheet.create({
 
   ProgressContainer : {
     flex : 60, 
-    backgroundColor :'green',
     borderRadius : 40
   },
 

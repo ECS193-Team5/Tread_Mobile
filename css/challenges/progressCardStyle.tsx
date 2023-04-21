@@ -2,8 +2,6 @@ import { Platform, StyleSheet } from 'react-native';
 
 const progressCardStyle = StyleSheet.create({
   CardContainer : {
-    // backgroundColor : "#FFFFFF",
-    backgroundColor : 'red',
     width : "80%",
     borderRadius : 20,
     flexDirection : 'row',
@@ -15,14 +13,24 @@ const progressCardStyle = StyleSheet.create({
     flex : 40,
     alignItems : "center",
     justifyContent : "center",
-    backgroundColor : 'purple'
+    // backgroundColor : 'purple'
   },
 
   ProgressBarContainer : {
     flex : 135,
-    backgroundColor : 'brown',
-    alignItems : 'center',
-  }
+    // backgroundColor : 'brown',
+    // alignItems : 'center',
+    margin : "5%"
+  },
+
+  imageStyle : {
+    width :50, 
+    height : 50 , 
+    borderRadius : 25, 
+    borderWidth : 2, 
+    borderColor : '#014421'
+  },
+  
 
 });
 

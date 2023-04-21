@@ -16,19 +16,23 @@ import ImageCluster from '../shared/ImageCluster';
 import ChallengeModalPopUp from './ChallengeModalPopUp';
 import GestureRecognizer from 'react-native-swipe-gestures'
 
+// get challenge leaderboard backend call to get image data 
+// pass on that data to modal
+
+// cloudinary image hosting will get these images
 const images5 = ['https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
-                'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
-                'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM'
               ]
 
-function ChallengeCard({text}): JSX.Element {
+function ChallengeCard({ChallengeData}): JSX.Element {
 	const [modalVisible, setModalVisible] = useState(false)
   
   const handleOnPress = function(){
     setModalVisible(!modalVisible)
   }
+
+  var ProgressPercent = Math.min(100, Math.round((ChallengeData.progress.progress)/(ChallengeData.exercise.amount) * 100))
 
   return (
     <Pressable 
@@ -45,7 +49,7 @@ function ChallengeCard({text}): JSX.Element {
         style = {{margin : 2}}
       >
         <ChallengeModalPopUp 
-          handleOnPress = {handleOnPress}
+          Challenge = {ChallengeData}
         />
       </Modal>
     </GestureRecognizer>
@@ -60,18 +64,20 @@ function ChallengeCard({text}): JSX.Element {
 
       <View style = {cardStyles.ChallengeCardTextContainer}>
         <View style = {cardStyles.ChallengeNameContainer}>
-          <Text style = {cardStyles.ChallengeNameText}>{text}</Text>
+          <Text style = {cardStyles.ChallengeNameText}>
+            {ChallengeData.exercise.exerciseName + " " + ChallengeData.exercise.amount + " " + ChallengeData.exercise.unit}
+          </Text>
         </View>
         <View style = {cardStyles.ChallengeProgressContainer}>
           <ProgressCircle
-            percent = {30}
+            percent = {ProgressPercent}
             radius = {35}
             borderWidth = {3}
             color = '#014421'
             shadowColor='#bebebe'
             bgColor='#FFFFFF'
           >
-          <Text style = {cardStyles.ChallengeProgressText}>30%</Text>
+          <Text style = {cardStyles.ChallengeProgressText}>{ProgressPercent + "%"}</Text>
         </ProgressCircle>
         </View>
       </View>

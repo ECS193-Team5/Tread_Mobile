@@ -71,7 +71,7 @@ const cardStyles = StyleSheet.create({
 
   ChallengeNameContainer : {
     flex : 90,
-    alignItems : 'center',
+    alignItems : 'flex-start',
     paddingHorizontal : '3.5%'
   },
 
@@ -92,7 +92,7 @@ const cardStyles = StyleSheet.create({
 
   ChallengeNameText : {
     fontWeight : "500",
-    fontSize : 14.5,
+    fontSize : 14,
     lineHeight : 16,
     color : "#014421",
   },
