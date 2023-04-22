@@ -22,15 +22,14 @@ import {styles} from '../css/login/Style';
 
 function Login(props): JSX.Element {
 
-  const configureGoogleSignIn = function() {
-		console.log('Configuring Google sign in');
-		GoogleSignin.configure({
+  const configureGoogleSignIn = async function() {
+		await GoogleSignin.configure({
 				offlineAccess: true,
 				androidClientId: ANDROID_CLIENT,
 				webClientId: WEB_CLIENT,
 				iosClientId: IOS_CLIENT
 		});
-		console.log('Configured Google sign in');	
+		console.log('Configured Google sign in');
 	}
 
   const signInGoogle = function (target) {
@@ -47,7 +46,7 @@ function Login(props): JSX.Element {
 			}
 		}).catch((e) => {
 				console.log("ERROR IS B: " + JSON.stringify(e));
-		})	
+		})
 	}
 
 	const storeEmail = async (email) => {
