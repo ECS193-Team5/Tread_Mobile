@@ -19,42 +19,42 @@ import {
 
 import axios from 'axios';
 
-import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, BACKEND_URL} from '@env';
+import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, BACKEND_URL, VAPID_KEY} from '@env';
 
 import {styles} from '../css/login/Style';
 
 function Login(props): JSX.Element {
 
-	const checkToken = async () => {
-	  console.log('Registering device');
+	const storeToken = async () => {
+// 	  console.log('Registering device');
 		await messaging().registerDeviceForRemoteMessages();
-		const fcmToken = await messaging().getToken({vapidKey: "BDXZrQCKEnAfnJWh6oIbEYKTuogSmiNl4gKVIDNmOEabzRt2BpAVIV4Znb7OgKzWJAz9eLOKde6YhWLpAdw1EZ0"});
-		console.log(fcmToken);
-		console.log('FCM token')
+		const fcmToken = await messaging().getToken({vapidKey: VAPID_KEY});
+// 		console.log(fcmToken);
+// 		console.log('FCM token')
 		if (fcmToken) {
-		  console.log('Setting token')
+// 		  console.log('Setting token')
       await AsyncStorage.setItem('fcmToken', fcmToken)
  		}
 	}
 
   const configureGoogleSignIn = function() {
-		console.log('Configuring Google sign in');
+// 		console.log('Configuring Google sign in');
 		GoogleSignin.configure({
 				offlineAccess: true,
 				androidClientId: ANDROID_CLIENT,
 				webClientId: WEB_CLIENT,
 				iosClientId: IOS_CLIENT
 		});
-		console.log('Configured Google sign in');	
+// 		console.log('Configured Google sign in');	
 	}
 
   const signInGoogle = function () {
 		GoogleSignin.hasPlayServices().then((hasPlayService) => {
-			console.log('Signing in');
+// 			console.log('Signing in');
 			if (hasPlayService) {
 				GoogleSignin.signIn().then((userInfo) => {
           console.log(JSON.stringify(userInfo))
-          storeInfo(userInfo['user']['email'], userInfo['idToken'])
+          storeInfo(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo'])
           .then((res) => {
 //      				const token = getToken();
 //      				console.log(token)
@@ -71,38 +71,39 @@ function Login(props): JSX.Element {
 		})	
 	}
 
-  const storeInfo = async (email, token) => {
-    console.log('storing info')
+  const storeInfo = async (email, token, photo) => {
+//     console.log('storing info')
     try {
-			await AsyncStorage.setItem('email', email)
+			await AsyncStorage.setItem('email', String(email))
 			await AsyncStorage.setItem('token', String(token))
-			await checkToken();
+			await AsyncStorage.setItem('photo', String(photo))
+			await storeToken();
     } catch (err) {
       console.log(err)
     }
 
-    console.log('stored info')
+//     console.log('stored info')
   }
 
-  const getToken = async () => {
-    console.log('Getting token')
+  const getGoogleToken = async () => {
+//     console.log('Getting token')
     try {
       const item = await AsyncStorage.getItem('token');
-//       console.log(item)
-			console.log('Got token')
+      console.log(item)
+// 			console.log('Got token')
       return String(item)
     } catch (err) {
       console.log(err);
     }
   }
 
-  const getFCM = async () => {
-    console.log('Getting FCM token')
+  const getFCMToken = async () => {
+//     console.log('Getting FCM token')
     try {
       const item = await AsyncStorage.getItem('fcmToken');
 //       console.log(item)
-			console.log('Got FCM token')
-			console.log(item)
+// 			console.log('Got FCM token')
+// 			console.log(item)
       return String(item)
     } catch (err) {
       console.log(err);
@@ -111,9 +112,9 @@ function Login(props): JSX.Element {
   }
 
   const login = async () => {
-  	console.log('Logging in');
-		const token = await getToken();
-		const deviceToken = await getFCM();
+//   	console.log('Logging in');
+		const authToken = await getGoogleToken();
+		const deviceToken = await getFCMToken();
 
 // 		console.log(token);
 //     console.log(deviceToken);
@@ -127,7 +128,7 @@ function Login(props): JSX.Element {
       withCredentials: true,
       credentials: 'include',
       headers: {
-        'Authorization': token,
+        'Authorization': authToken,
         Accept: 'application/json',
 //         ...data.getHeaders()
       },
@@ -140,7 +141,7 @@ function Login(props): JSX.Element {
 
     axios(config)
     .then((response) => {
-      console.log(response.data)
+//       console.log(response.data)
       const hasUsername = response.data['hasUsername'];
 // 				console.log(response.data['hasUsername']);
       if(hasUsername) {
@@ -161,15 +162,21 @@ function Login(props): JSX.Element {
 //     });
   }
 
-  const handleOnPressLogIn = function () {
+//   const handleOnPressLogIn = function () {
+// 		configureGoogleSignIn();
+//     signInGoogle();
+//   }
+//
+//   const handleOnPressSignUp = function () {
+// 		configureGoogleSignIn();
+//     signInGoogle();
+//   }
+
+  const handleOnPress = function () {
 		configureGoogleSignIn();
     signInGoogle();
   }
 
-  const handleOnPressSignUp = function () {
-		configureGoogleSignIn();
-    signInGoogle();
-  }
 
   return (
       <View >
@@ -186,7 +193,7 @@ function Login(props): JSX.Element {
 						</View>
 						<View style = {styles.loginContainer}>
 							<LoginButton
-								onPress={handleOnPressLogIn}
+								onPress={handleOnPress}
 							>
 							</LoginButton>
 						</View>
@@ -203,7 +210,7 @@ function Login(props): JSX.Element {
 						</View>
 						<View style = {styles.signUpContainer}>
 							<SignUpButton
-								onPress={handleOnPressSignUp}
+								onPress={handleOnPress}
 							>
 							</SignUpButton>
 
