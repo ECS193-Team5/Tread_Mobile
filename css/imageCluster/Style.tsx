@@ -39,6 +39,11 @@ const ImageStyles = StyleSheet.create({
   weekly :{
     width :50, 
     height : 50
+  },
+
+  AcceptOrDecline : {
+    width :39, 
+    height : 39 , 
   }
 });
 

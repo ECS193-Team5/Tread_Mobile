@@ -290,7 +290,6 @@ function ChallengesPage(props): JSX.Element {
         />
       </View> 
 
-      
     </View>
   )
 }
