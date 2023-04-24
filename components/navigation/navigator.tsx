@@ -1,6 +1,7 @@
 import { NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {Image} from 'react-native'
 
 import Login from '../../pages/loginPage';
@@ -16,14 +17,25 @@ const Tab = createBottomTabNavigator();
  
 const Stack = createNativeStackNavigator();
 
-const NestedPages = createNativeStackNavigator();
+const TopTab = createMaterialTopTabNavigator();
 
 import {styles} from '../../css/navigation/Style';
+
+function ChallengesSwipeStack() {
+  return (
+    <TopTab.Navigator
+      tabBarPosition='bottom'
+    >
+      <TopTab.Screen name = "Challenges" component= {Challenge}/>
+      <TopTab.Screen name = "Incoming Challenges" component = {IncomingChallengesPage}/>
+    </TopTab.Navigator>
+  )
+}
 
 function ChallengesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Challenges" component={Challenge} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
     <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false }}/>
   </Stack.Navigator>
   )

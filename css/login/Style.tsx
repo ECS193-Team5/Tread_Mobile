@@ -2,7 +2,7 @@ import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container : {
-    paddingTop:(Platform.OS === 'ios') ? 50 : 0
+    paddingTop:(Platform.OS === 'ios') ? "12%" : 0
   },
   
   linearGradient : {

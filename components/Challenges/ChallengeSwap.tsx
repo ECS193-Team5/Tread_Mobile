@@ -18,7 +18,7 @@ function ChallengesSwap({onPress,text, available, imageURL}): JSX.Element {
       colors={['rgba(1, 63, 33,1)', 'rgba(1, 63, 33,0.5)', 'rgb(1, 100, 0)']}
       style = {[cardStyles.ChallengeSwapCardContainer]}
       >
-      <View style = {cardStyles.ImageSection}>
+      <View style = {cardStyles.ImageSwapSection}>
       <Image style ={{width : 70, height : 70}}
         source={{uri: imageURL }}/>
       </View>
