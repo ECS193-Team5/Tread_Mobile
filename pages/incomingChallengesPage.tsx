@@ -15,7 +15,6 @@ function IncomingChallengesPage(props): JSX.Element {
   var imageUrl = "https://imgur.com/nFRNXOB.png"  
   return (
     <View style = {styles.container}>
-      
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
