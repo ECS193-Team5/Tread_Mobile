@@ -9,7 +9,7 @@ const modalstyle = StyleSheet.create({
     height : "10%",
     borderRadius : 40,
     borderColor : '#014421',
-    borderWidth : 2
+    borderWidth : 2,
   },
 
   PopUpTextContainer : {
@@ -44,7 +44,8 @@ const modalstyle = StyleSheet.create({
 
   ProgressContainer : {
     flex : 60, 
-    borderRadius : 40
+    borderRadius : 40,
+    marginBottom : "25%"
   },
 
   FlatListContainer : {
@@ -52,19 +53,19 @@ const modalstyle = StyleSheet.create({
   },
 
   TitleTextStyle : {
-    fontWeight : 600,
+    fontWeight : '600',
     fontSize : 20,
     color : "#014421"
   },
 
   InfoTypeTextStyle : {
-    fontWeight : 500,
+    fontWeight : '500',
     fontSize : 15,
     color : "#014421"
   },
 
   InfoTextStyle : {
-    fontWeight : 300,
+    fontWeight : '300',
     fontSize : 15,
     color : "#014421"
   }

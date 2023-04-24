@@ -42,7 +42,7 @@ function ChallengeModalPopUp({Challenge}) {
   const renderProgress = ({item}) => {
     return (
     <ProgressCard
-      Progress = {item}/>
+      ProgressObj = {item}/>
     )
   }
 
@@ -76,7 +76,7 @@ function ChallengeModalPopUp({Challenge}) {
       <View style = {modalstyle.seperator}/>
 
       <View style = {modalstyle.PopUpTextContainer}>
-        <Text style = {modalstyle.TitleTextStyle}> Progress </Text>
+        <Text style = {modalstyle.TitleTextStyle}>Leaderboard </Text>
 
       </View>
 
