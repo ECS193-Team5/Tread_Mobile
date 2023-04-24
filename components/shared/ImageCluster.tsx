@@ -9,7 +9,7 @@ import { Text } from 'react-native-elements';
 import {cardStyles} from "../../css/cards/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
 
-function ImageCluster({images}): JSX.Element{
+function ImageCluster({images, isWeekly}): JSX.Element{
   const imageUrl1 = images[0]
   const imageUrl2 = images[1]
   const Num3 = images.length - 2
@@ -35,7 +35,7 @@ function ImageCluster({images}): JSX.Element{
   } else {
     return(
       <View style = {cardStyles.ImageContainer}>
-        <Image style ={ImageStyles.first} source={{uri: imageUrl1}}/>
+        <Image style ={isWeekly ? ImageStyles.weekly : ImageStyles.first} source={{uri: imageUrl1}}/>
       </View>
     )  }
 }

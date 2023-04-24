@@ -23,11 +23,11 @@ function ChallengesPage(props): JSX.Element {
   const [isCurrent, setIsCurrent] = useState(false)
   const [challengeImage, setChallengeImage] = useState("https://imgur.com/2BHAmsN.png")
 
-
   const renderChallenge = ({item}) => {
     return (
     <ChallengeCard 
-      ChallengeData = {item}/>
+      ChallengeData = {item}
+      isWeekly = {isCurrent}/>
     )
   }
   const handleOnPressSwap = function(){
@@ -35,10 +35,12 @@ function ChallengesPage(props): JSX.Element {
     if (isCurrent === false) {
       setTitleName("Weekly")
       setAvailableCount(7)
+      // challenges should be set to weekly
       setChallengeImage("https://imgur.com/j33n2DQ.png") 
     } else {
       setTitleName("Current")
       setAvailableCount(10) 
+      // challenges should be set to current
       setChallengeImage("https://imgur.com/2BHAmsN.png") 
     }
   }
@@ -255,7 +257,6 @@ function ChallengesPage(props): JSX.Element {
       }
     },
   ]
-
 
   return (
     <View style = {styles.container}>

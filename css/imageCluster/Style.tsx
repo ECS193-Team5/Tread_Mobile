@@ -34,6 +34,11 @@ const ImageStyles = StyleSheet.create({
     alignSelf : 'center',
     justifyContent : 'center',
     color : 'white'
+  },
+
+  weekly :{
+    width :50, 
+    height : 50
   }
 });
 

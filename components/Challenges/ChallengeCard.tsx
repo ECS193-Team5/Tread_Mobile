@@ -20,14 +20,23 @@ import GestureRecognizer from 'react-native-swipe-gestures'
 // pass on that data to modal
 
 // cloudinary image hosting will get these images
-const images5 = ['https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
+// const images = ['https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
+//                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
+//                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
+//               ]
+
+function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
+	const [modalVisible, setModalVisible] = useState(false)
+  var images = []
+  if (!isWeekly){
+    images = ['https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM',
               ]
+  }else {
+    images = ['https://imgur.com/W03ovOf.png']
+  }
 
-function ChallengeCard({ChallengeData}): JSX.Element {
-	const [modalVisible, setModalVisible] = useState(false)
-  
   const handleOnPress = function(){
     setModalVisible(!modalVisible)
   }
@@ -58,7 +67,10 @@ function ChallengeCard({ChallengeData}): JSX.Element {
         barStyle="dark-content"
       />
       
-      <ImageCluster images = {images5}/>
+      <ImageCluster 
+        images = {images}
+        isWeekly = {isWeekly}
+      />
       
       <View style = {cardStyles.seperator}/>
 
