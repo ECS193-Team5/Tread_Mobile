@@ -24,6 +24,10 @@ const SharedStyles = StyleSheet.create({
   rowTextStyle : {
     fontSize : 15,
     color : "#014421"
+  },
+
+  buttonStyle : {
+    marginHorizontal : '5%'
   }
 });
 

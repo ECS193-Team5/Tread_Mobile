@@ -6,11 +6,13 @@ import {
   Text,
   StatusBar,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
 } from 'react-native';
 
 import {cardStyles} from "../../css/cards/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
+import { SharedStyles} from '../../css/shared/Style'
 
 function AcceptOrDelete({pageTitle, acceptObj, deleteObj, rejectObj}): JSX.Element {  
   if (pageTitle === 'Sent'){
@@ -29,13 +31,13 @@ function AcceptOrDelete({pageTitle, acceptObj, deleteObj, rejectObj}): JSX.Eleme
       <View style = {cardStyles.ChallengeProgressContainer}>
         <Pressable
         onPress={acceptObj}
-        style = {{marginHorizontal : "5%"}}
+        style = {SharedStyles.buttonStyle}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
-        </Pressable>
+        </Pressable>        
         <Pressable
         onPress={rejectObj}
-        style = {{marginHorizontal : "5%"}}
+        style = {SharedStyles.buttonStyle}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ingQGWS.png'}}/>
         </Pressable>
