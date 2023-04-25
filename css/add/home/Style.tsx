@@ -1,32 +1,42 @@
 import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+
 	HomePage : {
 		flexDirection: 'column',
-		flex: 1
+		flex: 1,
+		backgroundColor : "#E0E7E3"
 	},
 
-	TopButtonContainer : {
-		flex: 30,
-		backgroundColor: 'blue'
+	ButtonContainer : {
+		flex: 20,
+		marginRight: '5%',
+		marginLeft: '5%',
+
 	},
 
 	Separator : {
 		flex: 10,
-		backgroundColor: 'green'
+// 		backgroundColor: 'green',
+		flexDirection: 'row',
+		alignItems: 'center',
+		marginRight: '5%',
+		marginLeft: '5%',
+
 	},
 
-	MiddleButtonContainer : {
-		flex: 20,
-		backgroundColor: 'blue'
+	Button : {
+		height: '100%',
+		width: '100%',
+		borderRadius: 20,
+		backgroundColor: 'yellow'
 	},
 
-	BottomButtonContainer : {
-		flex: 30,
-		backgroundColor: 'blue'
+	SeparatorLine: {
+		flex: 1,
+		backgroundColor: '#F9A800',
+		height: '2%'
 	}
-
-
 
 });
 

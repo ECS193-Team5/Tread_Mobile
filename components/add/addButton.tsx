@@ -6,11 +6,11 @@ import {
 	Pressable
 } from 'react-native';
 
-// import {styles} from '../../css/login/Style';
+import {styles} from '../../css/add/home/Style';
 
 function AddButton({onPress, title, description}): JSX.Element {
 	return (
-		<Pressable onPress = {onPress}>
+		<Pressable onPress = {onPress} style = {styles.Button}>
 			<Text >{title}</Text>
 			<Text >{description}</Text>
 		</Pressable>

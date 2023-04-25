@@ -15,19 +15,48 @@ function AddPage(props): JSX.Element {
 
   return (
     <View style = {styles.HomePage}>
-    	<View style = {styles.TopButtonContainer}>
+    	<View style = {styles.Separator}>
+    	</View>
+
+    	<View style = {styles.ButtonContainer}>
+    		<AddButton
+    			title = 'Challenge'
+    			description = 'Issue a new challenge'
+    		>
+    		</AddButton>
+    	</View>
+
+    	<View style = {styles.Separator}>
+    		<View style = {styles.SeparatorLine}>
+    		</View>
+    	</View>
+
+    	<View style = {styles.ButtonContainer}>
+    		<AddButton
+    			title = 'Friend'
+    			description = 'Add a friend'
+    		>
+    		</AddButton>
+    	</View>
+
+    	<View style = {styles.Separator}>
+    		<View style = {styles.SeparatorLine}>
+    		</View>
+    	</View>
+
+    	<View style = {styles.ButtonContainer}>
+    		<AddButton
+    			title = 'League'
+    			description = 'Create League'
+    		>
+    		</AddButton>
+
     	</View>
 
     	<View style = {styles.Separator}>
     	</View>
 
-    	<View style = {styles.MiddleButtonContainer}>
-    	</View>
-
     	<View style = {styles.Separator}>
-    	</View>
-
-    	<View style = {styles.BottomButtonContainer}>
     	</View>
 
     </View>
