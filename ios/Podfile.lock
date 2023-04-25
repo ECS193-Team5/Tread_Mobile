@@ -447,6 +447,8 @@ PODS:
   - RNCCheckbox (0.5.15):
     - BEMCheckBox (~> 1.4)
     - React-Core
+  - RNGestureHandler (2.9.0):
+    - React-Core
   - RNGoogleSignin (9.0.2):
     - GoogleSignIn (~> 6.2)
     - React-Core
@@ -528,6 +530,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -638,6 +641,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCCheckbox:
     :path: "../node_modules/@react-native-community/checkbox"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
   RNScreens:
@@ -708,6 +713,7 @@ SPEC CHECKSUMS:
   ReactCommon: 0c43eaeaaee231d7d8dc24fc5a6e4cf2b75bf196
   RNCAsyncStorage: b90b71f45b8b97be43bc4284e71a6af48ac9f547
   RNCCheckbox: 43bcc6493611468af0e19f19f029dab3da8561c4
+  RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNGoogleSignin: 22e468a9474dbcb8618d8847205ad4f0b2575d13
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
