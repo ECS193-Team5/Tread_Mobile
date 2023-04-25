@@ -20,10 +20,18 @@ import { SharedStyles } from '../../css/shared/Style';
 import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
 
 // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
-const image = 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM'
+
+
 
 function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
+  
+  const getImage = function() {
+    return 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM'
+  }
+
+  const [image, setImage] = useState(getImage)
+
   
   useEffect(() => {
     if (pageTitle === 'Sent'){
@@ -119,7 +127,7 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
           </View>
           <View style = {cardStyles.ChallengeNameContainer}>
             <Text style = {cardStyles.ChallengeNameText}>
-                {SenderOrReceiver}
+                {SenderOrReceiver + " : "}
             </Text>
             <Text style = {cardStyles.ChallengeNameText}>
                 {ChallengeData.sentUser}
