@@ -195,7 +195,7 @@ function IncomingChallengesPage(props): JSX.Element {
   }
   
   const deleteItem = function(cData) {    
-    console.log(cData)
+    console.log(cData._id)
     console.log("deleted")
     const filteredData = ChallengeData.filter(item => item._id !== cData._id);
     setChallengeData(filteredData)
@@ -212,7 +212,6 @@ function IncomingChallengesPage(props): JSX.Element {
       />
     )
   }
-
   return (
     <View style = {styles.container}>
       <View style = {styles.topRightClickContainer}>
@@ -242,9 +241,7 @@ function IncomingChallengesPage(props): JSX.Element {
       <View style = {styles.ChallengesContainer}>
         <FlatList
           data = {ChallengeData}
-          renderItem = {(v) =>
-            renderInvite(v, () => {})
-          }
+          renderItem = {renderInvite}
         />
       </View>
 

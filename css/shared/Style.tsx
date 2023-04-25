@@ -26,8 +26,18 @@ const SharedStyles = StyleSheet.create({
     color : "#014421"
   },
 
-  buttonStyle : {
-    marginHorizontal : '5%'
+  LeftSliderContainer : {
+    margin : 0,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    width: "12%",
+  },
+
+  RightSliderContainer : {
+    margin : 0,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    width: "12%",
   }
 });
 

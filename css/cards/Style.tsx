@@ -62,7 +62,7 @@ const cardStyles = StyleSheet.create({
     flex : 80,
     flexDirection : 'row',
     alignItems : "center",
-    marginHorizontal : "0.5%"
+    marginHorizontal : "0.5%",
   },
 
   ChallengeProgressContainer : {
@@ -74,13 +74,6 @@ const cardStyles = StyleSheet.create({
   ChallengeNameContainer : {
     flex : 90,
     alignItems : 'flex-start',
-    paddingHorizontal : '3.5%'
-  },
-
-  InboxChallengeTextContainer : {
-    flex : 90,
-    alignItems : 'flex-start',
-    flexDirection : 'column',
     paddingHorizontal : '3.5%',
   },
 
