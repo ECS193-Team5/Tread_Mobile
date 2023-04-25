@@ -18,7 +18,7 @@ import AcceptOrDelete from './AcceptOrDelete';
 
 import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
 
-// Get image from cloudinary based on page title
+// Get image from cloudinary based on page title (receiver(sent) or sender(for received))
 const image = 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM'
 
 function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.Element {
@@ -33,6 +33,23 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
     prevOpenedRow = row[index];
   };
 
+  const RejectInvite = function(){
+    if (pageTitle === 'Sent'){
+      console.log('unsent outgoing request')
+      // backend call here 
+    } else {
+      console.log('rejected incoming request')
+      // backend call here
+    }
+    handler(ChallengeData)
+  }
+
+  const AcceptInvite = function(){
+    console.log('accepted incoming request')
+    //backend call here
+    handler(ChallengeData)
+  }
+  
   const renderRightActions = (progress, dragX, handler) => {
     return (
       <View
@@ -42,9 +59,27 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
           justifyContent: 'center',
           width: 70,
         }}>
-        <Button color="red" onPress={handler} title="Delete"></Button>
+        <Button color="red" onPress={RejectInvite} title="Delete"></Button>
       </View>
     );
+  };
+
+  const renderLeftActions = (progress, dragX, handler) => {
+    if (pageTitle === 'Sent'){
+      return ('')
+    } else {
+      return (
+        <View
+          style={{
+            margin: 0,
+            alignContent: 'center',
+            justifyContent: 'center',
+            width: 70,
+          }}>
+          <Button color="green" onPress={AcceptInvite} title="Accept"></Button>
+        </View>
+      );
+    }
   };
 
   return(
@@ -52,6 +87,9 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
       key = {ChallengeData._id}
       renderRightActions={(progress, dragX) =>
         renderRightActions(progress, dragX, handler)
+      }
+      renderLeftActions={(progress, dragX) =>
+        renderLeftActions(progress, dragX, handler)
       }
       onSwipeableOpen={() => closeRow(index)}
       ref={(ref) => (row[index] = ref)}
@@ -75,15 +113,18 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
           </View>
         </View>
 
-        {/* <AcceptOrDelete
-          pageTitle={pageTitle}
-          acceptObj = {handleAccept}
-          rejectObj = {handleReject}
-          deleteObj = {handleDelete}
-        /> */}
+
       </View>
     </Swipeable>
   )
 }
 
 export default ChallengeInviteCard
+
+
+{/* <AcceptOrDelete
+  pageTitle={pageTitle}
+  acceptObj = {handleAccept}
+  rejectObj = {handleReject}
+  deleteObj = {handleDelete}
+/> */}

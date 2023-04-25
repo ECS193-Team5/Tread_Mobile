@@ -193,21 +193,21 @@ function IncomingChallengesPage(props): JSX.Element {
     setPageTitle(selectedItem)
     // set challenges array here
   }
-
-  const deleteItem = function(cData) {
-    console.log(cData.item._id)
+  
+  const deleteItem = function(cData) {    
+    console.log(cData)
     console.log("deleted")
-    const filteredData = ChallengeData.filter(item => item._id !== cData.item._id);
+    const filteredData = ChallengeData.filter(item => item._id !== cData._id);
     setChallengeData(filteredData)
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
 
-  const renderInvite = ({item, index}, onClick) => {
+  const renderInvite = ({item, index}) => {
     return (
     <ChallengeInviteCard
       ChallengeData = {item}
       index = {index}
-      handler = {onClick}
+      handler = {deleteItem}
       pageTitle = {pageTitle}
       />
     )
@@ -243,10 +243,7 @@ function IncomingChallengesPage(props): JSX.Element {
         <FlatList
           data = {ChallengeData}
           renderItem = {(v) =>
-            renderInvite(v, () => {
-              console.log('Pressed', v);
-              deleteItem(v);
-            })
+            renderInvite(v, () => {})
           }
         />
       </View>
