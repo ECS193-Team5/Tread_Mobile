@@ -19,18 +19,16 @@ import { SharedStyles } from '../../css/shared/Style';
 
 import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
 
-
-function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.Element {
+function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
   
   // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
   const getImage = function() {
-    return 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM'
+    return 'https://imgur.com/N31G5Sk.png'
   }
 
   const [image, setImage] = useState(getImage)
 
-  
   useEffect(() => {
     if (pageTitle === 'Sent'){
       setSenderOrReceiver("To")
@@ -58,13 +56,13 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
       console.log('rejected incoming request')
       // backend call here
     }
-    handler(ChallengeData)
+    handler(LeagueData)
   }
 
   const AcceptInvite = function(){
     console.log('accepted incoming request')
     //backend call here
-    handler(ChallengeData)
+    handler(LeagueData)
   }
   
   const renderRightActions = (progress, dragX, handler) => {
@@ -97,7 +95,7 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
 
   return(
     <Swipeable
-      key = {ChallengeData._id}
+      key = {LeagueData._id}
       renderRightActions={(progress, dragX) =>
         renderRightActions(progress, dragX, handler)
       }
@@ -118,25 +116,26 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
         <View style = {cardStyles.seperator}/>
 
         <View style = {cardStyles.ChallengeCardTextContainer}>
-          <View style = {cardStyles.ChallengeNameContainer}>
+          <View style = {cardStyles.LeagueAddressContainer}>
             <Text style = {cardStyles.ChallengeNameText}>
-              {ChallengeData.exercise.exerciseName + " " + ChallengeData.exercise.amount + " " + ChallengeData.exercise.unit}
+              {SenderOrReceiver + " : "}
             </Text>
           </View>
           <View style = {cardStyles.ChallengeNameContainer}>
-            <Text style = {cardStyles.ChallengeNameText}>
-                {SenderOrReceiver + " : "}
+            <Text style = {cardStyles.LeagueNameText}>
+            {LeagueData.leagueName}
             </Text>
             <Text style = {cardStyles.ChallengeNameText}>
-                {ChallengeData.sentUser}
+              {LeagueData.members.length + (LeagueData.members.length > 1 ? " Members" : " Member")}
+            </Text>
+            <Text style = {[cardStyles.ChallengeNameText , {color : "#F9A800"}]}>
+              {LeagueData.activeChallenges + " Active Challenges"}
             </Text>
           </View>
         </View>
-
-
       </View>
     </Swipeable>
   )
 }
 
-export default ChallengeInviteCard
+export default LeagueInviteCard

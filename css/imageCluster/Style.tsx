@@ -41,6 +41,14 @@ const ImageStyles = StyleSheet.create({
     height : 50
   },
 
+  single :{
+    width :50, 
+    height : 50,
+    borderRadius : 25, 
+    borderWidth : 2, 
+    borderColor : '#014421'
+  },
+
   AcceptOrDecline : {
     width :39, 
     height : 39 , 

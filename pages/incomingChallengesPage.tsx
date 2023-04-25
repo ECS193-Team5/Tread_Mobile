@@ -224,7 +224,6 @@ function IncomingChallengesPage(props): JSX.Element {
         <Text style = {styles.TitleText}>{pageTitle} Challenges</Text>
       </View>
       <View style = {styles.filterContainer}>
-        {/* <Text style = {styles.FilterText}>Filters</Text> */}
         <SelectDropdown
           data={FilterOptions}
           defaultValue = "Received"
