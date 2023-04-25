@@ -5,17 +5,31 @@ import {
   StyleSheet
 } from 'react-native';
 
-import {styles} from "../css/login/Style"
+import {styles} from '../css/add/home/Style'
+import AddButton from '../components/add/addButton';
 
 function AddPage(props): JSX.Element {
+	onPress = function () {
+		console.log('pressed')
+	}
+
   return (
-    <View style = {styles.container}>
-      <Button 
-        title = "Add page"
-        onPress = {() =>
-          props.navigation.navigate('Login')
-        }
-      />
+    <View style = {styles.HomePage}>
+    	<View style = {styles.TopButtonContainer}>
+    	</View>
+
+    	<View style = {styles.Separator}>
+    	</View>
+
+    	<View style = {styles.MiddleButtonContainer}>
+    	</View>
+
+    	<View style = {styles.Separator}>
+    	</View>
+
+    	<View style = {styles.BottomButtonContainer}>
+    	</View>
+
     </View>
   )
 }
