@@ -9,8 +9,8 @@ import {styles} from '../css/add/home/Style'
 import AddButton from '../components/add/addButton';
 
 function AddPage(props): JSX.Element {
-	onPress = function () {
-		console.log('pressed')
+	onAddChallengePress = function () {
+		props.navigation.navigate('AddChallenge')
 	}
 
   return (
@@ -22,6 +22,7 @@ function AddPage(props): JSX.Element {
     		<AddButton
     			title = 'Challenge'
     			description = 'Issue a new challenge'
+    			onPress = {onAddChallengePress}
     		>
     		</AddButton>
     	</View>

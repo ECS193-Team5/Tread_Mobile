@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 		flex: 20,
 		marginRight: '5%',
 		marginLeft: '5%',
-
+		flexDirection: 'column'
 	},
 
 	Separator : {
@@ -29,14 +29,54 @@ const styles = StyleSheet.create({
 		height: '100%',
 		width: '100%',
 		borderRadius: 20,
-		backgroundColor: 'yellow'
+		backgroundColor: 'yellow',
 	},
 
 	SeparatorLine: {
 		flex: 1,
 		backgroundColor: '#F9A800',
 		height: '2%'
+	},
+
+	GradientStyle : {
+		borderRadius: 20,
+		flex: 1,
+		flexDirection: 'row'
+	},
+
+	IconContainer: {
+		flex: 40
+	},
+
+	TextContainer: {
+// 		backgroundColor: 'blue',
+		flex: 60,
+		flexDirection: 'column'
+	},
+
+	TitleContainer: {
+		justifyContent: 'flex-end',
+		flex: 50
+	},
+
+	DescContainer: {
+		flex: 50
+	},
+
+	Title: {
+		color: 'white',
+		fontSize: 26,
+		fontWeight: 700
+	},
+
+	Description: {
+		color: '#F9A800',
+		fontWeight: 400,
+		fontSize: 15,
+		marginTop: '2%'
 	}
+
+
 
 });
 
