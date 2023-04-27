@@ -11,7 +11,7 @@ import {
 
 import Modal from "react-native-modal"
 import {cardStyles} from "../../css/cards/Style"
-import ProgressCircle from "react-native-progress-circle"
+import ProgressCircle from "progress-circle-react-native"
 import ImageCluster from '../shared/ImageCluster';
 import ChallengeModalPopUp from './ChallengeModalPopUp';
 import GestureRecognizer from 'react-native-swipe-gestures'
