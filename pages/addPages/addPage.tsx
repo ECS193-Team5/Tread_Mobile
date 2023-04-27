@@ -5,12 +5,16 @@ import {
   StyleSheet
 } from 'react-native';
 
-import {styles} from '../css/add/home/Style'
-import AddButton from '../components/add/addButton';
+import {styles} from '../../css/add/home/Style'
+import AddButton from '../../components/add/addButton';
 
 function AddPage(props): JSX.Element {
 	onAddChallengePress = function () {
 		props.navigation.navigate('AddChallenge')
+	}
+
+	onAddFriendPress = function () {
+		props.navigation.navigate('AddFriend')
 	}
 
   return (
@@ -36,6 +40,7 @@ function AddPage(props): JSX.Element {
     		<AddButton
     			title = 'Friend'
     			description = 'Add a friend'
+    			onPress = {onAddFriendPress}
     		>
     		</AddButton>
     	</View>
