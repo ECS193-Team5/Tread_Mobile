@@ -15,6 +15,7 @@ import ChallengesSwap from '../components/Challenges/ChallengeSwap';
 import {styles} from "../css/challenges/Style"
 import {cardStyles} from "../css/cards/Style"
 import ChallengeCard from '../components/Challenges/ChallengeCard';
+import ChallengeScroll from '../components/Challenges/ChallengeScroll';
 
 
 function ChallengesPage(props): JSX.Element {
@@ -283,10 +284,9 @@ function ChallengesPage(props): JSX.Element {
       <View style = {styles.seperator}/>
 
       <View style = {styles.ChallengesContainer}>
-        <FlatList
-          data = {ChallengeData}
-          renderItem = {renderChallenge}
-          contentContainerStyle = {styles.FlatListContainer}
+        <ChallengeScroll
+          ChallengeData={ChallengeData}
+          isCurrent = {isCurrent}
         />
       </View> 
 
