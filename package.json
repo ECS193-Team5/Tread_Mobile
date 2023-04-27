@@ -20,6 +20,7 @@
     "react-native": "0.71.6",
     "react-native-check-box": "^2.1.7",
     "react-native-elements": "^3.4.3",
+    "react-native-health": "^1.14.0",
     "react-native-ico": "^20.1.2",
     "react-native-ico-material-design": "^3.3.1",
     "react-native-ionicons": "^4.6.5",
