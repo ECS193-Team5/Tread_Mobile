@@ -14,6 +14,7 @@ import ProfilePage from '../../pages/profilePage';
 import IncomingChallengesPage from '../../pages/incomingChallengesPage'
 import AddChallengePage from '../../pages/addPages/addChallengePage'
 import AddFriendPage from '../../pages/addPages/addFriendPage'
+import AddLeaguePage from '../../pages/addPages/addLeaguePage'
 
 const Tab = createBottomTabNavigator();
  
@@ -75,6 +76,14 @@ function AddFriendStack(){
   )
 }
 
+function AddLeagueStack(){
+  return (
+  <Stack.Navigator>
+    <Stack.Screen name = "Add" component={AddLeaguePage} options={{ headerShown: false }}/>
+  </Stack.Navigator>
+  )
+}
+
 function SearchStack(){
   return (
   <Stack.Navigator>
@@ -106,7 +115,8 @@ function ShowTabs(){
           iconName = focused
           ? "https://imgur.com/fMqLrA2.png"
           : "https://imgur.com/PZgaF7K.png"
-        } else if (route.name === 'Add' || route.name === 'AddChallenge') {
+        } else if (route.name === 'Add' || route.name === 'AddChallenge' || route.name ===
+        'AddFriend' || route.name === 'AddLeague') {
           iconName = focused
           ? "https://imgur.com/0MHiWup.png"
           : "https://imgur.com/iWwOCAG.png"
@@ -146,6 +156,8 @@ function Navigator(){
         <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false }}/>
 				<Stack.Screen name="AddChallenge" component={AddChallengeStack} options={{headerShown: false}}/>
 				<Stack.Screen name="AddFriend" component={AddFriendStack} options={{headerShown: false}}/>
+				<Stack.Screen name="AddLeague" component={AddLeagueStack} options={{headerShown: false}}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );
