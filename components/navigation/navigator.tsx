@@ -8,10 +8,12 @@ import Login from '../../pages/loginPage';
 import Signup from '../../pages/signupPage';
 import Challenge from '../../pages/ChallengesPage';
 import LeaguesPage from '../../pages/leaguesPage';
-import AddPage from '../../pages/addPage';
+import AddPage from '../../pages/addPages/addPage';
 import SearchPage from '../../pages/searchPage';
 import ProfilePage from '../../pages/profilePage';
 import IncomingChallengesPage from '../../pages/incomingChallengesPage'
+import AddChallengePage from '../../pages/addPages/addChallengePage'
+import AddFriendPage from '../../pages/addPages/addFriendPage'
 
 const Tab = createBottomTabNavigator();
  
@@ -57,6 +59,22 @@ function AddStack(){
   )
 }
 
+function AddChallengeStack(){
+  return (
+  <Stack.Navigator>
+    <Stack.Screen name = "Add" component={AddChallengePage} options={{ headerShown: false }}/>
+  </Stack.Navigator>
+  )
+}
+
+function AddFriendStack(){
+  return (
+  <Stack.Navigator>
+    <Stack.Screen name = "Add" component={AddFriendPage} options={{ headerShown: false }}/>
+  </Stack.Navigator>
+  )
+}
+
 function SearchStack(){
   return (
   <Stack.Navigator>
@@ -88,7 +106,7 @@ function ShowTabs(){
           iconName = focused
           ? "https://imgur.com/fMqLrA2.png"
           : "https://imgur.com/PZgaF7K.png"
-        } else if (route.name === 'Add') {
+        } else if (route.name === 'Add' || route.name === 'AddChallenge') {
           iconName = focused
           ? "https://imgur.com/0MHiWup.png"
           : "https://imgur.com/iWwOCAG.png"
@@ -126,6 +144,8 @@ function Navigator(){
         <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false }}/>
         <Stack.Screen name = "Signup" component={Signup} options={{ headerShown: false }}/>
         <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false }}/>
+				<Stack.Screen name="AddChallenge" component={AddChallengeStack} options={{headerShown: false}}/>
+				<Stack.Screen name="AddFriend" component={AddFriendStack} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

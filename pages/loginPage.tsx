@@ -53,7 +53,7 @@ function Login(props): JSX.Element {
 // 			console.log('Signing in');
 			if (hasPlayService) {
 				GoogleSignin.signIn().then((userInfo) => {
-          console.log(JSON.stringify(userInfo))
+//           console.log(JSON.stringify(userInfo))
           storeInfo(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo'])
           .then((res) => {
 //      				const token = getToken();
@@ -89,7 +89,7 @@ function Login(props): JSX.Element {
 //     console.log('Getting token')
     try {
       const item = await AsyncStorage.getItem('token');
-      console.log(item)
+//       console.log(item)
 // 			console.log('Got token')
       return String(item)
     } catch (err) {
