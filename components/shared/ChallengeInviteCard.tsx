@@ -25,12 +25,11 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
   
   // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
   const getImage = function() {
-    return 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_200_200/0/1629526954865?e=1682553600&v=beta&t=1m93JYRscH1wDz8rW3_cuF2IsOGuwn3BREKHdr-K1bM'
+    return 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo'
   }
 
   const [image, setImage] = useState(getImage)
 
-  
   useEffect(() => {
     if (pageTitle === 'Sent'){
       setSenderOrReceiver("To")
