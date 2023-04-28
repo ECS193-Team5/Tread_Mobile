@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "171571653869",
+    "project_id": "tread-379302",
+    "storage_bucket": "tread-379302.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171571653869:android:52187a2635975ce13d30e4",
+        "android_client_info": {
+          "package_name": "com.treadmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171571653869-ls5iqdlo1boe6isj7r1koo2tvi57g62m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwBvOVhgH5z2upC3yll94XYbg-vJv5Ajs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171571653869-ls5iqdlo1boe6isj7r1koo2tvi57g62m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "171571653869-354h06f0m50kepgjljmlso2gn4iej25r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.TreadMobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
