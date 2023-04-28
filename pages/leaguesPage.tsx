@@ -11,12 +11,17 @@ import SelectDropdown from 'react-native-select-dropdown';
 import ChallengesSwap from '../components/Challenges/ChallengeSwap';
 import LeagueCard from '../components/Leagues/LeagueCard';
 
+import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
 import { cardStyles } from '../css/cards/Style';
 import {styles} from "../css/challenges/Style"
 import { SharedStyles } from '../css/shared/Style';
 
-const FilterOptions = ['All' , 'Admin']
+const options = [
+  { label : "All" , value : 'All'},
+  { label : "Admin", value : 'Admin'},
+]
+
 
 function LeaguesPage(props): JSX.Element {
   // Check for invitations and update icon, but for now
@@ -129,17 +134,14 @@ function LeaguesPage(props): JSX.Element {
         <Text style = {styles.TitleText}>Your Leagues</Text>
       </View>
       <View style = {styles.filterContainer}>
-        <SelectDropdown
-          data={FilterOptions}
-          defaultValue = "All"
-          renderDropdownIcon={getdropdownIcon}
-          dropdownIconPosition='right'
-          buttonStyle = {SharedStyles.dropDownButton}
-          buttonTextStyle = {SharedStyles.dropDownText}
-          dropdownStyle = {SharedStyles.dropDownBox}
-          selectedRowStyle = {SharedStyles.selectedrowStyle}
-          rowTextStyle = {SharedStyles.rowTextStyle}
-          onSelect = {(selectedItem) => {handleDropDown(selectedItem)}}
+        <SwitchSelector
+          initial= {0}
+          onPress = {value => handleDropDown(value)}
+          textColor = {'#014421'}
+          selectedColor = {'#F9A800'}
+          buttonColor = {'#014421'}
+          hasPadding
+          options = {options}
         />
       </View>
       <View style = {styles.ChallengesContainer}>

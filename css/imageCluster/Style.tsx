@@ -52,6 +52,11 @@ const ImageStyles = StyleSheet.create({
   AcceptOrDecline : {
     width :39, 
     height : 39 , 
+  },
+
+  LeagueImage : {
+    width :110, 
+    height : 110 , 
   }
 });
 

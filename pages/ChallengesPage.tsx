@@ -15,7 +15,7 @@ import ChallengesSwap from '../components/Challenges/ChallengeSwap';
 import {styles} from "../css/challenges/Style"
 import {cardStyles} from "../css/cards/Style"
 import ChallengeCard from '../components/Challenges/ChallengeCard';
-import ChallengeScroll from '../components/Challenges/ChallengeScroll';
+import ChallengeScroll from '../components/shared/ChallengeScroll';
 
 
 function ChallengesPage(props): JSX.Element {

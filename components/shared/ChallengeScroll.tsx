@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 import {styles} from "../../css/challenges/Style"
-import ChallengeCard from './ChallengeCard';
+import ChallengeCard from '../Challenges/ChallengeCard';
 
 function ChallengeScroll({ChallengeData, isCurrent}): JSX.Element {
   const renderChallenge = ({item}) => {

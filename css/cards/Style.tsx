@@ -1,5 +1,4 @@
 import { Platform, StyleSheet } from 'react-native';
-import { Overlay } from 'react-native-elements/dist/overlay/Overlay';
 
 const cardStyles = StyleSheet.create({
   ChallengeSwapCardContainer : {

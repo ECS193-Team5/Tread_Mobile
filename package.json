@@ -38,6 +38,7 @@
     "react-native-select-dropdown": "^3.3.2",
     "react-native-svg": "^13.9.0",
     "react-native-swipe-gestures": "^1.0.5",
+    "react-native-switch-selector": "^2.3.0",
     "react-native-tab-view": "^3.5.1",
     "react-native-vector-icons": "^9.2.0"
   },
