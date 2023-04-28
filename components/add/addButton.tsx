@@ -4,13 +4,14 @@ import {
 	Button,
 	Text,
 	Pressable,
-	View
+	View,
+	Image
 } from 'react-native';
 
 import {styles} from '../../css/add/home/Style';
 import LinearGradient from 'react-native-linear-gradient';
 
-function AddButton({onPress, title, description}): JSX.Element {
+function AddButton({onPress, title, description, imageUrl}): JSX.Element {
 	return (
 			<Pressable onPress = {onPress} style = {styles.Button}>
 				<LinearGradient
@@ -18,6 +19,12 @@ function AddButton({onPress, title, description}): JSX.Element {
 					style={styles.GradientStyle}
 					>
 					<View style = {styles.IconContainer}>
+					  <Image
+					    src = {imageUrl}
+// 					    src = {'https://reactnative.dev/img/tiny_logo.png'}
+              style = {styles.Image}
+					    >
+					  </Image>
 					</View>
 
 					<View style = {styles.TextContainer}>

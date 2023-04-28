@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
 		backgroundColor: 'yellow',
 	},
 
+  Image : {
+    height: '55%',
+    width: '55%'
+  },
+
 	SeparatorLine: {
 		flex: 1,
 		backgroundColor: '#F9A800',
@@ -45,7 +50,12 @@ const styles = StyleSheet.create({
 	},
 
 	IconContainer: {
-		flex: 40
+		flex: 40,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		padding: 0
+// 		backgroundColor: 'blue'
 	},
 
 	TextContainer: {
