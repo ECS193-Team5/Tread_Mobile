@@ -8,19 +8,21 @@ const styles = StyleSheet.create({
   },
 
   topRightClickContainer : {
-    flex: 4,
+    position : 'relative',
+    height : '5%',
     width : "90%",
   	alignItems: 'flex-end',
     alignSelf : 'center',
-    justifyContent : 'center'
+    justifyContent : 'center',
   },
 
   titleContainer : {
-    flex: 6,
+    position : 'relative',
+    height : '10%',
     width : "90%",
   	alignItems: 'flex-start',
     alignSelf : 'center',
-    justifyContent : 'center'
+    justifyContent : 'center',
   },
 
   tabswitchContainer : {
@@ -32,11 +34,20 @@ const styles = StyleSheet.create({
 
   ChallengesContainer : {
     flex: 40,
-    marginBottom : "7.5%"
+    marginBottom : "7.5%",
   },
 
   FlatListContainer : {
     alignItems : "center",
+  },
+
+  filterContainer : {
+    flex : 1.5,
+    width : "90%",
+    alignSelf : 'center',
+    alignItems : 'flex-end',
+    justifyContent : 'center',
+    marginBottom : '5%'
   },
 
   seperator : {
@@ -56,8 +67,11 @@ const styles = StyleSheet.create({
 
   TabNavigatorPlaceHolder : {
     flex : 20
-  }
+  },
 
+  FilterText: {
+    color: "#014421"
+  }
 });
 
 export { styles}

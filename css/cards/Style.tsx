@@ -62,17 +62,25 @@ const cardStyles = StyleSheet.create({
     flex : 80,
     flexDirection : 'row',
     alignItems : "center",
-    marginHorizontal : "0.5%"
+    marginHorizontal : "0.5%",
   },
 
   ChallengeProgressContainer : {
     flex : 55,
+    flexDirection : 'row',
+    justifyContent : 'center'
   },
 
   ChallengeNameContainer : {
     flex : 90,
     alignItems : 'flex-start',
-    paddingHorizontal : '3.5%'
+    paddingHorizontal : '3.5%',
+  },
+
+  LeagueAddressContainer : {
+    flex : 40,
+    alignItems : 'flex-start',
+    paddingHorizontal : '3.5%',
   },
 
   ChallengeTypeText : {
@@ -95,6 +103,15 @@ const cardStyles = StyleSheet.create({
     fontSize : 14,
     lineHeight : 16,
     color : "#014421",
+    marginVertical : "1.5%"
+  },
+
+  LeagueNameText : {
+    fontWeight : "500",
+    fontSize : 17,
+    lineHeight : 17,
+    color : "#014421",
+    marginVertical : "1.5%",
   },
 
   ChallengeProgressText : {
@@ -103,7 +120,15 @@ const cardStyles = StyleSheet.create({
     fontSize : 14,
     lineHeight : 16,
     color : "#014421",
-  }
+  },
+
+  LeagueDetailContainer : {
+    flex : 90,
+    alignItems : 'flex-start',
+    paddingHorizontal : '3.5%',
+    flexDirection : 'column'
+  },
+
 });
 
 export {cardStyles}
