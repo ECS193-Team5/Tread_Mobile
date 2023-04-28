@@ -12,7 +12,7 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 
 import { SharedStyles } from '../../css/shared/Style';
 
-import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
+import {GestureHandlerRootView, Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
 
 
 function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.Element {
@@ -90,46 +90,48 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
   };
 
   return(
-    <Swipeable
-      key = {ChallengeData._id}
-      renderRightActions={(progress, dragX) =>
-        renderRightActions(progress, dragX, handler)
-      }
-      renderLeftActions={(progress, dragX) =>
-        renderLeftActions(progress, dragX, handler)
-      }
-      onSwipeableOpen={() => closeRow(index)}
-      ref={(ref) => (row[index] = ref)}
-      friction = {1.5}
-      leftThreshold = {30}
-      righThreshold = {30}
-      childrenContainerStyle = {styles.FlatListContainer}>
-      <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
-        <View style = {cardStyles.ImageContainer}>
-          <Image style ={ImageStyles.single} source={{uri: image}}/>
-        </View>
-
-        <View style = {cardStyles.seperator}/>
-
-        <View style = {cardStyles.ChallengeCardTextContainer}>
-          <View style = {cardStyles.ChallengeNameContainer}>
-            <Text style = {cardStyles.ChallengeNameText}>
-              {ChallengeData.exercise.exerciseName + " " + ChallengeData.exercise.amount + " " + ChallengeData.exercise.unit}
-            </Text>
+    <GestureHandlerRootView>
+      <Swipeable
+        key = {ChallengeData._id}
+        renderRightActions={(progress, dragX) =>
+          renderRightActions(progress, dragX, handler)
+        }
+        renderLeftActions={(progress, dragX) =>
+          renderLeftActions(progress, dragX, handler)
+        }
+        onSwipeableOpen={() => closeRow(index)}
+        ref={(ref) => (row[index] = ref)}
+        friction = {1.5}
+        leftThreshold = {30}
+        righThreshold = {30}
+        childrenContainerStyle = {styles.FlatListContainer}>
+        <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
+          <View style = {cardStyles.ImageContainer}>
+            <Image style ={ImageStyles.single} source={{uri: image}}/>
           </View>
-          <View style = {cardStyles.ChallengeNameContainer}>
-            <Text style = {cardStyles.ChallengeNameText}>
-                {SenderOrReceiver + " : "}
-            </Text>
-            <Text style = {cardStyles.ChallengeNameText}>
-                {ChallengeData.sentUser}
-            </Text>
+
+          <View style = {cardStyles.seperator}/>
+
+          <View style = {cardStyles.ChallengeCardTextContainer}>
+            <View style = {cardStyles.ChallengeNameContainer}>
+              <Text style = {cardStyles.ChallengeNameText}>
+                {ChallengeData.exercise.exerciseName + " " + ChallengeData.exercise.amount + " " + ChallengeData.exercise.unit}
+              </Text>
+            </View>
+            <View style = {cardStyles.ChallengeNameContainer}>
+              <Text style = {cardStyles.ChallengeNameText}>
+                  {SenderOrReceiver + " : "}
+              </Text>
+              <Text style = {cardStyles.ChallengeNameText}>
+                  {ChallengeData.sentUser}
+              </Text>
+            </View>
           </View>
+
+
         </View>
-
-
-      </View>
-    </Swipeable>
+      </Swipeable>
+    </GestureHandlerRootView>
   )
 }
 
