@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 	},
 
 	InputContainer : {
-		flex: 80,
+		flex: 78,
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		marginRight: '5%',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 	},
 
 	SeparatorContainer : {
-		flex: 10
+		flex: 12
 	},
 
 	InputTitle : {
@@ -66,28 +66,96 @@ const styles = StyleSheet.create({
 		height: '50%',
 		borderRadius: 50,
 		borderWidth: 1,
-		backgroundColor: '#D9D9D9',
-		borderColor: '#D9D9D9'
+		backgroundColor: '#014421',
+		borderColor: '#014421',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+
+	ChoosePicText : {
+		color: 'white',
+		fontWeight: 700,
+		fontSize: 14
 	},
 
 	EnterLeagueContainer : {
 		flex: 12,
-		backgroundColor: 'green'
+		marginRight: '10%',
+		marginLeft: '10%',
+		flexDirection: 'column',
+		justifyContent: 'center'
+// 		marginTop: '5%'
+// 		backgroundColor: 'green'
+	},
+
+	NameInput: {
+		borderRadius: 50,
+		borderColor: '#9B9595',
+		borderWidth: 1,
+		height: '60%',
+		paddingLeft: 20
+	},
+
+	DescInput: {
+		borderRadius: 25,
+		borderColor: '#9B9595',
+		borderWidth: 1,
+		height: '80%',
+		paddingLeft: 20,
+		textAlignVertical: 'top'
 	},
 
 	EnterDescContainer : {
-		flex: 20,
-		backgroundColor: 'green'
+		flex: 15,
+		marginRight: '10%',
+		marginLeft: '10%',
+		flexDirection: 'column',
+		justifyContent: 'center'
+// 		backgroundColor: 'green'
 	},
 
 	ChooseSecContainer : {
-		flex: 8,
-		backgroundColor: 'green'
+		flex: 12,
+		marginRight: '15%',
+		marginLeft: '15%',
+		flexDirection: 'column',
+		justifyContent: 'center'
+// 		marginTop: '2%'
+// 		backgroundColor: 'green'
 	},
 
 	EnterButtonContainer : {
-		flex: 16,
-		backgroundColor: 'red'
+		flex: 17,
+// 		backgroundColor: 'red',
+		marginLeft: '30%',
+		marginRight: '30%',
+		flexDirection: 'column',
+		justifyContent: 'center'
+	},
+
+	EnterButtonValid : {
+		width: '100%',
+		height: '50%',
+		borderRadius: 50,
+		borderWidth: 1,
+		backgroundColor: '#014421',
+		borderColor: '#014421',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+
+	EnterButtonInvalid : {
+		width: '100%',
+		height: '50%',
+		borderRadius: 50,
+		borderWidth: 1,
+		backgroundColor: '#9B9595',
+		borderColor: '#9B9595',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
 
 });

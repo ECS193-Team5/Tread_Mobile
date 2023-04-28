@@ -97,7 +97,8 @@ function AddFriendPage(props): JSX.Element {
     		</View>
 
     		<View style = {styles.SubmitContainer}>
-    			<Pressable style = {validID ? styles.ButtonValid : styles.ButtonInvalid} onPress = {onSubmit}>
+    			<Pressable style = {validID ? styles.ButtonValid : styles.ButtonInvalid} onPress =
+    			{onSubmit} disabled = {!validID}>
     				<Text style = {styles.RequestText}>
     					Send Request
     				</Text>

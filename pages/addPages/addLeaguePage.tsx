@@ -10,17 +10,119 @@ import {
 
 import {styles} from '../../css/add/league/Style';
 import {launchImageLibrary} from 'react-native-image-picker';
+import SwitchSelector from "react-native-switch-selector";
+
+import {BACKEND_URL} from '@env';
+import axios from 'axios';
 
 function AddLeaguePage(props): JSX.Element {
 
-	onChoosePicPress = function() {
+	const [picture, setPicture] = useState({});
+	const [validPicture, setValidPicture] = useState(false);
+
+	const [leagueName, setLeagueName] = useState("");
+	const [validLeagueName, setValidLeagueName] = useState(false);
+
+	const [leagueDesc, setLeagueDesc] = useState("");
+	const [validLeagueDesc, setValidLeagueDesc] = useState(false);
+
+	const [security, setSecurity] = useState("private");
+
+	const switchOptions = [
+		{label: 'Private', value: 'private'},
+		{label: 'Public', value: 'public'}
+	];
+
+	const onChoosePicPress = function() {
 		const options = {
-			'includeBase64': true
+			'includeBase64': true,
+			'maxWidth': 400,
+			'maxHeight': 400
+// 			'quality': 0.2
 		}
 
 		launchImageLibrary(options, (response) => {
-			console.log(response['assets'][0]['base64']);
+// 			console.log(response['assets'][0]["uri"]);
+// 			const source = {
+// 				'uri': response['assets'][0]['base64'],
+// 				'name': 'picture.jpeg',
+// 				'type': 'image/jpeg'
+// 			};
+
+			const source = response['assets'][0]["base64"];
+// 			console.log(source);
+			setPicture("data:image/jpeg;base64," + source)
+			setValidPicture(true);
 		});
+	}
+
+	const onLeagueNameChange = function(name) {
+		setLeagueName(name);
+		if(checkValidLeagueName(name)) {
+			setValidLeagueName(true);
+		} else {
+			setValidLeagueName(false);
+		}
+	}
+
+	const onLeagueDescChange = function(desc) {
+		setLeagueDesc(desc);
+		if(checkValidLeagueDesc(desc)) {
+			setValidLeagueDesc(true);
+		} else {
+			setValidLeagueDesc(false);
+		}
+	}
+
+	const checkValidLeagueName = function(name) {
+		return name.length > 0
+	}
+
+	const checkValidLeagueDesc = function(desc) {
+		return desc.length > 0
+	}
+
+	const onSubmit = function() {
+// 		console.log(picture);
+// 		console.log(leagueName);
+// 		console.log(leagueDesc);
+// 		console.log(security)
+// 		const formdata = new FormData();
+// 		formdata.append('leagueName', leagueName);
+// 		formdata.append('leagueDescription', leagueDesc);
+// 		formdata.append('leagueType', security);
+// 		formdata.append('leaguePicture', picture);
+
+		var config = {
+			method: 'post',
+			url: BACKEND_URL + 'league/create_league',
+			withCredentials: true,
+			credentials: 'include',
+			headers: {
+				Accept: 'application/json',
+// 				'Content-Type': 'multipart/form-data'
+// 				...formdata.getHeaders()
+			},
+// 			body: formdata
+			data: {
+				'leagueName': leagueName,
+				'leagueDescription': leagueDesc,
+				'leagueType': security,
+				'leaguePicture': picture
+			}
+		};
+
+		axios(config)
+		.then(function (response) {
+			console.log(JSON.stringify(response.data));
+			setPicture("");
+			setLeagueName("");
+			setLeagueDesc("");
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+
 	}
 
   return (
@@ -40,6 +142,9 @@ function AddLeaguePage(props): JSX.Element {
 
 				<View style = {styles.ChoosePicContainer}>
 					<Pressable style = {styles.ChoosePicButton} onPress = {onChoosePicPress}>
+						<Text style = {styles.ChoosePicText}>
+							Choose Picture
+						</Text>
 					</Pressable>
 				</View>
 
@@ -50,6 +155,14 @@ function AddLeaguePage(props): JSX.Element {
 				</View>
 
 				<View style = {styles.EnterLeagueContainer}>
+					<TextInput
+						placeholder = "Enter league name"
+						placeholderTextColor= "grey"
+						style = {styles.NameInput}
+						onChangeText = {onLeagueNameChange}
+						value = {leagueName}
+					>
+					</TextInput>
 				</View>
 
 				<View style = {styles.InputTitle}>
@@ -59,6 +172,15 @@ function AddLeaguePage(props): JSX.Element {
 				</View>
 
 				<View style = {styles.EnterDescContainer}>
+					<TextInput
+						placeholder = "Enter league description"
+						placeholderTextColor= "grey"
+						style = {styles.DescInput}
+						onChangeText = {onLeagueDescChange}
+						value = {leagueDesc}
+						multiline = {true}
+					>
+					</TextInput>
 				</View>
 
 				<View style = {styles.InputTitle}>
@@ -68,9 +190,29 @@ function AddLeaguePage(props): JSX.Element {
 				</View>
 
 				<View style = {styles.ChooseSecContainer}>
+					<SwitchSelector
+						options = {switchOptions}
+						initial = {0}
+						selectedColor = 'white'
+						textColor = '#014421'
+						buttonColor = '#014421'
+						borderColor = '#014421'
+						onPress = {setSecurity}
+						hasPadding = {true}
+					>
+					</SwitchSelector>
 				</View>
 
 				<View style = {styles.EnterButtonContainer}>
+					<Pressable
+						style = {(validPicture && validLeagueName && validLeagueDesc) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
+						onPress = {onSubmit}
+						disabled = {!(validPicture && validLeagueName && validLeagueDesc)}
+						>
+						<Text style = {styles.ChoosePicText}>
+							Submit
+						</Text>
+					</Pressable>
 				</View>
 
 			</View>

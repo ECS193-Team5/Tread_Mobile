@@ -56,33 +56,38 @@ function AddStack(){
   return (
   <Stack.Navigator>
     <Stack.Screen name = "Add" component={AddPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "AddChallenge" component={AddChallengePage} options={{ headerShown: false
+    }}/>
+    <Stack.Screen name = "AddFriend" component={AddFriendPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "AddLeague" component={AddLeaguePage} options={{ headerShown: false }}/>
   </Stack.Navigator>
   )
 }
 
-function AddChallengeStack(){
-  return (
-  <Stack.Navigator>
-    <Stack.Screen name = "Add" component={AddChallengePage} options={{ headerShown: false }}/>
-  </Stack.Navigator>
-  )
-}
-
-function AddFriendStack(){
-  return (
-  <Stack.Navigator>
-    <Stack.Screen name = "Add" component={AddFriendPage} options={{ headerShown: false }}/>
-  </Stack.Navigator>
-  )
-}
-
-function AddLeagueStack(){
-  return (
-  <Stack.Navigator>
-    <Stack.Screen name = "Add" component={AddLeaguePage} options={{ headerShown: false }}/>
-  </Stack.Navigator>
-  )
-}
+// function AddChallengeStack(){
+//   return (
+//   <Stack.Navigator>
+//     <Stack.Screen name = "Add" component={AddChallengePage} options={{ headerShown: false }}/>
+//   </Stack.Navigator>
+//   )
+// }
+//
+// function AddFriendStack(){
+//   return (
+//   <Stack.Navigator>
+//     <Stack.Screen name = "Add" component={AddFriendPage} options={{ headerShown: false }}/>
+//   </Stack.Navigator>
+//   )
+// }
+//
+// function AddLeagueStack(){
+//   return (
+//   <Stack.Navigator>
+//     <Stack.Screen name = "Add" component={AddLeaguePage} options={{ headerShown: false }}/>
+// 		<Stack.Screen name = "Add" component={AddLeaguePage} options={{ headerShown: false }}/>
+//   </Stack.Navigator>
+//   )
+// }
 
 function SearchStack(){
   return (
@@ -154,9 +159,9 @@ function Navigator(){
         <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false }}/>
         <Stack.Screen name = "Signup" component={Signup} options={{ headerShown: false }}/>
         <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false }}/>
-				<Stack.Screen name="AddChallenge" component={AddChallengeStack} options={{headerShown: false}}/>
-				<Stack.Screen name="AddFriend" component={AddFriendStack} options={{headerShown: false}}/>
-				<Stack.Screen name="AddLeague" component={AddLeagueStack} options={{headerShown: false}}/>
+{/* 				<Stack.Screen name="AddChallenge" component={AddChallengeStack} options={{headerShown: false}}/> */}
+{/* 				<Stack.Screen name="AddFriend" component={AddFriendStack} options={{headerShown: false}}/> */}
+{/* 				<Stack.Screen name="AddLeague" component={AddLeagueStack} options={{headerShown: false}}/> */}
 
       </Stack.Navigator>
     </NavigationContainer>
