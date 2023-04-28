@@ -41,9 +41,11 @@ function AddLeaguePage(props): JSX.Element {
 		}
 
 		launchImageLibrary(options, (response) => {
-			const source = response['assets'][0]["base64"];
-			setPicture("data:image/jpeg;base64," + source)
-			setValidPicture(true);
+		  if(!response['didCancel']) {
+        const source = response['assets'][0]["base64"];
+        setPicture("data:image/jpeg;base64," + source)
+        setValidPicture(true);
+		  }
 		});
 	}
 
@@ -81,6 +83,7 @@ function AddLeaguePage(props): JSX.Element {
 			credentials: 'include',
 			headers: {
 				Accept: 'application/json',
+			},
 			data: {
 				'leagueName': leagueName,
 				'leagueDescription': leagueDesc,
