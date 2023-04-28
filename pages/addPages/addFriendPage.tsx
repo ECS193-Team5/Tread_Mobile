@@ -30,11 +30,8 @@ function AddFriendPage(props): JSX.Element {
 	}
 
 	const getGoogleToken = async () => {
-  //     console.log('Getting token')
 		try {
 			const item = await AsyncStorage.getItem('token');
-  //       console.log(item)
-  // 			console.log('Got token')
 			return String(item)
 		} catch (err) {
 			console.log(err);

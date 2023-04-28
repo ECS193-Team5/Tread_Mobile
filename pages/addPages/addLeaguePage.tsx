@@ -38,19 +38,10 @@ function AddLeaguePage(props): JSX.Element {
 			'includeBase64': true,
 			'maxWidth': 400,
 			'maxHeight': 400
-// 			'quality': 0.2
 		}
 
 		launchImageLibrary(options, (response) => {
-// 			console.log(response['assets'][0]["uri"]);
-// 			const source = {
-// 				'uri': response['assets'][0]['base64'],
-// 				'name': 'picture.jpeg',
-// 				'type': 'image/jpeg'
-// 			};
-
 			const source = response['assets'][0]["base64"];
-// 			console.log(source);
 			setPicture("data:image/jpeg;base64," + source)
 			setValidPicture(true);
 		});
@@ -83,16 +74,6 @@ function AddLeaguePage(props): JSX.Element {
 	}
 
 	const onSubmit = function() {
-// 		console.log(picture);
-// 		console.log(leagueName);
-// 		console.log(leagueDesc);
-// 		console.log(security)
-// 		const formdata = new FormData();
-// 		formdata.append('leagueName', leagueName);
-// 		formdata.append('leagueDescription', leagueDesc);
-// 		formdata.append('leagueType', security);
-// 		formdata.append('leaguePicture', picture);
-
 		var config = {
 			method: 'post',
 			url: BACKEND_URL + 'league/create_league',
@@ -100,10 +81,6 @@ function AddLeaguePage(props): JSX.Element {
 			credentials: 'include',
 			headers: {
 				Accept: 'application/json',
-// 				'Content-Type': 'multipart/form-data'
-// 				...formdata.getHeaders()
-			},
-// 			body: formdata
 			data: {
 				'leagueName': leagueName,
 				'leagueDescription': leagueDesc,
