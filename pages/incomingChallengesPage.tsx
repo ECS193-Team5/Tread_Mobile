@@ -14,11 +14,14 @@ import {
 import {styles} from "../css/challenges/Style"
 import { SharedStyles } from '../css/shared/Style';
 
+import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
-import SelectDropdown from 'react-native-select-dropdown'
 import ChallengeInviteCard from '../components/shared/ChallengeInviteCard';
 
-const FilterOptions = ['Received' , 'Sent']
+const options = [
+  { label : "Received" , value : 'Received'},
+  { label : "Sent", value : 'Sent'},
+]
 
 function getChallengeData() { 
   return(
@@ -224,18 +227,14 @@ function IncomingChallengesPage(props): JSX.Element {
         <Text style = {styles.TitleText}>{pageTitle} Challenges</Text>
       </View>
       <View style = {styles.filterContainer}>
-        {/* <Text style = {styles.FilterText}>Filters</Text> */}
-        <SelectDropdown
-          data={FilterOptions}
-          defaultValue = "Received"
-          renderDropdownIcon={getdropdownIcon}
-          dropdownIconPosition='right'
-          buttonStyle = {SharedStyles.dropDownButton}
-          buttonTextStyle = {SharedStyles.dropDownText}
-          dropdownStyle = {SharedStyles.dropDownBox}
-          selectedRowStyle = {SharedStyles.selectedrowStyle}
-          rowTextStyle = {SharedStyles.rowTextStyle}
-          onSelect = {(selectedItem) => {handleDropDown(selectedItem)}}
+        <SwitchSelector
+          initial= {0}
+          onPress = {value => handleDropDown(value)}
+          textColor = {'#014421'}
+          selectedColor = {'#F9A800'}
+          buttonColor = {'#014421'}
+          hasPadding
+          options = {options}
         />
       </View>
       <View style = {styles.ChallengesContainer}>

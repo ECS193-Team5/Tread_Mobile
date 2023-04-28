@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
   },
 
   titleContainer : {
-    flex: 6,
+    position : 'relative',
+    height : '10%',
     width : "90%",
   	alignItems: 'flex-start',
     alignSelf : 'center',

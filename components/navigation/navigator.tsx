@@ -22,6 +22,8 @@ const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
 import {styles} from '../../css/navigation/Style';
+import IncomingLeaguesPage from '../../pages/incomingLeaguesPage';
+import LeagueDetails from '../../pages/leagueDetails';
 
 function ChallengesSwipeStack() {
   return (
@@ -30,6 +32,17 @@ function ChallengesSwipeStack() {
     >
       <TopTab.Screen name = "Challenges" component= {Challenge}/>
       <TopTab.Screen name = "Incoming Challenges" component = {IncomingChallengesPage}/>
+    </TopTab.Navigator>
+  )
+}
+
+function LeaguesSwipeStack() {
+  return (
+    <TopTab.Navigator
+      tabBarPosition='bottom'
+    >
+      <TopTab.Screen name = "Leagues" component= {LeaguesPage}/>
+      <TopTab.Screen name = "Incoming Leagues" component = {IncomingLeaguesPage}/>
     </TopTab.Navigator>
   )
 }
@@ -46,7 +59,11 @@ function ChallengesStack(){
 function LeaguesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Leagues" component={LeaguesPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Incoming Leagues" component={IncomingLeaguesPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "League Details" component={LeagueDetails} options={{headerShown: false ,
+                                                                              animationTypeForReplace: 'push',
+                                                                              animation:'slide_from_right'}}/>
   </Stack.Navigator>
   )
 }
