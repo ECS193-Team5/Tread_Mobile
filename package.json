@@ -28,6 +28,7 @@
     "react-native-circular-progress-indicator": "^4.4.2",
     "react-native-dropdown-select-list": "^2.0.4",
     "react-native-elements": "^3.4.3",
+    "react-native-image-picker": "^5.3.1",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-ionicons": "^4.6.5",
     "react-native-linear-gradient": "^2.6.2",

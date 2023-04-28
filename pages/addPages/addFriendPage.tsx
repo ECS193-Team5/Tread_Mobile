@@ -30,11 +30,8 @@ function AddFriendPage(props): JSX.Element {
 	}
 
 	const getGoogleToken = async () => {
-  //     console.log('Getting token')
 		try {
 			const item = await AsyncStorage.getItem('token');
-  //       console.log(item)
-  // 			console.log('Got token')
 			return String(item)
 		} catch (err) {
 			console.log(err);
@@ -97,7 +94,8 @@ function AddFriendPage(props): JSX.Element {
     		</View>
 
     		<View style = {styles.SubmitContainer}>
-    			<Pressable style = {validID ? styles.ButtonValid : styles.ButtonInvalid} onPress = {onSubmit}>
+    			<Pressable style = {validID ? styles.ButtonValid : styles.ButtonInvalid} onPress =
+    			{onSubmit} disabled = {!validID}>
     				<Text style = {styles.RequestText}>
     					Send Request
     				</Text>

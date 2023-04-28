@@ -17,6 +17,10 @@ function AddPage(props): JSX.Element {
 		props.navigation.navigate('AddFriend')
 	}
 
+	onAddLeaguePress = function () {
+		props.navigation.navigate('AddLeague')
+	}
+
   return (
     <View style = {styles.HomePage}>
     	<View style = {styles.Separator}>
@@ -54,6 +58,7 @@ function AddPage(props): JSX.Element {
     		<AddButton
     			title = 'League'
     			description = 'Create League'
+    			onPress = {onAddLeaguePress}
     		>
     		</AddButton>
 
