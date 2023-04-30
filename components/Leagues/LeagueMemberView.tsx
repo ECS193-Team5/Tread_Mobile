@@ -16,7 +16,7 @@ import { SharedStyles } from '../../css/shared/Style';
 import {styles} from "../../css/challenges/Style"
 import { LeagueStyles } from '../../css/leagues/Style';
 import UserScroll from '../shared/UserScroll';
-import LeagueUserInviteCard from '../shared/LeagueUserInviteCard';
+import LeagueUserCard from '../shared/LeagueUserCard';
 
 const options = [
   { label : "All" , value : 'all'},
@@ -32,23 +32,23 @@ function getRequests() {
       "displayName": "Jhao Hua"
     },
     {
-      "username": "batman#6380",
+      "username": "batman#6381",
       "displayName": "Jhao Hua"
     },  
     {
-    "username": "batman#6380",
+    "username": "batman#6382",
     "displayName": "Jhao Hua"
     },
     {
-      "username": "batman#6380",
+      "username": "batman#6383",
       "displayName": "Jhao Hua"
     },
     {
-      "username": "batman#6380",
+      "username": "batman#6384",
       "displayName": "Jhao Hua"
     },  
     {
-    "username": "batman#6380",
+    "username": "batman#6385",
     "displayName": "Jhao Hua"
     }
   ])
@@ -81,7 +81,7 @@ function LeagueMemberView({MemberData}): JSX.Element {
   function handleDropDown(selectedItem) {
     console.log(selectedItem)
     setCurrentView(selectedItem)
-    // set the appropriate member list, all, pending or sent
+    // set the appropriate member list, all, pending or sent or blocked
   }
   
   const typeOfUser = function(userType) {
@@ -112,9 +112,8 @@ function LeagueMemberView({MemberData}): JSX.Element {
   }
 
   const renderInvite = ({item, index}) => {
-    console.log(currentView)
     return (
-    <LeagueUserInviteCard
+    <LeagueUserCard
       MemberData= {item}
       index = {index}
       handler = {deleteItem}
@@ -126,26 +125,14 @@ function LeagueMemberView({MemberData}): JSX.Element {
   
   const typeOfView = function() {
     if(isAdminOwnerParticipant == 'owner' || isAdminOwnerParticipant == 'admin'){
-      // if(currentView !== 'all' && currentView !== "banned"){
-      //   return (
-      //       <FlatList
-      //         data = {requests}
-      //         renderItem = {renderInvite}
-      //       />
-      //   )
-      // } else if {
-      //   return (<Text> All members owner admin</Text>)
-      // }
       if (currentView === 'all') {
         return (<Text> All members owner admin</Text>)
-      } else if (currentView === 'banned'){
-        return (<Text> Banned List</Text>)
       } else {
         return (
-            <FlatList
-              data = {requests}
-              renderItem = {renderInvite}
-            />
+          <FlatList
+            data = {requests}
+            renderItem = {renderInvite}
+          />
         )
       }
     } else {

@@ -9,12 +9,11 @@ import {
 import {cardStyles} from "../../css/cards/Style"
 import {styles} from "../../css/challenges/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
-
 import { SharedStyles } from '../../css/shared/Style';
 
 import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
 
-function LeagueUserInviteCard({MemberData, index, handler, pageTitle}): JSX.Element {
+function LeagueUserCard({MemberData, index, handler, pageTitle}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
   
   // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
@@ -44,13 +43,19 @@ function LeagueUserInviteCard({MemberData, index, handler, pageTitle}): JSX.Elem
   };
 
   const RejectInvite = function(){
-    if (pageTitle === 'Sent'){
+    if (pageTitle === 'sent'){
       console.log('unsent outgoing request')
       // backend call here 
     } else {
       console.log('rejected incoming request')
       // backend call here
     }
+    handler(MemberData)
+  }
+
+  const UnbanUser = function(){
+    console.log('unbanned user')
+    // backend call here
     handler(MemberData)
   }
 
@@ -61,19 +66,31 @@ function LeagueUserInviteCard({MemberData, index, handler, pageTitle}): JSX.Elem
   }
   
   const renderRightActions = (progress, dragX, handler) => {
-    return (
-      <View style={SharedStyles.RightSliderContainer}>
-        <Pressable
-          onPress={RejectInvite}
-        >
-          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
-        </Pressable>   
-      </View>
-    );
+    if (pageTitle === 'banned') {
+      return (
+        <View style={SharedStyles.RightSliderContainer}>
+          <Pressable
+            onPress={UnbanUser}
+          >
+            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/q7fgVdM.png'}}/>
+          </Pressable>   
+        </View>
+      );
+    } else {
+      return (
+        <View style={SharedStyles.RightSliderContainer}>
+          <Pressable
+            onPress={RejectInvite}
+          >
+            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
+          </Pressable>   
+        </View>
+      );
+    }
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
-    if (pageTitle === 'sent'){
+    if (pageTitle === 'sent' || pageTitle === 'banned'){
       return ('')
     } else {
       return (
@@ -101,7 +118,7 @@ function LeagueUserInviteCard({MemberData, index, handler, pageTitle}): JSX.Elem
       ref={(ref) => (row[index] = ref)}
       friction = {1.5}
       leftThreshold = {30}
-      righThreshold = {30}
+      rightThreshold = {30}
       childrenContainerStyle = {styles.FlatListContainer}>
       <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
         <View style = {cardStyles.ImageContainer}>
@@ -111,11 +128,19 @@ function LeagueUserInviteCard({MemberData, index, handler, pageTitle}): JSX.Elem
         <View style = {cardStyles.seperator}/>
 
         <View style = {cardStyles.ChallengeCardTextContainer}>
-          <View style = {cardStyles.LeagueAddressContainer}>
+          {pageTitle === 'banned' ? 
+            null : 
+            <View style = {cardStyles.LeagueAddressContainer}>
+              <Text style = {cardStyles.ChallengeNameText}>
+                {SenderOrReceiver + " : "}
+              </Text>
+            </View>
+          }
+          {/* <View style = {cardStyles.LeagueAddressContainer}>
             <Text style = {cardStyles.ChallengeNameText}>
               {SenderOrReceiver + " : "}
             </Text>
-          </View>
+          </View> */}
           <View style = {cardStyles.ChallengeNameContainer}>
             <Text style = {cardStyles.LeagueNameText}>
             {MemberData.displayName}
@@ -130,4 +155,4 @@ function LeagueUserInviteCard({MemberData, index, handler, pageTitle}): JSX.Elem
   )
 }
 
-export default LeagueUserInviteCard
+export default LeagueUserCard
