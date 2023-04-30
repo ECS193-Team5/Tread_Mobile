@@ -22,7 +22,8 @@ const options = [
   { label : "All" , value : 'all'},
   { label : "Pending", value : 'pending'},
   { label : "Sent", value : 'sent'},
-  { label : "Banned", value : 'banned'}
+  { label : "Banned", value : 'banned'},
+  { label : "Invite" , value : 'invite'}
 ]
 
 function getRequests() {
@@ -127,13 +128,16 @@ function LeagueMemberView({MemberData}): JSX.Element {
     if(isAdminOwnerParticipant == 'owner' || isAdminOwnerParticipant == 'admin'){
       if (currentView === 'all') {
         return (<Text> All members owner admin</Text>)
-      } else {
+      } else if (currentView !== 'invite'){
         return (
           <FlatList
             data = {requests}
             renderItem = {renderInvite}
           />
         )
+      } else {
+        return (<Text>Invite</Text>)
+        // add add friend component here
       }
     } else {
       return (<Text> All members regular</Text>)
@@ -143,7 +147,7 @@ function LeagueMemberView({MemberData}): JSX.Element {
   useEffect(() =>{
     // get username and check if with MemberData to see if they are owner admin or participant
     // set isAdminOwner
-    setIsAdminOwnerParticipant("owner")
+    setIsAdminOwnerParticipant("admin")
   })
 
   return(
