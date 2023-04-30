@@ -4,7 +4,7 @@ import {
   Button,
   StyleSheet
 } from 'react-native';
-
+import ButtonForClicking from './healthkit';
 import {styles} from "../css/login/Style"
 
 function LeaguesPage(props): JSX.Element {
@@ -16,6 +16,7 @@ function LeaguesPage(props): JSX.Element {
           props.navigation.navigate('Login')
         }
       />
+      <ButtonForClicking/>
     </View>
   )
 }
