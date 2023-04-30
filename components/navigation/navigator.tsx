@@ -17,7 +17,7 @@ import AddFriendPage from '../../pages/addPages/addFriendPage'
 import AddLeaguePage from '../../pages/addPages/addLeaguePage'
 
 const Tab = createBottomTabNavigator();
- 
+
 const Stack = createNativeStackNavigator();
 
 const TopTab = createMaterialTopTabNavigator();
@@ -124,11 +124,11 @@ function ProfileStack(){
 
 function ShowTabs(){
   return (
-  <Tab.Navigator 
+  <Tab.Navigator
     screenOptions={({route}) => ({
       tabBarIcon:({focused, color, size}) => {
         let iconName;
-        
+
         if (route.name === 'Challenges') {
           iconName = focused
           ? "https://imgur.com/FTvnYD3.png"
@@ -159,7 +159,7 @@ function ShowTabs(){
       tabBarStyle : styles.navBarStyle,
     })
   }
-  > 
+  >
     <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false }}/>
     <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false }}/>
     <Tab.Screen name="Add" component={AddStack} options={{headerShown: false}}/>
