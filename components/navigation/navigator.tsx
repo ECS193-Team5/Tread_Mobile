@@ -1,29 +1,57 @@
 import { NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {Image} from 'react-native'
 
 import Login from '../../pages/loginPage';
 import Signup from '../../pages/signupPage';
 import Challenge from '../../pages/ChallengesPage';
 import LeaguesPage from '../../pages/leaguesPage';
-import AddPage from '../../pages/addPage';
+import AddPage from '../../pages/addPages/addPage';
 import SearchPage from '../../pages/searchPage';
 import ProfilePage from '../../pages/profilePage';
 import IncomingChallengesPage from '../../pages/incomingChallengesPage'
+import AddChallengePage from '../../pages/addPages/addChallengePage'
+import AddFriendPage from '../../pages/addPages/addFriendPage'
+import AddLeaguePage from '../../pages/addPages/addLeaguePage'
 
 const Tab = createBottomTabNavigator();
  
 const Stack = createNativeStackNavigator();
 
-const NestedPages = createNativeStackNavigator();
+const TopTab = createMaterialTopTabNavigator();
 
 import {styles} from '../../css/navigation/Style';
+import IncomingLeaguesPage from '../../pages/incomingLeaguesPage';
+import LeagueDetails from '../../pages/leagueDetails';
+
+function ChallengesSwipeStack() {
+  return (
+    <TopTab.Navigator
+      tabBarPosition='bottom'
+    >
+      <TopTab.Screen name = "Challenges" component= {Challenge}/>
+      <TopTab.Screen name = "Incoming Challenges" component = {IncomingChallengesPage}/>
+    </TopTab.Navigator>
+  )
+}
+
+function LeaguesSwipeStack() {
+  return (
+    <TopTab.Navigator
+      tabBarPosition='bottom'
+    >
+      <TopTab.Screen name = "Leagues" component= {LeaguesPage}/>
+      <TopTab.Screen name = "Incoming Leagues" component = {IncomingLeaguesPage}/>
+    </TopTab.Navigator>
+  )
+}
 
 function ChallengesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Challenges" component={Challenge} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
     <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false }}/>
   </Stack.Navigator>
   )
@@ -32,7 +60,11 @@ function ChallengesStack(){
 function LeaguesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Leagues" component={LeaguesPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Incoming Leagues" component={IncomingLeaguesPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "League Details" component={LeagueDetails} options={{headerShown: false ,
+                                                                              animationTypeForReplace: 'push',
+                                                                              animation:'slide_from_right'}}/>
   </Stack.Navigator>
   )
 }
@@ -41,9 +73,38 @@ function AddStack(){
   return (
   <Stack.Navigator>
     <Stack.Screen name = "Add" component={AddPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "AddChallenge" component={AddChallengePage} options={{ headerShown: false
+    }}/>
+    <Stack.Screen name = "AddFriend" component={AddFriendPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "AddLeague" component={AddLeaguePage} options={{ headerShown: false }}/>
   </Stack.Navigator>
   )
 }
+
+// function AddChallengeStack(){
+//   return (
+//   <Stack.Navigator>
+//     <Stack.Screen name = "Add" component={AddChallengePage} options={{ headerShown: false }}/>
+//   </Stack.Navigator>
+//   )
+// }
+//
+// function AddFriendStack(){
+//   return (
+//   <Stack.Navigator>
+//     <Stack.Screen name = "Add" component={AddFriendPage} options={{ headerShown: false }}/>
+//   </Stack.Navigator>
+//   )
+// }
+//
+// function AddLeagueStack(){
+//   return (
+//   <Stack.Navigator>
+//     <Stack.Screen name = "Add" component={AddLeaguePage} options={{ headerShown: false }}/>
+// 		<Stack.Screen name = "Add" component={AddLeaguePage} options={{ headerShown: false }}/>
+//   </Stack.Navigator>
+//   )
+// }
 
 function SearchStack(){
   return (
@@ -76,7 +137,8 @@ function ShowTabs(){
           iconName = focused
           ? "https://imgur.com/fMqLrA2.png"
           : "https://imgur.com/PZgaF7K.png"
-        } else if (route.name === 'Add') {
+        } else if (route.name === 'Add' || route.name === 'AddChallenge' || route.name ===
+        'AddFriend' || route.name === 'AddLeague') {
           iconName = focused
           ? "https://imgur.com/0MHiWup.png"
           : "https://imgur.com/iWwOCAG.png"
@@ -114,6 +176,10 @@ function Navigator(){
         <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false }}/>
         <Stack.Screen name = "Signup" component={Signup} options={{ headerShown: false }}/>
         <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false }}/>
+{/* 				<Stack.Screen name="AddChallenge" component={AddChallengeStack} options={{headerShown: false}}/> */}
+{/* 				<Stack.Screen name="AddFriend" component={AddFriendStack} options={{headerShown: false}}/> */}
+{/* 				<Stack.Screen name="AddLeague" component={AddLeagueStack} options={{headerShown: false}}/> */}
+
       </Stack.Navigator>
     </NavigationContainer>
   );
