@@ -55,6 +55,8 @@ function Signup(props): JSX.Element {
 
   }
 
+
+  
   const handleOnPress = async function() {
 		const authToken = await getGoogleToken();
 		const deviceToken = await getFCMToken();
