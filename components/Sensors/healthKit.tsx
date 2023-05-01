@@ -151,9 +151,11 @@ const ListenerComponentHealthKit = () =>{
             let timeMin = (end-start)/(1000*60);
             return ({
                 loggedDate: start,
-                unit: "min",
-                amount: timeMin,
-                exerciseName: name
+                exercise: {
+                    exerciseName: name,
+                    amount:timeMin,
+                    unit: "min"
+                }
             });
 
         }
