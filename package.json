@@ -20,17 +20,18 @@
     "@react-navigation/material-top-tabs": "^6.6.2",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
-    "progress-circle-react-native": "^1.0.2",
     "axios": "^1.3.6",
+    "progress-circle-react-native": "^1.0.2",
     "react": "18.2.0",
     "react-native": "0.71.6",
     "react-native-check-box": "^2.1.7",
     "react-native-circular-progress-indicator": "^4.4.2",
     "react-native-dropdown-select-list": "^2.0.4",
     "react-native-elements": "^3.4.3",
-    "react-native-health": "^1.14.0",
-    "react-native-image-picker": "^5.3.1",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-health": "^1.14.0",
+    "react-native-health-connect": "^1.0.1",
+    "react-native-image-picker": "^5.3.1",
     "react-native-ionicons": "^4.6.5",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-modal": "^13.0.1",
@@ -68,7 +69,15 @@
     "preset": "react-native"
   },
   "overrides": {
-    "react-native-health":{
+    "react-native-health": {
+      "@expo/config-plugins": "^6.0.1",
+      "xml2js": "^0.5.0"
+    },
+    "@react-native-firebase/app": {
+      "@expo/config-plugins": "^6.0.1",
+      "xml2js": "^0.5.0"
+    },
+    "@react-native-firebase/messaging": {
       "@expo/config-plugins": "^6.0.1",
       "xml2js": "^0.5.0"
     }
