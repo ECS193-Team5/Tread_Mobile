@@ -12,6 +12,7 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
 import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
+import { addons } from 'react-native';
 
 function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
@@ -19,6 +20,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   
   useEffect(() =>{
     setCardRole(UserInfo.role)
+    console.log(UserRole)
   })
 
   // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
@@ -40,25 +42,109 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   };
 
   const RejectInvite = function(){
-    // if (pageTitle === 'Sent'){
-    //   console.log('unsent outgoing request')
-    //   // backend call here 
-    // } else {
-    //   console.log('rejected incoming request')
-    //   // backend call here
-    // }
     console.log('right')
     handler(UserInfo)
   }
 
-  const AcceptInvite = function(){
-    console.log('accepted incoming request')
+  const AddFriend = function(){
+    console.log('sent friend request')
     //backend call here
-    handler(UserInfo)
+    // handler(UserInfo)
   }
 
   const BlockUser = function(){
     console.log('blocked user ' +  UserInfo.displayName)
+    //backend call here
+  }
+
+  const KickUser = function(){
+    console.log('kicked user ' +  UserInfo.displayName)
+    // backend call here 
+    handler(UserInfo)
+  }
+
+  const BanUser = function(){
+    console.log('banned user ' +  UserInfo.displayName)
+    // backend call here 
+    handler(UserInfo)
+  }
+
+  const AdminAdd = function(){
+    console.log('added admin user ' +  UserInfo.displayName)
+    // backend call here 
+    // handler(UserInfo)
+  }
+
+  const AdminRemove = function(){
+    console.log('removed admin user ' +  UserInfo.displayName)
+    // backend call here 
+    // handler(UserInfo)
+  }
+  
+  const friend = function() {
+    return (
+        <Pressable
+          onPress={AddFriend}
+          style = {{margin : "4%"}}
+        >
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
+        </Pressable>   
+    ); 
+  }
+
+  const block = function() {
+    return (
+        <Pressable
+          onPress={BlockUser}
+          style = {{margin : "4%"}}
+        >
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/U7hfisP.png'}}/>
+        </Pressable>   
+    );
+  }
+
+  const kick = function(){
+    return (
+        <Pressable
+          onPress={KickUser}
+          style = {{margin : "4%"}}
+        >
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/U7hfisP.png'}}/>
+        </Pressable>   
+    );
+  }
+
+  const ban = function(){
+    return (
+        <Pressable
+          onPress={BanUser}
+          style = {{margin : "4%"}}
+        >
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/nDGURiM.png'}}/>
+        </Pressable>   
+    );
+  }
+
+  const addAdmin = function(){
+    return (
+        <Pressable
+          onPress={AdminAdd}
+          style = {{margin : "4%"}}
+        >
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/cQntMzs.png'}}/>
+        </Pressable>   
+    );
+  }
+
+  const removeAdmin = function(){
+    return (
+        <Pressable
+          onPress={AdminAdd}
+          style = {{margin : "4%"}}
+        >
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
+        </Pressable>   
+    );
   }
   
   const renderRightActions = (progress, dragX, handler) => {
@@ -72,16 +158,26 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     //   </View>
     // );
     if (UserRole === 'participant'){
-      return (
+      return(
         <View style={SharedStyles.RightSliderContainer}>
-          <Pressable
-            onPress={BlockUser}
-          >
-            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/U7hfisP.png'}}/>
-          </Pressable>   
+          {block()}
         </View>
-      );
+      )
+    } else if (UserRole === 'admin'){
+      return (
+        <View style={[SharedStyles.MultipleRightSliderContainer, {backgroundColor : 'yellow'}]}>
+          {block()}
+        </View>
+      )
     }
+
+
+    // return (
+    //   <View style={[SharedStyles.MultipleRightSliderContainer, {backgroundColor : 'yellow'}]}>
+    //     {kick()}
+    //     {ban()}
+    //   </View>
+    // )
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
@@ -91,7 +187,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
       return (
         <View style={SharedStyles.LeftSliderContainer}>
           <Pressable
-            onPress={AcceptInvite}
+            onPress={AddFriend}
           >
             <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
           </Pressable>   
