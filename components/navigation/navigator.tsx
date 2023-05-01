@@ -8,13 +8,16 @@ import Login from '../../pages/loginPage';
 import Signup from '../../pages/signupPage';
 import Challenge from '../../pages/ChallengesPage';
 import LeaguesPage from '../../pages/leaguesPage';
-import AddPage from '../../pages/addPage';
+import AddPage from '../../pages/addPages/addPage';
 import SearchPage from '../../pages/searchPage';
 import ProfilePage from '../../pages/profilePage';
 import IncomingChallengesPage from '../../pages/incomingChallengesPage'
+import AddChallengePage from '../../pages/addPages/addChallengePage'
+import AddFriendPage from '../../pages/addPages/addFriendPage'
+import AddLeaguePage from '../../pages/addPages/addLeaguePage'
 
 const Tab = createBottomTabNavigator();
- 
+
 const Stack = createNativeStackNavigator();
 
 const TopTab = createMaterialTopTabNavigator();
@@ -70,9 +73,38 @@ function AddStack(){
   return (
   <Stack.Navigator>
     <Stack.Screen name = "Add" component={AddPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "AddChallenge" component={AddChallengePage} options={{ headerShown: false
+    }}/>
+    <Stack.Screen name = "AddFriend" component={AddFriendPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "AddLeague" component={AddLeaguePage} options={{ headerShown: false }}/>
   </Stack.Navigator>
   )
 }
+
+// function AddChallengeStack(){
+//   return (
+//   <Stack.Navigator>
+//     <Stack.Screen name = "Add" component={AddChallengePage} options={{ headerShown: false }}/>
+//   </Stack.Navigator>
+//   )
+// }
+//
+// function AddFriendStack(){
+//   return (
+//   <Stack.Navigator>
+//     <Stack.Screen name = "Add" component={AddFriendPage} options={{ headerShown: false }}/>
+//   </Stack.Navigator>
+//   )
+// }
+//
+// function AddLeagueStack(){
+//   return (
+//   <Stack.Navigator>
+//     <Stack.Screen name = "Add" component={AddLeaguePage} options={{ headerShown: false }}/>
+// 		<Stack.Screen name = "Add" component={AddLeaguePage} options={{ headerShown: false }}/>
+//   </Stack.Navigator>
+//   )
+// }
 
 function SearchStack(){
   return (
@@ -92,11 +124,11 @@ function ProfileStack(){
 
 function ShowTabs(){
   return (
-  <Tab.Navigator 
+  <Tab.Navigator
     screenOptions={({route}) => ({
       tabBarIcon:({focused, color, size}) => {
         let iconName;
-        
+
         if (route.name === 'Challenges') {
           iconName = focused
           ? "https://imgur.com/FTvnYD3.png"
@@ -105,7 +137,8 @@ function ShowTabs(){
           iconName = focused
           ? "https://imgur.com/fMqLrA2.png"
           : "https://imgur.com/PZgaF7K.png"
-        } else if (route.name === 'Add') {
+        } else if (route.name === 'Add' || route.name === 'AddChallenge' || route.name ===
+        'AddFriend' || route.name === 'AddLeague') {
           iconName = focused
           ? "https://imgur.com/0MHiWup.png"
           : "https://imgur.com/iWwOCAG.png"
@@ -126,7 +159,7 @@ function ShowTabs(){
       tabBarStyle : styles.navBarStyle,
     })
   }
-  > 
+  >
     <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false }}/>
     <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false }}/>
     <Tab.Screen name="Add" component={AddStack} options={{headerShown: false}}/>
@@ -143,6 +176,10 @@ function Navigator(){
         <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false }}/>
         <Stack.Screen name = "Signup" component={Signup} options={{ headerShown: false }}/>
         <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false }}/>
+{/* 				<Stack.Screen name="AddChallenge" component={AddChallengeStack} options={{headerShown: false}}/> */}
+{/* 				<Stack.Screen name="AddFriend" component={AddFriendStack} options={{headerShown: false}}/> */}
+{/* 				<Stack.Screen name="AddLeague" component={AddLeagueStack} options={{headerShown: false}}/> */}
+
       </Stack.Navigator>
     </NavigationContainer>
   );
