@@ -7,7 +7,6 @@ import {
   Image,
   FlatList
 } from 'react-native';
-import {styles} from "../css/login/Style"
 import SelectDropdown from 'react-native-select-dropdown';
 import ChallengesSwap from '../components/Challenges/ChallengeSwap';
 import LeagueCard from '../components/Leagues/LeagueCard';
@@ -15,8 +14,8 @@ import LeagueCard from '../components/Leagues/LeagueCard';
 import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
 import { cardStyles } from '../css/cards/Style';
+import {styles} from "../css/challenges/Style"
 import { SharedStyles } from '../css/shared/Style';
-import ListenerComponent from '../components/Sensors/healthKit';
 
 const options = [
   { label : "All" , value : 'All'},
@@ -112,7 +111,7 @@ function LeaguesPage(props): JSX.Element {
     <Image style = {{width : 10, height : 10}}source={{uri: "https://imgur.com/ybSDJeh.png"}}/>
     )
   }
-
+  
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
     // set challenges array here
@@ -120,7 +119,7 @@ function LeaguesPage(props): JSX.Element {
   
   const renderLeague = ({item}) => {
     return (
-    <LeagueCard
+    <LeagueCard 
       LeagueData = {item}
       props = {props}
     />
@@ -129,13 +128,6 @@ function LeaguesPage(props): JSX.Element {
 
   return (
     <View style = {styles.container}>
-      <Button
-        title = "leagues"
-        onPress = {() =>
-          props.navigation.navigate('Login')
-        }
-      />
-
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
@@ -163,7 +155,7 @@ function LeaguesPage(props): JSX.Element {
           renderItem = {renderLeague}
           contentContainerStyle = {styles.FlatListContainer}
         />
-      </View>
+      </View> 
 
     </View>
   )
