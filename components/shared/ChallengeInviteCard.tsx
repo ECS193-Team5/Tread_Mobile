@@ -103,7 +103,7 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
         ref={(ref) => (row[index] = ref)}
         friction = {1.5}
         leftThreshold = {30}
-        righThreshold = {30}
+        rightThreshold = {30}
         childrenContainerStyle = {styles.FlatListContainer}>
         <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
           <View style = {cardStyles.ImageContainer}>

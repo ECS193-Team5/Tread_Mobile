@@ -106,7 +106,7 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
       ref={(ref) => (row[index] = ref)}
       friction = {1.5}
       leftThreshold = {30}
-      righThreshold = {30}
+      rightThreshold = {30}
       childrenContainerStyle = {styles.FlatListContainer}>
       <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
         <View style = {cardStyles.ImageContainer}>
