@@ -123,11 +123,15 @@ function LeagueMemberView({MemberData}): JSX.Element {
     )
   }
 
-  
   const typeOfView = function() {
     if(isAdminOwnerParticipant == 'owner' || isAdminOwnerParticipant == 'admin'){
       if (currentView === 'all') {
-        return (<Text> All members owner admin</Text>)
+        // return (<Text> All members owner admin</Text>)
+        return (<UserScroll
+          UserData={MemberData}
+          handler = {deleteItem}
+          UserRole = {isAdminOwnerParticipant}
+        />)
       } else if (currentView !== 'invite'){
         return (
           <FlatList
@@ -140,20 +144,24 @@ function LeagueMemberView({MemberData}): JSX.Element {
         // add add friend component here
       }
     } else {
-      return (<Text> All members regular</Text>)
+      return (<UserScroll
+        UserData={MemberData}
+        handler = {deleteItem}
+        UserRole = {isAdminOwnerParticipant}
+      />)
     }
   }
 
   useEffect(() =>{
     // get username and check if with MemberData to see if they are owner admin or participant
     // set isAdminOwner
-    setIsAdminOwnerParticipant("admin")
+    setIsAdminOwnerParticipant("participant")
   })
 
   return(
     <View style = {LeagueStyles.MembersChallengesContainer}>
       {typeOfUser(isAdminOwnerParticipant)}
-      <View style = {[styles.ChallengesContainer, {backgroundColor : 'green', marginBottom : "20%"}]}>
+      <View style = {[styles.ChallengesContainer, {marginBottom : "19%"}]}>
         {typeOfView()}
       </View>
     </View>

@@ -136,11 +136,6 @@ function LeagueUserCard({MemberData, index, handler, pageTitle}): JSX.Element {
               </Text>
             </View>
           }
-          {/* <View style = {cardStyles.LeagueAddressContainer}>
-            <Text style = {cardStyles.ChallengeNameText}>
-              {SenderOrReceiver + " : "}
-            </Text>
-          </View> */}
           <View style = {cardStyles.ChallengeNameContainer}>
             <Text style = {cardStyles.LeagueNameText}>
             {MemberData.displayName}

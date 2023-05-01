@@ -8,7 +8,6 @@ const LeagueStyles = StyleSheet.create({
 
   MembersChallengesContainer : {
     flex : 60,
-    // backgroundColor :'yellow'
   },
 
   LeagueInfoCard : {
@@ -21,9 +20,15 @@ const LeagueStyles = StyleSheet.create({
   },
 
   LeagueNameContainer : {
-    flex : 20,
-    margin :"2.5%",
-    alignItems : 'center'
+    flex : 60,
+    alignItems : 'flex-start',
+    justifyContent : 'center',
+  },
+
+  LeagueInfoContainer : {
+    flex : 75,
+    flexDirection : 'row',
+    width : '100%',
   },
 
   ToggleContainer : {
@@ -34,10 +39,10 @@ const LeagueStyles = StyleSheet.create({
   },
 
   LeagueImageContainer : {
-    flex : 55,
-    // margin : "1%",
-  },
-  
+    flex : 50,
+    alignItems : 'center',
+    justifyContent : 'center'
+  }  
 });
 
 export {LeagueStyles}

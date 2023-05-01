@@ -4,7 +4,8 @@ import {
   Button,
   StyleSheet,
   Text,
-  Image
+  Image,
+  Pressable
 } from 'react-native';
 
 import SwitchSelector from "react-native-switch-selector"
@@ -27,7 +28,10 @@ function LeagueDetails(props): JSX.Element {
   ]
 
   const [isMembers, setIsMembers] = useState("Members")
-  
+  // get description and other stuff from from backend call get_league_name_description_type
+  const [description, setDescription] = useState("Description")
+  const [security, setSecurity] = useState("Private")
+
   const LeagueMembers = 
   [
     {
@@ -225,6 +229,12 @@ function LeagueDetails(props): JSX.Element {
     }
   ]
   
+  const handleLeave = function() {
+    console.log("Left")
+    //backend call to leave league
+    props.navigation.navigate("Leagues")
+  }
+
   return (
     <View style = {styles.container}>
       <View style = {styles.topRightClickContainer}>
@@ -235,15 +245,25 @@ function LeagueDetails(props): JSX.Element {
       </View>
 
       <View style = {LeagueStyles.LeagueInfoCardContainer}>
-        <View style = {[LeagueStyles.LeagueInfoCard, cardStyles.shadowProp]}>
-          <View style = {LeagueStyles.LeagueNameContainer}> 
-            <Text style = {styles.TitleText}>{props.route.params.leagueData.leagueName}</Text>
+        <View style = {[LeagueStyles.LeagueInfoCard, cardStyles.shadowProp]}>   
+          <View style = {LeagueStyles.LeagueInfoContainer}> 
+            <View style = {LeagueStyles.LeagueImageContainer}>
+              <Image style ={ImageStyles.LeagueImage} source={{uri: LeagueImage}}/>
+            </View>
+        
+            <View style = {LeagueStyles.LeagueNameContainer}>
+              <Pressable
+                onPress={handleLeave}
+                style = {{alignSelf : 'flex-end'}}
+              >
+                <Text style = {[styles.TitleText, {fontSize : 13, color: 'red', marginRight : '10%'}]}>Leave</Text>
+              </Pressable>
+              <Text style = {styles.TitleText}>{props.route.params.leagueData.leagueName}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 15}]}>{description}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 15}]}>{security}</Text>
+            </View>            
           </View>
         
-          <View style = {LeagueStyles.LeagueImageContainer}>
-            <Image style ={ImageStyles.LeagueImage} source={{uri: LeagueImage}}/>
-          </View>
-
           <View style = {LeagueStyles.ToggleContainer}>
             <SwitchSelector
               initial= {0}
