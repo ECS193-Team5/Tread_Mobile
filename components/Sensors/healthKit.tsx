@@ -9,15 +9,16 @@ import {
     View,
      } from 'react-native';
 import {HealthKit} from "./exerciseNameConverstion.json";
-import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, BACKEND_URL, VAPID_KEY} from '@env';
+import {BACKEND_URL} from '@env';
 import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 
-const ListenerComponent = () =>{
+const ListenerComponentHealthKit = () =>{
     useEffect(() => {
+        try{
         AppleHealthKit.isAvailable((err: Object, available: boolean) => {
             if (err) {
                 console.log('error initializing Healthkit: ', err)
-                return;
+                throw err;
             }
         })
 
@@ -66,46 +67,62 @@ const ListenerComponent = () =>{
             },
         );
         pullSamples();
+        }
+        catch(err){
+            console.log("Error in HealthKit - Either this is not an apple device or permissions was not given");
+        }
     });
-    
-     
+
+
+
         const permissions = {
             permissions: {
                 read: [AppleHealthKit.Constants.Permissions.ActivitySummary,
-                AppleHealthKit.Constants.Permissions.Workout,  
+                AppleHealthKit.Constants.Permissions.Workout,
                 AppleHealthKit.Constants.Permissions.DistanceCycling,
-                AppleHealthKit.Constants.Permissions.DistanceSwimming, 
-                AppleHealthKit.Constants.Permissions.DistanceWalkingRunning, 
+                AppleHealthKit.Constants.Permissions.DistanceSwimming,
+                AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
                 AppleHealthKit.Constants.Permissions.FlightsClimbed,
                 AppleHealthKit.Constants.Permissions.StepCount,
                 AppleHealthKit.Constants.Permissions.Steps],
                 write: [AppleHealthKit.Constants.Permissions.ActivitySummary,
-                    AppleHealthKit.Constants.Permissions.Workout,  
+                    AppleHealthKit.Constants.Permissions.Workout,
                     AppleHealthKit.Constants.Permissions.DistanceCycling,
-                    AppleHealthKit.Constants.Permissions.DistanceSwimming, 
-                    AppleHealthKit.Constants.Permissions.DistanceWalkingRunning, 
+                    AppleHealthKit.Constants.Permissions.DistanceSwimming,
+                    AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
                     AppleHealthKit.Constants.Permissions.FlightsClimbed,
                     AppleHealthKit.Constants.Permissions.StepCount,
                     AppleHealthKit.Constants.Permissions.Steps]
 
             },
         } as HealthKitPermissions;
-    
+
+        try{
         AppleHealthKit.getAuthStatus(permissions, (err, results) => {
             console.log(err, results)
+            if (err){
+                throw err
+            }
         });
-    
+        }
+        catch(err){
+            console.log("Error in HealthKit - Either this is not an apple device or permissions was not given");
+        }
+
         function getMostRecentDateRead(){
             var config = {
                 method: 'post',
-                url: BACKEND_URL + 'sensors/get_apple_sensor_date',
+                url: BACKEND_URL + 'sensors/get_sensor_date',
                 withCredentials: true,
                 credentials: 'include',
                 headers: {
                   Accept: 'application/json',
+                },
+                data:{
+                    sensorType:"HealthKit"
                 }
               };
-    
+
               axios(config)
                 .then((response) => {
                     return response.data;
@@ -116,7 +133,7 @@ const ListenerComponent = () =>{
 
                 return 1672556406000;
         }
-    
+
         function createOptionsList(startDate: Int32){
             return(
                     {
@@ -132,7 +149,6 @@ const ListenerComponent = () =>{
             let start = Date.parse(workoutData.start);
             let end = Date.parse(workoutData.end);
             let timeMin = (end-start)/(1000*60);
-            console.log("Was called");
             return ({
                 loggedDate: start,
                 unit: "min",
@@ -144,7 +160,7 @@ const ListenerComponent = () =>{
         function giveServerResults(result){
             var config = {
                 method: 'post',
-                url: BACKEND_URL + 'sensors/get_apple_sensor_date',
+                url: BACKEND_URL + 'sensors/add_exercise_list',
                 withCredentials: true,
                 credentials: 'include',
                 headers: {
@@ -154,7 +170,7 @@ const ListenerComponent = () =>{
                     exerciseList: result
                 }
               };
-    
+
               axios(config)
                 .then((response) => {
                     console.log("Successfully sent exercises")
@@ -166,21 +182,21 @@ const ListenerComponent = () =>{
         function pullSamples() {
             // Intialize the HealthKit
             AppleHealthKit.initHealthKit(permissions, (error: string) => {
-    
+
                 /* Called after we receive a response from the system */
                 if (error) {
                     console.log("No permission for Apple Device");
                     return;
                 }
-    
+
                 /* Can now read or write to HealthKit  */
                 let startDate = getMostRecentDateRead();
 
 
                 let options = createOptionsList(startDate);
-             
+
                 let allResults = [];
-                
+
                 AppleHealthKit.getSamples(
                     options,
                     (callbackError: string, results: HealthValue[]) => {
@@ -188,11 +204,12 @@ const ListenerComponent = () =>{
                         giveServerResults(allResults);
                     },
                 );
-                
+
             })
+
         }
-    
+
         return (<View></View>)
     }
 
-export default ListenerComponent;
+export default ListenerComponentHealthKit;

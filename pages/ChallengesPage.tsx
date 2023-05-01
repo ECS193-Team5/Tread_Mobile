@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
-import ListenerComponent from '../components/Sensors/healthKit';
 import ChallengesSwap from '../components/Challenges/ChallengeSwap';
 import {styles} from "../css/challenges/Style"
 import {cardStyles} from "../css/cards/Style"
 import ChallengeCard from '../components/Challenges/ChallengeCard';
 import ChallengeScroll from '../components/shared/ChallengeScroll';
-
+import ListenerComponentHealthKit from '../components/Sensors/healthKit';
+import ListenerComponentHealthConnect from '../components/Sensors/healthConnect';
 
 function ChallengesPage(props): JSX.Element {
   const [titleName, setTitleName] = useState("Current")
@@ -26,7 +26,7 @@ function ChallengesPage(props): JSX.Element {
 
   const renderChallenge = ({item}) => {
     return (
-    <ChallengeCard 
+    <ChallengeCard
       ChallengeData = {item}
       isWeekly = {isCurrent}/>
     )
@@ -37,15 +37,15 @@ function ChallengesPage(props): JSX.Element {
       setTitleName("Weekly")
       setAvailableCount(7)
       // challenges should be set to weekly
-      setChallengeImage("https://imgur.com/j33n2DQ.png") 
+      setChallengeImage("https://imgur.com/j33n2DQ.png")
     } else {
       setTitleName("Current")
-      setAvailableCount(10) 
+      setAvailableCount(10)
       // challenges should be set to current
-      setChallengeImage("https://imgur.com/2BHAmsN.png") 
+      setChallengeImage("https://imgur.com/2BHAmsN.png")
     }
   }
-  
+
   // Check for invitations and update icon, but for now
   var IncomingImageUrl = "https://imgur.com/ULlEPhH.png"
 
@@ -261,14 +261,15 @@ function ChallengesPage(props): JSX.Element {
 
   return (
     <View style = {styles.container}>
-       <ListenerComponent/>
+       <ListenerComponentHealthConnect/>
+       <ListenerComponentHealthKit/>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
           PageToSwap = {"Incoming Challenges"}
           imageUrl = {IncomingImageUrl}/>
       </View>
-      
+
       <View style = {styles.titleContainer}>
         <Text style = {styles.TitleText}>Challenges</Text>
       </View>
@@ -281,7 +282,7 @@ function ChallengesPage(props): JSX.Element {
           imageURL = {challengeImage}
         />
       </View>
-      
+
       <View style = {styles.seperator}/>
 
       <View style = {styles.ChallengesContainer}>
@@ -289,7 +290,7 @@ function ChallengesPage(props): JSX.Element {
           ChallengeData={ChallengeData}
           isCurrent = {isCurrent}
         />
-      </View> 
+      </View>
 
     </View>
   )

@@ -33,7 +33,7 @@ function LeaguesPage(props): JSX.Element {
     <Image style = {{width : 10, height : 10}}source={{uri: "https://imgur.com/ybSDJeh.png"}}/>
     )
   }
-  
+
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
     // set challenges array here
@@ -115,7 +115,7 @@ function LeaguesPage(props): JSX.Element {
 
   const renderLeague = ({item}) => {
     return (
-    <LeagueCard 
+    <LeagueCard
       LeagueData = {item}
       props = {props}
     />
@@ -124,13 +124,13 @@ function LeaguesPage(props): JSX.Element {
 
   return (
     <View style = {styles.container}>
-      <Button 
+      <Button
         title = "leagues"
         onPress = {() =>
           props.navigation.navigate('Login')
         }
       />
-      
+
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
@@ -158,8 +158,8 @@ function LeaguesPage(props): JSX.Element {
           renderItem = {renderLeague}
           contentContainerStyle = {styles.FlatListContainer}
         />
-      </View> 
-       
+      </View>
+
     </View>
   )
 }
