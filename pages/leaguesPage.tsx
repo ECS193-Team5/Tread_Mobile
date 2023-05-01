@@ -7,7 +7,6 @@ import {
   Image,
   FlatList
 } from 'react-native';
-import ButtonForClicking from './healthkit';
 import {styles} from "../css/login/Style"
 import SelectDropdown from 'react-native-select-dropdown';
 import ChallengesSwap from '../components/Challenges/ChallengeSwap';
@@ -17,6 +16,7 @@ import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
 import { cardStyles } from '../css/cards/Style';
 import { SharedStyles } from '../css/shared/Style';
+import ListenerComponent from '../components/Sensors/healthKit';
 
 const options = [
   { label : "All" , value : 'All'},
@@ -130,7 +130,7 @@ function LeaguesPage(props): JSX.Element {
           props.navigation.navigate('Login')
         }
       />
-      <ButtonForClicking/>
+      
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
@@ -159,7 +159,7 @@ function LeaguesPage(props): JSX.Element {
           contentContainerStyle = {styles.FlatListContainer}
         />
       </View> 
-
+       
     </View>
   )
 }

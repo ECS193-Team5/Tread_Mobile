@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
-
+import ListenerComponent from '../components/Sensors/healthKit';
 import ChallengesSwap from '../components/Challenges/ChallengeSwap';
 import {styles} from "../css/challenges/Style"
 import {cardStyles} from "../css/cards/Style"
@@ -261,6 +261,7 @@ function ChallengesPage(props): JSX.Element {
 
   return (
     <View style = {styles.container}>
+       <ListenerComponent/>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
