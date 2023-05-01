@@ -55,7 +55,7 @@ function getRequests() {
   ])
 } 
 
-function LeagueMemberView({MemberData}): JSX.Element {  
+function LeagueMemberView({MemberData, setLeagueMembers}): JSX.Element {  
   
   const [isAdminOwnerParticipant, setIsAdminOwnerParticipant] = useState("")
   const [currentView, setCurrentView] = useState("all")
@@ -112,6 +112,17 @@ function LeagueMemberView({MemberData}): JSX.Element {
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
 
+  const deleteMember = function(mData) {    
+    console.log(mData.username)
+    console.log("deleted")
+    // when writing the backend call instead of setting the filtered data, set the actual member list to update everything accordingly
+    const filteredData = MemberData.filter(item => item.username !== mData.username);
+    setLeagueMembers(filteredData)
+    LayoutAnimation.configureNext(layoutAnimConfig) 
+  }
+    
+
+
   const renderInvite = ({item, index}) => {
     return (
     <LeagueUserCard
@@ -124,31 +135,22 @@ function LeagueMemberView({MemberData}): JSX.Element {
   }
 
   const typeOfView = function() {
-    if(isAdminOwnerParticipant == 'owner' || isAdminOwnerParticipant == 'admin'){
-      if (currentView === 'all') {
-        // return (<Text> All members owner admin</Text>)
-        return (<UserScroll
-          UserData={MemberData}
-          handler = {deleteItem}
-          UserRole = {isAdminOwnerParticipant}
-        />)
-      } else if (currentView !== 'invite'){
-        return (
-          <FlatList
-            data = {requests}
-            renderItem = {renderInvite}
-          />
-        )
-      } else {
-        return (<Text>Invite</Text>)
-        // add add friend component here
-      }
-    } else {
+    if (currentView === 'all') {
       return (<UserScroll
         UserData={MemberData}
-        handler = {deleteItem}
+        handler = {deleteMember}
         UserRole = {isAdminOwnerParticipant}
       />)
+    } else if (currentView !== 'invite'){
+      return (
+        <FlatList
+          data = {requests}
+          renderItem = {renderInvite}
+        />
+      )
+    } else {
+      return (<Text>Invite</Text>)
+      // add add friend component here
     }
   }
 

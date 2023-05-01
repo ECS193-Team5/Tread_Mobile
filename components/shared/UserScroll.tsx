@@ -32,8 +32,6 @@ function UserScroll({UserData, handler, UserRole}): JSX.Element {
     },
   };
 
-
-
   const renderUser = ({item, index}) => {
     return (
     <UserCard 

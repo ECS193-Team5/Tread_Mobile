@@ -17,10 +17,11 @@ import { addons } from 'react-native';
 function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
   const [cardRole, setCardRole] = useState('')
-  
+  const [currentUser, setCurrentUser] = useState('Kauboy#8925')
+
   useEffect(() =>{
     setCardRole(UserInfo.role)
-    console.log(UserRole)
+    // console.log(UserRole)
   })
 
   // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
@@ -41,15 +42,9 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     prevOpenedRow = row[index];
   };
 
-  const RejectInvite = function(){
-    console.log('right')
-    handler(UserInfo)
-  }
-
   const AddFriend = function(){
-    console.log('sent friend request')
+    console.log('sent friend request ' + UserInfo.username)
     //backend call here
-    // handler(UserInfo)
   }
 
   const BlockUser = function(){
@@ -109,7 +104,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
           onPress={KickUser}
           style = {{margin : "4%"}}
         >
-          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/U7hfisP.png'}}/>
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ngSIL5J.png'}}/>
         </Pressable>   
     );
   }
@@ -146,54 +141,50 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
         </Pressable>   
     );
   }
+
+  const adminOptions = function() {
+    if(cardRole === 'admin'){
+      return (removeAdmin())
+    } else {
+      return (addAdmin())
+    }
+  }
   
   const renderRightActions = (progress, dragX, handler) => {
-    // return (
-    //   <View style={SharedStyles.RightSliderContainer}>
-    //     <Pressable
-    //       onPress={RejectInvite}
-    //     >
-    //       <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
-    //     </Pressable>   
-    //   </View>
-    // );
-    if (UserRole === 'participant'){
+    if (currentUser === UserInfo.username) {
+      return null
+    } else if (UserRole === 'participant' || cardRole === 'owner'){
       return(
         <View style={SharedStyles.RightSliderContainer}>
           {block()}
         </View>
       )
-    } else if (UserRole === 'admin'){
+    } else {
       return (
-        <View style={[SharedStyles.MultipleRightSliderContainer, {backgroundColor : 'yellow'}]}>
+        <View style={SharedStyles.MultipleRightSliderContainer}>
           {block()}
+          {kick()}
+          {ban()}
+          {adminOptions()}
         </View>
       )
     }
-
-
-    // return (
-    //   <View style={[SharedStyles.MultipleRightSliderContainer, {backgroundColor : 'yellow'}]}>
-    //     {kick()}
-    //     {ban()}
-    //   </View>
-    // )
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
-    // if (pageTitle === 'Sent'){
-    //   return ('')
-    // } else {
-      return (
-        <View style={SharedStyles.LeftSliderContainer}>
-          <Pressable
-            onPress={AddFriend}
-          >
-            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
-          </Pressable>   
-        </View>
-      );
-    // }
+      if (currentUser === UserInfo.username) {
+        return null
+      } else {
+        return (
+          <View style={SharedStyles.LeftSliderContainer}>
+            <Pressable
+              onPress={AddFriend}
+            >
+              <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
+            </Pressable>   
+          </View>
+        );
+      }
   };
 
   return(
@@ -211,7 +202,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
       leftThreshold = {30}
       rightThreshold = {30}
       childrenContainerStyle = {styles.FlatListContainer}>
-      <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
+      <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, UserInfo.username === currentUser ? {borderColor : '#014421', borderWidth : 2} : null]}>
         <View style = {cardStyles.ImageContainer}>
           <Image style ={ImageStyles.single} source={{uri: image}}/>
         </View>

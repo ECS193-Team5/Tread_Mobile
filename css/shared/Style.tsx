@@ -37,7 +37,6 @@ const SharedStyles = StyleSheet.create({
     margin : 0,
     alignItems: 'flex-start',
     justifyContent: 'center',
-    // flexDirection : 'row',
     width: "12%",
   },
 
@@ -45,7 +44,7 @@ const SharedStyles = StyleSheet.create({
     margin : 0,
     alignItems: 'center',
     flexDirection : 'row',
-    width: "30%",
+    width: "53%",
   }
 });
 
