@@ -36,20 +36,22 @@ function AddLeaguePage(props): JSX.Element {
 	const onChoosePicPress = function() {
 		const options = {
 			'includeBase64': true,
-			'maxWidth': 400,
-			'maxHeight': 400
+			'maxWidth': 200,
+			'maxHeight': 200
 		}
 
 		launchImageLibrary(options, (response) => {
 		  if(!response['didCancel']) {
-        const source = response['assets'][0]["base64"];
-        setPicture("data:image/jpeg;base64," + source)
-        setValidPicture(true);
+			console.log('Picture Chosen');
+			const source = response['assets'][0]["base64"];
+			setPicture("data:image/jpeg;base64," + source)
+			setValidPicture(true);
 		  }
 		});
 	}
 
 	const onLeagueNameChange = function(name) {
+		console.log('Name changed');
 		setLeagueName(name);
 		if(checkValidLeagueName(name)) {
 			setValidLeagueName(true);
