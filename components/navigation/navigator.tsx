@@ -51,8 +51,8 @@ function LeaguesSwipeStack() {
 function ChallengesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
-    <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Challenges" component={Challenge} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false}}/>
   </Stack.Navigator>
   )
 }
@@ -160,7 +160,7 @@ function ShowTabs(){
     })
   }
   > 
-    <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false }}/>
+    <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false}}/>
     <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false }}/>
     <Tab.Screen name="Add" component={AddStack} options={{headerShown: false}}/>
     <Tab.Screen name="Search" component={SearchPage} options={{ headerShown: false }}/>
@@ -175,7 +175,7 @@ function Navigator(){
       <Stack.Navigator>
         <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false }}/>
         <Stack.Screen name = "Signup" component={Signup} options={{ headerShown: false }}/>
-        <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false}}/>
 {/* 				<Stack.Screen name="AddChallenge" component={AddChallengeStack} options={{headerShown: false}}/> */}
 {/* 				<Stack.Screen name="AddFriend" component={AddFriendStack} options={{headerShown: false}}/> */}
 {/* 				<Stack.Screen name="AddLeague" component={AddLeagueStack} options={{headerShown: false}}/> */}

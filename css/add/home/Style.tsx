@@ -34,7 +34,9 @@ const styles = StyleSheet.create({
 
   Image : {
     height: '55%',
-    width: '55%'
+    width: '55%',
+//     backgroundColor: 'blue',
+    resizeMode: 'contain'
   },
 
 	SeparatorLine: {
