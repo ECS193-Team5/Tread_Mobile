@@ -89,10 +89,12 @@ const ListenerComponentHealthConnect = () => {
 
           axios(config)
             .then(async (response) => {
+                console.log(response.data);
                 let timeString = new Date(0).toISOString();
-                if (response.data !== null){
-                    timeString = response.data;
+                if (response.data.healthConnectLastPostedDate){
+                    timeString = response.data.healthConnectLastPostedDate;
                 }
+                console.log(timeString);
 
                 const result = await readRecords('ExerciseSession', {
                     timeRangeFilter: {
@@ -106,7 +108,7 @@ const ListenerComponentHealthConnect = () => {
 
             })
             .catch(function (error) {
-                console.log("get last read date failed");
+                console.log(error);
                 return;
             });
     }
@@ -157,6 +159,10 @@ const ListenerComponentHealthConnect = () => {
 
 
     const sendExerciseList = (exerciseList, uniqueExercises) => {
+        if (exerciseList.length === 0){
+            console.log("No exercises to update");
+            return;
+        }
         console.log({
             exerciseList: exerciseList,
             uniqueExercises: uniqueExercises,
