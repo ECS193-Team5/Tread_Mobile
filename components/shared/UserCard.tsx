@@ -12,7 +12,6 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
 import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
-import { addons } from 'react-native';
 
 function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
@@ -21,7 +20,6 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
 
   useEffect(() =>{
     setCardRole(UserInfo.role)
-    // console.log(UserRole)
   })
 
   // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
@@ -47,9 +45,19 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     //backend call here
   }
 
+  const RemoveFriend = function(){
+    console.log('removed friend ' + UserInfo.username)
+    //backend call here
+    handler(UserInfo)
+
+  }
+
   const BlockUser = function(){
     console.log('blocked user ' +  UserInfo.displayName)
     //backend call here
+    if (UserRole === 'friendview'){
+      handler(UserInfo)
+    }
   }
 
   const KickUser = function(){
@@ -63,6 +71,13 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     // backend call here 
     handler(UserInfo)
   }
+
+  const unbanUser = function(){
+    console.log('unbanned user ' +  UserInfo.displayName)
+    // backend call here 
+    handler(UserInfo)
+  }
+
 
   const AdminAdd = function(){
     console.log('added admin user ' +  UserInfo.displayName)
@@ -83,6 +98,17 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
+        </Pressable>   
+    ); 
+  }
+
+  const unfriend = function() {
+    return (
+        <Pressable
+          onPress={RemoveFriend}
+          style = {{margin : "4%"}}
+        >
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/iD9p5iH.png'}}/>
         </Pressable>   
     ); 
   }
@@ -120,6 +146,17 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     );
   }
 
+  const unban = function(){
+    return (
+        <Pressable
+          onPress={unbanUser}
+          style = {{margin : "4%"}}
+        >
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/q7fgVdM.png'}}/>
+        </Pressable>   
+    );
+  }
+
   const addAdmin = function(){
     return (
         <Pressable
@@ -153,7 +190,20 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const renderRightActions = (progress, dragX, handler) => {
     if (currentUser === UserInfo.username) {
       return null
-    } else if (UserRole === 'participant' || cardRole === 'owner'){
+    } else if (UserRole === 'All'){
+      return(
+        <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
+          {block()}
+          {unfriend()}
+        </View>
+      )
+    } else if (UserRole === 'Banned'){
+      return(
+        <View style={SharedStyles.RightSliderContainer}>
+          {unban()}
+        </View>
+      )
+    }else if (UserRole === 'participant' || cardRole === 'owner'){
       return(
         <View style={SharedStyles.RightSliderContainer}>
           {block()}
@@ -172,19 +222,19 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
-      if (currentUser === UserInfo.username) {
-        return null
-      } else {
-        return (
-          <View style={SharedStyles.LeftSliderContainer}>
-            <Pressable
-              onPress={AddFriend}
-            >
-              <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
-            </Pressable>   
-          </View>
-        );
-      }
+    if (currentUser === UserInfo.username || UserRole === 'All' || UserRole === 'Banned') {
+      return null
+    } else {
+      return (
+        <View style={SharedStyles.LeftSliderContainer}>
+          <Pressable
+            onPress={AddFriend}
+          >
+            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
+          </Pressable>   
+        </View>
+      );
+    }
   };
 
   return(
@@ -218,11 +268,15 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
               {UserInfo.username}
             </Text>
           </View>
-          <View style = {[cardStyles.ChallengeNameContainer, {alignItems : 'center'}]}>
-            <Text style = {cardStyles.ChallengeNameText}>
-              {UserInfo.role !== 'participant' ? UserInfo.role.charAt(0).toUpperCase() + UserInfo.role.slice(1) : null}
-            </Text>
-          </View>
+          {UserRole === 'All' || UserRole === 'Banned' ? 
+            null 
+            :
+            <View style = {[cardStyles.ChallengeNameContainer, {alignItems : 'center'}]}>
+              <Text style = {cardStyles.ChallengeNameText}>
+                {cardRole !== 'participant' ? cardRole.charAt(0).toUpperCase() + cardRole.slice(1) : null}
+              </Text>
+            </View>
+          }
         </View>
       </View>
     </Swipeable>

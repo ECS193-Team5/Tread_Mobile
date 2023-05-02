@@ -25,6 +25,7 @@ const TopTab = createMaterialTopTabNavigator();
 import {styles} from '../../css/navigation/Style';
 import IncomingLeaguesPage from '../../pages/incomingLeaguesPage';
 import LeagueDetails from '../../pages/leagueDetails';
+import IncomingFriendsPage from '../../pages/incomingFriendsPage';
 
 function ChallengesSwipeStack() {
   return (
@@ -48,14 +49,28 @@ function LeaguesSwipeStack() {
   )
 }
 
+function SearchSwipeStack() {
+  return (
+    <TopTab.Navigator
+      tabBarPosition='bottom'
+    >
+      <TopTab.Screen name = "Search" component= {SearchPage}/>
+      <TopTab.Screen name = "Incoming Challenges" component = {IncomingFriendsPage}/>
+    </TopTab.Navigator>
+  )
+}
+
+
 function ChallengesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Challenges" component={Challenge} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
     <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false}}/>
   </Stack.Navigator>
   )
 }
+
+
 
 function LeaguesStack(){
   return (
@@ -81,35 +96,12 @@ function AddStack(){
   )
 }
 
-// function AddChallengeStack(){
-//   return (
-//   <Stack.Navigator>
-//     <Stack.Screen name = "Add" component={AddChallengePage} options={{ headerShown: false }}/>
-//   </Stack.Navigator>
-//   )
-// }
-//
-// function AddFriendStack(){
-//   return (
-//   <Stack.Navigator>
-//     <Stack.Screen name = "Add" component={AddFriendPage} options={{ headerShown: false }}/>
-//   </Stack.Navigator>
-//   )
-// }
-//
-// function AddLeagueStack(){
-//   return (
-//   <Stack.Navigator>
-//     <Stack.Screen name = "Add" component={AddLeaguePage} options={{ headerShown: false }}/>
-// 		<Stack.Screen name = "Add" component={AddLeaguePage} options={{ headerShown: false }}/>
-//   </Stack.Navigator>
-//   )
-// }
 
 function SearchStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Search" component={SearchPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Search" component={SearchSwipeStack} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Incoming Friends" component={IncomingFriendsPage} options={{ headerShown: false}}/>
   </Stack.Navigator>
   )
 }
@@ -163,7 +155,7 @@ function ShowTabs(){
     <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false}}/>
     <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false }}/>
     <Tab.Screen name="Add" component={AddStack} options={{headerShown: false}}/>
-    <Tab.Screen name="Search" component={SearchPage} options={{ headerShown: false }}/>
+    <Tab.Screen name="Search" component={SearchStack} options={{ headerShown: false }}/>
     <Tab.Screen name="Profile" component={ProfilePage} options={{ headerShown: false }}/>
   </Tab.Navigator>
   )

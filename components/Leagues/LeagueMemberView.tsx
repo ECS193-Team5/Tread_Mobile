@@ -121,8 +121,6 @@ function LeagueMemberView({MemberData, setLeagueMembers}): JSX.Element {
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
     
-
-
   const renderInvite = ({item, index}) => {
     return (
     <LeagueUserCard
@@ -157,7 +155,7 @@ function LeagueMemberView({MemberData, setLeagueMembers}): JSX.Element {
   useEffect(() =>{
     // get username and check if with MemberData to see if they are owner admin or participant
     // set isAdminOwner
-    setIsAdminOwnerParticipant("participant")
+    setIsAdminOwnerParticipant("admin")
   })
 
   return(
