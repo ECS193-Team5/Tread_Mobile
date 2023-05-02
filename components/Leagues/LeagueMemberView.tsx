@@ -12,11 +12,15 @@ import {
 
 import SwitchSelector from "react-native-switch-selector"
 
+import {BACKEND_URL} from '@env';
+
+
 import { SharedStyles } from '../../css/shared/Style';
 import {styles} from "../../css/challenges/Style"
 import { LeagueStyles } from '../../css/leagues/Style';
 import UserScroll from '../shared/UserScroll';
 import LeagueUserCard from '../shared/LeagueUserCard';
+import Invite from '../shared/invite';
 
 const options = [
   { label : "All" , value : 'all'},
@@ -132,6 +136,10 @@ function LeagueMemberView({MemberData, setLeagueMembers}): JSX.Element {
     )
   }
 
+  var config = {
+	  method: 'post',
+	};
+
   const typeOfView = function() {
     if (currentView === 'all') {
       return (<UserScroll
@@ -147,7 +155,12 @@ function LeagueMemberView({MemberData, setLeagueMembers}): JSX.Element {
         />
       )
     } else {
-      return (<Text>Invite</Text>)
+      return (
+        <Invite
+          text = 'Invite to League'
+          config={config}
+        />
+      )
       // add add friend component here
     }
   }
