@@ -44,8 +44,9 @@ function AddChallengePage(props): JSX.Element {
         >
         </SwitchSelector>
       </View>
-      <View>
         {pageContent}
+      <View style = {styles.BottomSeparator}>
+
       </View>
 
     </View>

@@ -6,11 +6,12 @@ import {
     Text,
     Image
 } from 'react-native';
+import {styles} from '../../css/add/challenge/Style';
 
 function ProgressChallenge(): JSX.Element {
 
     return (
-        <View>
+        <View style={styles.ChallengeContainer}>
             <Text>Progress Challenge</Text>
         </View>
     )
