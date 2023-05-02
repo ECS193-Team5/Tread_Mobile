@@ -115,7 +115,12 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     //backend call here
     handler(UserInfo)
   }
-  
+
+  const AdminRemoveSelf = function(){
+    console.log('Removed Self as Admin')
+    //backend call here
+  }
+
   const friend = function() {
     return (
         <Pressable
@@ -204,6 +209,18 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     );
   }
 
+
+  const removeSelfAsAdmin = function(){
+    return (
+        <Pressable
+          onPress={AdminRemoveSelf}
+          style = {{margin : "4%"}}
+        >
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
+        </Pressable>   
+    );
+  }
+
   const adminOptions = function() {
     if(cardRole === 'admin'){
       return (removeAdmin())
@@ -214,6 +231,15 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   
   const renderRightActions = (progress, dragX, handler) => {
     if (currentUser === UserInfo.username) {
+      if(cardRole === 'admin'){
+        return (
+          <View style={SharedStyles.RightSliderContainer}>
+            {removeSelfAsAdmin()}
+          </View>
+        );
+      } else{
+        return null
+      }
       return null
     } else if (UserRole === 'Received' || UserRole === 'Sent') {
       return (
