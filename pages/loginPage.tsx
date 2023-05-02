@@ -6,6 +6,7 @@ import {
   Text
 } from 'react-native';
 
+import "../components/Sensors/healthKit";
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';

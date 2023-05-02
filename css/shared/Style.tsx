@@ -38,6 +38,13 @@ const SharedStyles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     width: "12%",
+  },
+
+  MultipleRightSliderContainer : {
+    margin : 0,
+    alignItems: 'center',
+    flexDirection : 'row',
+    width: "53%",
   }
 });
 
