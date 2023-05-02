@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     },
 
     ChallengeContainer : {
-        flexDirection: 'row',
+        flexDirection: 'column',
         flex: 80,
         // backgroundColor: 'blue',
         marginLeft: '5%',
@@ -35,7 +35,21 @@ const styles = StyleSheet.create({
     ChallengeDropContainer: {
         flex: 1,
         // backgroundColor: 'green'
-    }
+    },
+
+    EnterOwnContainer : {
+        flex: 1,
+        // backgroundColor: 'blue'
+    },
+
+    validInput: {
+        borderRadius: 50,
+        borderColor: 'grey',
+        borderWidth: 2,
+        paddingLeft: 25,
+//   	color: '#9B9595',
+        fontSize : 16,
+    },
 });
 
 export {styles}

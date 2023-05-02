@@ -10,7 +10,8 @@ import {
     StyleSheet,
     Text,
     Image,
-    ScrollView
+    ScrollView,
+    TextInput
 } from 'react-native';
 
 function IssueChallenge(): JSX.Element {
@@ -19,8 +20,16 @@ function IssueChallenge(): JSX.Element {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState(mappedChallengeList);
+    const [customText, setCustomText] = useState("");
+    const [customTextEditable, setCustomTextEditable] = useState(false);
 
-    // console.log(items);
+    useEffect(() => {
+        if(value === 'Enter your own') {
+            setCustomTextEditable(true);
+        } else {
+            setCustomTextEditable(false);
+        }
+    }, [value])
 
     return (
         <View style={styles.ChallengeContainer}>
@@ -35,6 +44,19 @@ function IssueChallenge(): JSX.Element {
                 >
                 </DropDownPicker>
             </View>
+
+            {customTextEditable &&
+                <View style={styles.EnterOwnContainer}>
+
+                    <TextInput
+                        placeholder={"Enter custom activity"}
+                        placeholderTextColor='grey'
+                        style = {styles.validInput}
+                        editable={customTextEditable}
+                    >
+                    </TextInput>
+                </View>
+            }
         </View>
     )
 }
