@@ -54,10 +54,30 @@ const ImageStyles = StyleSheet.create({
     height : 39 , 
   },
 
+  QR : {
+    width :28, 
+    height : 28,
+    paddingHorizontal : '8%',
+    alignSelf : 'center'
+  },
+
+  Leave : {
+    width :39, 
+    height : 39,
+    paddingHorizontal : '8%',
+    alignSelf : 'center'
+  },
+
   LeagueImage : {
     width :110, 
     height : 110 , 
-  }
+  },
+
+  QRCode : {
+    width :375, 
+    height : 375,
+    alignSelf : 'center'
+  },
 });
 
 export {ImageStyles} 

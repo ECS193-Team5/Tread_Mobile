@@ -8,9 +8,10 @@ import {
   Pressable,
   Platform,
   UIManager,
-  LayoutAnimation
+  LayoutAnimation,
 } from 'react-native';
 
+import Modal from "react-native-modal"
 import SwitchSelector from "react-native-switch-selector"
 import {styles} from "../css/challenges/Style"
 import { LeagueStyles} from '../css/leagues/Style';
@@ -19,6 +20,9 @@ import IncomingSwap from '../components/shared/IncomingSwap';
 import { ImageStyles } from '../css/imageCluster/Style';
 import ChallengeScroll from '../components/shared/ChallengeScroll';
 import LeagueMemberView from '../components/Leagues/LeagueMemberView';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import { modalstyle } from '../css/shared/modalStyle';
+import QRModalPopUp from '../components/shared/QRModalPopUp';
 
 const getLeagueMembers = function(){
   return (
@@ -56,6 +60,7 @@ function LeagueDetails(props): JSX.Element {
   var imageUrl = "https://imgur.com/nFRNXOB.png"  
   var LeagueImage = 'https://imgur.com/N31G5Sk.png'
 
+  const [modalVisible, setModalVisible] = useState(false)
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -83,7 +88,7 @@ function LeagueDetails(props): JSX.Element {
   const [isMembers, setIsMembers] = useState("Members")
   // get description and other stuff from from backend call get_league_name_description_type
   const [description, setDescription] = useState("Description")
-  const [security, setSecurity] = useState("Private")
+  const [security, setSecurity] = useState("private")
   const [LeagueMembers, setLeagueMembers] = useState(getLeagueMembers)
 
   const ChallengeData = [
@@ -259,8 +264,32 @@ function LeagueDetails(props): JSX.Element {
     props.navigation.navigate("Leagues")
   }
 
+  const handleQR = function() {
+    console.log("QR")
+    setModalVisible(true)
+    //backend call to leave league
+    // props.navigation.navigate("Leagues")
+  }
+
   return (
     <View style = {styles.container}>
+      <GestureRecognizer
+        onSwipeDown={() => setModalVisible(false)}
+      >
+        <Modal
+          isVisible={modalVisible}
+          hasBackdrop = {true}
+          backdropColor = 'black'
+          style = {{margin : 2}}
+        >
+          <QRModalPopUp
+            Name = {props.route.params.leagueData.leagueName}
+            idUserName = {props.route.params.leagueData._id}
+            isLeague = {true}
+            security = {security}
+          />
+        </Modal>
+      </GestureRecognizer>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
@@ -276,28 +305,37 @@ function LeagueDetails(props): JSX.Element {
             </View>
         
             <View style = {LeagueStyles.LeagueNameContainer}>
-              <Pressable
-                onPress={handleLeave}
-                style = {{alignSelf : 'flex-end'}}
-              >
-                <Text style = {[styles.TitleText, {fontSize : 13, color: 'red', marginRight : '10%'}]}>Leave</Text>
-              </Pressable>
               <Text style = {styles.TitleText}>{props.route.params.leagueData.leagueName}</Text>
               <Text style = {[styles.TitleText, {fontSize : 15}]}>{description}</Text>
-              <Text style = {[styles.TitleText, {fontSize : 15}]}>{security}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 15}]}>{security.charAt(0).toUpperCase() + security.slice(1)}</Text>
             </View>            
           </View>
         
-          <View style = {LeagueStyles.ToggleContainer}>
-            <SwitchSelector
-              initial= {0}
-              onPress = {value => setIsMembers(value)}
-              textColor = {'#014421'}
-              selectedColor = {'#F9A800'}
-              buttonColor = {'#014421'}
-              hasPadding
-              options = {options}
-            />
+          <View style = {[LeagueStyles.ToggleContainer]}>
+            <Pressable
+              onPress={handleLeave}
+            >
+              <Image style ={ImageStyles.Leave} source={{uri: 'https://imgur.com/FgqDfgA.png'}}/>
+            </Pressable>
+            
+            <View style = {[LeagueStyles.ToggleContainer, {width : '60%'}]}>
+              <SwitchSelector
+                initial= {0}
+                onPress = {value => setIsMembers(value)}
+                textColor = {'#014421'}
+                selectedColor = {'#F9A800'}
+                buttonColor = {'#014421'}
+                hasPadding
+                
+                options = {options}
+              />
+            </View>
+
+            <Pressable
+              onPress={() => handleQR()}
+            >
+              <Image style ={ImageStyles.QR} source={{uri: 'https://imgur.com/cC2QHxO.png'}}/>
+            </Pressable>
           </View>
         </View>
       </View>
