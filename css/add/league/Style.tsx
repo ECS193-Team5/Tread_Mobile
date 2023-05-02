@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
 		borderColor: '#9B9595',
 		borderWidth: 1,
 		height: '60%',
-		paddingLeft: 20
+		paddingLeft: 20,
+		color: 'grey'
 	},
 
 	DescInput: {
@@ -103,7 +104,8 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		height: '80%',
 		paddingLeft: 20,
-		textAlignVertical: 'top'
+		textAlignVertical: 'top',
+		color: 'grey'
 	},
 
 	EnterDescContainer : {
