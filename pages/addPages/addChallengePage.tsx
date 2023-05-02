@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Button,
@@ -7,11 +7,47 @@ import {
   Image
 } from 'react-native';
 
-
+import {styles} from '../../css/add/challenge/Style';
+import SwitchSelector from "react-native-switch-selector";
+import IssueChallenge from "../../components/add/issueChallenge";
+import ProgressChallenge from "../../components/add/progressChallenge";
 function AddChallengePage(props): JSX.Element {
 
+  const switchOptions = [
+    {label: 'Issue', value: 'issue'},
+    {label: 'Progress', value: 'progress'}
+  ];
+
+  const [pageType, setPageType] = useState("issue");
+  const [pageContent, setPageContent] = useState(<IssueChallenge/>);
+
+  useEffect(() => {
+    if(pageType === 'issue') {
+      setPageContent(<IssueChallenge/>);
+    } else {
+      setPageContent(<ProgressChallenge/>);
+    }
+  }, [pageType])
+
   return (
-    <View>
+    <View style = {styles.Background}>
+      <View style = {styles.ToggleContainer}>
+        <SwitchSelector
+            options = {switchOptions}
+            initial = {0}
+            selectedColor = 'white'
+            textColor = '#014421'
+            buttonColor = '#014421'
+            borderColor = '#014421'
+            onPress = {setPageType}
+            hasPadding = {true}
+        >
+        </SwitchSelector>
+      </View>
+      <View>
+        {pageContent}
+      </View>
+
     </View>
   )
 }
