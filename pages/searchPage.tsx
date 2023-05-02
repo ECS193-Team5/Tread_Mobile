@@ -22,8 +22,8 @@ import { SharedStyles } from '../css/shared/Style';
 import UserScroll from '../components/shared/UserScroll';
 
 const options = [
-  { label : "All" , value : 'All'},
-  { label : "Banned", value : 'Banned'},
+  { label : "All" , value : 'All Friends'},
+  { label : "Banned", value : 'Banned Friends'},
 ]
 
 const getFriends = function() {
@@ -59,7 +59,7 @@ function LeaguesPage(props): JSX.Element {
   // Check for invitations and update icon, but for now
   var IncomingImageUrl = "https://imgur.com/ULlEPhH.png"
   const [FriendData, setFriendData] = useState(getFriends)
-  const [friendType, setFriendType] = useState('All')
+  const [friendType, setFriendType] = useState('All Friends')
 
   const getdropdownIcon = function(){
     return (
@@ -110,7 +110,7 @@ function LeaguesPage(props): JSX.Element {
       </View>
 
       <View style = {styles.titleContainer}>
-        <Text style = {styles.TitleText}>{friendType + ' Friends'}</Text>
+        <Text style = {styles.TitleText}>{friendType}</Text>
       </View>
       <View style = {styles.filterContainer}>
         <SwitchSelector

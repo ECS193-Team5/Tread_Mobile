@@ -55,11 +55,10 @@ function SearchSwipeStack() {
       tabBarPosition='bottom'
     >
       <TopTab.Screen name = "Search" component= {SearchPage}/>
-      <TopTab.Screen name = "Incoming Challenges" component = {IncomingFriendsPage}/>
+      <TopTab.Screen name = "Incoming Friends" component = {IncomingFriendsPage}/>
     </TopTab.Navigator>
   )
 }
-
 
 function ChallengesStack(){
   return (
@@ -69,8 +68,6 @@ function ChallengesStack(){
   </Stack.Navigator>
   )
 }
-
-
 
 function LeaguesStack(){
   return (
@@ -88,8 +85,7 @@ function AddStack(){
   return (
   <Stack.Navigator>
     <Stack.Screen name = "Add" component={AddPage} options={{ headerShown: false }}/>
-    <Stack.Screen name = "AddChallenge" component={AddChallengePage} options={{ headerShown: false
-    }}/>
+    <Stack.Screen name = "AddChallenge" component={AddChallengePage} options={{ headerShown: false}}/>
     <Stack.Screen name = "AddFriend" component={AddFriendPage} options={{ headerShown: false }}/>
     <Stack.Screen name = "AddLeague" component={AddLeaguePage} options={{ headerShown: false }}/>
   </Stack.Navigator>

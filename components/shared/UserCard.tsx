@@ -22,6 +22,14 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     setCardRole(UserInfo.role)
   })
 
+  useEffect(() => {
+    if (UserRole === 'Sent'){
+      setSenderOrReceiver("To")
+    } else {
+      setSenderOrReceiver("From")
+    }
+  })
+
   // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
   const getImage = function() {
     return 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo'
@@ -55,7 +63,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const BlockUser = function(){
     console.log('blocked user ' +  UserInfo.displayName)
     //backend call here
-    if (UserRole === 'friendview'){
+    if (UserRole === 'All Friends'){
       handler(UserInfo)
     }
   }
@@ -89,6 +97,23 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     console.log('removed admin user ' +  UserInfo.displayName)
     // backend call here 
     // handler(UserInfo)
+  }
+
+  const RejectInvite = function(){
+    if (UserInfo === 'Sent'){
+      console.log('unsent outgoing request')
+      // backend call here 
+    } else {
+      console.log('rejected incoming request')
+      // backend call here
+    }
+    handler(UserInfo)
+  }
+
+  const AcceptInvite = function(){
+    console.log('accepted incoming request')
+    //backend call here
+    handler(UserInfo)
   }
   
   const friend = function() {
@@ -171,7 +196,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const removeAdmin = function(){
     return (
         <Pressable
-          onPress={AdminAdd}
+          onPress={AdminRemove}
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
@@ -190,14 +215,24 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const renderRightActions = (progress, dragX, handler) => {
     if (currentUser === UserInfo.username) {
       return null
-    } else if (UserRole === 'All'){
+    } else if (UserRole === 'Received' || UserRole === 'Sent') {
+      return (
+        <View style={SharedStyles.RightSliderContainer}>
+          <Pressable
+            onPress={RejectInvite}
+          >
+            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
+          </Pressable>   
+        </View>
+      );
+    } else if (UserRole === 'All' || UserRole === 'All Friends'){
       return(
         <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
           {block()}
           {unfriend()}
         </View>
       )
-    } else if (UserRole === 'Banned'){
+    } else if (UserRole === 'Banned Friends'){
       return(
         <View style={SharedStyles.RightSliderContainer}>
           {unban()}
@@ -222,8 +257,18 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
-    if (currentUser === UserInfo.username || UserRole === 'All' || UserRole === 'Banned') {
+    if (currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Banned Friends' || UserRole === 'Sent') {
       return null
+    } else if(UserRole === 'Received'){
+      return (
+        <View style={SharedStyles.LeftSliderContainer}>
+          <Pressable
+            onPress={AcceptInvite}
+          >
+            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
+          </Pressable>   
+        </View>
+      );
     } else {
       return (
         <View style={SharedStyles.LeftSliderContainer}>
@@ -236,6 +281,49 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
       );
     }
   };
+
+  const getUserInfo = function(){
+    return (
+      <View style = {[cardStyles.ChallengeNameContainer, {flexDirection : 'column'}]}>            
+        <Text style = {cardStyles.ChallengeNameText}>
+          {UserInfo.displayName}
+        </Text>
+        <Text style = {[cardStyles.ChallengeNameText, {color : "#F9A800"}]}>
+          {UserInfo.username}
+        </Text> 
+      </View>
+    )
+  }
+
+  const UserInfoOrRecipientInfo = function(){
+    if (UserRole === 'Sent' || UserRole === 'Received'){
+      return (
+        <View style = {[cardStyles.ChallengeNameContainer, {flexDirection : 'column', flex : 40}]}>            
+          <Text style = {cardStyles.ChallengeNameText}>
+            {SenderOrReceiver + " : "}
+          </Text>
+        </View>
+      )
+    } else {
+      return getUserInfo()
+    }
+  }
+
+  const isRoleInLeague = function(){
+    if(UserRole === 'All Friends' || UserRole === 'Banned Friends'){
+      return null
+    } else if(UserRole === 'Sent' || UserRole === 'Received'){
+      return getUserInfo()
+    } else {
+      return (
+        <View style = {[cardStyles.ChallengeNameContainer, {alignItems : 'center'}]}>
+          <Text style = {cardStyles.ChallengeNameText}>
+            {cardRole !== 'participant' ? cardRole.charAt(0).toUpperCase() + cardRole.slice(1) : null}
+          </Text>
+        </View>
+      )
+    } 
+  }
 
   return(
     <Swipeable
@@ -260,23 +348,8 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
         <View style = {cardStyles.seperator}/>
 
         <View style = {cardStyles.ChallengeCardTextContainer}>
-          <View style = {[cardStyles.ChallengeNameContainer, {flexDirection : 'column'}]}>
-            <Text style = {cardStyles.ChallengeNameText}>
-              {UserInfo.displayName}
-            </Text>
-            <Text style = {[cardStyles.ChallengeNameText, {color : "#F9A800"}]}>
-              {UserInfo.username}
-            </Text>
-          </View>
-          {UserRole === 'All' || UserRole === 'Banned' ? 
-            null 
-            :
-            <View style = {[cardStyles.ChallengeNameContainer, {alignItems : 'center'}]}>
-              <Text style = {cardStyles.ChallengeNameText}>
-                {cardRole !== 'participant' ? cardRole.charAt(0).toUpperCase() + cardRole.slice(1) : null}
-              </Text>
-            </View>
-          }
+            {UserInfoOrRecipientInfo()}
+            {isRoleInLeague()}
         </View>
       </View>
     </Swipeable>
