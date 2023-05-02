@@ -6,27 +6,25 @@ import {
   Text,
   Image,
   FlatList,
+  LayoutAnimation,
   Platform,
-  UIManager,
-  LayoutAnimation
+  UIManager
 } from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
-import ChallengesSwap from '../components/Challenges/ChallengeSwap';
-import LeagueCard from '../components/Leagues/LeagueCard';
+
+import {styles} from "../css/challenges/Style"
+import { SharedStyles } from '../css/shared/Style';
 
 import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
-import { cardStyles } from '../css/cards/Style';
-import {styles} from "../css/challenges/Style"
-import { SharedStyles } from '../css/shared/Style';
+import ChallengeInviteCard from '../components/shared/ChallengeInviteCard';
 import UserScroll from '../components/shared/UserScroll';
 
 const options = [
-  { label : "All" , value : 'All Friends'},
-  { label : "Banned", value : 'Banned Friends'},
+  { label : "Received" , value : 'Received'},
+  { label : "Sent", value : 'Sent'},
 ]
 
-const getFriends = function() {
+const getRequests = function() {
   // backend call here
   return (
     [
@@ -55,17 +53,10 @@ const getFriends = function() {
 }
 
 
-function LeaguesPage(props): JSX.Element {
-  // Check for invitations and update icon, but for now
-  var IncomingImageUrl = "https://imgur.com/ULlEPhH.png"
-  const [FriendData, setFriendData] = useState(getFriends)
-  const [friendType, setFriendType] = useState('All Friends')
-
-  const getdropdownIcon = function(){
-    return (
-    <Image style = {{width : 10, height : 10}}source={{uri: "https://imgur.com/ybSDJeh.png"}}/>
-    )
-  }
+function IncomingFriendsPage(props): JSX.Element {
+  var NavImageUrl = "https://imgur.com/nFRNXOB.png"  
+  const [RequestData, setRequests] = useState(getRequests)
+  const [pageTitle, setPageTitle] = useState('Received')
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -85,18 +76,24 @@ function LeaguesPage(props): JSX.Element {
     },
   };
   
-  const handleDropDown = function(selectedItem){
-    console.log(selectedItem)
-    setFriendType(selectedItem)
-    // set friends array here
+
+  const getdropdownIcon = function(){
+    return (
+    <Image style = {{width : 10, height : 10}}source={{uri: "https://imgur.com/ybSDJeh.png"}}/>
+    )
   }
 
-  const deleteMember = function(fData) {    
-    console.log(fData.username) 
-    console.log("deleted")
-    // when writing the backend call instead of setting the filtered data, set the actual member list to update everything accordingly
-    const filteredData = FriendData.filter(item => item.username !== fData.username);
-    setFriendData(filteredData)
+  const handleDropDown = function(selectedItem){
+    console.log(selectedItem)
+    setPageTitle(selectedItem)
+    // set challenges array here
+  }
+  
+  const deleteItem = function(rData) {    
+    console.log(rData.username)
+    console.log("deleted request")
+    const filteredData = RequestData.filter(item => item.username !== rData.username);
+    setRequests(filteredData)
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
 
@@ -105,12 +102,11 @@ function LeaguesPage(props): JSX.Element {
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
-          PageToSwap = {"Incoming Friends"}
-          imageUrl = {IncomingImageUrl}/>
+          PageToSwap = {"Search"}
+          imageUrl = {NavImageUrl}/>
       </View>
-
       <View style = {styles.titleContainer}>
-        <Text style = {styles.TitleText}>{friendType}</Text>
+        <Text style = {styles.TitleText}>{pageTitle} Requests</Text>
       </View>
       <View style = {styles.filterContainer}>
         <SwitchSelector
@@ -125,14 +121,14 @@ function LeaguesPage(props): JSX.Element {
       </View>
       <View style = {styles.ChallengesContainer}>
         <UserScroll
-          UserData={FriendData}
-          handler = {deleteMember}
-          UserRole = {friendType}
+          UserData={RequestData}
+          handler = {deleteItem}
+          UserRole = {pageTitle}
         />
-      </View> 
+      </View>
 
     </View>
   )
 }
 
-export default LeaguesPage;
+export default IncomingFriendsPage;

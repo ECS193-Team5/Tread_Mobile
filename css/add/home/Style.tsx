@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
 	GradientStyle : {
 		borderRadius: 20,
 		flex: 1,
-		flexDirection: 'row'
+		flexDirection: 'row',
+    backgroundColor : "#014421",
 	},
 
 	IconContainer: {
