@@ -21,7 +21,6 @@ function AddButton({onPress, title, description, imageUrl}): JSX.Element {
 					<View style = {styles.IconContainer}>
 					  <Image
 					    src = {imageUrl}
-// 					    src = {'https://reactnative.dev/img/tiny_logo.png'}
               style = {styles.Image}
 					    >
 					  </Image>

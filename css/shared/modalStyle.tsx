@@ -44,7 +44,6 @@ const modalstyle = StyleSheet.create({
 
   ProgressContainer : {
     flex : 60, 
-    borderRadius : 40,
     marginBottom : "25%"
   },
 
@@ -68,7 +67,43 @@ const modalstyle = StyleSheet.create({
     fontWeight : '300',
     fontSize : 15,
     color : "#014421"
-  }
+  },
+
+  QRTextContainer : {
+    flex: 25,
+    alignItems : 'center',
+    width : '90%',
+    alignSelf : 'center',
+    justifyContent : 'center',
+  },
+
+  QRTitleTextStyle : {
+    fontWeight : '600',
+    fontSize : 35,
+    color : "#014421"
+  },
+
+  QRCodeContainerStyle : {
+    borderRadius : 40,
+    borderWidth : 2,
+    width : '90%',
+    alignSelf : 'center',
+    borderColor : '#F9A800',
+    backgroundColor : '#D9D9D9'
+  },
+
+  QRCodePromptTextStyle : {
+    fontWeight : '600',
+    fontSize : 17,
+    color : "#014421"
+  },
+
+  QRCodePromptContainer : {
+    flex: 5,
+    borderRadius : 40,
+    alignItems : 'center',
+    marginTop : '5%'
+  },
 });
 
 export {modalstyle} 

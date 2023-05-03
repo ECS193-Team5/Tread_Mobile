@@ -60,7 +60,7 @@ function AddPage(props): JSX.Element {
     	<View style = {styles.ButtonContainer}>
     		<AddButton
     			title = 'League'
-    			description = 'Create or Invite to league'
+    			description = 'Create or Join to league'
     			onPress = {onAddLeaguePress}
     			imageUrl = 'https://i.imgur.com/mvWXcvC.png'
     		>

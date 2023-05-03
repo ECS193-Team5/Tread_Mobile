@@ -10,7 +10,7 @@ import {
   FlatList
 } from 'react-native';
 
-import { modalstyle } from '../../css/challenges/modalStyle';
+import { modalstyle } from '../../css/shared/modalStyle';
 import ChallengeCard from './ChallengeCard';
 import ProgressCard from './ProgressCard';
 

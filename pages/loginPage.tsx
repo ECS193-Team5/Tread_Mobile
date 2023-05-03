@@ -116,7 +116,7 @@ function Login(props): JSX.Element {
 //   	console.log('Logging in');
 		const authToken = await getGoogleToken();
 		const deviceToken = await getFCMToken();
-
+    console.log(authToken)
 // 		console.log(token);
 //     console.log(deviceToken);
 //     var FormData = require('form-data');

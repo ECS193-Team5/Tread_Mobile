@@ -32,6 +32,8 @@ function AddFriendPage(props): JSX.Element {
 	<Invite
 		text = 'Add Friend'
 		config = {config}
+    props = {props}
+    pagetoNav = "AddFriend"
 	>
 	</Invite>
   )
