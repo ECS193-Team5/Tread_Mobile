@@ -19,9 +19,10 @@ const styles = StyleSheet.create({
     ChallengeContainer : {
         flexDirection: 'column',
         flex: 80,
-        // backgroundColor: 'blue',
+        backgroundColor: 'white',
         marginLeft: '5%',
-        marginRight: '5%'
+        marginRight: '5%',
+        borderRadius: 20
     },
 
     BottomSeparator: {
@@ -33,13 +34,16 @@ const styles = StyleSheet.create({
     },
 
     ChallengeDropContainer: {
-        flex: 1,
-        // backgroundColor: 'green'
+        flex: 30,
+        // backgroundColor: 'green',
+        marginLeft: '5%',
+        marginRight: '5%'
     },
 
     EnterOwnContainer : {
         flex: 1,
         // backgroundColor: 'blue'
+        marginTop: '5%'
     },
 
     validInput: {
@@ -49,7 +53,62 @@ const styles = StyleSheet.create({
         paddingLeft: 25,
 //   	color: '#9B9595',
         fontSize : 16,
+        color: 'grey'
     },
+
+    invalidInput: {
+        borderRadius: 50,
+        borderColor: '#C65656',
+        borderWidth: 2,
+        paddingLeft: 25,
+//   	color: '#9B9595',
+        fontSize : 16,
+        color: '#C65656'
+    },
+
+    ActivityTitle: {
+        fontWeight: "400",
+        fontSize: 16,
+        color: '#014421',
+        marginTop: '5%',
+        marginBottom: '5%'
+    },
+
+    ChallengeAmountContainer : {
+        flex: 20,
+        flexDirection: 'column',
+        backgroundColor: 'black',
+        marginLeft: '5%',
+        marginRight: '5%'
+    },
+
+    CompletionDataContainer: {
+        flex: 15,
+        flexDirection: 'column',
+        backgroundColor: 'yellow',
+        marginLeft: '5%',
+        marginRight: '5%'
+    },
+
+    IssueToContainer: {
+        flex: 20,
+        flexDirection: 'column',
+        backgroundColor: 'red',
+        marginLeft: '5%',
+        marginRight: '5%'
+    },
+
+    SubmitContainer: {
+        flex: 15,
+        flexDirection: 'column',
+        backgroundColor: 'purple',
+        marginLeft: '5%',
+        marginRight: '5%'
+
+    }
+
+
+
 });
 
 export {styles}
