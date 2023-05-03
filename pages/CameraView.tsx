@@ -14,7 +14,6 @@ import {CameraScreen} from 'react-native-camera-kit';
 import {styles} from '../css/add/friend/Style';
 import { ImageStyles } from '../css/imageCluster/Style';
 
-
 function CameraView(props): JSX.Element {
   return (
     <View style = {{height : '100%'}}>

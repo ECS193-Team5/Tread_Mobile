@@ -11,13 +11,13 @@ const styles = StyleSheet.create({
 		flex: 10,
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
-    marginHorizontal : '5%'
+  marginHorizontal : '5%'
 	},
 
 	InputContainer : {
 		flex: 30,
-		flexDirection: 'column',
-		justifyContent: 'flex-start',
+		// flexDirection: 'column',
+		// justifyContent: 'flex-start',
     marginHorizontal : '5%',
 		backgroundColor: 'white',
 		borderRadius: 20,
@@ -37,11 +37,10 @@ const styles = StyleSheet.create({
 
 	FriendContainer: {
 		flex: 50,
-		flexDirection: 'column',
+		flexDirection: 'row',
 		justifyContent: 'center',
-		marginRight: '6%',
-		marginLeft: '6%',
-// 		backgroundColor: 'blue'
+    width : '100%',
+    alignItems : 'center',
 	},
 
 	SubmitContainer: {
@@ -50,7 +49,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		marginRight: '25%',
 		marginLeft: '25%',
-// 		backgroundColor: 'red'
 	},
 
 	Input: {
@@ -58,8 +56,10 @@ const styles = StyleSheet.create({
 		borderColor: '#9B9595',
 		borderWidth: 1,
 		height: '40%',
+    width : '80%',
 		paddingLeft: 20,
-		color: 'grey'
+		color: 'grey',
+    marginLeft : '4%' 
 	},
 
 	ButtonValid: {

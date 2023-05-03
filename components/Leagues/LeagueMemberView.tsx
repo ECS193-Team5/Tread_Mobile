@@ -160,6 +160,8 @@ function LeagueMemberView({MemberData, setLeagueMembers, props}): JSX.Element {
         <Invite
           text = 'Invite to League'
           config={config}
+          props = {props}
+          pagetoNav = 'League Details'
         />
       )
       // add add friend component here
