@@ -9,11 +9,18 @@ import {
 } from 'react-native';
 
 import {styles} from '../../css/add/league/Style';
+
 import {launchImageLibrary} from 'react-native-image-picker';
 import SwitchSelector from "react-native-switch-selector";
 
 import {BACKEND_URL} from '@env';
 import axios from 'axios';
+import LeagueInvite from '../../components/shared/LeagueInvite';
+
+const options = [
+  { label : "Create" , value : true},
+  { label : "Join", value : false}
+]
 
 function AddLeaguePage(props): JSX.Element {
 
@@ -27,6 +34,8 @@ function AddLeaguePage(props): JSX.Element {
 	const [validLeagueDesc, setValidLeagueDesc] = useState(false);
 
 	const [security, setSecurity] = useState("private");
+
+  const [isCreate, setIsCreate] = useState(true)
 
 	const switchOptions = [
 		{label: 'Private', value: 'private'},
@@ -77,6 +86,11 @@ function AddLeaguePage(props): JSX.Element {
 		return desc.length > 0
 	}
 
+  const handleDropDown = function(selectedItem){
+    console.log(selectedItem)
+    setIsCreate(selectedItem)
+  }
+
 	const onSubmit = function() {
 		var config = {
 			method: 'post',
@@ -104,18 +118,33 @@ function AddLeaguePage(props): JSX.Element {
 		.catch(function (error) {
 			console.log(error);
 		});
-
 	}
+
+  // const createOrJoin = function(){
+  //   if(isCreate){
+  //     return (
+
+  //     )
+  //   }
+  // }
 
   return (
 		<View style = {styles.Background}>
-			<View style = {styles.TitleContainer}>
-				<Text style = {styles.Title}>
-					Create League
-				</Text>
+      <View style = {styles.TitleContainer}>
+      <SwitchSelector
+          initial= {0}
+          onPress = {value => handleDropDown(value)}
+          textColor = {'#014421'}
+          selectedColor = {'#F9A800'}
+          buttonColor = {'#014421'}
+          hasPadding
+          options = {options}
+        />
 			</View>
 
-			<View style = {styles.InputContainer}>
+      {/* {createOrJoin()} */}
+			{isCreate ? 
+      <View style = {styles.InputContainer}>
 				<View style = {styles.InputTitle}>
 					<Text style = {styles.InputTitleText}>
 						Picture
@@ -198,10 +227,16 @@ function AddLeaguePage(props): JSX.Element {
 				</View>
 
 			</View>
+      :
+      <View style = {styles.InputContainer}>
+        <LeagueInvite
+          text = 'Join League'
+          // config={config}
+        />
+      </View>
+      }
 
-			<View style = {styles.SeparatorContainer}>
-			</View>
-
+			<View style = {styles.SeparatorContainer}/>
 		</View>
   )
 }

@@ -8,13 +8,22 @@ const styles = StyleSheet.create({
 	},
 
 	TitleContainer : {
-		flex: 10,
+    position : 'relative',
+    height : '9%',
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
-		marginRight: '5%',
-		marginLeft: '5%',
-// 		backgroundColor: 'blue'
+    marginHorizontal : '5%',
+    marginTop : '5%'
 	},
+
+  filterContainer : {
+    flex : 1.5,
+    width : "90%",
+    alignSelf : 'center',
+    alignItems : 'flex-end',
+    justifyContent : 'center',
+    marginBottom : '5%'
+  },
 
 	Title: {
 		fontSize: 28,

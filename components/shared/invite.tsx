@@ -54,7 +54,7 @@ function Invite({text, config}): JSX.Element {
             <View style = {styles.InputContainer}>
                 <View style = {styles.FriendContainer}>
                     <TextInput
-                        placeholder = "Enter friend id"
+                        placeholder = "Enter User ID"
                         placeholderTextColor= "grey"
                         style = {styles.Input}
                         onChangeText = {onFriendChange}

@@ -13,15 +13,13 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-end',
 		marginRight: '5%',
 		marginLeft: '5%',
-// 		backgroundColor: 'blue'
 	},
 
 	InputContainer : {
 		flex: 30,
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
-		marginRight: '5%',
-		marginLeft: '5%',
+    marginHorizontal : '5%',
 		backgroundColor: 'white',
 		borderRadius: 20,
 		marginTop: '5%'
