@@ -15,6 +15,10 @@ import IncomingChallengesPage from '../../pages/incomingChallengesPage'
 import AddChallengePage from '../../pages/addPages/addChallengePage'
 import AddFriendPage from '../../pages/addPages/addFriendPage'
 import AddLeaguePage from '../../pages/addPages/addLeaguePage'
+import IncomingLeaguesPage from '../../pages/incomingLeaguesPage';
+import LeagueDetails from '../../pages/leagueDetails';
+import IncomingFriendsPage from '../../pages/incomingFriendsPage';
+import CameraView from '../../pages/CameraView';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,9 +27,7 @@ const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
 import {styles} from '../../css/navigation/Style';
-import IncomingLeaguesPage from '../../pages/incomingLeaguesPage';
-import LeagueDetails from '../../pages/leagueDetails';
-import IncomingFriendsPage from '../../pages/incomingFriendsPage';
+
 
 function ChallengesSwipeStack() {
   return (
@@ -164,10 +166,7 @@ function Navigator(){
         <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false }}/>
         <Stack.Screen name = "Signup" component={Signup} options={{ headerShown: false }}/>
         <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false}}/>
-{/* 				<Stack.Screen name="AddChallenge" component={AddChallengeStack} options={{headerShown: false}}/> */}
-{/* 				<Stack.Screen name="AddFriend" component={AddFriendStack} options={{headerShown: false}}/> */}
-{/* 				<Stack.Screen name="AddLeague" component={AddLeagueStack} options={{headerShown: false}}/> */}
-
+        <Stack.Screen name = "CameraView" component={CameraView} options={{ headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

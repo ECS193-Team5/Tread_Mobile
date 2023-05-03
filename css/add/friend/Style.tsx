@@ -11,8 +11,7 @@ const styles = StyleSheet.create({
 		flex: 10,
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
-		marginRight: '5%',
-		marginLeft: '5%',
+    marginHorizontal : '5%'
 	},
 
 	InputContainer : {

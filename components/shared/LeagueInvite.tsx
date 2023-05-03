@@ -1,57 +1,40 @@
 import React, { useState, useEffect} from 'react';
 import {
     View,
-    Button,
-    StyleSheet,
     Text,
-    TextInput,
-    Pressable
+    Linking,
+    Pressable,
+    Platform,
+    PermissionsAndroid,
 } from 'react-native';
 
 import {styles} from '../../css/add/friend/Style';
 import axios from "axios";
+import {CameraScreen} from 'react-native-camera-kit';
 
-function LeagueInvite({text, config}): JSX.Element {
-    const [friendID, setFriendID] = useState("");
-    const [validID, setValidID] = useState(false);
-    const [placeholder, setPlaceholder] = useState("Enter friend ID");
-
-    const onSubmit = async function() {
-        // config['data']['friendName'] = friendID;
-
-        // axios(config)
-        //     .then(function (response) {
-        //         console.log(JSON.stringify(response.data));
-        //         onFriendChange("");
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //         onFriendChange("");
-        //     });
-        // console.log('qr code view opened')
-
-    }
-
-    return (
-        <View style = {styles.Background}>
-            <View style = {[styles.InputContainer, {flex: 20, marginTop : '0%', marginHorizontal : '0%'}]}>
-                <View style = {[styles.SubmitContainer,{justifyContent : 'center'}]}>
-                    <Pressable style = {styles.ButtonValid}
-                               onPress = {onSubmit}>
-                        <Text style = {styles.RequestText}>
-                            Scan QR Code
-                        </Text>
-                    </Pressable>
-                </View>
-
-            </View>
-
-            <View style = {styles.SeparatorContainer}>
-            </View>
-
+function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {  
+  return (
+      <View style = {styles.Background}>
+        <View style = {[styles.InputContainer, {flex: 20, marginTop : '0%', marginHorizontal : '0%'}]}>
+          <View style = {[styles.SubmitContainer,{justifyContent : 'center'}]}>
+            <Pressable style = {styles.ButtonValid}
+              onPress = {onPress}
+            >
+              <Text style = {styles.RequestText}>
+                Scan QR Code
+              </Text>
+            </Pressable>
+          </View>
         </View>
-    )
-
+        <Text style = {styles.RequestText}>
+            {qrValue}
+        </Text>
+        <View style = {styles.SeparatorContainer}>
+        </View>
+      </View>
+    // } 
+    // </View>
+  )
 }
 
 export default LeagueInvite;

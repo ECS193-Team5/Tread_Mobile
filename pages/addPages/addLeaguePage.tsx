@@ -1,11 +1,12 @@
 import React, { useState, useEffect} from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
   Text,
   TextInput,
-  Pressable
+  Pressable,
+  Platform,
+  PermissionsAndroid,
+  StatusBar,
 } from 'react-native';
 
 import {styles} from '../../css/add/league/Style';
@@ -23,6 +24,51 @@ const options = [
 ]
 
 function AddLeaguePage(props): JSX.Element {
+  const [qrValue, setQrValue] = useState('')
+  const [openScanner, setOpenScanner] = useState(false)
+  const [defaultTab ,setDefaultTab] = useState(0)
+
+  
+  const onBarcodeScan = function(qrvalue) {
+    setQrValue(qrvalue)
+    setOpenScanner(false)
+    props.navigation.navigate("AddLeague")
+  }
+
+  const handleBack = function(qrValue) {
+    setDefaultTab(1)
+    setOpenScanner(false)
+    props.navigation.navigate("AddLeague")
+  }
+
+  const onOpenScanner = function() {
+    if (Platform.OS === 'android') {
+      async function requestCameraPermission() {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+              title: 'Camera Permission',
+              message: 'App needs permission for camera access',
+            },
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            setQrValue('');
+            setOpenScanner(true);
+          } else {
+            alert('CAMERA permission denied');
+          }
+        } catch (err) {
+          alert('Camera permission err', err);
+          console.warn(err);
+        }
+      }
+      requestCameraPermission();
+    } else {
+      setQrValue('');
+      setOpenScanner(true);
+    }
+  }
 
 	const [picture, setPicture] = useState({});
 	const [validPicture, setValidPicture] = useState(false);
@@ -120,124 +166,125 @@ function AddLeaguePage(props): JSX.Element {
 		});
 	}
 
-  // const createOrJoin = function(){
-  //   if(isCreate){
-  //     return (
-
-  //     )
-  //   }
-  // }
-
   return (
 		<View style = {styles.Background}>
-      <View style = {styles.TitleContainer}>
-      <SwitchSelector
-          initial= {0}
-          onPress = {value => handleDropDown(value)}
-          textColor = {'#014421'}
-          selectedColor = {'#F9A800'}
-          buttonColor = {'#014421'}
-          hasPadding
-          options = {options}
-        />
-			</View>
-
-      {/* {createOrJoin()} */}
-			{isCreate ? 
-      <View style = {styles.InputContainer}>
-				<View style = {styles.InputTitle}>
-					<Text style = {styles.InputTitleText}>
-						Picture
-					</Text>
-				</View>
-
-				<View style = {styles.ChoosePicContainer}>
-					<Pressable style = {styles.ChoosePicButton} onPress = {onChoosePicPress}>
-						<Text style = {styles.ChoosePicText}>
-							Choose Picture
-						</Text>
-					</Pressable>
-				</View>
-
-				<View style = {styles.InputTitle}>
-					<Text style = {styles.InputTitleText}>
-						Name
-					</Text>
-				</View>
-
-				<View style = {styles.EnterLeagueContainer}>
-					<TextInput
-						placeholder = "Enter league name"
-						placeholderTextColor= "grey"
-						style = {styles.NameInput}
-						onChangeText = {onLeagueNameChange}
-						value = {leagueName}
-					>
-					</TextInput>
-				</View>
-
-				<View style = {styles.InputTitle}>
-					<Text style = {styles.InputTitleText}>
-						Description
-					</Text>
-				</View>
-
-				<View style = {styles.EnterDescContainer}>
-					<TextInput
-						placeholder = "Enter league description"
-						placeholderTextColor= "grey"
-						style = {styles.DescInput}
-						onChangeText = {onLeagueDescChange}
-						value = {leagueDesc}
-						multiline = {true}
-					>
-					</TextInput>
-				</View>
-
-				<View style = {styles.InputTitle}>
-					<Text style = {styles.InputTitleText}>
-						Security
-					</Text>
-				</View>
-
-				<View style = {styles.ChooseSecContainer}>
-					<SwitchSelector
-						options = {switchOptions}
-						initial = {0}
-						selectedColor = 'white'
-						textColor = '#014421'
-						buttonColor = '#014421'
-						borderColor = '#014421'
-						onPress = {setSecurity}
-						hasPadding = {true}
-					>
-					</SwitchSelector>
-				</View>
-
-				<View style = {styles.EnterButtonContainer}>
-					<Pressable
-						style = {(validPicture && validLeagueName && validLeagueDesc) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
-						onPress = {onSubmit}
-						disabled = {!(validPicture && validLeagueName && validLeagueDesc)}
-						>
-						<Text style = {styles.ChoosePicText}>
-							Submit
-						</Text>
-					</Pressable>
-				</View>
-
-			</View>
+      <StatusBar
+        barStyle="dark-content"
+      />
+      
+      {openScanner ?
+      props.navigation.navigate("CameraView", {qrValue : qrValue, setQrValue : setQrValue, openScanner : openScanner, setOpenScanner, onBarcodeScan : onBarcodeScan, handleBack : handleBack})
       :
-      <View style = {styles.InputContainer}>
-        <LeagueInvite
-          text = 'Join League'
-          // config={config}
-        />
+      <View style = {{flex:1}}>
+        <View style = {styles.TitleContainer}>
+          <SwitchSelector
+              initial= {defaultTab}
+              onPress = {value => handleDropDown(value)}
+              textColor = {'#014421'}
+              selectedColor = {'#F9A800'}
+              buttonColor = {'#014421'}
+              hasPadding
+              options = {options}
+            />
+        </View>
+        
+        {isCreate ? 
+          <View style = {styles.InputContainer}>
+            <View style = {styles.InputTitle}>
+              <Text style = {styles.InputTitleText}>
+                Picture
+              </Text>
+            </View>
+
+            <View style = {styles.ChoosePicContainer}>
+              <Pressable style = {styles.ChoosePicButton} onPress = {onChoosePicPress}>
+                <Text style = {styles.ChoosePicText}>
+                  Choose Picture
+                </Text>
+              </Pressable>
+            </View>
+
+            <View style = {styles.InputTitle}>
+              <Text style = {styles.InputTitleText}>
+                Name
+              </Text>
+            </View>
+
+            <View style = {styles.EnterLeagueContainer}>
+              <TextInput
+                placeholder = "Enter league name"
+                placeholderTextColor= "grey"
+                style = {styles.NameInput}
+                onChangeText = {onLeagueNameChange}
+                value = {leagueName}
+              >
+              </TextInput>
+            </View>
+
+            <View style = {styles.InputTitle}>
+              <Text style = {styles.InputTitleText}>
+                Description
+              </Text>
+            </View>
+
+            <View style = {styles.EnterDescContainer}>
+              <TextInput
+                placeholder = "Enter league description"
+                placeholderTextColor= "grey"
+                style = {styles.DescInput}
+                onChangeText = {onLeagueDescChange}
+                value = {leagueDesc}
+                multiline = {true}
+              >
+              </TextInput>
+            </View>
+
+            <View style = {styles.InputTitle}>
+              <Text style = {styles.InputTitleText}>
+                Security
+              </Text>
+            </View>
+
+            <View style = {styles.ChooseSecContainer}>
+              <SwitchSelector
+                options = {switchOptions}
+                initial = {0}
+                selectedColor = 'white'
+                textColor = '#014421'
+                buttonColor = '#014421'
+                borderColor = '#014421'
+                onPress = {setSecurity}
+                hasPadding = {true}
+              >
+              </SwitchSelector>
+            </View>
+
+            <View style = {styles.EnterButtonContainer}>
+              <Pressable
+                style = {(validPicture && validLeagueName && validLeagueDesc) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
+                onPress = {onSubmit}
+                disabled = {!(validPicture && validLeagueName && validLeagueDesc)}
+                >
+                <Text style = {styles.ChoosePicText}>
+                  Submit
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        :
+          <View style = {styles.InputContainer}>
+            <LeagueInvite
+              text = 'Join League'
+              // config={config}
+              onPress = {onOpenScanner}
+              qrValue = {qrValue}
+            />
+          </View>
+        }
+      <View style = {styles.SeparatorContainer}/>
       </View>
       }
-
-			<View style = {styles.SeparatorContainer}/>
-		</View>
+		  </View>
   )
 }
 
