@@ -12,8 +12,9 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
 import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
 
-function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
+function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
   const [cardRole, setCardRole] = useState('')
   const [currentUser, setCurrentUser] = useState('Kauboy#8925')
@@ -119,6 +120,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const AdminRemoveSelf = function(){
     console.log('Removed Self as Admin')
     //backend call here
+    props.navigation.navigate("Leagues")
   }
 
   const friend = function() {

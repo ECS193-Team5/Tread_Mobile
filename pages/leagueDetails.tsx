@@ -346,6 +346,7 @@ function LeagueDetails(props): JSX.Element {
         <LeagueMemberView
           MemberData={LeagueMembers}
           setLeagueMembers = {setLeagueMembers}
+          props = {props}
         /> 
       : 
       <View style = {LeagueStyles.MembersChallengesContainer}>

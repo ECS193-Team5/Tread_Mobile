@@ -13,7 +13,7 @@ import {
 import UserCard from './UserCard';
 import {styles} from "../../css/challenges/Style"
 
-function UserScroll({UserData, handler, UserRole}): JSX.Element {
+function UserScroll({UserData, handler, UserRole, props}): JSX.Element {
   const renderUser = ({item, index}) => {    
     return (
     <UserCard 
@@ -21,6 +21,7 @@ function UserScroll({UserData, handler, UserRole}): JSX.Element {
       index = {index}
       handler = {handler}
       UserRole = {UserRole}
+      props = {props}
     />
     )
   }

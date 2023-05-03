@@ -59,7 +59,7 @@ function getRequests() {
   ])
 } 
 
-function LeagueMemberView({MemberData, setLeagueMembers}): JSX.Element {  
+function LeagueMemberView({MemberData, setLeagueMembers, props}): JSX.Element {  
   
   const [isAdminOwnerParticipant, setIsAdminOwnerParticipant] = useState("")
   const [currentView, setCurrentView] = useState("all")
@@ -146,6 +146,7 @@ function LeagueMemberView({MemberData, setLeagueMembers}): JSX.Element {
         UserData={MemberData}
         handler = {deleteMember}
         UserRole = {isAdminOwnerParticipant}
+        props = {props}
       />)
     } else if (currentView !== 'invite'){
       return (
