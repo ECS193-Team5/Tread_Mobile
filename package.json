@@ -36,6 +36,7 @@
     "react-native-ionicons": "^4.6.5",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-modal": "^13.0.1",
+    "react-native-numeric-input": "^1.9.1",
     "react-native-pager-view": "^6.2.0",
     "react-native-progress": "^5.0.0",
     "react-native-progress-circle": "^2.1.0",

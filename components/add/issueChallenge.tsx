@@ -3,6 +3,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 DropDownPicker.setListMode("MODAL")
 import mappedChallengeList from "./challengeList";
 import {styles} from '../../css/add/challenge/Style';
+import NumericInput from 'react-native-numeric-input'
 
 import {
     View,
@@ -27,6 +28,7 @@ function IssueChallenge(): JSX.Element {
     const [customActivity, setCustomActivity] = useState("");
     const [validCustomActivity, setValidCustomActivity] = useState(true);
 
+    const [challengeAmount, setChallengeAmount] = useState(0);
     useEffect(() => {
         if(value === 'Enter your own') {
             setCustomTextEditable(true);
@@ -82,6 +84,42 @@ function IssueChallenge(): JSX.Element {
 
             </View>
             <View style={styles.ChallengeAmountContainer}>
+                <Text style={styles.ActivityTitle}>
+                    Activity
+                </Text>
+
+                <View style={styles.EnterChallengeAmount}>
+                    <View style={styles.NumericInput}>
+                        <NumericInput
+                            onChange={setChallengeAmount}
+                            value={challengeAmount}
+                            minValue={0}
+                            rounded={true}
+                            inputStyle={{borderColor: '#014421'}}
+                            iconStyle={{color: 'white'}}
+                            textColor="black"
+                            rightButtonBackgroundColor="#014421"
+                            leftButtonBackgroundColor="#014421"
+                        />
+                    </View>
+
+                    <View style={styles.UnitDropdown}>
+                        <DropDownPicker
+                            setValue={setValue}
+                            value={value}
+                            items={items}
+                            open={open}
+                            setOpen={setOpen}
+                            placeholder={'Units'}
+                            // containerStyle={{width: '50%'}}
+                        >
+                        </DropDownPicker>
+
+                    </View>
+
+                </View>
+
+
 
             </View>
             <View style = {styles.CompletionDataContainer}>

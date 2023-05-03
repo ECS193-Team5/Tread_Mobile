@@ -77,9 +77,26 @@ const styles = StyleSheet.create({
     ChallengeAmountContainer : {
         flex: 20,
         flexDirection: 'column',
-        backgroundColor: 'black',
+        // backgroundColor: 'black',
         marginLeft: '5%',
         marginRight: '5%'
+    },
+
+    EnterChallengeAmount: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+
+    NumericInput: {
+        flex: 60,
+        // backgroundColor: 'blue'
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+
+    UnitDropdown: {
+      flex: 40,
+        marginRight: '10%'
     },
 
     CompletionDataContainer: {
