@@ -1,3 +1,4 @@
+
 import AppleHealthKit, {
     HealthValue,
     HealthKitPermissions,
@@ -9,12 +10,13 @@ import {
     View,
      } from 'react-native';
 import {HealthKit} from "./exerciseNameConverstion.json";
-import {BACKEND_URL} from '@env';
+import { BACKEND_URL } from '@env';
 import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
-
+//
 const ListenerComponentHealthKit = () =>{
     useEffect(() => {
         try{
+        console.log("Setting off the Apple Version of Health");
         AppleHealthKit.isAvailable((err: Object, available: boolean) => {
             if (err) {
                 console.log('error initializing Healthkit: ', err)
@@ -145,6 +147,7 @@ const ListenerComponentHealthKit = () =>{
         }
 
         function convertWorkout(workoutData){
+            console.log(workoutData);
             let name = HealthKit[workoutData.activityName];
             let start = Date.parse(workoutData.start);
             let end = Date.parse(workoutData.end);
@@ -191,7 +194,7 @@ const ListenerComponentHealthKit = () =>{
                     return;
                 }
 
-                /* Can now read or write to HealthKit  */
+                /* Can now read or write to HealthKit */
                 let startDate = getMostRecentDateRead();
 
 

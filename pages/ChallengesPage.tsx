@@ -261,8 +261,8 @@ function ChallengesPage(props): JSX.Element {
 
   return (
     <View style = {styles.container}>
-       <ListenerComponentHealthConnect/>
-       <ListenerComponentHealthKit/>
+      <ListenerComponentHealthConnect/>
+<ListenerComponentHealthKit/>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
