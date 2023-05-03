@@ -4,7 +4,11 @@ import {
   Button,
   StyleSheet,
   Text,
-  Image
+  Image,
+  Pressable,
+  Platform,
+  UIManager,
+  LayoutAnimation
 } from 'react-native';
 
 import SwitchSelector from "react-native-switch-selector"
@@ -16,10 +20,60 @@ import { ImageStyles } from '../css/imageCluster/Style';
 import ChallengeScroll from '../components/shared/ChallengeScroll';
 import LeagueMemberView from '../components/Leagues/LeagueMemberView';
 
+const getLeagueMembers = function(){
+  return (
+    [
+      {
+          "username": "User#6822",
+          "displayName": "Rebekah Grace",
+          "role": "owner"
+      },
+      {
+          "username": "yadda#7651",
+          "displayName": "yadda",
+          "role": "admin"
+      },
+      {
+          "username": "Kauboy#8925",
+          "displayName": "Kaushik",
+          "role": "participant"
+      },
+      {
+        "username": "Test#1234",
+        "displayName": "Tester1",
+        "role": "participant"
+      },
+      {
+        "username": "Test2#1234",
+        "displayName": "Tester 2",
+        "role": "participant"
+      }
+    ]
+  )
+}
+
 function LeagueDetails(props): JSX.Element {
   var imageUrl = "https://imgur.com/nFRNXOB.png"  
-
   var LeagueImage = 'https://imgur.com/N31G5Sk.png'
+
+
+  if (Platform.OS === 'android') {
+    if (UIManager.setLayoutAnimationEnabledExperimental) {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }
+
+  const layoutAnimConfig = {
+    duration: 1000,
+    update: {
+      type: LayoutAnimation.Types.easeInEaseOut, 
+    },
+    delete: {
+      duration: 200,
+      type: LayoutAnimation.Types.easeOut,
+      property: LayoutAnimation.Properties.opacity,
+    },
+  };
   
   const options = [
     { label : "Members" , value : true},
@@ -27,37 +81,11 @@ function LeagueDetails(props): JSX.Element {
   ]
 
   const [isMembers, setIsMembers] = useState("Members")
-  
-  const LeagueMembers = 
-  [
-    {
-        "username": "User#6822",
-        "displayName": "Rebekah Grace",
-        "role": "owner"
-    },
-    {
-        "username": "yadda#7651",
-        "displayName": "yadda",
-        "role": "admin"
-    },
-    {
-        "username": "Kauboy#8925",
-        "displayName": "Kaushik",
-        "role": "participant"
-    },
-    {
-      "username": "Test#1234",
-      "displayName": "Tester1",
-      "role": "participant"
-    },
-    {
-      "username": "Test2#1234",
-      "displayName": "Tester 2",
-      "role": "participant"
-    }
-]
-  
-  
+  // get description and other stuff from from backend call get_league_name_description_type
+  const [description, setDescription] = useState("Description")
+  const [security, setSecurity] = useState("Private")
+  const [LeagueMembers, setLeagueMembers] = useState(getLeagueMembers)
+
   const ChallengeData = [
     {
       "_id": "642f81a350e4b483053a9cc1",
@@ -225,6 +253,12 @@ function LeagueDetails(props): JSX.Element {
     }
   ]
   
+  const handleLeave = function() {
+    console.log("Left")
+    //backend call to leave league
+    props.navigation.navigate("Leagues")
+  }
+
   return (
     <View style = {styles.container}>
       <View style = {styles.topRightClickContainer}>
@@ -235,15 +269,25 @@ function LeagueDetails(props): JSX.Element {
       </View>
 
       <View style = {LeagueStyles.LeagueInfoCardContainer}>
-        <View style = {[LeagueStyles.LeagueInfoCard, cardStyles.shadowProp]}>
-          <View style = {LeagueStyles.LeagueNameContainer}> 
-            <Text style = {styles.TitleText}>{props.route.params.leagueData.leagueName}</Text>
+        <View style = {[LeagueStyles.LeagueInfoCard, cardStyles.shadowProp]}>   
+          <View style = {LeagueStyles.LeagueInfoContainer}> 
+            <View style = {LeagueStyles.LeagueImageContainer}>
+              <Image style ={ImageStyles.LeagueImage} source={{uri: LeagueImage}}/>
+            </View>
+        
+            <View style = {LeagueStyles.LeagueNameContainer}>
+              <Pressable
+                onPress={handleLeave}
+                style = {{alignSelf : 'flex-end'}}
+              >
+                <Text style = {[styles.TitleText, {fontSize : 13, color: 'red', marginRight : '10%'}]}>Leave</Text>
+              </Pressable>
+              <Text style = {styles.TitleText}>{props.route.params.leagueData.leagueName}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 15}]}>{description}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 15}]}>{security}</Text>
+            </View>            
           </View>
         
-          <View style = {LeagueStyles.LeagueImageContainer}>
-            <Image style ={ImageStyles.LeagueImage} source={{uri: LeagueImage}}/>
-          </View>
-
           <View style = {LeagueStyles.ToggleContainer}>
             <SwitchSelector
               initial= {0}
@@ -263,6 +307,7 @@ function LeagueDetails(props): JSX.Element {
       {isMembers ? 
         <LeagueMemberView
           MemberData={LeagueMembers}
+          setLeagueMembers = {setLeagueMembers}
         /> 
       : 
       <View style = {LeagueStyles.MembersChallengesContainer}>

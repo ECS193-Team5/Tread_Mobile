@@ -34,7 +34,9 @@ const styles = StyleSheet.create({
 
   Image : {
     height: '55%',
-    width: '55%'
+    width: '55%',
+//     backgroundColor: 'blue',
+    resizeMode: 'contain'
   },
 
 	SeparatorLine: {
@@ -46,7 +48,8 @@ const styles = StyleSheet.create({
 	GradientStyle : {
 		borderRadius: 20,
 		flex: 1,
-		flexDirection: 'row'
+		flexDirection: 'row',
+    backgroundColor : "#014421",
 	},
 
 	IconContainer: {

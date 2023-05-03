@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
 		borderColor: '#9B9595',
 		borderWidth: 1,
 		height: '40%',
-		paddingLeft: 20
+		paddingLeft: 20,
+		color: 'grey'
 	},
 
 	ButtonValid: {

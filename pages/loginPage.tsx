@@ -123,6 +123,7 @@ function Login(props): JSX.Element {
 //     var data = new FormData();
 
 //     data.append('deviceToken', deviceToken);
+    // console.log(BACKEND_URL)
 		var config = {
       method: 'post',
       url: BACKEND_URL + 'auth/login/google',

@@ -15,8 +15,8 @@ function AddButton({onPress, title, description, imageUrl}): JSX.Element {
 	return (
 			<Pressable onPress = {onPress} style = {styles.Button}>
 				<LinearGradient
-					colors={['#014421','#71a88c']}
-					style={styles.GradientStyle}
+          colors={['rgba(1, 63, 33,1)', 'rgba(1, 63, 33,0.5)', 'rgb(1, 100, 0)']}
+          style={styles.GradientStyle}
 					>
 					<View style = {styles.IconContainer}>
 					  <Image

@@ -15,6 +15,7 @@ import { SharedStyles } from '../../css/shared/Style';
 import {GestureHandlerRootView, Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
 
 
+// @ts-ignore
 function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
   
@@ -103,7 +104,7 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
         ref={(ref) => (row[index] = ref)}
         friction = {1.5}
         leftThreshold = {30}
-        righThreshold = {30}
+        rightThreshold = {30}
         childrenContainerStyle = {styles.FlatListContainer}>
         <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
           <View style = {cardStyles.ImageContainer}>

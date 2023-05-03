@@ -30,7 +30,7 @@ function AddPage(props): JSX.Element {
 
     		<AddButton
     			title = 'Challenge'
-    			description = 'Issue a new challenge'
+    			description = 'Issue or Progress challenge'
     			onPress = {onAddChallengePress}
     			imageUrl = 'https://i.imgur.com/ZIgWWQq.png'
     		>
@@ -60,7 +60,7 @@ function AddPage(props): JSX.Element {
     	<View style = {styles.ButtonContainer}>
     		<AddButton
     			title = 'League'
-    			description = 'Create League'
+    			description = 'Create or Invite to league'
     			onPress = {onAddLeaguePress}
     			imageUrl = 'https://i.imgur.com/mvWXcvC.png'
     		>
