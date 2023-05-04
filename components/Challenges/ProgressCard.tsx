@@ -13,7 +13,7 @@ import {progressCardStyle} from '../../css/challenges/progressCardStyle'
 import * as Progress from 'react-native-progress';
 
 // Get Image here from cloudinary again
-const image = 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo'
+const image = 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683777600&v=beta&t=HUgGzkTxHKUGP6_JQupbKEty3qKO-dd8Spm52asCjH8'
             
 function ProgressCard({ProgressObj}){
   

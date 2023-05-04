@@ -37,7 +37,7 @@ const ProgressInfo = [
   }
 ]
 
-function ChallengeModalPopUp({Challenge}) {
+function ChallengeModalPopUp({Challenge, isWeekly}) {
   
   const renderProgress = ({item}) => {
     return (
@@ -46,12 +46,21 @@ function ChallengeModalPopUp({Challenge}) {
     )
   }
 
-  var time_left = ((new Date(Challenge.dueDate)-new Date(Challenge.issueDate))/(1000*60*60*24))
+  var time_left = Math.round((new Date(Challenge.dueDate)-new Date(Challenge.issueDate))/(1000*60*60*24))
+  var title = ''
+  var sentUser = ''
+  if (!isWeekly){
+    title = Challenge.challengeType.charAt(0).toUpperCase() + Challenge.challengeType.slice(1) + ' Challenge'
+    sentUser = "      " + Challenge.sentUser
+  } else {
+    title = 'Global Challenge'
+    sentUser = '      Tread Mobile'
 
+  }
   return(
     <View style={modalstyle.container}>
       <View style = {modalstyle.PopUpTextContainer}>
-        <Text style = {modalstyle.TitleTextStyle}> Challenge </Text>
+        <Text style = {modalstyle.TitleTextStyle}>{title}</Text>
       </View>
       <View style = {modalstyle.PopUpChallengeDescriptionContainer}>
         <View style = {modalstyle.ChallengeInfoIndividualContainer}> 
@@ -62,7 +71,7 @@ function ChallengeModalPopUp({Challenge}) {
         
         <View style = {modalstyle.ChallengeInfoIndividualContainer}> 
           <Text style = {modalstyle.InfoTypeTextStyle}>Assigned by      :     
-            <Text style = {modalstyle.InfoTextStyle}>{"      " + Challenge.sentUser}</Text>
+            <Text style = {modalstyle.InfoTextStyle}>{sentUser}</Text>
           </Text>
         </View>
         

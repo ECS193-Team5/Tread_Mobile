@@ -27,7 +27,7 @@ function ChallengesSwap({onPress,text, available, imageURL}): JSX.Element {
           <Text style = {cardStyles.ChallengeTypeText}>{text}</Text>
         </View>
         <View>
-          <Text style = {cardStyles.ChallengeCountText}>{available} available </Text>
+          <Text style = {cardStyles.ChallengeCountText}>{available}</Text>
         </View>
       </View>
       </LinearGradient>

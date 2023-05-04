@@ -529,7 +529,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = run.tread.treadmobileTest;
+				PRODUCT_BUNDLE_IDENTIFIER = run.tread.treadmobile;
 				PRODUCT_NAME = TreadMobile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -560,7 +560,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = run.tread.treadmobileTest;
+				PRODUCT_BUNDLE_IDENTIFIER = run.tread.treadmobile;
 				PRODUCT_NAME = TreadMobile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
