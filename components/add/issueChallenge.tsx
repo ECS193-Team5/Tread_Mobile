@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 DropDownPicker.setListMode("MODAL")
 import mappedChallengeList from "./challengeList";
+import unitList from "./unitList";
 import {styles} from '../../css/add/challenge/Style';
 import NumericInput from 'react-native-numeric-input'
 
@@ -21,6 +22,10 @@ function IssueChallenge(): JSX.Element {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState(mappedChallengeList);
+
+    const [openUnits, setOpenUnits] = useState(false);
+    const [valueUnits, setValueUnits] = useState(null);
+    const [itemsUnits, setItemsUnits] = useState(unitList);
 
     const [customText, setCustomText] = useState("");
     const [customTextEditable, setCustomTextEditable] = useState(false);
@@ -105,11 +110,11 @@ function IssueChallenge(): JSX.Element {
 
                     <View style={styles.UnitDropdown}>
                         <DropDownPicker
-                            setValue={setValue}
-                            value={value}
-                            items={items}
-                            open={open}
-                            setOpen={setOpen}
+                            setValue={setValueUnits}
+                            value={valueUnits}
+                            items={itemsUnits}
+                            open={openUnits}
+                            setOpen={setOpenUnits}
                             placeholder={'Units'}
                             // containerStyle={{width: '50%'}}
                         >
@@ -118,8 +123,6 @@ function IssueChallenge(): JSX.Element {
                     </View>
 
                 </View>
-
-
 
             </View>
             <View style = {styles.CompletionDataContainer}>
