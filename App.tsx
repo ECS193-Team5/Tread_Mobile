@@ -16,8 +16,7 @@ function App(): JSX.Element {
     // Get the deep link used to open the app
     const getUrl = async () => {
       const universalLink = await Linking.getInitialURL();
-      console.log("is this the other run?", universalLink);
-      //handle universal link
+      console.log(universalLink);
     };
 
     getUrl();

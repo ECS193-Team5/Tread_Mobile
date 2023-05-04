@@ -1,4 +1,4 @@
-/*import {
+import {
     View,
 } from 'react-native';
 import axios from 'axios';
@@ -151,4 +151,3 @@ const ListenerComponentHealthConnect = () => {
     return (<View></View>);
 }
 export default ListenerComponentHealthConnect;
-*/

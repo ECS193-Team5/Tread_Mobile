@@ -1,5 +1,5 @@
 
-/*import AppleHealthKit, {
+import AppleHealthKit, {
     HealthValue,
     HealthKitPermissions,
 } from 'react-native-health'
@@ -12,6 +12,7 @@ import {
 import {HealthKit} from "./exerciseNameConverstion.json";
 import { BACKEND_URL } from '@env';
 import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
+import { reduceExercisesToUnique, sendExerciseList } from './sensorHelperFunctions';
 
 const ListenerComponentHealthKit = () =>{
     useEffect(() => {
@@ -112,26 +113,56 @@ const ListenerComponentHealthKit = () =>{
         function getMostRecentDateRead(){
             var config = {
                 method: 'post',
-                url: BACKEND_URL + 'sensors/get_sensor_date',
+                url: 'https://tread-backend-wvh22rj5mq-uw.a.run.app/data_origin/get_origin_last_import_date',
                 withCredentials: true,
                 credentials: 'include',
                 headers: {
                   Accept: 'application/json',
                 },
                 data:{
-                    sensorType:"HealthKit"
+                    dataOrigin:"healthKit"
                 }
               };
 
               axios(config)
-                .then((response) => {
-                    return response.data;
+                .then(async (response) => {
+                    let startDate = new Date(0).toISOString();
+                    if (response.data.healthConnectLastPostedDate){
+                        startDate = response.data.healthConnectLastPostedDate;
+                    }
+
+
+                    let options = createOptionsList(startDate);
+
+                    let allResults = [];
+
+                    AppleHealthKit.getSamples(
+                        options,
+                        (callbackError: string, results: HealthValue[]) => {
+                            if(callbackError){
+                                return;
+                            }
+                            results.forEach((item) => {allResults.push(convertWorkoutTime(item))} )
+                            results.forEach((item) => {
+                                let result = convertWorkoutDistance(item);
+
+                                if (result.exercise.amount >  0){
+                                    allResults.push(result)
+                                }
+                            });
+
+                            let uniqueExerciseList = reduceExercisesToUnique(allResults);
+                            sendExerciseList(exerciseList, uniqueExerciseList, "healthKit");
+                        },
+                    );
+
+
                 })
                 .catch(function (error) {
-                    return Date.now();
+                    console.log(error);
+                    return;
                 });
 
-                return 1672556406000;
         }
 
         function createOptionsList(startDate: Int32){
@@ -144,8 +175,7 @@ const ListenerComponentHealthKit = () =>{
                 );
         }
 
-        function convertWorkout(workoutData){
-            console.log(workoutData);
+        function convertWorkoutTime(workoutData){
             let name = HealthKit[workoutData.activityName];
             let start = Date.parse(workoutData.start);
             let end = Date.parse(workoutData.end);
@@ -160,28 +190,23 @@ const ListenerComponentHealthKit = () =>{
             });
 
         }
-        function giveServerResults(result){
-            var config = {
-                method: 'post',
-                url: BACKEND_URL + 'sensors/add_exercise_list',
-                withCredentials: true,
-                credentials: 'include',
-                headers: {
-                  Accept: 'application/json',
-                },
-                data:{
-                    exerciseList: result
-                }
-              };
 
-              axios(config)
-                .then((response) => {
-                    console.log("Successfully sent exercises")
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+        function convertWorkoutDistance(workoutData){
+            let name = HealthKit[workoutData.activityName];
+            let start = Date.parse(workoutData.start);
+
+            return ({
+                loggedDate: start,
+                exercise: {
+                    exerciseName: name,
+                    amount: workoutData.distance,
+                    unit: "mi"
+                }
+            });
+
         }
+
+
         function pullSamples() {
             // Intialize the HealthKit
             AppleHealthKit.initHealthKit(permissions, (error: string) => {
@@ -194,17 +219,7 @@ const ListenerComponentHealthKit = () =>{
                 let startDate = getMostRecentDateRead();
 
 
-                let options = createOptionsList(startDate);
 
-                let allResults = [];
-
-                AppleHealthKit.getSamples(
-                    options,
-                    (callbackError: string, results: HealthValue[]) => {
-                        results.forEach((item) => {allResults.push(convertWorkout(item))} )
-                        giveServerResults(allResults);
-                    },
-                );
 
             })
 
@@ -214,4 +229,3 @@ const ListenerComponentHealthKit = () =>{
     }
 
 export default ListenerComponentHealthKit;
-*/
