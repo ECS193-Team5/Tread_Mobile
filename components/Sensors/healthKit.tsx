@@ -129,7 +129,6 @@ const ListenerComponentHealthKit = () =>{
                     let startDate = new Date(0).toISOString();
                     if (response.data.healthKitLastPostedDate){
                         startDate = response.data.healthKitLastPostedDate;
-                        console.log("start date", startDate);
                     }
 
 
