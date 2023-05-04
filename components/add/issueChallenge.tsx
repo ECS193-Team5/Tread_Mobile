@@ -7,7 +7,8 @@ import {styles} from '../../css/add/challenge/Style';
 import NumericInput from 'react-native-numeric-input'
 import DatePicker from 'react-native-date-picker'
 import SwitchSelector from "react-native-switch-selector";
-
+import axios from "axios";
+import {BACKEND_URL} from '@env';
 
 import {
     View,
@@ -49,12 +50,24 @@ function IssueChallenge(): JSX.Element {
 
     const [startDateSet, setStartDateSet] = useState(false);
 
+    const [targetType, setTargetType] = useState("self")
     const switchOptions = [
         {label: 'Self', value: 'self'},
         {label: 'Friends', value: 'friend'},
         {label: 'League', value: 'league'}
     ];
 
+    const friendInfo = [];
+    const leagueInfo = [];
+
+    const [friendsList, setFriendsList] = useState(null);
+
+    useEffect(() => {
+        console.log('getting friends')
+        getFriends()
+        console.log('getting leagues')
+        getLeagues()
+    }, [])
 
     useEffect(() => {
         if(value === 'Enter your own') {
@@ -69,6 +82,46 @@ function IssueChallenge(): JSX.Element {
     //     console.log(startDate)
     //     console.log(endDate)
     // }, [])
+
+    const getFriends = function() {
+        var config = {
+            method : 'post',
+            url : BACKEND_URL + 'friend_list/get_all_friends_info',
+            headers: {
+                Accept: 'application/json',
+            },
+            withCredentials: true,
+            credentials: 'include'
+        };
+        axios(config)
+            .then(function(response) {
+                console.log(response.data)
+            })
+            .catch(function(error){
+                console.log(error)
+                console.log("No response")
+            });
+    }
+
+    const getLeagues = function() {
+        var config = {
+            method : 'post',
+            url : BACKEND_URL + 'league/get_leagues',
+            headers: {
+                Accept: 'application/json',
+            },
+            withCredentials: true,
+            credentials: 'include'
+        };
+        axios(config)
+            .then(function(response) {
+                console.log(response.data)
+            })
+            .catch(function(error){
+                console.log(error)
+                console.log("No response")
+            });
+    }
 
     const handleCustomActivityChange = function(activity) {
         setCustomActivity(activity);
@@ -217,12 +270,26 @@ function IssueChallenge(): JSX.Element {
                     Issue To
                 </Text>
                 <View style={styles.PickIssueTarget}>
+                    <SwitchSelector
+                        options = {switchOptions}
+                        initial = {0}
+                        selectedColor = 'white'
+                        textColor = '#014421'
+                        buttonColor = '#014421'
+                        borderColor = '#014421'
+                        onPress = {setTargetType}
+                        hasPadding = {true}
+                    >
+                    </SwitchSelector>
 
                 </View>
-                <View style={styles.SelectTarget}>
+                {
+                    (targetType === "friend" || targetType === "league") &&
+                    <View style={styles.SelectTarget}>
 
-                </View>
+                    </View>
 
+                }
             </View>
             <View style = {styles.SubmitContainer}>
 
