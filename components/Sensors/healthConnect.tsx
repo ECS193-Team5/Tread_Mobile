@@ -14,6 +14,7 @@ import {
 import {BACKEND_URL} from '@env';
 import {HealthConnect} from "./exerciseNameConverstion.json";
 const ListenerComponentHealthConnect = () => {
+    try{
     useEffect(() => {
         readSampleData();
     });
@@ -143,8 +144,10 @@ const ListenerComponentHealthConnect = () => {
         });
         let exerciseList = result.map(convertWorkout)
         sendExerciseList(exerciseList);
+    }}
+    catch(error){
+        console.log("HealthConnect cannot be used. This is either a device that does not support HealthConnect or something has gone wrong.")
     }
-
     return (<View></View>);
 }
 export default ListenerComponentHealthConnect;

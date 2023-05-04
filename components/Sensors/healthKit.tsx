@@ -119,7 +119,7 @@ const ListenerComponentHealthKit = () =>{
                   Accept: 'application/json',
                 },
                 data:{
-                    sensorType:"HealthKit"
+                    sensorType:"healthKit"
                 }
               };
 
