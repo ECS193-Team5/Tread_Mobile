@@ -102,9 +102,30 @@ const styles = StyleSheet.create({
     CompletionDataContainer: {
         flex: 15,
         flexDirection: 'column',
-        backgroundColor: 'yellow',
+        // backgroundColor: 'yellow',
         marginLeft: '5%',
         marginRight: '5%'
+    },
+
+    CalendarButtonContainer: {
+        // backgroundColor: 'yellow',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+
+    CalendarImageIcon: {
+        height: '100%',
+        width: '100%',
+        resizeMode: 'contain',
+        marginBottom: '10%'
+    },
+
+    CalendarPickerModal: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     IssueToContainer: {

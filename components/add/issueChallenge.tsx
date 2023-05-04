@@ -5,6 +5,7 @@ import mappedChallengeList from "./challengeList";
 import unitList from "./unitList";
 import {styles} from '../../css/add/challenge/Style';
 import NumericInput from 'react-native-numeric-input'
+import DatePicker from 'react-native-date-picker'
 
 import {
     View,
@@ -13,8 +14,11 @@ import {
     Text,
     Image,
     ScrollView,
-    TextInput
+    TextInput,
+    Pressable,
+    Modal
 } from 'react-native';
+import ScaleGestureDetector from "react-native-gesture-handler/lib/typescript/web/detectors/ScaleGestureDetector";
 
 function IssueChallenge(): JSX.Element {
     // DropDownPicker.setListMode("SCROLLVIEW")
@@ -34,6 +38,10 @@ function IssueChallenge(): JSX.Element {
     const [validCustomActivity, setValidCustomActivity] = useState(true);
 
     const [challengeAmount, setChallengeAmount] = useState(0);
+
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [date, setDate] = useState(new Date())
+
     useEffect(() => {
         if(value === 'Enter your own') {
             setCustomTextEditable(true);
@@ -42,9 +50,6 @@ function IssueChallenge(): JSX.Element {
             setCustomActivity("");
         }
     }, [value])
-
-    console.log(value);
-    console.log(customActivity);
 
     const handleCustomActivityChange = function(activity) {
         setCustomActivity(activity);
@@ -55,6 +60,7 @@ function IssueChallenge(): JSX.Element {
             setValidCustomActivity(false);
         }
     }
+
 
     return (
         <View style={styles.ChallengeContainer}>
@@ -126,6 +132,33 @@ function IssueChallenge(): JSX.Element {
 
             </View>
             <View style = {styles.CompletionDataContainer}>
+                <Text style={styles.ActivityTitle}>
+                    Completion Date
+                </Text>
+                <Pressable
+                    style={styles.CalendarButtonContainer}
+                    onPress = {() => {setShowDatePicker(true)}}
+                >
+                    <Image
+                        src = {'https://i.imgur.com/is304Gd.png'}
+                        style = {styles.CalendarImageIcon}
+                    >
+                    </Image>
+                </Pressable>
+                <DatePicker
+                    modal = {true}
+                    mode = {'date'}
+                    open={showDatePicker}
+                    date={date}
+                    onConfirm={(date) => {
+                        setShowDatePicker(false)
+                        console.log(date)
+                        setDate(date)
+                    }}
+                    onCancel={() => {
+                        setShowDatePicker(false)
+                    }}
+                />
 
             </View>
             <View style = {styles.IssueToContainer}>
@@ -135,7 +168,27 @@ function IssueChallenge(): JSX.Element {
 
             </View>
 
+            {/*<Modal*/}
+            {/*    visible = {showDatePicker}*/}
+            {/*    transparent={true}*/}
+            {/*>*/}
+            {/*    <View style={styles.CalendarPickerModal}>*/}
+            {/*        <DateRangePicker*/}
+            {/*            onChange = {handleDateChange}*/}
+            {/*            startDate = {null}*/}
+            {/*            endDate = {null}*/}
+            {/*            range = {true}*/}
+            {/*            displayedDate = {displayedDate}*/}
+            {/*            open = {showDatePicker}*/}
+            {/*            selectedStyle = {{*/}
+            {/*                backgroundColor: 'blue'*/}
+            {/*            }}*/}
+            {/*            // presetButtons = {true}*/}
+            {/*        >*/}
 
+            {/*        </DateRangePicker>*/}
+            {/*    </View>*/}
+            {/*</Modal>*/}
 
         </View>
     )
