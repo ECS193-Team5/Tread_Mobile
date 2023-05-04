@@ -3,7 +3,7 @@ import {Linking} from 'react-native';
 import Navigator from "./components/navigation/navigator"
 
 function handleUrl ({ url }) {
-  console.log(url); 
+  console.log(url);
 }
 Linking.addEventListener('url', handleUrl)
 
@@ -16,6 +16,7 @@ function App(): JSX.Element {
     // Get the deep link used to open the app
     const getUrl = async () => {
       const universalLink = await Linking.getInitialURL();
+      console.log("is this the other run?", universalLink);
       //handle universal link
     };
 
@@ -24,7 +25,7 @@ function App(): JSX.Element {
 
   return (
       <Navigator/>
-      
+
   );
 }
 

@@ -6,7 +6,7 @@ import {
   Image,
   Pressable,
   ScrollView,
-  FlatList
+  FlatList, Linking
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
@@ -229,10 +229,11 @@ const getChallengeData = function(){
     ]
   )
 }
-
+/*
 import ListenerComponentHealthKit from '../components/Sensors/healthKit';
 import ListenerComponentHealthConnect from '../components/Sensors/healthConnect';
-
+<ListenerComponentHealthConnect/>
+<ListenerComponentHealthKit/>*/
 function ChallengesPage(props): JSX.Element {
   const [titleName, setTitleName] = useState("Current")
   const [availableCount, setAvailableCount] = useState(10)
@@ -264,11 +265,9 @@ function ChallengesPage(props): JSX.Element {
 
   // Check for invitations and update icon, but for now
   var IncomingImageUrl = "https://imgur.com/ULlEPhH.png"
-  
+
   return (
     <View style = {styles.container}>
-      <ListenerComponentHealthConnect/>
-<ListenerComponentHealthKit/>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}

@@ -1,4 +1,4 @@
-import { unitTypes } from "./exerciseNameConverstion.json";
+/*import { unitTypes } from "./exerciseNameConverstion.json";
 
 import axios from 'axios';
 const calculateUnitType = (unit) => {
@@ -58,4 +58,4 @@ export const sendExerciseList = (exerciseList, uniqueExercises, dataOrigin) => {
         .catch(function (error) {
             console.log(error);
         });
-}
+}*/

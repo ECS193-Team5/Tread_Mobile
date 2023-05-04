@@ -1,4 +1,4 @@
-import {
+/*import {
     View,
 } from 'react-native';
 import axios from 'axios';
@@ -11,7 +11,6 @@ import {
     getSdkStatus,
     SdkAvailabilityStatus,
 } from 'react-native-health-connect';
-import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, BACKEND_URL, VAPID_KEY} from '@env';
 import {HealthConnect} from "./exerciseNameConverstion.json";
 import {reduceExercisesToUnique, sendExerciseList } from './sensorHelperFunctions';
 
@@ -95,6 +94,7 @@ const ListenerComponentHealthConnect = () => {
                 setDataResults(result);
 
 
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -151,3 +151,4 @@ const ListenerComponentHealthConnect = () => {
     return (<View></View>);
 }
 export default ListenerComponentHealthConnect;
+*/

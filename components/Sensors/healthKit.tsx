@@ -1,5 +1,5 @@
 
-import AppleHealthKit, {
+/*import AppleHealthKit, {
     HealthValue,
     HealthKitPermissions,
 } from 'react-native-health'
@@ -12,7 +12,7 @@ import {
 import {HealthKit} from "./exerciseNameConverstion.json";
 import { BACKEND_URL } from '@env';
 import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
-//
+
 const ListenerComponentHealthKit = () =>{
     useEffect(() => {
         try{
@@ -74,8 +74,6 @@ const ListenerComponentHealthKit = () =>{
             console.log("Error in HealthKit - Either this is not an apple device or permissions was not given");
         }
     });
-
-
 
         const permissions = {
             permissions: {
@@ -188,13 +186,11 @@ const ListenerComponentHealthKit = () =>{
             // Intialize the HealthKit
             AppleHealthKit.initHealthKit(permissions, (error: string) => {
 
-                /* Called after we receive a response from the system */
                 if (error) {
                     console.log("No permission for Apple Device");
                     return;
                 }
 
-                /* Can now read or write to HealthKit */
                 let startDate = getMostRecentDateRead();
 
 
@@ -218,3 +214,4 @@ const ListenerComponentHealthKit = () =>{
     }
 
 export default ListenerComponentHealthKit;
+*/
