@@ -6,6 +6,8 @@ import unitList from "./unitList";
 import {styles} from '../../css/add/challenge/Style';
 import NumericInput from 'react-native-numeric-input'
 import DatePicker from 'react-native-date-picker'
+import SwitchSelector from "react-native-switch-selector";
+
 
 import {
     View,
@@ -39,8 +41,20 @@ function IssueChallenge(): JSX.Element {
 
     const [challengeAmount, setChallengeAmount] = useState(0);
 
-    const [showDatePicker, setShowDatePicker] = useState(false);
-    const [date, setDate] = useState(new Date())
+    const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+    const [startDate, setStartDate] = useState(new Date())
+
+    const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+    const [endDate, setEndDate] = useState(new Date())
+
+    const [startDateSet, setStartDateSet] = useState(false);
+
+    const switchOptions = [
+        {label: 'Self', value: 'self'},
+        {label: 'Friends', value: 'friend'},
+        {label: 'League', value: 'league'}
+    ];
+
 
     useEffect(() => {
         if(value === 'Enter your own') {
@@ -50,6 +64,11 @@ function IssueChallenge(): JSX.Element {
             setCustomActivity("");
         }
     }, [value])
+
+    // useEffect(() => {
+    //     console.log(startDate)
+    //     console.log(endDate)
+    // }, [])
 
     const handleCustomActivityChange = function(activity) {
         setCustomActivity(activity);
@@ -135,33 +154,74 @@ function IssueChallenge(): JSX.Element {
                 <Text style={styles.ActivityTitle}>
                     Completion Date
                 </Text>
-                <Pressable
-                    style={styles.CalendarButtonContainer}
-                    onPress = {() => {setShowDatePicker(true)}}
-                >
-                    <Image
-                        src = {'https://i.imgur.com/is304Gd.png'}
-                        style = {styles.CalendarImageIcon}
+                <View style = {styles.CalendarButtonContainer}>
+                    <Pressable
+                        style={styles.StartButton}
+                        onPress={() => {setShowStartDatePicker(true)}}
                     >
-                    </Image>
-                </Pressable>
-                <DatePicker
-                    modal = {true}
-                    mode = {'date'}
-                    open={showDatePicker}
-                    date={date}
-                    onConfirm={(date) => {
-                        setShowDatePicker(false)
-                        console.log(date)
-                        setDate(date)
-                    }}
-                    onCancel={() => {
-                        setShowDatePicker(false)
-                    }}
-                />
+                        <DatePicker
+                            modal = {true}
+                            mode = {'date'}
+                            open={showStartDatePicker}
+                            date={startDate}
+                            onConfirm={(date) => {
+                                setShowStartDatePicker(false)
+                                console.log(date)
+                                setStartDate(date)
+                                // setStartDateSet(true)
+                            }}
+                            onCancel={() => {
+                                setShowStartDatePicker(false)
+                            }}
+                        />
+                        <Text style={styles.DateText}>
+                            {startDate.getMonth()} / {startDate.getDate()} / {startDate.getFullYear()}
+                        </Text>
+                    </Pressable>
+                    <View style={styles.ToTextContainer}>
+                        <Text style={styles.DateText}>
+                            to
+                        </Text>
+                    </View>
+                    <Pressable
+                        style={styles.EndButton}
+                        onPress={() => {setShowEndDatePicker(true)}}
+                    >
+                        <DatePicker
+                            modal = {true}
+                            mode = {'date'}
+                            // minimumDate={startDate}
+                            open={showEndDatePicker && startDateSet}
+                            date={endDate}
+                            onConfirm={(date) => {
+                                setShowEndDatePicker(false)
+                                // console.log(date)
+                                setEndDate(date)
+                            }}
+                            onCancel={() => {
+                                setShowEndDatePicker(false)
+                            }}
+                        />
+
+                        <Text style={styles.DateText}>
+                            {endDate.getMonth()} / {endDate.getDate()} / {endDate.getFullYear()}
+                        </Text>
+                    </Pressable>
+
+                </View>
+
 
             </View>
             <View style = {styles.IssueToContainer}>
+                <Text style={styles.ActivityTitle}>
+                    Issue To
+                </Text>
+                <View style={styles.PickIssueTarget}>
+
+                </View>
+                <View style={styles.SelectTarget}>
+
+                </View>
 
             </View>
             <View style = {styles.SubmitContainer}>

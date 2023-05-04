@@ -103,15 +103,51 @@ const styles = StyleSheet.create({
         flex: 15,
         flexDirection: 'column',
         // backgroundColor: 'yellow',
-        marginLeft: '5%',
-        marginRight: '5%'
+        // marginLeft: '5%',
+        // marginRight: '5%'
+        marginHorizontal: '5%'
     },
 
     CalendarButtonContainer: {
         // backgroundColor: 'yellow',
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginHorizontal: '10%'
+    },
+
+    StartButton: {
+        flex: 40,
+        // backgroundColor: 'yellow',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    ToTextContainer: {
+        flex: 20,
+        // backgroundColor: 'red',
+        // color: '#014421',
+        // fontSize: 16,
+        // fontWeight: '400',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    DateText: {
+        color: '#014421',
+        fontSize: 16,
+        fontWeight: '400',
+    },
+
+    EndButton: {
+        flex: 40,
+        // backgroundColor: 'blue',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+
     },
 
     CalendarImageIcon: {
@@ -129,20 +165,29 @@ const styles = StyleSheet.create({
     },
 
     IssueToContainer: {
-        flex: 20,
+        flex: 25,
         flexDirection: 'column',
-        backgroundColor: 'red',
+        // backgroundColor: 'red',
         marginLeft: '5%',
         marginRight: '5%'
     },
 
+    PickIssueTarget: {
+        flex: 1,
+        backgroundColor: 'blue'
+    },
+
+    SelectTarget: {
+        flex: 1,
+        backgroundColor: 'red'
+    },
+
     SubmitContainer: {
-        flex: 15,
+        flex: 10,
         flexDirection: 'column',
         backgroundColor: 'purple',
         marginLeft: '5%',
         marginRight: '5%'
-
     }
 
 
