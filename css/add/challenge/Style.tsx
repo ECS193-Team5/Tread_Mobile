@@ -174,12 +174,12 @@ const styles = StyleSheet.create({
 
     PickIssueTarget: {
         flex: 1,
-        backgroundColor: 'blue'
+        // backgroundColor: 'blue'
     },
 
     SelectTarget: {
         flex: 1,
-        backgroundColor: 'red'
+        // backgroundColor: 'red'
     },
 
     SubmitContainer: {

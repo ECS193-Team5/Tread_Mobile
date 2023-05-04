@@ -58,9 +58,15 @@ function IssueChallenge(): JSX.Element {
     ];
 
     const friendInfo = [];
-    const leagueInfo = [];
+    const leagueInfo: ((prevState: never[]) => never[]) | { label: any; value: any; }[] = [];
 
-    const [friendsList, setFriendsList] = useState(null);
+    const [openFriends, setOpenFriends] = useState(false);
+    const [valueFriends, setValueFriends] = useState(null);
+    const [itemsFriends, setItemsFriends] = useState([]);
+
+    const [openLeagues, setOpenLeagues] = useState(false);
+    const [valueLeagues, setValueLeagues] = useState(null);
+    const [itemsLeagues, setItemsLeagues] = useState([]);
 
     useEffect(() => {
         console.log('getting friends')
@@ -95,7 +101,13 @@ function IssueChallenge(): JSX.Element {
         };
         axios(config)
             .then(function(response) {
-                console.log(response.data)
+                // console.log(response.data)
+                response.data.forEach(function(item, index) {
+                    friendInfo.push({label: item['displayName'], value: item['_id']})
+                })
+
+                setItemsFriends(friendInfo)
+                // console.log(friendInfo)
             })
             .catch(function(error){
                 console.log(error)
@@ -115,7 +127,13 @@ function IssueChallenge(): JSX.Element {
         };
         axios(config)
             .then(function(response) {
-                console.log(response.data)
+                // console.log(response.data)
+                response.data.forEach(function(item, index) {
+                    leagueInfo.push({label: item['leagueName'], value: item['_id']})
+                })
+
+                setItemsLeagues(leagueInfo)
+                // console.log(leagueInfo)
             })
             .catch(function(error){
                 console.log(error)
@@ -221,7 +239,7 @@ function IssueChallenge(): JSX.Element {
                                 setShowStartDatePicker(false)
                                 console.log(date)
                                 setStartDate(date)
-                                // setStartDateSet(true)
+                                setStartDateSet(true)
                             }}
                             onCancel={() => {
                                 setShowStartDatePicker(false)
@@ -284,8 +302,35 @@ function IssueChallenge(): JSX.Element {
 
                 </View>
                 {
-                    (targetType === "friend" || targetType === "league") &&
+                    targetType === "friend" &&
                     <View style={styles.SelectTarget}>
+                        <DropDownPicker
+                            setValue={setValueFriends}
+                            value={valueFriends}
+                            items={itemsFriends}
+                            open={openFriends}
+                            setOpen={setOpenFriends}
+                            placeholder={'Choose friend'}
+                        >
+                        </DropDownPicker>
+
+
+                    </View>
+                }
+
+                {
+                    targetType === "league" &&
+                    <View style={styles.SelectTarget}>
+                        <DropDownPicker
+                            setValue={setValueLeagues}
+                            value={valueLeagues}
+                            items={itemsLeagues}
+                            open={openLeagues}
+                            setOpen={setOpenLeagues}
+                            placeholder={'Choose a league'}
+                        >
+                        </DropDownPicker>
+
 
                     </View>
 
