@@ -11,18 +11,18 @@ import {
 
 import {progressCardStyle} from '../../css/challenges/progressCardStyle'
 import * as Progress from 'react-native-progress';
+import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
-// Get Image here from cloudinary again
-const image = 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo'
-            
-function ProgressCard({ProgressObj}){
-  
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
+
+function ProgressCard({ProgressObj, Username}){
   var ProgressPercent = Math.min(ProgressObj.complete, 100)
-  
+
   return (
-    <View style ={progressCardStyle.CardContainer}>
+    <View style ={[progressCardStyle.CardContainer, Username === ProgressObj.name ? {borderColor : '#014421', borderWidth : 2} : null]}>
       <View style = {progressCardStyle.ImageSwapSection}>
-        <Image style ={progressCardStyle.imageStyle} source={{uri: image}}/>
+        <Image style ={progressCardStyle.imageStyle} source={{uri: createProfilePictureURL(ProgressObj.name)}}/>
       </View>
       <View style = {progressCardStyle.ProgressBarContainer}>
         <Progress.Bar
