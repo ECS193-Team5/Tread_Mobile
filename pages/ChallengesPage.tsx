@@ -6,7 +6,7 @@ import {
   Image,
   Pressable,
   ScrollView,
-  FlatList
+  FlatList, Linking
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
@@ -264,11 +264,11 @@ function ChallengesPage(props): JSX.Element {
 
   // Check for invitations and update icon, but for now
   var IncomingImageUrl = "https://imgur.com/ULlEPhH.png"
-  
+
   return (
     <View style = {styles.container}>
-       <ListenerComponentHealthConnect/>
-       <ListenerComponentHealthKit/>
+      <ListenerComponentHealthConnect/>
+      <ListenerComponentHealthKit/>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
