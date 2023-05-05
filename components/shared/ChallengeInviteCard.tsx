@@ -9,22 +9,17 @@ import {
 import {cardStyles} from "../../css/cards/Style"
 import {styles} from "../../css/challenges/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
+import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
 import { SharedStyles } from '../../css/shared/Style';
 
 import {GestureHandlerRootView, Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
 
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
 
-// @ts-ignore
-function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.Element {
+function ChallengeInviteCard({ChallengeData, index, handler, pageTitle, image}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
-  
-  // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
-  const getImage = function() {
-    return 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683777600&v=beta&t=HUgGzkTxHKUGP6_JQupbKEty3qKO-dd8Spm52asCjH8'
-  }
-
-  const [image, setImage] = useState(getImage)
 
   useEffect(() => {
     if (pageTitle === 'Sent'){
@@ -46,19 +41,63 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
   };
 
   const RejectInvite = function(){
+    var route = pageTitle === 'Sent' ? 'challenges/delete_friend_challenge' : 'challenges/decline_friend_challenge'
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + route,
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        challengeID : ChallengeData._id
+      }
+    };
+    
     if (pageTitle === 'Sent'){
       console.log('unsent outgoing request')
-      // backend call here 
+      axios(config)
+        .then(function (response) {
+          console.log(ChallengeData.exercise.exerciseName + ' unsent')
+        })
+        .catch((error) =>
+          console.log(error)
+        )
     } else {
-      console.log('rejected incoming request')
-      // backend call here
+      console.log('rejected incoming request')    
+      axios(config)
+        .then(function (response) {
+          console.log(ChallengeData.exercise.exerciseName + ' rejected')
+        })
+        .catch((error) =>
+          console.log(error)
+        )
     }
     handler(ChallengeData)
   }
 
   const AcceptInvite = function(){
     console.log('accepted incoming request')
-    //backend call here
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'challenges/accept_friend_challenge',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        challengeID : ChallengeData._id
+      }
+    };
+    axios(config)
+    .then(function (response) {
+      console.log(ChallengeData.exercise.exerciseName + ' accepted')
+    })
+    .catch((error) =>
+      console.log(error)
+    )
     handler(ChallengeData)
   }
   
@@ -124,12 +163,10 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle}): JSX.El
                   {SenderOrReceiver + " : "}
               </Text>
               <Text style = {cardStyles.ChallengeNameText}>
-                  {ChallengeData.sentUser}
+                  {pageTitle === 'Received' ? ChallengeData.sentUser : ChallengeData.receivedUser}
               </Text>
             </View>
           </View>
-
-
         </View>
       </Swipeable>
     </GestureHandlerRootView>

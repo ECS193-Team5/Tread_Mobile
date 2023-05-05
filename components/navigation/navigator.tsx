@@ -9,7 +9,7 @@ import Signup from '../../pages/signupPage';
 import Challenge from '../../pages/ChallengesPage';
 import LeaguesPage from '../../pages/leaguesPage';
 import AddPage from '../../pages/addPages/addPage';
-import SearchPage from '../../pages/searchPage';
+import FriendPage from '../../pages/friendsPage';
 import ProfilePage from '../../pages/profilePage';
 import IncomingChallengesPage from '../../pages/incomingChallengesPage'
 import AddChallengePage from '../../pages/addPages/addChallengePage'
@@ -56,7 +56,7 @@ function SearchSwipeStack() {
     <TopTab.Navigator
       tabBarPosition='bottom'
     >
-      <TopTab.Screen name = "Search" component= {SearchPage}/>
+      <TopTab.Screen name = "Search" component= {FriendPage}/>
       <TopTab.Screen name = "Incoming Friends" component = {IncomingFriendsPage}/>
     </TopTab.Navigator>
   )
@@ -132,10 +132,10 @@ function ShowTabs(){
           iconName = focused
           ? "https://imgur.com/0MHiWup.png"
           : "https://imgur.com/iWwOCAG.png"
-        } else if (route.name === 'Search') {
+        } else if (route.name === 'Friends') {
           iconName = focused
-          ? "https://imgur.com/yUUEUim.png"
-          : "https://imgur.com/NUVX70E.png"
+          ? "https://imgur.com/6mdmwb6.png"
+          : "https://imgur.com/OdvBddd.png"
         } else if (route.name === 'Profile') {
           iconName = focused
           ? "https://imgur.com/zZnCC7M.png"
@@ -153,7 +153,7 @@ function ShowTabs(){
     <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false}}/>
     <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false }}/>
     <Tab.Screen name="Add" component={AddStack} options={{headerShown: false}}/>
-    <Tab.Screen name="Search" component={SearchStack} options={{ headerShown: false }}/>
+    <Tab.Screen name="Friends" component={SearchStack} options={{ headerShown: false }}/>
     <Tab.Screen name="Profile" component={ProfilePage} options={{ headerShown: false }}/>
   </Tab.Navigator>
   )

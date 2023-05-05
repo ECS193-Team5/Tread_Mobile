@@ -18,9 +18,6 @@ import GestureRecognizer from 'react-native-swipe-gestures'
 import { calculateProgress } from '../Helpers/calculationHelpers';
 import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
-// get challenge leaderboard backend call to get image data 
-// pass on that data to modal
-
 function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
 	const [modalVisible, setModalVisible] = useState(false)
   var images = []

@@ -11,10 +11,12 @@ import {styles} from "../../css/challenges/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
-import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
+import {Swipeable} from 'react-native-gesture-handler';
 
-function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
+
+function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
   const [cardRole, setCardRole] = useState('')
   const [currentUser, setCurrentUser] = useState('Kauboy#8925')
@@ -30,13 +32,6 @@ function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
       setSenderOrReceiver("From")
     }
   })
-
-  // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
-  const getImage = function() {
-    return 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683777600&v=beta&t=HUgGzkTxHKUGP6_JQupbKEty3qKO-dd8Spm52asCjH8'
-  }
-
-  const [image, setImage] = useState(getImage)
 
   let row: Array<any> = [];
   let prevOpenedRow;
@@ -55,16 +50,51 @@ function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
   }
 
   const RemoveFriend = function(){
-    console.log('removed friend ' + UserInfo.username)
-    //backend call here
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/remove_friend',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        friendName : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('removed friend ' + UserInfo.username)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     handler(UserInfo)
-
   }
 
   const BlockUser = function(){
-    console.log('blocked user ' +  UserInfo.displayName)
-    //backend call here
-    if (UserRole === 'All Friends'){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/block_user',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        friendName : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('blocked user ' +  UserInfo.displayName)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    if (UserRole === 'All Friends' || UserRole === 'Received' || UserRole === 'Sent'){
       handler(UserInfo)
     }
   }
@@ -81,9 +111,27 @@ function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
     handler(UserInfo)
   }
 
-  const unbanUser = function(){
-    console.log('unbanned user ' +  UserInfo.displayName)
-    // backend call here 
+  const unblockUser = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/unblock_user',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        friendName : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('unblock user friend ' +  UserInfo.displayName)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     handler(UserInfo)
   }
 
@@ -91,29 +139,59 @@ function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
   const AdminAdd = function(){
     console.log('added admin user ' +  UserInfo.displayName)
     // backend call here 
-    // handler(UserInfo)
   }
 
   const AdminRemove = function(){
     console.log('removed admin user ' +  UserInfo.displayName)
     // backend call here 
-    // handler(UserInfo)
   }
 
   const RejectInvite = function(){
-    if (UserInfo === 'Sent'){
-      console.log('unsent outgoing request')
-      // backend call here 
-    } else {
-      console.log('rejected incoming request')
-      // backend call here
-    }
+    var route = UserRole === 'Sent' ? 'friend_list/remove_sent_request' : 'friend_list/remove_received_request'
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + route,
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        friendName : UserInfo.username
+      }
+    };
+    
+    axios(config)
+      .then(function (response) {
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     handler(UserInfo)
   }
 
   const AcceptInvite = function(){
-    console.log('accepted incoming request')
-    //backend call here
+    console.log('accepted incoming request ' + UserInfo.username)
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/accept_received_request',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        friendName : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('added user friend ' +  UserInfo.displayName)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     handler(UserInfo)
   }
 
@@ -178,10 +256,10 @@ function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
     );
   }
 
-  const unban = function(){
+  const unblock = function(){
     return (
         <Pressable
-          onPress={unbanUser}
+          onPress={unblockUser}
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/q7fgVdM.png'}}/>
@@ -223,6 +301,17 @@ function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
     );
   }
 
+  const rejectInvite = function(){
+    return (
+      <Pressable
+        onPress={RejectInvite}
+        style = {{margin : "4%"}}
+      >
+        <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
+      </Pressable>   
+    );
+  }
+
   const adminOptions = function() {
     if(cardRole === 'admin'){
       return (removeAdmin())
@@ -245,12 +334,9 @@ function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
       return null
     } else if (UserRole === 'Received' || UserRole === 'Sent') {
       return (
-        <View style={SharedStyles.RightSliderContainer}>
-          <Pressable
-            onPress={RejectInvite}
-          >
-            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
-          </Pressable>   
+        <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
+          {block()}
+          {rejectInvite()}
         </View>
       );
     } else if (UserRole === 'All' || UserRole === 'All Friends'){
@@ -260,10 +346,10 @@ function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
           {unfriend()}
         </View>
       )
-    } else if (UserRole === 'Banned Friends'){
+    } else if (UserRole === 'Blocked Users'){
       return(
         <View style={SharedStyles.RightSliderContainer}>
-          {unban()}
+          {unblock()}
         </View>
       )
     }else if (UserRole === 'participant' || cardRole === 'owner'){
@@ -285,7 +371,7 @@ function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
-    if (currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Banned Friends' || UserRole === 'Sent') {
+    if (currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Blocked Users' || UserRole === 'Sent') {
       return null
     } else if(UserRole === 'Received'){
       return (
@@ -338,7 +424,7 @@ function UserCard({UserInfo, index, handler, UserRole, props}): JSX.Element {
   }
 
   const isRoleInLeague = function(){
-    if(UserRole === 'All Friends' || UserRole === 'Banned Friends'){
+    if(UserRole === 'All Friends' || UserRole === 'Blocked Users'){
       return null
     } else if(UserRole === 'Sent' || UserRole === 'Received'){
       return getUserInfo()

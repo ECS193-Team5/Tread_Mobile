@@ -18,10 +18,6 @@ import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import { calculateProgress } from '../Helpers/calculationHelpers';
 
-// output of getLeaderboard Info with the convertProgress and makeLeaderBoardObj function applied
-// IssuedChallengesObj.js from the web frontend
-
-
 function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
   const makeProgressObj = function(item, index){
     var entry = {}

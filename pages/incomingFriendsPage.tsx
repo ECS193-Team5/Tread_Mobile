@@ -19,43 +19,57 @@ import IncomingSwap from '../components/shared/IncomingSwap';
 import ChallengeInviteCard from '../components/shared/ChallengeInviteCard';
 import UserScroll from '../components/shared/UserScroll';
 
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
+
 const options = [
   { label : "Received" , value : 'Received'},
   { label : "Sent", value : 'Sent'},
 ]
 
-const getRequests = function() {
-  // backend call here
-  return (
-    [
-      {
-          "_id": "6406c89e17ed18fca1d6e4f7",
-          "username": "User#6822",
-          "displayName": "Rebekah Grace"
-      },
-      {
-          "_id": "643782002acc6cd471d2f3f3",
-          "username": "NewUser#2224",
-          "displayName": "NewUser"
-      },
-      {
-          "_id": "64448e820e7644e8ced214fb",
-          "username": "PrabTheCrab#6525",
-          "displayName": "Prabhdeep"
-      },
-      {
-          "_id": "645043cebc6f0328a786d994",
-          "username": "Username#2929",
-          "displayName": "DisplayName"
-      }
-    ]
-  )
-}
-
-
 function IncomingFriendsPage(props): JSX.Element {
+  const getReceivedRequests = function() {
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/received_request_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setRequests(response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  const getSentRequests = function() {
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/sent_request_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setRequests(response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
   var NavImageUrl = "https://imgur.com/nFRNXOB.png"  
-  const [RequestData, setRequests] = useState(getRequests)
+  const [RequestData, setRequests] = useState(getReceivedRequests)
   const [pageTitle, setPageTitle] = useState('Received')
 
   if (Platform.OS === 'android') {
@@ -77,16 +91,23 @@ function IncomingFriendsPage(props): JSX.Element {
   };
   
 
-  const getdropdownIcon = function(){
-    return (
-    <Image style = {{width : 10, height : 10}}source={{uri: "https://imgur.com/ybSDJeh.png"}}/>
-    )
-  }
-
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
     setPageTitle(selectedItem)
-    // set challenges array here
+    setRequests()
+    if (selectedItem === 'Received'){
+      getReceivedRequests()
+    }else {
+      getSentRequests()
+    }
+  }
+
+  const handleRefresh = function(){
+    if (pageTitle === 'Received'){
+      getReceivedRequests()
+    }else {
+      getSentRequests()
+    }
   }
   
   const deleteItem = function(rData) {    
@@ -124,6 +145,7 @@ function IncomingFriendsPage(props): JSX.Element {
           UserData={RequestData}
           handler = {deleteItem}
           UserRole = {pageTitle}
+          onRefresh = {handleRefresh}
         />
       </View>
 
