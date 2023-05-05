@@ -12,10 +12,9 @@ import {
 
 import SwitchSelector from "react-native-switch-selector"
 
+import axios from 'axios';
 import {BACKEND_URL} from '@env';
 
-
-import { SharedStyles } from '../../css/shared/Style';
 import {styles} from "../../css/challenges/Style"
 import { LeagueStyles } from '../../css/leagues/Style';
 import UserScroll from '../shared/UserScroll';
@@ -59,8 +58,58 @@ function getRequests() {
   ])
 } 
 
-function LeagueMemberView({MemberData, setLeagueMembers, props}): JSX.Element {  
+function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX.Element {  
+  const getLeagueRole = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/get_role',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id
+      }
+    };
   
+    axios(config)
+      .then(function (response) {
+        setIsAdminOwnerParticipant(response.data)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
+  const getPending = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/get_role',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setIsAdminOwnerParticipant(response.data)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+  
+  useEffect(() =>{
+    getLeagueRole()
+  })
+
+
   const [isAdminOwnerParticipant, setIsAdminOwnerParticipant] = useState("")
   const [currentView, setCurrentView] = useState("all")
   const [requests, setRequests] = useState(getRequests);
@@ -86,7 +135,15 @@ function LeagueMemberView({MemberData, setLeagueMembers, props}): JSX.Element {
   function handleDropDown(selectedItem) {
     console.log(selectedItem)
     setCurrentView(selectedItem)
+    setLeagueMembers()
     // set the appropriate member list, all, pending or sent or blocked
+    // if(selectedItem === 'pending'){
+    //   getPending()
+    // } else if(selectedItem === 'sent'){
+    //   getPending()
+    // } else if(selectedItem === 'banned'){
+    //   getBanned()
+    // }
   }
   
   const typeOfUser = function(userType) {
@@ -147,6 +204,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props}): JSX.Element {
         handler = {deleteMember}
         UserRole = {isAdminOwnerParticipant}
         props = {props}
+        onRefresh = {onRefresh}
       />)
     } else if (currentView !== 'invite'){
       return (
@@ -164,15 +222,10 @@ function LeagueMemberView({MemberData, setLeagueMembers, props}): JSX.Element {
           pagetoNav = 'League Details'
         />
       )
-      // add add friend component here
     }
   }
 
-  useEffect(() =>{
-    // get username and check if with MemberData to see if they are owner admin or participant
-    // set isAdminOwner
-    setIsAdminOwnerParticipant("admin")
-  })
+
 
   return(
     <View style = {LeagueStyles.MembersChallengesContainer}>

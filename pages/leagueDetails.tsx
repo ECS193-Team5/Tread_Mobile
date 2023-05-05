@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
   Text,
   Image,
   Pressable,
@@ -21,44 +19,87 @@ import { ImageStyles } from '../css/imageCluster/Style';
 import ChallengeScroll from '../components/shared/ChallengeScroll';
 import LeagueMemberView from '../components/Leagues/LeagueMemberView';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { modalstyle } from '../css/shared/modalStyle';
 import QRModalPopUp from '../components/shared/QRModalPopUp';
+import { createLeaguePictureURL } from '../components/Helpers/CloudinaryURLHelper';
 
-const getLeagueMembers = function(){
-  return (
-    [
-      {
-          "username": "User#6822",
-          "displayName": "Rebekah Grace",
-          "role": "owner"
-      },
-      {
-          "username": "yadda#7651",
-          "displayName": "yadda",
-          "role": "admin"
-      },
-      {
-          "username": "Kauboy#8925",
-          "displayName": "Kaushik",
-          "role": "participant"
-      },
-      {
-        "username": "Test#1234",
-        "displayName": "Tester1",
-        "role": "participant"
-      },
-      {
-        "username": "Test2#1234",
-        "displayName": "Tester 2",
-        "role": "participant"
-      }
-    ]
-  )
-}
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
 
 function LeagueDetails(props): JSX.Element {
+  const getChallengeData = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'challenges/league_challenges',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setLeagueChallenges(response.data)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
+  const getLeagueMembers = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/get_member_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setLeagueMembers(response.data)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
+  const getLeagueInfo = function(){
+    console.log(props.route.params.leagueData._id)
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/get_league_name_description_type',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setSecurity(response.data['leagueType'])
+        setDescription(response.data['leagueDescription'])
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+  
+  
   var imageUrl = "https://imgur.com/nFRNXOB.png"  
-  var LeagueImage = 'https://imgur.com/N31G5Sk.png'
+  var LeagueImage = createLeaguePictureURL(props.route.params.leagueData._id)
 
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -86,182 +127,25 @@ function LeagueDetails(props): JSX.Element {
   ]
 
   const [isMembers, setIsMembers] = useState("Members")
-  // get description and other stuff from from backend call get_league_name_description_type
-  const [description, setDescription] = useState("Description")
-  const [security, setSecurity] = useState("private")
-  const [LeagueMembers, setLeagueMembers] = useState(getLeagueMembers)
+  const [description, setDescription] = useState('description')
+  const [security, setSecurity] = useState('private')
+  getLeagueInfo()
 
-  const ChallengeData = [
-    {
-      "_id": "642f81a350e4b483053a9cc1",
-      "participants": [
-          "batman#9320",
-          "batman#6380",
-          "Kauboy#8925",
-          "PrabTheCrab#1609"
-      ],
-      "sentUser": "batman#6380",
-      "receivedUser": "63fb66a1971b753d7edf9c48",
-      "challengeType": "league",
-      "issueDate": "2023-04-07T00:00:00.000Z",
-      "dueDate": "2023-04-10T00:00:00.000Z",
-      "exercise": {
-          "exerciseName": "Aikido",
-          "unit": "ct",
-          "amount": 444,
-          "_id": "642f81a350e4b483053a9cc2",
-          "unitType": "count",
-          "convertedAmount": 444
-      },
-      "status": "accepted",
-      "__v": 0,
-      "progress": {
-          "_id": "642f81a350e4b483053a9cc8",
-          "username": "Kauboy#8925",
-          "challengeID": "642f81a350e4b483053a9cc1",
-          "issueDate": "2023-04-07T00:00:00.000Z",
-          "dueDate": "2023-04-10T00:00:00.000Z",
-          "exercise": {
-              "exerciseName": "Aikido",
-              "unit": "ct",
-              "amount": 444,
-              "_id": "642f81a350e4b483053a9cc9",
-              "unitType": "count",
-              "convertedAmount": 444
-          },
-          "progress": 111,
-          "completed": false
-      }
-    },
-    {
-      "_id": "642f81a350e4b483053a9cc1",
-      "participants": [
-          "batman#9320",
-          "batman#6380",
-          "Kauboy#8925",
-          "PrabTheCrab#1609"
-      ],
-      "sentUser": "batman#6380",
-      "receivedUser": "63fb66a1971b753d7edf9c48",
-      "challengeType": "league",
-      "issueDate": "2023-04-07T00:00:00.000Z",
-      "dueDate": "2023-04-10T00:00:00.000Z",
-      "exercise": {
-          "exerciseName": "Badminton",
-          "unit": "ct",
-          "amount": 444,
-          "_id": "642f81a350e4b483053a9cc2",
-          "unitType": "count",
-          "convertedAmount": 444
-      },
-      "status": "accepted",
-      "__v": 0,
-      "progress": {
-          "_id": "642f81a350e4b483053a9cc8",
-          "username": "Kauboy#8925",
-          "challengeID": "642f81a350e4b483053a9cc1",
-          "issueDate": "2023-04-07T00:00:00.000Z",
-          "dueDate": "2023-04-10T00:00:00.000Z",
-          "exercise": {
-              "exerciseName": "Badminton",
-              "unit": "ct",
-              "amount": 444,
-              "_id": "642f81a350e4b483053a9cc9",
-              "unitType": "count",
-              "convertedAmount": 444
-          },
-          "progress": 222,
-          "completed": false
-      }
-    },
-    {
-      "_id": "642f81a350e4b483053a9cc1",
-      "participants": [
-          "batman#9320",
-          "batman#6380",
-          "Kauboy#8925",
-          "PrabTheCrab#1609"
-      ],
-      "sentUser": "batman#6380",
-      "receivedUser": "63fb66a1971b753d7edf9c48",
-      "challengeType": "league",
-      "issueDate": "2023-04-07T00:00:00.000Z",
-      "dueDate": "2023-04-10T00:00:00.000Z",
-      "exercise": {
-          "exerciseName": "Basketball",
-          "unit": "ct",
-          "amount": 444,
-          "_id": "642f81a350e4b483053a9cc2",
-          "unitType": "count",
-          "convertedAmount": 444
-      },
-      "status": "accepted",
-      "__v": 0,
-      "progress": {
-          "_id": "642f81a350e4b483053a9cc8",
-          "username": "Kauboy#8925",
-          "challengeID": "642f81a350e4b483053a9cc1",
-          "issueDate": "2023-04-07T00:00:00.000Z",
-          "dueDate": "2023-04-10T00:00:00.000Z",
-          "exercise": {
-              "exerciseName": "Basketball",
-              "unit": "ct",
-              "amount": 444,
-              "_id": "642f81a350e4b483053a9cc9",
-              "unitType": "count",
-              "convertedAmount": 444
-          },
-          "progress": 555,
-          "completed": false
-      }
-    },
-    {
-      "_id": "642f81a350e4b483053a9cc1",
-      "participants": [
-          "batman#9320",
-          "batman#6380",
-          "Kauboy#8925",
-          "PrabTheCrab#1609"
-      ],
-      "sentUser": "batman#6380",
-      "receivedUser": "63fb66a1971b753d7edf9c48",
-      "challengeType": "league",
-      "issueDate": "2023-04-07T00:00:00.000Z",
-      "dueDate": "2023-04-10T00:00:00.000Z",
-      "exercise": {
-          "exerciseName": "Archery",
-          "unit": "ct",
-          "amount": 444,
-          "_id": "642f81a350e4b483053a9cc2",
-          "unitType": "count",
-          "convertedAmount": 444
-      },
-      "status": "accepted",
-      "__v": 0,
-      "progress": {
-          "_id": "642f81a350e4b483053a9cc8",
-          "username": "Kauboy#8925",
-          "challengeID": "642f81a350e4b483053a9cc1",
-          "issueDate": "2023-04-07T00:00:00.000Z",
-          "dueDate": "2023-04-10T00:00:00.000Z",
-          "exercise": {
-              "exerciseName": "Archery",
-              "unit": "ct",
-              "amount": 444,
-              "_id": "642f81a350e4b483053a9cc9",
-              "unitType": "count",
-              "convertedAmount": 444
-          },
-          "progress": 179,
-          "completed": false
-      }
-    }
-  ]
+  const [LeagueMembers, setLeagueMembers] = useState(getLeagueMembers)
+  const [LeagueChallenges, setLeagueChallenges] = useState(getChallengeData)
   
   const handleLeave = function() {
     console.log("Left")
     //backend call to leave league
     props.navigation.navigate("Leagues")
+  }
+
+  const handleRefresh = function() {
+    if (isMembers){
+      getLeagueMembers()
+    } else {
+      getChallengeData()
+    }
   }
 
   const handleQR = function() {
@@ -305,9 +189,11 @@ function LeagueDetails(props): JSX.Element {
             </View>
         
             <View style = {LeagueStyles.LeagueNameContainer}>
-              <Text style = {styles.TitleText}>{props.route.params.leagueData.leagueName}</Text>
-              <Text style = {[styles.TitleText, {fontSize : 15}]}>{description}</Text>
-              <Text style = {[styles.TitleText, {fontSize : 15}]}>{security.charAt(0).toUpperCase() + security.slice(1)}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 30, marginVertical: '-3%%'}]}>{props.route.params.leagueData.leagueName}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 15, marginBottom: '-2%'}]}>{description}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{security.charAt(0).toUpperCase() + security.slice(1)}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{props.route.params.leagueData.activeChallenges + ' Active Challenges'}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{props.route.params.leagueData.members.length + ' Members'}</Text>
             </View>            
           </View>
         
@@ -347,12 +233,14 @@ function LeagueDetails(props): JSX.Element {
           MemberData={LeagueMembers}
           setLeagueMembers = {setLeagueMembers}
           props = {props}
+          onRefresh = {handleRefresh}
         /> 
       : 
       <View style = {LeagueStyles.MembersChallengesContainer}>
         <ChallengeScroll
-          ChallengeData={ChallengeData}
-          isCurrent = {false}
+          ChallengeData={LeagueChallenges}
+          isCurrent = {true}
+          onRefresh = {handleRefresh}
         />
       </View>
       } 

@@ -71,6 +71,9 @@ const ImageStyles = StyleSheet.create({
   LeagueImage : {
     width :110, 
     height : 110 , 
+    borderRadius : 55, 
+    borderWidth : 2, 
+    borderColor : '#014421'
   },
 
   QRCode : {
