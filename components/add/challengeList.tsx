@@ -1,4 +1,5 @@
 const challengeList = [
+    "Enter your own",
     "Aikido",
     "Archery",
     "Badminton",
@@ -93,8 +94,7 @@ const challengeList = [
     "Weightlifting (Upper Body)",
     "Weightlifting",
     "Wrestling",
-    "Yoga",
-    "Enter your own"
+    "Yoga"
 ]
 
 let mappedChallengeList = [];

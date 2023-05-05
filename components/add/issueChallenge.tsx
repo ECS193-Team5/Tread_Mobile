@@ -102,7 +102,7 @@ function IssueChallenge(): JSX.Element {
         };
         axios(config)
             .then(function(response) {
-                console.log(response.data)
+                // console.log(response.data)
                 response.data.forEach(function(item, index) {
                     friendInfo.push({label: item['displayName'], value: item['username']})
                 })
@@ -234,7 +234,11 @@ function IssueChallenge(): JSX.Element {
                 >
                 </DropDownPicker>
 
-                {customTextEditable &&
+
+            </View>
+
+            {customTextEditable &&
+                <View style={styles.CustomChalContainer}>
                     <View style={styles.EnterOwnContainer}>
 
                         <TextInput
@@ -247,9 +251,11 @@ function IssueChallenge(): JSX.Element {
                         >
                         </TextInput>
                     </View>
-                }
 
-            </View>
+                </View>
+
+            }
+
             <View style={styles.ChallengeAmountContainer}>
                 <Text style={styles.ActivityTitle}>
                     Activity

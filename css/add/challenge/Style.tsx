@@ -34,8 +34,15 @@ const styles = StyleSheet.create({
     },
 
     ChallengeDropContainer: {
-        flex: 30,
-        // backgroundColor: 'green',
+        flex: 17,
+        // backgroundColor: 'blue',
+        marginLeft: '5%',
+        marginRight: '5%'
+    },
+
+    CustomChalContainer: {
+        // backgroundColor: 'red',
+        flex: 13,
         marginLeft: '5%',
         marginRight: '5%'
     },
@@ -71,7 +78,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#014421',
         marginTop: '5%',
-        marginBottom: '5%'
+        marginBottom: '5%',
+        // backgroundColor: 'green'
     },
 
     ChallengeAmountContainer : {
