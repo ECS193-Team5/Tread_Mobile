@@ -312,6 +312,17 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
     );
   }
 
+  const addFriend = function(){
+    return(
+    <Pressable
+      onPress={AddFriend}
+      style = {{margin : "4%"}}
+    >
+      <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
+    </Pressable>
+    )
+  }
+
   const adminOptions = function() {
     if(cardRole === 'admin'){
       return (removeAdmin())
@@ -322,77 +333,70 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
   
   const renderRightActions = (progress, dragX, handler) => {
     if (currentUser === UserInfo.username) {
-      if(cardRole === 'admin'){
-        return (
-          <View style={SharedStyles.RightSliderContainer}>
-            {removeSelfAsAdmin()}
-          </View>
-        );
-      } else{
-        return null
-      }
       return null
-    } else if (UserRole === 'Received' || UserRole === 'Sent') {
+    } else if(UserRole === 'Received' || UserRole === 'Sent'){
       return (
         <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
           {block()}
           {rejectInvite()}
         </View>
       );
-    } else if (UserRole === 'All' || UserRole === 'All Friends'){
-      return(
+    } else if(UserRole === 'All Friends' || UserRole === 'Blocked Users'){
+        return (
+          <View style={UserRole === 'Blocked Users' ? SharedStyles.RightSliderContainer : [SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
+            {UserRole === 'All Friends' ? unfriend() : null}
+            {UserRole === 'All Friends' ? block() : unblock()}
+          </View>
+        );
+    } else {
+      return (
         <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
           {block()}
-          {unfriend()}
+          {addFriend()}
         </View>
       )
+    } 
+  };
+
+  const renderLeftActions = (progress, dragX, handler) => {
+    if (currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Blocked Users' || UserRole === 'Sent' ||
+        UserRole === 'participant' || cardRole === 'owner') {
+      if(cardRole === 'admin'){
+        return (
+          <View style={SharedStyles.LeftSliderContainer}>
+            {removeSelfAsAdmin()}
+          </View>
+        );
+      } else{
+        return null
+      }    
+    } 
+    if (UserRole === 'Received') {
+      return (
+        <View style={SharedStyles.LeftSliderContainer}>
+            <Pressable
+              onPress={AcceptInvite}
+            >
+              <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
+            </Pressable>   
+          </View>
+      );
     } else if (UserRole === 'Blocked Users'){
       return(
-        <View style={SharedStyles.RightSliderContainer}>
+        <View style={SharedStyles.LeftSliderContainer}>
           {unblock()}
         </View>
       )
-    }else if (UserRole === 'participant' || cardRole === 'owner'){
-      return(
-        <View style={SharedStyles.RightSliderContainer}>
-          {block()}
-        </View>
-      )
-    } else {
+    } 
+    
+    else {
       return (
-        <View style={SharedStyles.MultipleRightSliderContainer}>
-          {block()}
+        <View style={[SharedStyles.MultipleLeftSliderContainer, {width :'32%'}]}>
           {kick()}
           {ban()}
           {adminOptions()}
         </View>
       )
-    }
-  };
-
-  const renderLeftActions = (progress, dragX, handler) => {
-    if (currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Blocked Users' || UserRole === 'Sent') {
-      return null
-    } else if(UserRole === 'Received'){
-      return (
-        <View style={SharedStyles.LeftSliderContainer}>
-          <Pressable
-            onPress={AcceptInvite}
-          >
-            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
-          </Pressable>   
-        </View>
-      );
-    } else {
-      return (
-        <View style={SharedStyles.LeftSliderContainer}>
-          <Pressable
-            onPress={AddFriend}
-          >
-            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
-          </Pressable>   
-        </View>
-      );
     }
   };
 
