@@ -185,10 +185,43 @@ const styles = StyleSheet.create({
     SubmitContainer: {
         flex: 10,
         flexDirection: 'column',
-        backgroundColor: 'purple',
-        marginLeft: '5%',
-        marginRight: '5%'
-    }
+        // backgroundColor: 'purple',
+        // marginLeft: '5%',
+        // marginRight: '5%'
+        marginHorizontal: '30%',
+        justifyContent: 'center'
+    },
+
+    EnterButtonValid : {
+        width: '100%',
+        height: '60%',
+        borderRadius: 50,
+        borderWidth: 1,
+        backgroundColor: '#014421',
+        borderColor: '#014421',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    EnterButtonInvalid : {
+        width: '100%',
+        height: '60%',
+        borderRadius: 50,
+        borderWidth: 1,
+        backgroundColor: 'grey',
+        borderColor: 'grey',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    IssueChallengeText : {
+        color: 'white',
+        fontWeight: 700,
+        fontSize: 14
+    },
+
 
 
 

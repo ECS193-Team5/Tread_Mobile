@@ -22,6 +22,7 @@ import {
     Modal
 } from 'react-native';
 import ScaleGestureDetector from "react-native-gesture-handler/lib/typescript/web/detectors/ScaleGestureDetector";
+// import units from "react-native-svg/lib/typescript/lib/units";
 
 function IssueChallenge(): JSX.Element {
     // DropDownPicker.setListMode("SCROLLVIEW")
@@ -34,7 +35,7 @@ function IssueChallenge(): JSX.Element {
     const [valueUnits, setValueUnits] = useState(null);
     const [itemsUnits, setItemsUnits] = useState(unitList);
 
-    const [customText, setCustomText] = useState("");
+    // const [customText, setCustomText] = useState("");
     const [customTextEditable, setCustomTextEditable] = useState(false);
 
     const [customActivity, setCustomActivity] = useState("");
@@ -69,9 +70,9 @@ function IssueChallenge(): JSX.Element {
     const [itemsLeagues, setItemsLeagues] = useState([]);
 
     useEffect(() => {
-        console.log('getting friends')
+        // console.log('getting friends')
         getFriends()
-        console.log('getting leagues')
+        // console.log('getting leagues')
         getLeagues()
     }, [])
 
@@ -101,9 +102,9 @@ function IssueChallenge(): JSX.Element {
         };
         axios(config)
             .then(function(response) {
-                // console.log(response.data)
+                console.log(response.data)
                 response.data.forEach(function(item, index) {
-                    friendInfo.push({label: item['displayName'], value: item['_id']})
+                    friendInfo.push({label: item['displayName'], value: item['username']})
                 })
 
                 setItemsFriends(friendInfo)
@@ -151,6 +152,71 @@ function IssueChallenge(): JSX.Element {
         }
     }
 
+    const handleIssuePress = () => {
+        let receivedUser = null;
+
+        if(targetType === 'friend') {
+            receivedUser = valueFriends;
+        }
+
+        if(targetType === 'league') {
+            receivedUser = valueLeagues
+        }
+
+        console.log(receivedUser)
+
+        const data = {
+            receivedUser: receivedUser,
+            issueDate: startDate.valueOf(),
+            dueDate: endDate.valueOf(),
+            unit: valueUnits,
+            amount: challengeAmount,
+            exerciseName: (customTextEditable ? customActivity : value)
+        }
+
+        var config = {
+            method: 'post',
+            url: BACKEND_URL + "challenges/add_" + targetType + "_challenge",
+            headers: {
+                Accept: 'application/json',
+            },
+            withCredentials: true,
+            credentials: 'include',
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(response.data)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+
+    const validInfo = () => {
+        let activitySelected = (value !== null);
+        if(customTextEditable) {
+            activitySelected = activitySelected && (customActivity.length > 0)
+        }
+
+        // console.log(activitySelected)
+
+        let unitSelected = (valueUnits !== null);
+        let validDate = endDate >= startDate;
+
+        let targetSelected = true;
+
+        if(targetType === 'friend') {
+            targetSelected = targetSelected && (valueFriends !== null)
+        }
+
+        if(targetType === 'league') {
+            targetSelected = targetSelected && (valueLeagues !== null)
+        }
+
+        return activitySelected && unitSelected && validDate && targetSelected;
+    }
 
     return (
         <View style={styles.ChallengeContainer}>
@@ -263,7 +329,8 @@ function IssueChallenge(): JSX.Element {
                             mode = {'date'}
                             // minimumDate={startDate}
                             open={showEndDatePicker && startDateSet}
-                            date={endDate}
+                            minimumDate={startDate}
+                            date={startDate}
                             onConfirm={(date) => {
                                 setShowEndDatePicker(false)
                                 // console.log(date)
@@ -337,6 +404,14 @@ function IssueChallenge(): JSX.Element {
                 }
             </View>
             <View style = {styles.SubmitContainer}>
+                <Pressable
+                    style={validInfo() ? styles.EnterButtonValid : styles.EnterButtonInvalid}
+                    onPress={handleIssuePress}
+                >
+                    <Text style={styles.IssueChallengeText}>
+                        Issue
+                    </Text>
+                </Pressable>
 
             </View>
 
