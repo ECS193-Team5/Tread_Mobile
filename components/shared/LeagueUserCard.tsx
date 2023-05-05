@@ -44,23 +44,23 @@ function LeagueUserCard({MemberData, index, handler, pageTitle}): JSX.Element {
 
   const RejectInvite = function(){
     if (pageTitle === 'sent'){
-      console.log('unsent outgoing request')
+      console.log('unsent outgoing request league')
       // backend call here 
     } else {
-      console.log('rejected incoming request')
+      console.log('rejected incoming request league')
       // backend call here
     }
     handler(MemberData)
   }
 
   const UnbanUser = function(){
-    console.log('unbanned user')
+    console.log('unbanned user league')
     // backend call here
     handler(MemberData)
   }
 
   const AcceptInvite = function(){
-    console.log('accepted incoming request')
+    console.log('accepted incoming request league')
     //backend call here
     handler(MemberData)
   }

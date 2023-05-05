@@ -16,56 +16,88 @@ import LeagueCard from '../components/Leagues/LeagueCard';
 
 import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
-import { cardStyles } from '../css/cards/Style';
 import {styles} from "../css/challenges/Style"
-import { SharedStyles } from '../css/shared/Style';
 import UserScroll from '../components/shared/UserScroll';
+
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
 
 const options = [
   { label : "All" , value : 'All Friends'},
-  { label : "Banned", value : 'Banned Friends'},
+  { label : "Blocked", value : 'Blocked Users'},
 ]
 
-const getFriends = function() {
-  // backend call here
-  return (
-    [
-      {
-          "_id": "6406c89e17ed18fca1d6e4f7",
-          "username": "User#6822",
-          "displayName": "Rebekah Grace"
-      },
-      {
-          "_id": "643782002acc6cd471d2f3f3",
-          "username": "NewUser#2224",
-          "displayName": "NewUser"
-      },
-      {
-          "_id": "64448e820e7644e8ced214fb",
-          "username": "PrabTheCrab#6525",
-          "displayName": "Prabhdeep"
-      },
-      {
-          "_id": "645043cebc6f0328a786d994",
-          "username": "Username#2929",
-          "displayName": "DisplayName"
-      }
-    ]
-  )
-}
-
-
 function LeaguesPage(props): JSX.Element {
+  const getIncomingImage = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/received_request_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        if (response.data.length > 0){
+          setIncomingImage('https://imgur.com/gMqz2UZ.png')
+        } else {
+          setIncomingImage('https://imgur.com/ULlEPhH.png')
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+  
+  
+  
+  const getFriends = function() {
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/get_all_friends_info',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setFriendData(response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  const getBlocked = function() {
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/blocked_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setFriendData(response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+  
   // Check for invitations and update icon, but for now
-  var IncomingImageUrl = "https://imgur.com/ULlEPhH.png"
+  const [IncomingImageUrl, setIncomingImage] = useState(getIncomingImage)
   const [FriendData, setFriendData] = useState(getFriends)
   const [friendType, setFriendType] = useState('All Friends')
-
-  const getdropdownIcon = function(){
-    return (
-    <Image style = {{width : 10, height : 10}}source={{uri: "https://imgur.com/ybSDJeh.png"}}/>
-    )
-  }
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -86,9 +118,21 @@ function LeaguesPage(props): JSX.Element {
   };
   
   const handleDropDown = function(selectedItem){
-    console.log(selectedItem)
     setFriendType(selectedItem)
-    // set friends array here
+    setFriendData()
+    if (selectedItem === 'All Friends'){
+      getFriends()
+    }else {
+      getBlocked()
+    }
+  }
+
+  const handleRefresh = function(){
+    if (friendType === 'All Friends'){
+      getFriends()
+    }else {
+      getBlocked()
+    }
   }
 
   const deleteMember = function(fData) {    
@@ -128,6 +172,7 @@ function LeaguesPage(props): JSX.Element {
           UserData={FriendData}
           handler = {deleteMember}
           UserRole = {friendType}
+          onRefresh = {handleRefresh}
         />
       </View> 
 
