@@ -258,7 +258,7 @@ function IssueChallenge(): JSX.Element {
 
             <View style={styles.ChallengeAmountContainer}>
                 <Text style={styles.ActivityTitle}>
-                    Activity
+                    Amount
                 </Text>
 
                 <View style={styles.EnterChallengeAmount}>
@@ -413,6 +413,7 @@ function IssueChallenge(): JSX.Element {
                 <Pressable
                     style={validInfo() ? styles.EnterButtonValid : styles.EnterButtonInvalid}
                     onPress={handleIssuePress}
+                    disabled={!validInfo()}
                 >
                     <Text style={styles.IssueChallengeText}>
                         Issue

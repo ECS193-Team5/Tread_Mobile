@@ -257,7 +257,7 @@ function ProgressChallenge(): JSX.Element {
 
             <View style={styles.ChallengeAmountContainer}>
                 <Text style={styles.ActivityTitle}>
-                    Activity
+                    Amount
                 </Text>
 
                 <View style={styles.EnterChallengeAmount}>
@@ -321,127 +321,26 @@ function ProgressChallenge(): JSX.Element {
                             {startDate.getMonth()} / {startDate.getDate()} / {startDate.getFullYear()}
                         </Text>
                     </Pressable>
-                    {/*<View style={styles.ToTextContainer}>*/}
-                    {/*    <Text style={styles.DateText}>*/}
-                    {/*        to*/}
-                    {/*    </Text>*/}
-                    {/*</View>*/}
-                    {/*<Pressable*/}
-                    {/*    style={styles.EndButton}*/}
-                    {/*    onPress={() => {setShowEndDatePicker(true)}}*/}
-                    {/*>*/}
-                    {/*    <DatePicker*/}
-                    {/*        modal = {true}*/}
-                    {/*        mode = {'date'}*/}
-                    {/*        // minimumDate={startDate}*/}
-                    {/*        open={showEndDatePicker && startDateSet}*/}
-                    {/*        minimumDate={startDate}*/}
-                    {/*        date={startDate}*/}
-                    {/*        onConfirm={(date) => {*/}
-                    {/*            setShowEndDatePicker(false)*/}
-                    {/*            // console.log(date)*/}
-                    {/*            setEndDate(date)*/}
-                    {/*        }}*/}
-                    {/*        onCancel={() => {*/}
-                    {/*            setShowEndDatePicker(false)*/}
-                    {/*        }}*/}
-                    {/*    />*/}
 
-                    {/*    <Text style={styles.DateText}>*/}
-                    {/*        {endDate.getMonth()} / {endDate.getDate()} / {endDate.getFullYear()}*/}
-                    {/*    </Text>*/}
-                    {/*</Pressable>*/}
 
                 </View>
 
 
             </View>
-            {/*<View style = {styles.IssueToContainer}>*/}
-            {/*    <Text style={styles.ActivityTitle}>*/}
-            {/*        Issue To*/}
-            {/*    </Text>*/}
-            {/*    <View style={styles.PickIssueTarget}>*/}
-            {/*        <SwitchSelector*/}
-            {/*            options = {switchOptions}*/}
-            {/*            initial = {0}*/}
-            {/*            selectedColor = 'white'*/}
-            {/*            textColor = '#014421'*/}
-            {/*            buttonColor = '#014421'*/}
-            {/*            borderColor = '#014421'*/}
-            {/*            onPress = {setTargetType}*/}
-            {/*            hasPadding = {true}*/}
-            {/*        >*/}
-            {/*        </SwitchSelector>*/}
 
-            {/*    </View>*/}
-            {/*    {*/}
-            {/*        targetType === "friend" &&*/}
-            {/*        <View style={styles.SelectTarget}>*/}
-            {/*            <DropDownPicker*/}
-            {/*                setValue={setValueFriends}*/}
-            {/*                value={valueFriends}*/}
-            {/*                items={itemsFriends}*/}
-            {/*                open={openFriends}*/}
-            {/*                setOpen={setOpenFriends}*/}
-            {/*                placeholder={'Choose friend'}*/}
-            {/*            >*/}
-            {/*            </DropDownPicker>*/}
-
-
-            {/*        </View>*/}
-            {/*    }*/}
-
-            {/*    {*/}
-            {/*        targetType === "league" &&*/}
-            {/*        <View style={styles.SelectTarget}>*/}
-            {/*            <DropDownPicker*/}
-            {/*                setValue={setValueLeagues}*/}
-            {/*                value={valueLeagues}*/}
-            {/*                items={itemsLeagues}*/}
-            {/*                open={openLeagues}*/}
-            {/*                setOpen={setOpenLeagues}*/}
-            {/*                placeholder={'Choose a league'}*/}
-            {/*            >*/}
-            {/*            </DropDownPicker>*/}
-
-
-            {/*        </View>*/}
-
-            {/*    }*/}
-            {/*</View>*/}
             <View style = {styles.SubmitContainer}>
                 <Pressable
                     style={validInfo() ? styles.EnterButtonValid : styles.EnterButtonInvalid}
                     onPress={handleIssuePress}
+                    disabled={!validInfo()}
                 >
                     <Text style={styles.IssueChallengeText}>
-                        Issue
+                        Submit
                     </Text>
                 </Pressable>
 
             </View>
 
-            {/*<Modal*/}
-            {/*    visible = {showDatePicker}*/}
-            {/*    transparent={true}*/}
-            {/*>*/}
-            {/*    <View style={styles.CalendarPickerModal}>*/}
-            {/*        <DateRangePicker*/}
-            {/*            onChange = {handleDateChange}*/}
-            {/*            startDate = {null}*/}
-            {/*            endDate = {null}*/}
-            {/*            range = {true}*/}
-            {/*            displayedDate = {displayedDate}*/}
-            {/*            open = {showDatePicker}*/}
-            {/*            selectedStyle = {{*/}
-            {/*                backgroundColor: 'blue'*/}
-            {/*            }}*/}
-            {/*            // presetButtons = {true}*/}
-            {/*        >*/}
-
-            {/*        </DateRangePicker>*/}
-            {/*    </View>*/}
-            {/*</Modal>*/}
 
         </View>
     )

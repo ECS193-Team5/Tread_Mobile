@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     },
 
     ChallengeDropContainer: {
-        flex: 17,
+        flex: 10,
         // backgroundColor: 'blue',
         marginLeft: '5%',
         marginRight: '5%'
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
     CustomChalContainer: {
         // backgroundColor: 'red',
-        flex: 13,
+        flex: 8,
         marginLeft: '5%',
         marginRight: '5%'
     },
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     },
 
     ChallengeAmountContainer : {
-        flex: 20,
+        flex: 10,
         flexDirection: 'column',
         // backgroundColor: 'black',
         marginLeft: '5%',
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     },
 
     CompletionDataContainer: {
-        flex: 15,
+        flex: 8,
         flexDirection: 'column',
         // backgroundColor: 'yellow',
         // marginLeft: '5%',
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
 
     EnterButtonValid : {
         width: '100%',
-        height: '60%',
+        height: '35%',
         borderRadius: 50,
         borderWidth: 1,
         backgroundColor: '#014421',
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
 
     EnterButtonInvalid : {
         width: '100%',
-        height: '60%',
+        height: '35%',
         borderRadius: 50,
         borderWidth: 1,
         backgroundColor: 'grey',
