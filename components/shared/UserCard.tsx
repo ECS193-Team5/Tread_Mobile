@@ -67,8 +67,26 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
   };
 
   const AddFriend = function(){
-    console.log('sent friend request ' + UserInfo.username)
-    //backend call here
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/send_friend_request',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+      Accept: 'application/json',
+      },
+      data: {
+      'friendName' : UserInfo.username,
+      }
+    };
+
+    axios(config)
+    .then(function (response) {
+      console.log('sent friend request ' + UserInfo.username)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   }
 
   const RemoveFriend = function(){
@@ -157,17 +175,6 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
     handler(UserInfo)
   }
 
-
-  const AdminAdd = function(){
-    console.log('added admin user ' +  UserInfo.displayName)
-    // backend call here 
-  }
-
-  const AdminRemove = function(){
-    console.log('removed admin user ' +  UserInfo.displayName)
-    // backend call here 
-  }
-
   const RejectInvite = function(){
     var route = UserRole === 'Sent' ? 'friend_list/remove_sent_request' : 'friend_list/remove_received_request'
     var config = {
@@ -215,6 +222,16 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
         console.log(error)
       })
     handler(UserInfo)
+  }
+
+  const AdminAdd = function(){
+    console.log('added admin user ' +  UserInfo.displayName)
+    // backend call here 
+  }
+
+  const AdminRemove = function(){
+    console.log('removed admin user ' +  UserInfo.displayName)
+    // backend call here 
   }
 
   const AdminRemoveSelf = function(){
@@ -345,6 +362,16 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
     )
   }
 
+  const acceptInvite = function(){
+    return(
+      <Pressable
+      onPress={AcceptInvite}
+    >
+      <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
+    </Pressable>  
+    )
+  }
+
   const adminOptions = function() {
     if(cardRole === 'admin'){
       return (removeAdmin())
@@ -373,8 +400,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
     } else {
       return (
         <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
-          {block()}
           {addFriend()}
+          {block()}
         </View>
       )
     } 
@@ -396,12 +423,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
     if (UserRole === 'Received') {
       return (
         <View style={SharedStyles.LeftSliderContainer}>
-            <Pressable
-              onPress={AcceptInvite}
-            >
-              <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
-            </Pressable>   
-          </View>
+          {acceptInvite()}
+        </View>
       );
     } else if (UserRole === 'Blocked Users'){
       return(
