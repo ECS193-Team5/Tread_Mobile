@@ -12,16 +12,12 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
 import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
+import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
 function LeagueUserCard({MemberData, index, handler, pageTitle}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
   
-  // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
-  const getImage = function() {
-    return 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683777600&v=beta&t=HUgGzkTxHKUGP6_JQupbKEty3qKO-dd8Spm52asCjH8'
-  }
-
-  const [image, setImage] = useState(getImage)
+  const [image, setImage] = useState(createProfilePictureURL(MemberData.username))
 
   useEffect(() => {
     if (pageTitle === 'sent'){

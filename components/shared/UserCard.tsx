@@ -17,9 +17,31 @@ import axios from 'axios';
 import {BACKEND_URL} from '@env';
 
 function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Element {
-  const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
+  const getUsername = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'user/get_username',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    }
+  
+    axios(config)
+      .then(function (response) {
+        console.log(response.data)
+        setCurrentUser(response.data)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+  
+  
+  const [SenderOrReceiver , setSenderOrReceiver] = useState("To")
   const [cardRole, setCardRole] = useState('')
-  const [currentUser, setCurrentUser] = useState('Kauboy#8925')
+  const [currentUser, setCurrentUser] = useState(getUsername)
 
   useEffect(() =>{
     setCardRole(UserInfo.role)
