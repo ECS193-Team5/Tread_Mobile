@@ -14,6 +14,7 @@ import {
 import {styles} from '../../css/add/friend/Style';
 import axios from "axios";
 import { ImageStyles } from '../../css/imageCluster/Style';
+import {BACKEND_URL} from '@env';
 
 function Invite({text, config, props, pagetoNav}): JSX.Element {
   const [qrValue, setQrValue] = useState('')
@@ -86,7 +87,11 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
         return id.length > 0
     }
     const onSubmit = async function() {
-        config['data']['friendName'] = friendID;
+        if(config['url'] === BACKEND_URL + 'friend_list/send_friend_request'){
+          config['data']['friendName'] = friendID;
+        } else {
+          config['data']['recipient'] = friendID;
+        }
 
         axios(config)
             .then(function (response) {

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
-	Pressable,
-  Image,
   View,
-  Text,
   FlatList,
   UIManager,
   Platform,
   LayoutAnimation,
+  RefreshControl,
 } from 'react-native';
 
 import SwitchSelector from "react-native-switch-selector"
@@ -82,10 +80,10 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
       )
   }
 
-  const getPending = function(){
+  const updateRequests = function(route){
     var config = {
       method: 'post',
-      url: BACKEND_URL + 'league/get_role',
+      url: BACKEND_URL + route,
       withCredentials: true,
       credentials: 'include',
       headers: {
@@ -98,7 +96,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
   
     axios(config)
       .then(function (response) {
-        setIsAdminOwnerParticipant(response.data)
+        setRequests(response.data)
       })
       .catch((error) =>
         console.log(error)
@@ -108,11 +106,6 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
   useEffect(() =>{
     getLeagueRole()
   })
-
-
-  const [isAdminOwnerParticipant, setIsAdminOwnerParticipant] = useState("")
-  const [currentView, setCurrentView] = useState("all")
-  const [requests, setRequests] = useState(getRequests);
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -135,16 +128,30 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
   function handleDropDown(selectedItem) {
     console.log(selectedItem)
     setCurrentView(selectedItem)
-    setLeagueMembers()
-    // set the appropriate member list, all, pending or sent or blocked
-    // if(selectedItem === 'pending'){
-    //   getPending()
-    // } else if(selectedItem === 'sent'){
-    //   getPending()
-    // } else if(selectedItem === 'banned'){
-    //   getBanned()
-    // }
+    var route = ''
+    if(selectedItem === 'pending'){
+      route = 'league/get_pending_request_list'
+    } else if(selectedItem === 'sent'){
+      route = 'league/get_sent_invite_list'
+    } else if(selectedItem === 'banned'){
+      route = 'league/get_banned_list'
+    }
+    setRequests([])
+    updateRequests(route)
   }
+
+  function handleRefresh() {
+    var route = ''
+    if(currentView === 'pending'){
+      route = 'league/get_pending_request_list'
+    } else if(currentView === 'sent'){
+      route = 'league/get_sent_invite_list'
+    } else if(currentView === 'banned'){
+      route = 'league/get_banned_list'
+    }
+    updateRequests(route)
+  }
+  
   
   const typeOfUser = function(userType) {
     if(userType === 'owner' || userType === 'admin') {
@@ -193,9 +200,32 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
     )
   }
 
+  const [isAdminOwnerParticipant, setIsAdminOwnerParticipant] = useState("")
+  const [currentView, setCurrentView] = useState("all")
+  const [requests, setRequests] = useState(getRequests);
+  const [refreshing, setRefreshing] = useState(false)
+
+  const Refresh = function() {
+    setRefreshing(true);
+    setTimeout(() => {
+      handleRefresh()
+      setRefreshing(false);
+      }, 3000);
+  }
+
   var config = {
-	  method: 'post',
-	};
+    method: 'post',
+    url: BACKEND_URL + 'league/invite_to_join',
+    withCredentials: true,
+    credentials: 'include',
+    headers: {
+      Accept: 'application/json',
+    },
+    data : {
+      leagueID : props.route.params.leagueData._id,
+      recipient : ''
+    }
+  };
 
   const typeOfView = function() {
     if (currentView === 'all') {
@@ -211,6 +241,15 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
         <FlatList
           data = {requests}
           renderItem = {renderInvite}
+          refreshControl ={
+            <RefreshControl 
+              refreshing = {refreshing} 
+              onRefresh = {Refresh} 
+              colors = {'#014421'} 
+              tintColor = {'#014421'}
+              progressViewOffset = {-10}
+            />
+          }
         />
       )
     } else {
