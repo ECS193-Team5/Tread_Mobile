@@ -6,26 +6,17 @@ import unitList from "./unitList";
 import {styles} from '../../css/add/progress/Style';
 import NumericInput from 'react-native-numeric-input'
 import DatePicker from 'react-native-date-picker'
-import SwitchSelector from "react-native-switch-selector";
 import axios from "axios";
 import {BACKEND_URL} from '@env';
 
 import {
     View,
-    Button,
-    StyleSheet,
     Text,
-    Image,
-    ScrollView,
     TextInput,
     Pressable,
-    Modal
 } from 'react-native';
-import ScaleGestureDetector from "react-native-gesture-handler/lib/typescript/web/detectors/ScaleGestureDetector";
-// import units from "react-native-svg/lib/typescript/lib/units";
 
 function ProgressChallenge(): JSX.Element {
-    // DropDownPicker.setListMode("SCROLLVIEW")
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
@@ -35,7 +26,6 @@ function ProgressChallenge(): JSX.Element {
     const [valueUnits, setValueUnits] = useState(null);
     const [itemsUnits, setItemsUnits] = useState(unitList);
 
-    // const [customText, setCustomText] = useState("");
     const [customTextEditable, setCustomTextEditable] = useState(false);
 
     const [customActivity, setCustomActivity] = useState("");
@@ -46,35 +36,6 @@ function ProgressChallenge(): JSX.Element {
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [startDate, setStartDate] = useState(new Date())
 
-    // const [showEndDatePicker, setShowEndDatePicker] = useState(false);
-    // const [endDate, setEndDate] = useState(new Date())
-    //
-    // const [startDateSet, setStartDateSet] = useState(false);
-
-    // const [targetType, setTargetType] = useState("self")
-    // const switchOptions = [
-    //     {label: 'Self', value: 'self'},
-    //     {label: 'Friends', value: 'friend'},
-    //     {label: 'League', value: 'league'}
-    // ];
-    //
-    // const friendInfo = [];
-    // const leagueInfo: ((prevState: never[]) => never[]) | { label: any; value: any; }[] = [];
-
-    // const [openFriends, setOpenFriends] = useState(false);
-    // const [valueFriends, setValueFriends] = useState(null);
-    // const [itemsFriends, setItemsFriends] = useState([]);
-    //
-    // const [openLeagues, setOpenLeagues] = useState(false);
-    // const [valueLeagues, setValueLeagues] = useState(null);
-    // const [itemsLeagues, setItemsLeagues] = useState([]);
-
-    // useEffect(() => {
-    //     // console.log('getting friends')
-    //     getFriends()
-    //     // console.log('getting leagues')
-    //     getLeagues()
-    // }, [])
 
     useEffect(() => {
         if(value === 'Enter your own') {
@@ -85,62 +46,6 @@ function ProgressChallenge(): JSX.Element {
         }
     }, [value])
 
-    // useEffect(() => {
-    //     console.log(startDate)
-    //     console.log(endDate)
-    // }, [])
-
-    // const getFriends = function() {
-    //     var config = {
-    //         method : 'post',
-    //         url : BACKEND_URL + 'friend_list/get_all_friends_info',
-    //         headers: {
-    //             Accept: 'application/json',
-    //         },
-    //         withCredentials: true,
-    //         credentials: 'include'
-    //     };
-    //     axios(config)
-    //         .then(function(response) {
-    //             // console.log(response.data)
-    //             response.data.forEach(function(item, index) {
-    //                 friendInfo.push({label: item['displayName'], value: item['username']})
-    //             })
-    //
-    //             setItemsFriends(friendInfo)
-    //             // console.log(friendInfo)
-    //         })
-    //         .catch(function(error){
-    //             console.log(error)
-    //             console.log("No response")
-    //         });
-    // }
-
-    // const getLeagues = function() {
-    //     var config = {
-    //         method : 'post',
-    //         url : BACKEND_URL + 'league/get_leagues',
-    //         headers: {
-    //             Accept: 'application/json',
-    //         },
-    //         withCredentials: true,
-    //         credentials: 'include'
-    //     };
-    //     axios(config)
-    //         .then(function(response) {
-    //             // console.log(response.data)
-    //             response.data.forEach(function(item, index) {
-    //                 leagueInfo.push({label: item['leagueName'], value: item['_id']})
-    //             })
-    //
-    //             setItemsLeagues(leagueInfo)
-    //             // console.log(leagueInfo)
-    //         })
-    //         .catch(function(error){
-    //             console.log(error)
-    //             console.log("No response")
-    //         });
-    // }
 
     const handleCustomActivityChange = function(activity) {
         setCustomActivity(activity);
@@ -153,17 +58,6 @@ function ProgressChallenge(): JSX.Element {
     }
 
     const handleIssuePress = () => {
-        // let receivedUser = null;
-        //
-        // if(targetType === 'friend') {
-        //     receivedUser = valueFriends;
-        // }
-        //
-        // if(targetType === 'league') {
-        //     receivedUser = valueLeagues
-        // }
-        //
-        // console.log(receivedUser)
 
         const data = {
             loggedDate: startDate.valueOf(),
@@ -187,6 +81,11 @@ function ProgressChallenge(): JSX.Element {
         axios(config)
             .then(function (response) {
                 console.log(response.data)
+                setValue(null)
+                setValueUnits(null)
+                setChallengeAmount(0)
+                setStartDate(new Date())
+
             })
             .catch(function (error) {
                 console.log(error)
@@ -199,20 +98,8 @@ function ProgressChallenge(): JSX.Element {
             activitySelected = activitySelected && (customActivity.length > 0)
         }
 
-        // console.log(activitySelected)
 
         let unitSelected = (valueUnits !== null);
-        // let validDate = endDate >= startDate;
-
-        // let targetSelected = true;
-        //
-        // if(targetType === 'friend') {
-        //     targetSelected = targetSelected && (valueFriends !== null)
-        // }
-        //
-        // if(targetType === 'league') {
-        //     targetSelected = targetSelected && (valueLeagues !== null)
-        // }
 
         return activitySelected && unitSelected;
     }
@@ -283,7 +170,6 @@ function ProgressChallenge(): JSX.Element {
                             open={openUnits}
                             setOpen={setOpenUnits}
                             placeholder={'Units'}
-                            // containerStyle={{width: '50%'}}
                         >
                         </DropDownPicker>
 
@@ -311,14 +197,13 @@ function ProgressChallenge(): JSX.Element {
                                 setShowStartDatePicker(false)
                                 console.log(date)
                                 setStartDate(date)
-                                // setStartDateSet(true)
                             }}
                             onCancel={() => {
                                 setShowStartDatePicker(false)
                             }}
                         />
                         <Text style={styles.DateText}>
-                            {startDate.getMonth()} / {startDate.getDate()} / {startDate.getFullYear()}
+                            {startDate.getMonth() + 1} / {startDate.getDate()} / {startDate.getFullYear()}
                         </Text>
                     </Pressable>
 

@@ -12,20 +12,12 @@ import {BACKEND_URL} from '@env';
 
 import {
     View,
-    Button,
-    StyleSheet,
     Text,
-    Image,
-    ScrollView,
     TextInput,
     Pressable,
-    Modal
 } from 'react-native';
-import ScaleGestureDetector from "react-native-gesture-handler/lib/typescript/web/detectors/ScaleGestureDetector";
-// import units from "react-native-svg/lib/typescript/lib/units";
 
 function IssueChallenge(): JSX.Element {
-    // DropDownPicker.setListMode("SCROLLVIEW")
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
@@ -35,7 +27,6 @@ function IssueChallenge(): JSX.Element {
     const [valueUnits, setValueUnits] = useState(null);
     const [itemsUnits, setItemsUnits] = useState(unitList);
 
-    // const [customText, setCustomText] = useState("");
     const [customTextEditable, setCustomTextEditable] = useState(false);
 
     const [customActivity, setCustomActivity] = useState("");
@@ -70,9 +61,7 @@ function IssueChallenge(): JSX.Element {
     const [itemsLeagues, setItemsLeagues] = useState([]);
 
     useEffect(() => {
-        // console.log('getting friends')
         getFriends()
-        // console.log('getting leagues')
         getLeagues()
     }, [])
 
@@ -84,11 +73,6 @@ function IssueChallenge(): JSX.Element {
             setCustomActivity("");
         }
     }, [value])
-
-    // useEffect(() => {
-    //     console.log(startDate)
-    //     console.log(endDate)
-    // }, [])
 
     const getFriends = function() {
         var config = {
@@ -102,13 +86,11 @@ function IssueChallenge(): JSX.Element {
         };
         axios(config)
             .then(function(response) {
-                // console.log(response.data)
                 response.data.forEach(function(item, index) {
                     friendInfo.push({label: item['displayName'], value: item['username']})
                 })
 
                 setItemsFriends(friendInfo)
-                // console.log(friendInfo)
             })
             .catch(function(error){
                 console.log(error)
@@ -128,13 +110,11 @@ function IssueChallenge(): JSX.Element {
         };
         axios(config)
             .then(function(response) {
-                // console.log(response.data)
                 response.data.forEach(function(item, index) {
                     leagueInfo.push({label: item['leagueName'], value: item['_id']})
                 })
 
                 setItemsLeagues(leagueInfo)
-                // console.log(leagueInfo)
             })
             .catch(function(error){
                 console.log(error)
@@ -188,6 +168,13 @@ function IssueChallenge(): JSX.Element {
         axios(config)
             .then(function (response) {
                 console.log(response.data)
+                setValue(null)
+                setValueUnits(null)
+                setChallengeAmount(0)
+                setStartDate(new Date())
+                setEndDate(new Date())
+                setValueLeagues(null)
+                setValueFriends(null)
             })
             .catch(function (error) {
                 console.log(error)
@@ -200,7 +187,6 @@ function IssueChallenge(): JSX.Element {
             activitySelected = activitySelected && (customActivity.length > 0)
         }
 
-        // console.log(activitySelected)
 
         let unitSelected = (valueUnits !== null);
         let validDate = endDate >= startDate;
@@ -284,7 +270,6 @@ function IssueChallenge(): JSX.Element {
                             open={openUnits}
                             setOpen={setOpenUnits}
                             placeholder={'Units'}
-                            // containerStyle={{width: '50%'}}
                         >
                         </DropDownPicker>
 
@@ -318,7 +303,7 @@ function IssueChallenge(): JSX.Element {
                             }}
                         />
                         <Text style={styles.DateText}>
-                            {startDate.getMonth()} / {startDate.getDate()} / {startDate.getFullYear()}
+                            {startDate.getMonth() + 1} / {startDate.getDate()} / {startDate.getFullYear()}
                         </Text>
                     </Pressable>
                     <View style={styles.ToTextContainer}>
@@ -333,13 +318,11 @@ function IssueChallenge(): JSX.Element {
                         <DatePicker
                             modal = {true}
                             mode = {'date'}
-                            // minimumDate={startDate}
                             open={showEndDatePicker && startDateSet}
                             minimumDate={startDate}
                             date={startDate}
                             onConfirm={(date) => {
                                 setShowEndDatePicker(false)
-                                // console.log(date)
                                 setEndDate(date)
                             }}
                             onCancel={() => {
@@ -348,7 +331,7 @@ function IssueChallenge(): JSX.Element {
                         />
 
                         <Text style={styles.DateText}>
-                            {endDate.getMonth()} / {endDate.getDate()} / {endDate.getFullYear()}
+                            {endDate.getMonth() + 1} / {endDate.getDate()} / {endDate.getFullYear()}
                         </Text>
                     </Pressable>
 
@@ -421,28 +404,6 @@ function IssueChallenge(): JSX.Element {
                 </Pressable>
 
             </View>
-
-            {/*<Modal*/}
-            {/*    visible = {showDatePicker}*/}
-            {/*    transparent={true}*/}
-            {/*>*/}
-            {/*    <View style={styles.CalendarPickerModal}>*/}
-            {/*        <DateRangePicker*/}
-            {/*            onChange = {handleDateChange}*/}
-            {/*            startDate = {null}*/}
-            {/*            endDate = {null}*/}
-            {/*            range = {true}*/}
-            {/*            displayedDate = {displayedDate}*/}
-            {/*            open = {showDatePicker}*/}
-            {/*            selectedStyle = {{*/}
-            {/*                backgroundColor: 'blue'*/}
-            {/*            }}*/}
-            {/*            // presetButtons = {true}*/}
-            {/*        >*/}
-
-            {/*        </DateRangePicker>*/}
-            {/*    </View>*/}
-            {/*</Modal>*/}
 
         </View>
     )
