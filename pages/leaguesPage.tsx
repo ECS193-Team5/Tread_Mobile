@@ -92,7 +92,7 @@ function LeaguesPage(props): JSX.Element {
     setTimeout(() => {
       handleRefresh()
       setRefreshing(false);
-      }, 3000);
+      }, 450);
   }
 
   const renderLeague = ({item}) => {

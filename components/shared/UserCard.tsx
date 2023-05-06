@@ -16,7 +16,7 @@ import {Swipeable} from 'react-native-gesture-handler';
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 
-function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Element {
+function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh}): JSX.Element {
   const getUsername = function(){
     var config = {
       method: 'post',
@@ -141,13 +141,53 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
 
   const KickUser = function(){
     console.log('kicked user ' +  UserInfo.displayName)
-    // backend call here 
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/kick_member',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id,
+        recipient : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('kicked user ' +  UserInfo.displayName)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     handler(UserInfo)
   }
 
   const BanUser = function(){
     console.log('banned user ' +  UserInfo.displayName)
-    // backend call here 
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/ban_user',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id,
+        recipient : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('banned user ' +  UserInfo.displayName)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     handler(UserInfo)
   }
 
@@ -225,19 +265,78 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
   }
 
   const AdminAdd = function(){
-    console.log('added admin user ' +  UserInfo.displayName)
-    // backend call here 
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/add_admin',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id,
+        recipient : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('added admin ' +  UserInfo.displayName)
+        onRefresh()
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 
   const AdminRemove = function(){
-    console.log('removed admin user ' +  UserInfo.displayName)
-    // backend call here 
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/remove_admin',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id,
+        recipient : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('removed admin ' +  UserInfo.displayName)
+        onRefresh()
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 
   const AdminRemoveSelf = function(){
     console.log('Removed Self as Admin')
-    //backend call here
-    props.navigation.navigate("Leagues")
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/user_remove_admin',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id,
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('removed admin ' +  UserInfo.displayName)
+        onRefresh()
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 
   const friend = function() {
@@ -382,7 +481,13 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
   
   const renderRightActions = (progress, dragX, handler) => {
     if (currentUser === UserInfo.username) {
-      return null
+      if(cardRole === 'admin'){
+        return (
+          <View style={SharedStyles.RightSliderContainer}>
+            {removeSelfAsAdmin()}
+          </View>
+        )
+      }
     } else if(UserRole === 'Received' || UserRole === 'Sent'){
       return (
         <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
@@ -408,19 +513,9 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
-    if (currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Blocked Users' || UserRole === 'Sent' ||
-        UserRole === 'participant' || cardRole === 'owner') {
-      if(cardRole === 'admin'){
-        return (
-          <View style={SharedStyles.LeftSliderContainer}>
-            {removeSelfAsAdmin()}
-          </View>
-        );
-      } else{
-        return null
-      }    
-    } 
-    if (UserRole === 'Received') {
+    if(currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Blocked Users' || UserRole === 'Sent' ||UserRole === 'participant' || cardRole === 'owner'){
+      return null
+    } else if (UserRole === 'Received') {
       return (
         <View style={SharedStyles.LeftSliderContainer}>
           {acceptInvite()}
@@ -432,9 +527,7 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
           {unblock()}
         </View>
       )
-    } 
-    
-    else {
+    } else {
       return (
         <View style={[SharedStyles.MultipleLeftSliderContainer, {width :'32%'}]}>
           {kick()}
@@ -491,11 +584,11 @@ function UserCard({UserInfo, index, handler, UserRole, props, image}): JSX.Eleme
   return(
     <Swipeable
       key = {UserInfo.username}
-      renderRightActions={(progress, dragX) =>
-        renderRightActions(progress, dragX, handler)
-      }
       renderLeftActions={(progress, dragX) =>
         renderLeftActions(progress, dragX, handler)
+      }
+      renderRightActions={(progress, dragX) =>
+        renderRightActions(progress, dragX, handler)
       }
       onSwipeableOpen={() => closeRow(index)}
       ref={(ref) => (row[index] = ref)}

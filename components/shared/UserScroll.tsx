@@ -12,9 +12,7 @@ import {
 } from 'react-native';
 
 import UserCard from './UserCard';
-import {styles} from "../../css/challenges/Style"
 import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
-
 
 function UserScroll({UserData, handler, UserRole, props, onRefresh}): JSX.Element {
   const [refreshing, setRefreshing] = useState(false)
@@ -24,7 +22,7 @@ function UserScroll({UserData, handler, UserRole, props, onRefresh}): JSX.Elemen
     setTimeout(() => {
       onRefresh()
       setRefreshing(false);
-      }, 3000);
+      }, 450);
   }
 
   const getImage = function(item) {
@@ -40,6 +38,7 @@ function UserScroll({UserData, handler, UserRole, props, onRefresh}): JSX.Elemen
       UserRole = {UserRole}
       props = {props}
       image = {getImage(item)}
+      onRefresh = {onRefresh}
     />
     )
   }

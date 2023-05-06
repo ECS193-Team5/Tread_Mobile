@@ -210,7 +210,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
     setTimeout(() => {
       handleRefresh()
       setRefreshing(false);
-      }, 3000);
+      }, 350);
   }
 
   var config = {
