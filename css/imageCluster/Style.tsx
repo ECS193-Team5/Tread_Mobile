@@ -61,11 +61,28 @@ const ImageStyles = StyleSheet.create({
     alignSelf : 'center'
   },
 
-  Leave : {
-    width :39, 
-    height : 39,
+  Options : {
+    width :30, 
+    height : 30,
     paddingHorizontal : '8%',
     alignSelf : 'center'
+  },
+
+  Leave : {
+    width :24, 
+    height : 24,
+    alignSelf : 'flex-end',
+    margin : '2%',
+    marginRight : '5%'
+  },
+
+  Edit : {
+    width :20, 
+    height : 20,
+    alignSelf : 'flex-end',
+    overflow : 'visible',
+    margin : '4%',
+    marginRight : '5%'
   },
 
   LeagueImage : {
@@ -81,6 +98,8 @@ const ImageStyles = StyleSheet.create({
     height : 375,
     alignSelf : 'center'
   },
+
+
 });
 
 export {ImageStyles} 

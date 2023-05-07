@@ -100,6 +100,7 @@ function LeaguesPage(props): JSX.Element {
     <LeagueCard 
       LeagueData = {item}
       props = {props}
+      refresh = {handleRefresh}
     />
     )
   }

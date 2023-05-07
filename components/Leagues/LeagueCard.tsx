@@ -13,11 +13,11 @@ import {cardStyles} from "../../css/cards/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
 import { createLeaguePictureURL } from '../Helpers/CloudinaryURLHelper';
 
-function LeagueCard({LeagueData, props}): JSX.Element {
+function LeagueCard({LeagueData, props, refresh}): JSX.Element {
   var image = createLeaguePictureURL(LeagueData._id)
   const handleLeaguePress = function() {
     console.log(LeagueData.leagueName)
-    props.navigation.navigate("League Details", {leagueData : LeagueData})
+    props.navigation.navigate("League Details", {leagueData : LeagueData, refresh : refresh})
   }
 
   return (

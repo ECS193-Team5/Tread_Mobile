@@ -7,8 +7,9 @@ import {
   Platform,
   UIManager,
   LayoutAnimation,
+  TouchableHighlight,
 } from 'react-native';
-
+ 
 import Modal from "react-native-modal"
 import SwitchSelector from "react-native-switch-selector"
 import {styles} from "../css/challenges/Style"
@@ -24,6 +25,8 @@ import { createLeaguePictureURL } from '../components/Helpers/CloudinaryURLHelpe
 
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
+import { modalstyle } from '../css/shared/modalStyle';
+import MenuPopUp from '../components/shared/MenuPopUp';
 
 function LeagueDetails(props): JSX.Element {
   const getChallengeData = function(){
@@ -101,7 +104,8 @@ function LeagueDetails(props): JSX.Element {
   var imageUrl = "https://imgur.com/nFRNXOB.png"  
   var LeagueImage = createLeaguePictureURL(props.route.params.leagueData._id)
 
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisibleQR, setModalVisibleQR] = useState(false)
+  const [modalVisiblePopUp, setModalVisiblePopUp] = useState(false)
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -126,6 +130,29 @@ function LeagueDetails(props): JSX.Element {
     { label : "Challenges", value : false}
   ]
 
+  const getRole = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/get_role',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id
+      }
+    }
+  
+    axios(config)
+      .then(function (response) {
+        setRole(response.data)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
   const [isMembers, setIsMembers] = useState("Members")
   const [description, setDescription] = useState('description')
   const [security, setSecurity] = useState('private')
@@ -133,11 +160,40 @@ function LeagueDetails(props): JSX.Element {
 
   const [LeagueMembers, setLeagueMembers] = useState(getLeagueMembers)
   const [LeagueChallenges, setLeagueChallenges] = useState(getChallengeData)
-  
+  const [role, setRole] = useState('')
+  getRole()
+
+  const handlePopup = function() {
+    setModalVisiblePopUp(true)
+  }
+
   const handleLeave = function() {
-    console.log("Left")
-    //backend call to leave league
-    props.navigation.navigate("Leagues")
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/leave_league',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('leave')
+        props.route.params.refresh()   
+        props.navigation.navigate("Leagues")
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
+  const handleEdit = function() {
+    console.log('edit')
   }
 
   const handleRefresh = function() {
@@ -150,18 +206,59 @@ function LeagueDetails(props): JSX.Element {
 
   const handleQR = function() {
     console.log("QR")
-    setModalVisible(true)
+    setModalVisibleQR(true)
     //backend call to leave league
     // props.navigation.navigate("Leagues")
+  }
+
+  const LeaveClickable = function(){
+    return (
+      <TouchableHighlight
+        onPress={handleLeave}
+        style = {{borderBottomRightRadius : 20, borderBottomLeftRadius : 20}}
+        underlayColor = 'rgba(0,0,0,0.15)'
+      >
+        <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
+          <Text style = {[modalstyle.PopUpOptionText, {color:'red', flex : 50}]}> Leave </Text>
+          <Image style ={ImageStyles.Leave} source={{uri: 'https://imgur.com/FgqDfgA.png'}}/>
+        </View>
+      </TouchableHighlight>
+    )
+  }
+
+  const EditClickable = function(){
+    return(
+      <TouchableHighlight
+      onPress={handleEdit}
+      style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
+      underlayColor = 'rgba(0,0,0,0.15)'
+      >
+        <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
+          <Text style = {[modalstyle.PopUpOptionText , {flex : 50}]}> Edit </Text>
+          <Image style ={ImageStyles.Edit} source={{uri: 'https://imgur.com/tRs9SvT.png'}}/>
+        </View>
+      </TouchableHighlight>
+    )
+  }
+
+  const getOptions = function(){
+    var options = []
+    if(role === 'owner' || role === 'admin'){
+      options.push(EditClickable)
+    } 
+    if (role === 'admin' || role === 'participant'){
+      options.push(LeaveClickable)
+    }
+    return options
   }
 
   return (
     <View style = {styles.container}>
       <GestureRecognizer
-        onSwipeDown={() => setModalVisible(false)}
+        onSwipeDown={() => setModalVisibleQR(false)}
       >
         <Modal
-          isVisible={modalVisible}
+          isVisible={modalVisibleQR}
           hasBackdrop = {true}
           backdropColor = 'black'
           style = {{margin : 2}}
@@ -174,6 +271,23 @@ function LeagueDetails(props): JSX.Element {
           />
         </Modal>
       </GestureRecognizer>
+
+      <Modal
+        isVisible={modalVisiblePopUp}
+        hasBackdrop = {true}
+        backdropColor = 'rgba(0,0,0,0.7)'
+        onBackdropPress = { () => setModalVisiblePopUp(false)}
+        style = {{margin : 2}}
+        animationIn = 'fadeIn'
+        animationInTiming={160}
+        animationOut = 'fadeOut'
+        animationOutTiming={100}
+      >
+        <MenuPopUp
+          options = {getOptions()}
+        />
+      </Modal>
+
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
@@ -199,12 +313,11 @@ function LeagueDetails(props): JSX.Element {
         
           <View style = {[LeagueStyles.ToggleContainer]}>
             <Pressable
-              onPress={handleLeave}
+              onPress={handlePopup}
             >
-              <Image style ={ImageStyles.Leave} source={{uri: 'https://imgur.com/FgqDfgA.png'}}/>
+              <Image style ={ImageStyles.Options} source={{uri: 'https://imgur.com/G0SHXKl.png'}}/>
             </Pressable>
-            
-            <View style = {[LeagueStyles.ToggleContainer, {width : '60%'}]}>
+            <View style = {LeagueStyles.ToggleContainer}>
               <SwitchSelector
                 initial= {0}
                 onPress = {value => setIsMembers(value)}
@@ -212,7 +325,6 @@ function LeagueDetails(props): JSX.Element {
                 selectedColor = {'#F9A800'}
                 buttonColor = {'#014421'}
                 hasPadding
-                
                 options = {options}
               />
             </View>
