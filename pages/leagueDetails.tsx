@@ -8,6 +8,7 @@ import {
   UIManager,
   LayoutAnimation,
   TouchableHighlight,
+  Alert,
 } from 'react-native';
  
 import Modal from "react-native-modal"
@@ -211,10 +212,28 @@ function LeagueDetails(props): JSX.Element {
     // props.navigation.navigate("Leagues")
   }
 
+  const clickedLeave = function(){
+    setModalVisiblePopUp(false)
+    Alert.alert('Leave ' + props.route.params.leagueData.leagueName + ' ?', 
+    security === 'private' ? 'You are about to leave this league' : 'If you change your mind you will have to request to join again',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Leave', 
+        onPress: handleLeave,
+        style : 'destructive'
+      },
+    ]);
+  }
+
   const LeaveClickable = function(){
     return (
       <TouchableHighlight
-        onPress={handleLeave}
+        onPress={clickedLeave}
         style = {{borderBottomRightRadius : 20, borderBottomLeftRadius : 20}}
         underlayColor = 'rgba(0,0,0,0.15)'
       >
