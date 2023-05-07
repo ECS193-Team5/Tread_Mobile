@@ -67,7 +67,6 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle, image}):
             color : '#F9A800',
           })
           handler(ChallengeData)
-
         })
         .catch(function (error) {
           console.log(error)
