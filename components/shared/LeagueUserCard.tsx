@@ -11,10 +11,14 @@ import {styles} from "../../css/challenges/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
-import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
+import {Swipeable} from 'react-native-gesture-handler';
 import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
-function LeagueUserCard({MemberData, index, handler, pageTitle}): JSX.Element {
+import {showMessage} from 'react-native-flash-message'
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
+
+function LeagueUserCard({MemberData, index, handler, pageTitle, id}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
   
   const [image, setImage] = useState(createProfilePictureURL(MemberData.username))
@@ -58,7 +62,39 @@ function LeagueUserCard({MemberData, index, handler, pageTitle}): JSX.Element {
   const AcceptInvite = function(){
     console.log('accepted incoming request league')
     //backend call here
-    handler(MemberData)
+    // var config = {
+    //   method: 'post',
+    //   url: BACKEND_URL + 'league/accept_join_request',
+    //   withCredentials: true,
+    //   credentials: 'include',
+    //   headers: {
+    //     Accept: 'application/json',
+    //   },
+    //   data : {
+    //     leagueID : id,
+    //     recipient : MemberData.username
+    //   }
+    // };
+  
+    // axios(config)
+    //   .then(function (response) {
+    //     console.log('accepted user ' +  MemberData.displayName)
+    //     showMessage({
+    //       floating : true,
+    //       message : 'accepted ' + MemberData.username,
+    //       backgroundColor : '#014421',
+    //       color : '#F9A800',
+    //     })
+    //     handler(MemberData)
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error)
+    //     showMessage({
+    //       floating : true,
+    //       message : 'Error accepting request from ' + MemberData.username,
+    //       type : 'danger',
+    //     })
+    //   })
   }
   
   const renderRightActions = (progress, dragX, handler) => {

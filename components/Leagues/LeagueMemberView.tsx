@@ -28,32 +28,7 @@ const options = [
 ]
 
 function getRequests() {
-  return ([
-    {
-      "username": "batman#6380",
-      "displayName": "Jhao Hua"
-    },
-    {
-      "username": "batman#6381",
-      "displayName": "Jhao Hua"
-    },  
-    {
-    "username": "batman#6382",
-    "displayName": "Jhao Hua"
-    },
-    {
-      "username": "batman#6383",
-      "displayName": "Jhao Hua"
-    },
-    {
-      "username": "batman#6384",
-      "displayName": "Jhao Hua"
-    },  
-    {
-    "username": "batman#6385",
-    "displayName": "Jhao Hua"
-    }
-  ])
+  return ([])
 } 
 
 function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX.Element {  
@@ -196,6 +171,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
       index = {index}
       handler = {deleteItem}
       pageTitle = {currentView}
+      id = {props.route.params.leagueData._id}
       />
     )
   }
