@@ -11,23 +11,13 @@ import {
 
 import {cardStyles} from "../../css/cards/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
-import ImageCluster from '../shared/ImageCluster';
+import { createLeaguePictureURL } from '../Helpers/CloudinaryURLHelper';
 
-// get challenge leaderboard backend call to get image data 
-// pass on that data to modal
-
-// cloudinary image hosting will get these images
-// const images = ['https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683777600&v=beta&t=HUgGzkTxHKUGP6_JQupbKEty3qKO-dd8Spm52asCjH8',
-//                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683777600&v=beta&t=HUgGzkTxHKUGP6_JQupbKEty3qKO-dd8Spm52asCjH8',
-//                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683777600&v=beta&t=HUgGzkTxHKUGP6_JQupbKEty3qKO-dd8Spm52asCjH8',
-//               ]
-
-function LeagueCard({LeagueData, props}): JSX.Element {
-  var image = 'https://imgur.com/N31G5Sk.png'
-
+function LeagueCard({LeagueData, props, refresh}): JSX.Element {
+  var image = createLeaguePictureURL(LeagueData._id)
   const handleLeaguePress = function() {
     console.log(LeagueData.leagueName)
-    props.navigation.navigate("League Details", {leagueData : LeagueData})
+    props.navigation.navigate("League Details", {leagueData : LeagueData, refresh : refresh})
   }
 
   return (

@@ -104,6 +104,25 @@ const modalstyle = StyleSheet.create({
     alignItems : 'center',
     marginTop : '5%'
   },
+
+  PopUpPromptContainer : {
+    backgroundColor : '#E0E7E3', 
+    position : 'relative', 
+    bottom : '18.5%',
+    left : '16%', 
+    width : '35%',
+    borderRadius : 20,
+    borderWidth : 1,
+    borderColor : '#014421'
+  },
+
+  PopUpOptionText : {
+    alignSelf : 'flex-start', 
+    margin : '5%',
+    color: '#014421',
+    fontWeight : '600',
+    flexDirection : 'row',
+  }
 });
 
 export {modalstyle} 

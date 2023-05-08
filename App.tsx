@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
-import {Linking, LogBox} from 'react-native';
+import {Linking, LogBox, View} from 'react-native';
 import Navigator from "./components/navigation/navigator"
+import FlashMessage from 'react-native-flash-message'
+
 function handleUrl ({ url }) {
   console.log(url); 
 }
@@ -25,8 +27,10 @@ function App(): JSX.Element {
 
 
   return (
-      <Navigator/>
-      
+      <View style ={{flex:1}}>
+        <Navigator/>
+        <FlashMessage position = 'top'/> 
+      </View>
   );
 }
 
