@@ -322,7 +322,7 @@ function LeagueDetails(props): JSX.Element {
             </View>
         
             <View style = {LeagueStyles.LeagueNameContainer}>
-              <Text style = {[styles.TitleText, {fontSize : 25, marginVertical: '-3%%'}]}>{props.route.params.leagueData.leagueName}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 25}]}>{props.route.params.leagueData.leagueName}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-2%'}]}>{description}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{security.charAt(0).toUpperCase() + security.slice(1)}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{props.route.params.leagueData.activeChallenges + ' Active Challenges'}</Text>
