@@ -22,7 +22,7 @@ function ChallengeScroll({ChallengeData, isCurrent, onRefresh}): JSX.Element {
     setTimeout(() => {
       onRefresh()
       setRefreshing(false);
-      }, 3000);
+      }, 450);
   }
 
   return (

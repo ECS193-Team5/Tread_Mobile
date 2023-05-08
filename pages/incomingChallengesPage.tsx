@@ -146,7 +146,7 @@ function IncomingChallengesPage(props): JSX.Element {
     setTimeout(() => {
       handleRefresh()
       setRefreshing(false);
-      }, 3000);
+      }, 450);
   }
 
   return (

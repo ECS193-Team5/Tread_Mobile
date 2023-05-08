@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
   Text,
   Image,
   Platform,
@@ -11,12 +9,9 @@ import {
   FlatList
 } from 'react-native';
 
-import ChallengesSwap from '../components/Challenges/ChallengeSwap';
 import {styles} from "../css/challenges/Style"
-import {cardStyles} from "../css/cards/Style"
 import IncomingSwap from '../components/shared/IncomingSwap';
 import SwitchSelector from "react-native-switch-selector"
-import { SharedStyles } from '../css/shared/Style';
 import LeagueInviteCard from '../components/shared/LeagueInviteCard';
 
 const options = [

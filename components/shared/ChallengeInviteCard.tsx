@@ -9,7 +9,7 @@ import {
 import {cardStyles} from "../../css/cards/Style"
 import {styles} from "../../css/challenges/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
-import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
+import {showMessage} from 'react-native-flash-message'
 
 import { SharedStyles } from '../../css/shared/Style';
 
@@ -60,21 +60,44 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle, image}):
       axios(config)
         .then(function (response) {
           console.log(ChallengeData.exercise.exerciseName + ' unsent')
+          showMessage({
+            floating : true,
+            message : 'Unsent challenge',
+            backgroundColor : '#014421',
+            color : '#F9A800',
+          })
+          handler(ChallengeData)
         })
-        .catch((error) =>
+        .catch(function (error) {
           console.log(error)
-        )
+          showMessage({
+            floating : true,
+            message : 'Error unsending challenge',
+            type : 'danger',
+          })
+        })
     } else {
       console.log('rejected incoming request')    
       axios(config)
         .then(function (response) {
           console.log(ChallengeData.exercise.exerciseName + ' rejected')
+          showMessage({
+            floating : true,
+            message : 'Rejected incoming challenge',
+            backgroundColor : '#014421',
+            color : '#F9A800',
+          })
+          handler(ChallengeData)
         })
-        .catch((error) =>
+        .catch(function (error) {
           console.log(error)
-        )
+          showMessage({
+            floating : true,
+            message : 'Error rejecting challenge',
+            type : 'danger',
+          })
+        })
     }
-    handler(ChallengeData)
   }
 
   const AcceptInvite = function(){
@@ -94,11 +117,22 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle, image}):
     axios(config)
     .then(function (response) {
       console.log(ChallengeData.exercise.exerciseName + ' accepted')
+      showMessage({
+        floating : true,
+        message : 'Accepted incoming challenge',
+        backgroundColor : '#014421',
+        color : '#F9A800',
+      })
+      handler(ChallengeData)
     })
-    .catch((error) =>
+    .catch(function (error) {
       console.log(error)
-    )
-    handler(ChallengeData)
+      showMessage({
+        floating : true,
+        message : 'Error accepting challenge',
+        type : 'danger',
+      })
+    })
   }
   
   const renderRightActions = (progress, dragX, handler) => {

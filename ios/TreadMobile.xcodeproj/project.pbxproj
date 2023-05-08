@@ -519,6 +519,8 @@
 				DEVELOPMENT_TEAM = RRVDW6CPA6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TreadMobile/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Tread;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -550,6 +552,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RRVDW6CPA6;
 				INFOPLIST_FILE = TreadMobile/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Tread;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
