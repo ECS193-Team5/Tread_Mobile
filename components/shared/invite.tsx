@@ -15,8 +15,12 @@ import {styles} from '../../css/add/friend/Style';
 import axios from "axios";
 import { ImageStyles } from '../../css/imageCluster/Style';
 import {BACKEND_URL} from '@env';
+import {showMessage} from 'react-native-flash-message'
 
+
+// function Invite({text, config, props, pagetoNav, existing, pending, sent, banned, refresh}): JSX.Element {
 function Invite({text, config, props, pagetoNav}): JSX.Element {
+
   const [qrValue, setQrValue] = useState('')
   const [openScanner, setOpenScanner] = useState(false)  
   
@@ -69,9 +73,8 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
       setOpenScanner(true);
     }
   }
-  const [friendID, setFriendID] = useState("");
+    const [friendID, setFriendID] = useState("");
     const [validID, setValidID] = useState(false);
-    const [placeholder, setPlaceholder] = useState("Enter friend ID");
 
     const onFriendChange = function(id) {
         console.log(id);
@@ -87,21 +90,61 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
         return id.length > 0
     }
     const onSubmit = async function() {
-        if(config['url'] === BACKEND_URL + 'friend_list/send_friend_request'){
-          config['data']['friendName'] = friendID;
-        } else {
-          config['data']['recipient'] = friendID;
-        }
+      var message = ''
+      
+      pagetoNav === 'AddFriend' ? config['data']['friendName'] = friendID : config['data']['recipient'] = friendID;
+      
+      // if(pagetoNav === 'AddFriend'){
+      //   if(existing.includes(friendID)){
+      //     console.log('in existing')
+      //     showMessage({
+      //       floating : true,
+      //       message :  pagetoNav === 'AddFriend' ? ('You are already friends with ' + friendID) : (friendID + ' is already a member'),
+      //       backgroundColor : '#014421',
+      //       color : '#F9A800',
+      //     })
+      //     onFriendChange("");
+      //     return ;
+      //   } else if(sent.includes(friendID)){
+      //     console.log('in sent')
+      //     showMessage({
+      //       floating : true,
+      //       message : 'You\'ve already sent a request to ' + friendID,
+      //       backgroundColor : '#014421',
+      //       color : '#F9A800',
+      //     })
+      //     onFriendChange("");
+      //     return
+      //   } else if(pending.includes(friendID)){
+      //     console.log('in pending')
+      //     message = 'Pending request from' + friendID +' was accepted'
+      //   } else if(banned.includes(friendID)){
+      //     console.log('in banned')
+      //     message = friendID + ' was banned. They\'ve been unbanned and a request has been sent'
+      //   }
+      // } 
 
-        axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                onFriendChange("");
+
+      axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            onFriendChange("");
+            showMessage({
+              floating : true,
+              message : message.length === 0 ? 'Sent ' + (pagetoNav === 'League Details' ? 'league invite': 'friend request') + ' to ' + friendID : message,
+              backgroundColor : '#014421',
+              color : '#F9A800',
             })
-            .catch(function (error) {
-                console.log(error);
-                onFriendChange("");
-            });
+        })
+        .catch(function (error) {
+            console.log(error);
+            onFriendChange("");
+            showMessage({
+              floating : true,
+              message : 'Error sending ' + (pagetoNav === 'League Details' ? 'league invite': 'friend request') + ' to ' + friendID,
+              type : 'danger',
+            })
+        });
     }
 
     return (
@@ -119,7 +162,7 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
             <View style = {styles.InputContainer}>
               <View style = {styles.FriendContainer}>
                 <TextInput
-                  placeholder = "Enter friend id"
+                  placeholder = "Enter User id"
                   placeholderTextColor= "grey"
                   style = {styles.Input}
                   onChangeText = {onFriendChange}
