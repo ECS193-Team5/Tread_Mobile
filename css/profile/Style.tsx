@@ -44,7 +44,7 @@ const ProfileStyles = StyleSheet.create({
 
     ProfileNameContainer: {
         flex: 60,
-        backgroundColor: 'yellow'
+        // backgroundColor: 'yellow'
     },
 
     ProfileImage: {
@@ -53,6 +53,44 @@ const ProfileStyles = StyleSheet.create({
         borderRadius : 55,
         borderWidth : 2,
         borderColor : '#014421'
+    },
+
+    DisplayNameContainer: {
+        flex: 35,
+        width: '100%',
+        // backgroundColor: 'green',
+        flexDirection: 'column',
+        justifyContent: 'flex-end'
+    },
+
+    DisplayNameText: {
+        fontWeight: "600",
+        fontSize: 24,
+        color: '#014421'
+    },
+
+    UsernameContainer: {
+        flex: 20,
+        width: '100%',
+        // backgroundColor: 'yellow'
+    },
+
+    UsernameText: {
+      fontWeight: "300",
+      fontSize: 16,
+      color: '#F9A800'
+    },
+
+    OtherInfoContainer: {
+        flex: 15,
+        width: '100%',
+        // backgroundColor: 'blue'
+    },
+
+    OtherInfoText: {
+        fontWeight: '300',
+        fontSize: 16,
+        color: '#014421'
     },
 
     ProfileToggleContainer: {
