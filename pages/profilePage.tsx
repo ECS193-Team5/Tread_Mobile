@@ -4,15 +4,22 @@ import {
     Button,
     StyleSheet,
     Image,
-    Text
+    Text, Pressable, TouchableHighlight
 } from 'react-native';
 
 import {ProfileStyles} from "../css/profile/Style";
+import { ImageStyles } from '../css/imageCluster/Style';
 import {BACKEND_URL} from '@env';
 import {
 	GoogleSignin,
 } from '@react-native-google-signin/google-signin';
 import axios from "axios/index";
+import GestureRecognizer from "react-native-swipe-gestures";
+import Modal from "react-native-modal";
+import QRModalPopUp from "../components/shared/QRModalPopUp";
+import MenuPopUp from "../components/shared/MenuPopUp";
+import {modalstyle} from "../css/shared/modalStyle";
+
 
 function ProfilePage(props): JSX.Element {
 	// signOut = async () => {
@@ -26,9 +33,13 @@ function ProfilePage(props): JSX.Element {
     const [profilePhotoURL, setProfilePhotoURL] = useState("")
     const [displayName, setDisplayName] = useState("")
     const [userName, setUserName] = useState("")
+
     const [numFriends, setNumFriends] = useState(0);
     const [numLeagues, setNumLeagues] = useState(0);
     const [numMedals, setNumMedals] = useState(0);
+
+    const [modalVisibleQR, setModalVisibleQR] = useState(false)
+    const [modalVisiblePopUp, setModalVisiblePopUp] = useState(false)
 
 
     useEffect(() => {
@@ -165,11 +176,94 @@ function ProfilePage(props): JSX.Element {
             )
     }
 
+    const handleQR = function() {
+        // console.log("QR")
+        setModalVisibleQR(true)
+    }
+
+    const handlePopup = function() {
+        setModalVisiblePopUp(true)
+    }
+
+    const handleEdit = function() {
+        console.log('edit')
+    }
+
+    const EditClickable = function(){
+        return(
+            <TouchableHighlight
+                onPress={handleEdit}
+                style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
+                underlayColor = 'rgba(0,0,0,0.15)'
+            >
+                <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
+                    <Text style = {[modalstyle.PopUpOptionText , {flex : 50}]}> Edit </Text>
+                    <Image style ={ImageStyles.Edit} source={{uri: 'https://imgur.com/tRs9SvT.png'}}/>
+                </View>
+            </TouchableHighlight>
+        )
+    }
+
+    const handleLogout = function() {
+        console.log('logout')
+    }
+
+
+    const LogoutClickable = function(){
+        return(
+            <TouchableHighlight
+                onPress={handleLogout}
+                style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
+                underlayColor = 'rgba(0,0,0,0.15)'
+            >
+                <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
+                    <Text style = {[modalstyle.PopUpOptionText , {flex : 50}]}> Logout </Text>
+                    <Image style ={ImageStyles.Edit} source={{uri: 'https://i.imgur.com/Yv8lfL7.png'}}/>
+                </View>
+            </TouchableHighlight>
+        )
+    }
+
+
     return (
       <View style={ProfileStyles.Background}>
           <View style={ProfileStyles.TopSeparator}>
-
           </View>
+
+          <GestureRecognizer
+              onSwipeDown={() => setModalVisibleQR(false)}
+          >
+              <Modal
+                  isVisible={modalVisibleQR}
+                  hasBackdrop = {true}
+                  backdropColor = 'black'
+                  style = {{margin : 2}}
+              >
+                  <QRModalPopUp
+                      Name = {userName}
+                      isLeague = {false}
+                      security = {""}
+                  />
+              </Modal>
+          </GestureRecognizer>
+
+          <Modal
+              isVisible={modalVisiblePopUp}
+              hasBackdrop = {true}
+              backdropColor = 'rgba(0,0,0,0.7)'
+              onBackdropPress = { () => setModalVisiblePopUp(false)}
+              style = {{margin : 2}}
+              animationIn = 'fadeIn'
+              animationInTiming={160}
+              animationOut = 'fadeOut'
+              animationOutTiming={100}
+          >
+              <MenuPopUp
+                  options = {[EditClickable, LogoutClickable]}
+              />
+          </Modal>
+
+
           <View style={ProfileStyles.ProfileContainer}>
               <View style={ProfileStyles.ProfileCard}>
                 <View style={ProfileStyles.ProfileInfoContainer}>
@@ -211,7 +305,22 @@ function ProfilePage(props): JSX.Element {
                     </View>
                 </View>
                 <View style={ProfileStyles.ProfileToggleContainer}>
+                    <View style={ProfileStyles.OptionsContainer}>
+                        <Pressable
+                            onPress={handlePopup}
+                        >
+                            <Image style ={ImageStyles.Options} source={{uri: 'https://imgur.com/G0SHXKl.png'}}/>
+                        </Pressable>
 
+                    </View>
+                    <View style={ProfileStyles.QRContainer}>
+                        <Pressable
+                            onPress={() => handleQR()}
+                        >
+                            <Image style ={ImageStyles.QR} source={{uri: 'https://imgur.com/cC2QHxO.png'}}/>
+                        </Pressable>
+
+                    </View>
                 </View>
               </View>
           </View>

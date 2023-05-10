@@ -100,6 +100,24 @@ const ProfileStyles = StyleSheet.create({
         width: '100%'
     },
 
+    OptionsContainer: {
+        flex: 1,
+        // backgroundColor: 'blue',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginLeft: '10%'
+    },
+
+    QRContainer: {
+        flex: 1,
+        // backgroundColor: 'red',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginRight: '10%'
+    },
+
     MedalsContainer: {
         flex: 55,
         flexDirection: 'column',
