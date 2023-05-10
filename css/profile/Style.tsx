@@ -121,7 +121,20 @@ const ProfileStyles = StyleSheet.create({
     MedalsContainer: {
         flex: 55,
         flexDirection: 'column',
-        // backgroundColor: 'yellow'
+        // backgroundColor: 'yellow',
+        alignItems: 'center'
+    },
+
+    Separator: {
+        borderWidth : 0.5,
+        borderColor : "#F9A800",
+        alignSelf: 'stretch',
+        justifyContent : 'center',
+        margin : "4.5%",
+    },
+
+    MedalType: {
+        width: '90%',
     }
 });
 

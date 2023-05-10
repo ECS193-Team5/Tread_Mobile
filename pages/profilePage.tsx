@@ -19,6 +19,8 @@ import Modal from "react-native-modal";
 import QRModalPopUp from "../components/shared/QRModalPopUp";
 import MenuPopUp from "../components/shared/MenuPopUp";
 import {modalstyle} from "../css/shared/modalStyle";
+import SwitchSelector from "react-native-switch-selector";
+import {styles} from "../css/challenges/Style";
 
 
 function ProfilePage(props): JSX.Element {
@@ -30,6 +32,11 @@ function ProfilePage(props): JSX.Element {
 	// 	}
 	// };
 
+    const options = [
+        { label : "In progress" , value : 'progress'},
+        { label : "Completed", value : 'complete'}
+    ]
+
     const [profilePhotoURL, setProfilePhotoURL] = useState("")
     const [displayName, setDisplayName] = useState("")
     const [userName, setUserName] = useState("")
@@ -40,7 +47,7 @@ function ProfilePage(props): JSX.Element {
 
     const [modalVisibleQR, setModalVisibleQR] = useState(false)
     const [modalVisiblePopUp, setModalVisiblePopUp] = useState(false)
-
+    const [medalType, setMedalType] = useState('progress');
 
     useEffect(() => {
         getProfilePhoto()
@@ -325,6 +332,21 @@ function ProfilePage(props): JSX.Element {
               </View>
           </View>
           <View style={ProfileStyles.MedalsContainer}>
+            <View style={ProfileStyles.Separator}>
+            </View>
+
+            <View style={ProfileStyles.MedalType}>
+              <SwitchSelector
+                  initial= {0}
+                  onPress = {setMedalType}
+                  textColor = {'#014421'}
+                  selectedColor = {'#F9A800'}
+                  buttonColor = {'#014421'}
+                  hasPadding
+                  options = {options}
+              >
+              </SwitchSelector>
+            </View>
 
           </View>
 
