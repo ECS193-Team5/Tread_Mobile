@@ -5,8 +5,6 @@ import {
   View,
   Text,
   StatusBar,
-  StyleSheet,
-  Dimensions
 } from 'react-native';
 
 import {cardStyles} from "../../css/cards/Style"

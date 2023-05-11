@@ -19,6 +19,7 @@ import {
     TextInput,
     Pressable,
 } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 
 function IssueChallenge(): JSX.Element {
 
@@ -178,9 +179,20 @@ function IssueChallenge(): JSX.Element {
                 setEndDate(new Date())
                 setValueLeagues(null)
                 setValueFriends(null)
+                showMessage({
+                  floating : true,
+                  message : 'Challenge created',
+                  backgroundColor : '#014421',
+                  color : '#F9A800',
+                })
             })
             .catch(function (error) {
                 console.log(error)
+                showMessage({
+                  floating : true,
+                  message : 'Error creating challenge',
+                  type : 'danger',
+                })
             })
     }
 
@@ -295,6 +307,7 @@ function IssueChallenge(): JSX.Element {
                             mode = {'date'}
                             open={showStartDatePicker}
                             date={startDate}
+                            minimumDate = {new Date()}
                             onConfirm={(date) => {
                                 setShowStartDatePicker(false)
                                 console.log(date)
