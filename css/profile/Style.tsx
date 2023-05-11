@@ -135,6 +135,11 @@ const ProfileStyles = StyleSheet.create({
 
     MedalType: {
         width: '90%',
+    },
+
+    MedalScroll: {
+        marginTop: '5%',
+        width: '100%'
     }
 });
 
