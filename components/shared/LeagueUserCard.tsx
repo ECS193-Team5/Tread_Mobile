@@ -44,57 +44,148 @@ function LeagueUserCard({MemberData, index, handler, pageTitle, id}): JSX.Elemen
 
   const RejectInvite = function(){
     if (pageTitle === 'sent'){
-      console.log('unsent outgoing request league')
-      // backend call here 
+      var config = {
+        method: 'post',
+        url: BACKEND_URL + 'league/undo_invite',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+        },
+        data : {
+          leagueID : id,
+          recipient : MemberData.username
+        }
+      };
+    
+      axios(config)
+        .then(function (response) {
+          console.log('unsent outgoing request league')
+          showMessage({
+            floating : true,
+            message : 'Unsent request to ' + MemberData.username,
+            backgroundColor : '#014421',
+            color : '#F9A800',
+          })
+          handler(MemberData)
+        })
+        .catch(function (error) {
+          console.log(error)
+          showMessage({
+            floating : true,
+            message : 'Error unsending request to ' + MemberData.username,
+            type : 'danger',
+          })
+        })
     } else {
-      console.log('rejected incoming request league')
-      // backend call here
+      var config = {
+        method: 'post',
+        url: BACKEND_URL + 'league/decline_request',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+        },
+        data : {
+          leagueID : id,
+          recipient : MemberData.username
+        }
+      };
+    
+      axios(config)
+        .then(function (response) {
+          console.log('rejected incoming request league')
+          showMessage({
+            floating : true,
+            message : 'Rejected request from' + MemberData.username,
+            backgroundColor : '#014421',
+            color : '#F9A800',
+          })
+          handler(MemberData)
+        })
+        .catch(function (error) {
+          console.log(error)
+          showMessage({
+            floating : true,
+            message : 'Error rejecting request from ' + MemberData.username,
+            type : 'danger',
+          })
+        })
     }
-    handler(MemberData)
   }
 
   const UnbanUser = function(){
     console.log('unbanned user league')
-    // backend call here
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/unban_user',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : id,
+        recipient : MemberData.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('Unbanned ' +  MemberData.displayName)
+        showMessage({
+          floating : true,
+          message : 'Unbanned ' + MemberData.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(MemberData)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error unbanning ' + MemberData.username,
+          type : 'danger',
+        })
+      })
     handler(MemberData)
   }
 
   const AcceptInvite = function(){
-    console.log('accepted incoming request league')
-    //backend call here
-    // var config = {
-    //   method: 'post',
-    //   url: BACKEND_URL + 'league/accept_join_request',
-    //   withCredentials: true,
-    //   credentials: 'include',
-    //   headers: {
-    //     Accept: 'application/json',
-    //   },
-    //   data : {
-    //     leagueID : id,
-    //     recipient : MemberData.username
-    //   }
-    // };
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/accept_join_request',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : id,
+        recipient : MemberData.username
+      }
+    };
   
-    // axios(config)
-    //   .then(function (response) {
-    //     console.log('accepted user ' +  MemberData.displayName)
-    //     showMessage({
-    //       floating : true,
-    //       message : 'accepted ' + MemberData.username,
-    //       backgroundColor : '#014421',
-    //       color : '#F9A800',
-    //     })
-    //     handler(MemberData)
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error)
-    //     showMessage({
-    //       floating : true,
-    //       message : 'Error accepting request from ' + MemberData.username,
-    //       type : 'danger',
-    //     })
-    //   })
+    axios(config)
+      .then(function (response) {
+        console.log('accepted user ' +  MemberData.displayName)
+        showMessage({
+          floating : true,
+          message : 'Accepted request from' + MemberData.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(MemberData)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error accepting request from ' + MemberData.username,
+          type : 'danger',
+        })
+      })
   }
   
   const renderRightActions = (progress, dragX, handler) => {

@@ -10,6 +10,9 @@ import SwitchSelector from "react-native-switch-selector";
 import axios from "axios";
 import {BACKEND_URL} from '@env';
 
+import Ionicons from 'react-native-vector-icons/Ionicons'
+Ionicons.loadFont()
+
 import {
     View,
     Text,

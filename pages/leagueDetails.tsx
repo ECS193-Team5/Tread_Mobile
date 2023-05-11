@@ -71,9 +71,9 @@ function LeagueDetails(props): JSX.Element {
       .then(function (response) {
         setLeagueMembers(response.data)
       })
-      .catch((error) =>
+      .catch(function (error) {
         console.log(error)
-      )
+      })
   }
 
   const getLeagueInfo = function(){
