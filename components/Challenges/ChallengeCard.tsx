@@ -57,6 +57,7 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
         hasBackdrop = {true}
         backdropColor = 'black'
         style = {{margin : 2}}
+        onBackdropPress = { () => setModalVisible(false)}
       >
         <ChallengeModalPopUp 
           Challenge = {ChallengeData}
