@@ -60,10 +60,33 @@ function LeaguesPage(props): JSX.Element {
       )
   }
 
-
-  // Check for invitations and update icon, but for now
-  var IncomingImageUrl = "https://imgur.com/ULlEPhH.png"
+  const getReceived = function() {
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/get_invited_leagues',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
   
+    axios(config)
+      .then(function (response) {
+        if (response.data.length > 0){
+          setImage('https://imgur.com/gMqz2UZ.png')
+        } else {
+          setImage('https://imgur.com/ULlEPhH.png')
+        }     
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
+
+  const [IncomingImageUrl, setImage] = useState('')
+  getReceived()
   const [LeagueData, setLeagueData] = useState(getAllLeagueData)
   const [refreshing, setRefreshing] = useState(false)
   const [currentView, setCurrentView] = useState("All")

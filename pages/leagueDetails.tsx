@@ -28,6 +28,7 @@ import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import { modalstyle } from '../css/shared/modalStyle';
 import MenuPopUp from '../components/shared/MenuPopUp';
+import { showMessage } from 'react-native-flash-message';
 
 function LeagueDetails(props): JSX.Element {
   const getChallengeData = function(){
@@ -185,6 +186,12 @@ function LeagueDetails(props): JSX.Element {
     axios(config)
       .then(function (response) {
         console.log('leave')
+        showMessage({
+          floating : true,
+          message : 'Left League',
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
         props.route.params.refresh()   
         props.navigation.navigate("Leagues")
       })
