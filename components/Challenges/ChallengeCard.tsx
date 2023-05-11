@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import {
 	Pressable,
-  Image,
   View,
   Text,
   StatusBar,
-  StyleSheet,
-  Dimensions
 } from 'react-native';
 
 import Modal from "react-native-modal"

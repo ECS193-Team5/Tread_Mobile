@@ -18,7 +18,6 @@ import {BACKEND_URL} from '@env';
 import {showMessage} from 'react-native-flash-message'
 
 
-// function Invite({text, config, props, pagetoNav, existing, pending, sent, banned, refresh}): JSX.Element {
 function Invite({text, config, props, pagetoNav}): JSX.Element {
 
   const [qrValue, setQrValue] = useState('')
@@ -77,7 +76,6 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
     const [validID, setValidID] = useState(false);
 
     const onFriendChange = function(id) {
-        console.log(id);
         setFriendID(id);
         if(checkValidID(id)) {
             setValidID(true);
@@ -93,48 +91,37 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
       var message = ''
       
       pagetoNav === 'AddFriend' ? config['data']['friendName'] = friendID : config['data']['recipient'] = friendID;
+    
+
       
-      // if(pagetoNav === 'AddFriend'){
-      //   if(existing.includes(friendID)){
-      //     console.log('in existing')
-      //     showMessage({
-      //       floating : true,
-      //       message :  pagetoNav === 'AddFriend' ? ('You are already friends with ' + friendID) : (friendID + ' is already a member'),
-      //       backgroundColor : '#014421',
-      //       color : '#F9A800',
-      //     })
-      //     onFriendChange("");
-      //     return ;
-      //   } else if(sent.includes(friendID)){
-      //     console.log('in sent')
-      //     showMessage({
-      //       floating : true,
-      //       message : 'You\'ve already sent a request to ' + friendID,
-      //       backgroundColor : '#014421',
-      //       color : '#F9A800',
-      //     })
-      //     onFriendChange("");
-      //     return
-      //   } else if(pending.includes(friendID)){
-      //     console.log('in pending')
-      //     message = 'Pending request from' + friendID +' was accepted'
-      //   } else if(banned.includes(friendID)){
-      //     console.log('in banned')
-      //     message = friendID + ' was banned. They\'ve been unbanned and a request has been sent'
-      //   }
-      // } 
-
-
       axios(config)
         .then(function (response) {
-            console.log(JSON.stringify(response.data));
+            var message = ''
+            if(response.data === 'Already sent'){
+              message = 'You\'ve already sent a request to ' + friendID
+              showMessage({
+                floating : true,
+                message : message,
+                backgroundColor : '#014421',
+                color : '#F9A800',
+              })
+            } else if(response.data === "You are already a friend"){
+              message = 'You\'re already friends with ' + friendID
+              showMessage({
+                floating : true,
+                message : message,
+                backgroundColor : '#014421',
+                color : '#F9A800',
+              })
+            } else if(response.data === "You are blocked"){
+              message = "You are blocked by " + friendID
+              showMessage({
+                floating : true,
+                message : message,
+                type : 'warning',
+              })
+            }
             onFriendChange("");
-            showMessage({
-              floating : true,
-              message : message.length === 0 ? 'Sent ' + (pagetoNav === 'League Details' ? 'league invite': 'friend request') + ' to ' + friendID : message,
-              backgroundColor : '#014421',
-              color : '#F9A800',
-            })
         })
         .catch(function (error) {
             console.log(error);

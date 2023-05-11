@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import {
-	Pressable,
-  Image,
   View,
   Text,
-  StatusBar,
-  Modal,
-  StyleSheet,
-  FlatList
+  FlatList,  
 } from 'react-native';
 
 import { modalstyle } from '../../css/shared/modalStyle';
