@@ -26,20 +26,28 @@ function ProgressCard({ProgressObj, Username}){
       <View style = {progressCardStyle.ImageSwapSection}>
         <Image style ={progressCardStyle.imageStyle} source={{uri: createProfilePictureURL(ProgressObj.name)}}/>
       </View>
+
       <View style = {progressCardStyle.ProgressBarContainer}>
-        <Progress.Bar
-          progress={ProgressPercent/100}
-          width = {null}
-          height = {15}
-          borderWidth	= {0.3}
-          unfilledColor	= {'white'}
-          color  = {'#014421'}
-          borderRadius = {20}
-        >
-        <Text style = {[progressCardStyle.ProgressTextStyle, ProgressPercent > 80 ? {alignSelf : 'flex-end', color: color} :{left : left, color: color}]}>
-          {Math.round(ProgressPercent)}%
-        </Text>
-        </Progress.Bar>
+        <View style = {{flex: 50}}>
+          <Text style = {[progressCardStyle.ProgressTextStyle, {color : '#014421'}]}>
+            {ProgressObj.name}
+          </Text>
+        </View>
+        <View style = {{flex: 50}}>
+          <Progress.Bar
+            progress={ProgressPercent/100}
+            width = {null}
+            height = {15}
+            borderWidth	= {0.3}
+            unfilledColor	= {'white'}
+            color  = {'#014421'}
+            borderRadius = {20}
+          >
+          <Text style = {[progressCardStyle.ProgressTextStyle, ProgressPercent > 80 ? {alignSelf : 'flex-end', color: color} :{left : left, color: color}]}>
+            {Math.round(ProgressPercent)}%
+          </Text>
+          </Progress.Bar>
+        </View>
       </View>
       <View style = {progressCardStyle.ProgressPercentContainer}>
         <Text style = {progressCardStyle.ScoreTextStyle}>
