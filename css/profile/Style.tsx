@@ -27,7 +27,7 @@ const ProfileStyles = StyleSheet.create({
         backgroundColor : "#FFFFFF",
     },
 
-    ProfileInfoContainer: {
+    ProfileTopContainer: {
         flex: 70,
         // backgroundColor: 'blue',
         flexDirection: 'row',
@@ -56,7 +56,7 @@ const ProfileStyles = StyleSheet.create({
     },
 
     DisplayNameContainer: {
-        flex: 35,
+        flex: 20,
         width: '100%',
         // backgroundColor: 'green',
         flexDirection: 'column',
@@ -70,7 +70,7 @@ const ProfileStyles = StyleSheet.create({
     },
 
     UsernameContainer: {
-        flex: 20,
+        flex: 50,
         width: '100%',
         // backgroundColor: 'yellow'
     },
@@ -84,16 +84,19 @@ const ProfileStyles = StyleSheet.create({
     OtherInfoContainer: {
         flex: 15,
         width: '100%',
+        flexDirection: 'row',
         // backgroundColor: 'blue'
+        justifyContent: 'center'
+
     },
 
     OtherInfoText: {
-        fontWeight: '300',
-        fontSize: 16,
+        fontWeight: '400',
+        fontSize: 18,
         color: '#014421'
     },
 
-    ProfileToggleContainer: {
+    ProfileBottomContainer: {
         flex: 30,
         // backgroundColor: 'yellow',
         flexDirection: 'row',
@@ -101,12 +104,12 @@ const ProfileStyles = StyleSheet.create({
     },
 
     OptionsContainer: {
-        flex: 1,
+        flex: 30,
         // backgroundColor: 'blue',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginLeft: '10%'
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        marginRight: '10%'
     },
 
     QRContainer: {

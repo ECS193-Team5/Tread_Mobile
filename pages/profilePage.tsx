@@ -17,7 +17,7 @@ import axios from "axios/index";
 import GestureRecognizer from "react-native-swipe-gestures";
 import Modal from "react-native-modal";
 import QRModalPopUp from "../components/shared/QRModalPopUp";
-import MenuPopUp from "../components/shared/MenuPopUp";
+import MenuPopUp from "../components/profile/MenuPopUp";
 import {modalstyle} from "../css/shared/modalStyle";
 import SwitchSelector from "react-native-switch-selector";
 import {styles} from "../css/challenges/Style";
@@ -262,6 +262,24 @@ function ProfilePage(props): JSX.Element {
         )
     }
 
+    const handleQRClick = function() {
+        setModalVisiblePopUp(false);
+        setModalVisibleQR(true);
+    }
+    const QRClickable = function(){
+        return(
+            <TouchableHighlight
+                onPress={handleQRClick}
+                style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
+                underlayColor = 'rgba(0,0,0,0.15)'
+            >
+                <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
+                    <Text style = {[modalstyle.PopUpOptionText , {flex : 50}]}> Show QR </Text>
+                    <Image style ={ImageStyles.Edit} source={{uri: 'https://i.imgur.com/vdw15Hl.png'}}/>
+                </View>
+            </TouchableHighlight>
+        )
+    }
 
     return (
       <View style={ProfileStyles.Background}>
@@ -297,14 +315,14 @@ function ProfilePage(props): JSX.Element {
               animationOutTiming={100}
           >
               <MenuPopUp
-                  options = {[EditClickable, LogoutClickable]}
+                  options = {[EditClickable, QRClickable, LogoutClickable]}
               />
           </Modal>
 
 
           <View style={ProfileStyles.ProfileContainer}>
               <View style={ProfileStyles.ProfileCard}>
-                <View style={ProfileStyles.ProfileInfoContainer}>
+                <View style={ProfileStyles.ProfileTopContainer}>
                     <View style={ProfileStyles.ProfileImageContainer}>
                         <Image
                             src={profilePhotoURL}
@@ -314,6 +332,13 @@ function ProfilePage(props): JSX.Element {
                     </View>
 
                     <View style={ProfileStyles.ProfileNameContainer}>
+                        <View style={ProfileStyles.OptionsContainer}>
+                                <Pressable
+                                    onPress={handlePopup}
+                                >
+                                    <Image style ={ImageStyles.Options} source={{uri: 'https://i.imgur.com/RtnN9Hu.png'}}/>
+                                </Pressable>
+                        </View>
                         <View style={ProfileStyles.DisplayNameContainer}>
                             <Text style={ProfileStyles.DisplayNameText}>
                                 {displayName}
@@ -324,41 +349,27 @@ function ProfilePage(props): JSX.Element {
                                 {userName}
                             </Text>
                         </View>
-                        <View style={ProfileStyles.OtherInfoContainer}>
-                            <Text style={ProfileStyles.OtherInfoText}>
-                                {numFriends.toString() + " Friends"}
-                            </Text>
-                        </View>
-                        <View style={ProfileStyles.OtherInfoContainer}>
-                            <Text style={ProfileStyles.OtherInfoText}>
-                                {numLeagues.toString() + " Leagues"}
-                            </Text>
-                        </View>
-                        <View style={ProfileStyles.OtherInfoContainer}>
-                            <Text style={ProfileStyles.OtherInfoText}>
-                                {numMedals.toString() + " Medals"}
-                            </Text>
-                        </View>
 
                     </View>
                 </View>
-                <View style={ProfileStyles.ProfileToggleContainer}>
-                    <View style={ProfileStyles.OptionsContainer}>
-                        <Pressable
-                            onPress={handlePopup}
-                        >
-                            <Image style ={ImageStyles.Options} source={{uri: 'https://imgur.com/G0SHXKl.png'}}/>
-                        </Pressable>
+                <View style={ProfileStyles.ProfileBottomContainer}>
 
+                    <View style={ProfileStyles.OtherInfoContainer}>
+                        <Text style={ProfileStyles.OtherInfoText}>
+                            {numFriends.toString() + " Friends"}
+                        </Text>
                     </View>
-                    <View style={ProfileStyles.QRContainer}>
-                        <Pressable
-                            onPress={() => handleQR()}
-                        >
-                            <Image style ={ImageStyles.QR} source={{uri: 'https://imgur.com/cC2QHxO.png'}}/>
-                        </Pressable>
+                    <View style={ProfileStyles.OtherInfoContainer}>
+                        <Text style={ProfileStyles.OtherInfoText}>
+                            {numLeagues.toString() + " Leagues"}
+                        </Text>
+                    </View>
+                    <View style={ProfileStyles.OtherInfoContainer}>
+                        <Text style={ProfileStyles.OtherInfoText}>
+                            {numMedals.toString() + " Medals"}
+                        </Text>
+                    </View>
 
-                    </View>
                 </View>
               </View>
           </View>
