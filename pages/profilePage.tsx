@@ -26,13 +26,13 @@ import MedalScroll from "../components/profile/medalScroll";
 
 
 function ProfilePage(props): JSX.Element {
-	// signOut = async () => {
-	// 	try {
-	// 		await GoogleSignin.signOut();
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// };
+	const signOut = async () => {
+		try {
+			await GoogleSignin.signOut();
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
     const options = [
         { label : "In progress" , value : 'progress'},
@@ -51,7 +51,8 @@ function ProfilePage(props): JSX.Element {
     const [modalVisiblePopUp, setModalVisiblePopUp] = useState(false)
     const [medalType, setMedalType] = useState('progress');
 
-    const [medalInfo, setMedalInfo] = useState([])
+    const [medalInfoProgress, setMedalInfoProgress] = useState([])
+    const [medalInfoEarned, setMedalInfoEarned] = useState([])
 
     useEffect(() => {
         getProfilePhoto()
@@ -59,7 +60,7 @@ function ProfilePage(props): JSX.Element {
         getUserName()
         getFriends()
         getLeagues()
-        getMedals()
+        getMedalsEarned()
         getMedalsProgress()
     }, [])
     const getProfilePhoto = function() {
@@ -167,7 +168,7 @@ function ProfilePage(props): JSX.Element {
             )
     }
 
-    const getMedals = function() {
+    const getMedalsEarned = function() {
         var config = {
             method: 'post',
             url: BACKEND_URL + 'medals/get_earned',
@@ -182,6 +183,7 @@ function ProfilePage(props): JSX.Element {
             .then(function (response) {
                 // console.log(response.data.length)
                 setNumMedals(response.data.length)
+                setMedalInfoEarned(response.data)
             })
             .catch((error) =>
                 console.log(error)
@@ -202,7 +204,7 @@ function ProfilePage(props): JSX.Element {
         axios(config)
             .then(function (response) {
                 // console.log(response.data)
-                setMedalInfo(response.data)
+                setMedalInfoProgress(response.data)
             })
             .catch((error) =>
                 console.log(error)
@@ -212,11 +214,6 @@ function ProfilePage(props): JSX.Element {
 
     const handleRefresh = function() {
         getMedalsProgress()
-    }
-
-    const handleQR = function() {
-        // console.log("QR")
-        setModalVisibleQR(true)
     }
 
     const handlePopup = function() {
@@ -244,6 +241,9 @@ function ProfilePage(props): JSX.Element {
 
     const handleLogout = function() {
         console.log('logout')
+        signOut().then(response => {
+            props.navigation.navigate('Login')
+        })
     }
 
 
@@ -391,7 +391,7 @@ function ProfilePage(props): JSX.Element {
             </View>
             <View style={ProfileStyles.MedalScroll}>
                 <MedalScroll
-                    MedalData={medalInfo}
+                    MedalData={medalType === 'progress' ? medalInfoProgress : medalInfoEarned}
                     onRefresh = {handleRefresh}
                 />
 
