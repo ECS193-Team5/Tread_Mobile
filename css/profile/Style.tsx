@@ -56,7 +56,7 @@ const ProfileStyles = StyleSheet.create({
     },
 
     DisplayNameContainer: {
-        flex: 20,
+        flex: 25,
         width: '100%',
         // backgroundColor: 'green',
         flexDirection: 'column',
@@ -65,12 +65,12 @@ const ProfileStyles = StyleSheet.create({
 
     DisplayNameText: {
         fontWeight: "600",
-        fontSize: 24,
+        fontSize: 28,
         color: '#014421'
     },
 
     UsernameContainer: {
-        flex: 50,
+        flex: 45,
         width: '100%',
         // backgroundColor: 'yellow'
     },
