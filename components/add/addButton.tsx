@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-	TouchableOpacity,
-	Button,
 	Text,
 	Pressable,
 	View,
