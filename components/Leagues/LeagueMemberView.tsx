@@ -104,7 +104,10 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
     console.log(selectedItem)
     setCurrentView(selectedItem)
     var route = ''
-    if(selectedItem === 'pending'){
+    if(selectedItem === 'all'){
+      onRefresh()
+      return
+    }else if(selectedItem === 'pending'){
       route = 'league/get_pending_request_list'
     } else if(selectedItem === 'sent'){
       route = 'league/get_sent_invite_list'

@@ -13,6 +13,7 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 
 import { modalstyle } from '../../css/shared/modalStyle';
 
+
 function QRModalPopUp({Name, isLeague, security}) {
   const GeneratePrompt = function(){
     if(isLeague){

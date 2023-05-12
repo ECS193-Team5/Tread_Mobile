@@ -8,10 +8,6 @@ function handleUrl ({ url }) {
 }
 Linking.addEventListener('url', handleUrl)
 
-
-
-
-
 function App(): JSX.Element {
   LogBox.ignoreAllLogs();
   useEffect(() => {
@@ -23,8 +19,6 @@ function App(): JSX.Element {
 
     getUrl();
   });
-
-
 
   return (
       <View style ={{flex:1}}>

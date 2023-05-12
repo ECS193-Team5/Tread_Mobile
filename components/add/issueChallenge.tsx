@@ -10,12 +10,41 @@ import SwitchSelector from "react-native-switch-selector";
 import axios from "axios";
 import {BACKEND_URL} from '@env';
 
+import Ionicons                 from 'react-native-vector-icons/Ionicons'
+import AntDesign                from 'react-native-vector-icons/AntDesign'
+import Entypo                   from 'react-native-vector-icons/Entypo'
+import Feather                  from 'react-native-vector-icons/Feather'
+import FontAwesome              from 'react-native-vector-icons/FontAwesome'
+import FontAwesome5             from 'react-native-vector-icons/FontAwesome5Pro'
+import Fontisto                 from 'react-native-vector-icons/Fontisto'
+import Foundation               from 'react-native-vector-icons/Foundation'
+import MaterialCommunityIcons   from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialIcons            from 'react-native-vector-icons/MaterialIcons'
+import Octicons                 from 'react-native-vector-icons/Octicons'
+import SimpleLineIcons          from 'react-native-vector-icons/SimpleLineIcons'
+import Zocial                   from 'react-native-vector-icons/Zocial'
+
+Ionicons.loadFont()            
+AntDesign.loadFont()                       
+Entypo.loadFont()                          
+Feather.loadFont()                         
+FontAwesome.loadFont()                     
+// FontAwesome5.loadFont()                    
+Fontisto.loadFont()                        
+Foundation.loadFont()                      
+MaterialCommunityIcons.loadFont()          
+MaterialIcons.loadFont()                   
+Octicons.loadFont()                        
+SimpleLineIcons.loadFont()                 
+Zocial.loadFont()                          
+
 import {
     View,
     Text,
     TextInput,
     Pressable,
 } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 
 function IssueChallenge(): JSX.Element {
 
@@ -175,9 +204,20 @@ function IssueChallenge(): JSX.Element {
                 setEndDate(new Date())
                 setValueLeagues(null)
                 setValueFriends(null)
+                showMessage({
+                  floating : true,
+                  message : 'Challenge created',
+                  backgroundColor : '#014421',
+                  color : '#F9A800',
+                })
             })
             .catch(function (error) {
                 console.log(error)
+                showMessage({
+                  floating : true,
+                  message : 'Error creating challenge',
+                  type : 'danger',
+                })
             })
     }
 
@@ -292,6 +332,7 @@ function IssueChallenge(): JSX.Element {
                             mode = {'date'}
                             open={showStartDatePicker}
                             date={startDate}
+                            minimumDate = {new Date()}
                             onConfirm={(date) => {
                                 setShowStartDatePicker(false)
                                 console.log(date)

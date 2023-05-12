@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
 import {
-	Pressable,
   Image,
   View,
   Text,
-  StatusBar,
-  StyleSheet,
-  Dimensions
 } from 'react-native';
 
 import {progressCardStyle} from '../../css/challenges/progressCardStyle'
 import * as Progress from 'react-native-progress';
 import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
-
-import axios from 'axios';
-import {BACKEND_URL} from '@env';
 
 function ProgressCard({ProgressObj, Username}){
   var ProgressPercent = Math.min(ProgressObj.complete, 100)

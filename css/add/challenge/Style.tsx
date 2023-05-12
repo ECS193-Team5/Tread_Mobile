@@ -3,6 +3,7 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     Background : {
         flexDirection: 'column',
+        paddingTop:(Platform.OS === 'ios') ? "12%" : 0,
         flex: 1,
         backgroundColor : "#E0E7E3"
     },
