@@ -19,6 +19,7 @@ import IncomingLeaguesPage from '../../pages/incomingLeaguesPage';
 import LeagueDetails from '../../pages/leagueDetails';
 import IncomingFriendsPage from '../../pages/incomingFriendsPage';
 import CameraView from '../../pages/CameraView';
+import EditProfile from "../../pages/editProfile";
 
 const Tab = createBottomTabNavigator();
 
@@ -108,6 +109,7 @@ function ProfileStack(){
   return (
   <Stack.Navigator>
     <Stack.Screen name = "Profile" component={ProfilePage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "EditProfile" component={EditProfile} options={{ headerShown: false }}/>
   </Stack.Navigator>
   )
 }
@@ -154,7 +156,7 @@ function ShowTabs(){
     <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false }}/>
     <Tab.Screen name="Add" component={AddStack} options={{headerShown: false}}/>
     <Tab.Screen name="Friends" component={SearchStack} options={{ headerShown: false }}/>
-    <Tab.Screen name="Profile" component={ProfilePage} options={{ headerShown: false }}/>
+    <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false }}/>
   </Tab.Navigator>
   )
 }
