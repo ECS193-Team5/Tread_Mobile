@@ -12,8 +12,8 @@ import {
 import {cardStyles} from "../../css/cards/Style"
 import ProgressCircle from "progress-circle-react-native"
 import ImageCluster from '../shared/ImageCluster';
-import ProfileImage from "./profileImage";
-function ProfileCard({MedalData}): JSX.Element {
+import MedalImage from "./medalImage";
+function MedalCard({MedalData}): JSX.Element {
     const [modalVisible, setModalVisible] = useState(false)
     // var images = []
     var currentAmount = MedalData['progress'];
@@ -29,7 +29,7 @@ function ProfileCard({MedalData}): JSX.Element {
                 barStyle="dark-content"
             />
 
-            <ProfileImage
+            <MedalImage
                 level = {MedalData['level']}
             />
 
@@ -37,7 +37,7 @@ function ProfileCard({MedalData}): JSX.Element {
 
             <View style = {cardStyles.ChallengeCardTextContainer}>
                 <View style = {cardStyles.ChallengeNameContainer}>
-                    <Text style = {cardStyles.ChallengeNameText}>
+                    <Text style = {cardStyles.MedalNameText}>
                         {MedalData['exercise']['exerciseName'] + " " + MedalData['exercise']['amount'] + " " + MedalData['exercise']['unit']}
                     </Text>
                 </View>
@@ -50,7 +50,7 @@ function ProfileCard({MedalData}): JSX.Element {
                         shadowColor='#bebebe'
                         bgColor='#FFFFFF'
                     >
-                        <Text style = {cardStyles.ChallengeProgressText}>{ProgressPercent + "%"}</Text>
+                        <Text style = {cardStyles.MedalProgressText}>{ProgressPercent + "%"}</Text>
                     </ProgressCircle>
                 </View>
             </View>
@@ -58,4 +58,4 @@ function ProfileCard({MedalData}): JSX.Element {
     )
 }
 
-export default ProfileCard;
+export default MedalCard;

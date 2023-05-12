@@ -4,15 +4,15 @@ import {
 } from 'react-native';
 
 import {styles} from "../../css/challenges/Style"
-import ProfileCard from "./profileCard";
-function ProfileScroll({MedalData, onRefresh}): JSX.Element {
+import MedalCard from "./medalCard";
+function MedalScroll({MedalData, onRefresh}): JSX.Element {
     const [refreshing, setRefreshing] = useState(false)
 
     const renderProfile = ({item}) => {
         return (
-            <ProfileCard
+            <MedalCard
                 MedalData = {item}
-            ></ProfileCard>
+            ></MedalCard>
         )
     }
 
@@ -42,4 +42,4 @@ function ProfileScroll({MedalData, onRefresh}): JSX.Element {
     )
 }
 
-export default ProfileScroll
+export default MedalScroll

@@ -8,7 +8,7 @@ import {
 import {cardStyles} from "../../css/cards/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
 
-function ProfileImage({level}): JSX.Element{
+function MedalImage({level}): JSX.Element{
     const imageGold = 'https://i.imgur.com/o2XvWn9.png';
     const imageSilver = 'https://i.imgur.com/72N0DMU.png';
     const imageBronze = 'https://i.imgur.com/iCqnM41.png';
@@ -24,9 +24,9 @@ function ProfileImage({level}): JSX.Element{
 
     return(
         <View style = {cardStyles.ImageContainer}>
-            <Image style ={ImageStyles.first} source={{uri: imageUrl}}/>
+            <Image style ={ImageStyles.medal} source={{uri: imageUrl}}/>
         </View>
     )
 }
 
-export default ProfileImage;
+export default MedalImage;

@@ -22,7 +22,7 @@ import {modalstyle} from "../css/shared/modalStyle";
 import SwitchSelector from "react-native-switch-selector";
 import {styles} from "../css/challenges/Style";
 import ChallengeScroll from "../components/shared/ChallengeScroll";
-import ProfileScroll from "../components/profile/profileScroll";
+import MedalScroll from "../components/profile/medalScroll";
 
 
 function ProfilePage(props): JSX.Element {
@@ -390,7 +390,7 @@ function ProfilePage(props): JSX.Element {
               </SwitchSelector>
             </View>
             <View style={ProfileStyles.MedalScroll}>
-                <ProfileScroll
+                <MedalScroll
                     MedalData={medalInfo}
                     onRefresh = {handleRefresh}
                 />
