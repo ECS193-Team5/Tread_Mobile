@@ -29,6 +29,14 @@ const ImageStyles = StyleSheet.create({
     marginLeft : -12
   },
 
+  medal : {
+    width :60,
+    height : 60 ,
+    borderRadius : 30,
+    borderWidth : 2,
+    borderColor : '#014421'
+  },
+
   thirdText : {
     width : "80%",
     alignSelf : 'center',

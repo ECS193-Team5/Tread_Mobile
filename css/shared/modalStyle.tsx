@@ -116,6 +116,17 @@ const modalstyle = StyleSheet.create({
     borderColor : '#014421'
   },
 
+  PopUpPromptContainerProfile : {
+    backgroundColor : '#E0E7E3',
+    position : 'relative',
+    bottom : '32%',
+    left : '55%',
+    width : '35%',
+    borderRadius : 20,
+    borderWidth : 1,
+    borderColor : '#014421'
+  },
+
   PopUpOptionText : {
     alignSelf : 'flex-start', 
     margin : '5%',

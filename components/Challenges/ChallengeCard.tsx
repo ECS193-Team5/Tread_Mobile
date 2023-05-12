@@ -24,7 +24,7 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
     for (let User of ChallengeData.participants){
       images.push(createProfilePictureURL(User))
     }
-    console.log(images)
+    // console.log(images)
     var myProgressBaseUnits = ChallengeData.progress.progress;
     totalBaseUnits = ChallengeData.progress.exercise.convertedAmount;
     var totalRealUnits = ChallengeData.progress.exercise.amount;

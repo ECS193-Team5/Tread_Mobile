@@ -106,6 +106,14 @@ const cardStyles = StyleSheet.create({
     marginVertical : "1.5%"
   },
 
+  MedalNameText : {
+    fontWeight : "500",
+    fontSize : 16,
+    lineHeight : 16,
+    color : "#014421",
+    marginVertical : "1.5%"
+  },
+
   LeagueNameText : {
     fontWeight : "500",
     fontSize : 17,
@@ -119,6 +127,14 @@ const cardStyles = StyleSheet.create({
     alignSelf: 'center',
     fontSize : 14,
     lineHeight : 16,
+    color : "#014421",
+  },
+
+  MedalProgressText : {
+    fontWeight : "500",
+    alignSelf: 'center',
+    fontSize : 16,
+    lineHeight : 18,
     color : "#014421",
   },
 
