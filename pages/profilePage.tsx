@@ -217,11 +217,14 @@ function ProfilePage(props): JSX.Element {
     }
 
     const handlePopup = function() {
+        console.log(modalVisiblePopUp)
         setModalVisiblePopUp(true)
     }
 
     const handleEdit = function() {
-        console.log('edit')
+        setModalVisiblePopUp(false)
+        props.navigation.navigate('EditProfile')
+        // console.log('edit')
     }
 
     const EditClickable = function(){
