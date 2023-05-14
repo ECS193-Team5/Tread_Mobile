@@ -150,18 +150,18 @@ function Signup(props): JSX.Element {
 				<TextInput
 					placeholder = {email}
 					style = {styles.validInput}
-          placeholderTextColor = "#014421"
+                    placeholderTextColor = "#014421"
 					editable = {false}
 				/>
 				<TextInput
 					placeholder = "Display Name"
-          placeholderTextColor= "grey"
+                    placeholderTextColor= "grey"
 					style = {validDisplayName ? styles.validInput : styles.invalidInput}
 					onChangeText = {handleDisplayNameChange}
 				/>
 				<TextInput
 					placeholder = "Username"
-          placeholderTextColor= "grey"
+                    placeholderTextColor= "grey"
 					style = {validUserName ? styles.validInput : styles.invalidInput}
 					onChangeText = {handleUserNameChange}
 				/>

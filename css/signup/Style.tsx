@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   	borderColor: '#9B9595',
   	borderWidth: 2,
   	paddingLeft: 25,
-//   	color: '#9B9595',
+  	color: '#9B9595',
     height : 55,
     fontSize : 16
   },
@@ -77,7 +77,33 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		fontSize: 16,
 		fontWeight: 700
-  }
+  },
+    ChoosePicContainer : {
+        flex: 12,
+// 		backgroundColor: 'green',
+        marginLeft: '20%',
+        marginRight: '20%',
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+
+    ChoosePicButton : {
+        width: '100%',
+        height: '20%',
+        borderRadius: 50,
+        borderWidth: 1,
+        backgroundColor: '#014421',
+        borderColor: '#014421',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    ChoosePicText : {
+        color: 'white',
+        fontWeight: 700,
+        fontSize: 14
+    },
+
 
 });
 
