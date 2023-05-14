@@ -3,7 +3,7 @@ import {
   View,
   Button,
   StyleSheet,
-  Text
+  Text, Image
 } from 'react-native';
 
 import "../components/Sensors/healthKit";
@@ -183,11 +183,27 @@ function Login(props): JSX.Element {
   return (
       <View >
         <LinearGradient
-          colors = {['#014421', '#000000']}
+          colors = {['#014421', '#012522']}
           style = {styles.linearGradient}
           start = {{x:1, y: 0}}
         >
-					<View style = {styles.mainContainer}>
+          <Image
+            src={'https://i.imgur.com/FTHVwBA.png'}
+            style={styles.pushupImage}
+          />
+
+          <Image
+            src={'https://i.imgur.com/7z2WZm7.png'}
+            style={styles.liftingImage}
+          />
+
+          <Image
+            src={'https://i.imgur.com/JqkFVQC.png'}
+            style={styles.skiImage}
+          />
+
+
+          <View style = {styles.mainContainer}>
 						<View style = {styles.titleContainer}>
 							<Text style = {styles.titleText}>
 								Tread
