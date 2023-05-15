@@ -179,7 +179,6 @@ function Login(props): JSX.Element {
     signInGoogle();
   }
 
-
   return (
       <View >
         <LinearGradient
