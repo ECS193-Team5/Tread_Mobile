@@ -23,6 +23,7 @@ import SwitchSelector from "react-native-switch-selector";
 import {styles} from "../css/challenges/Style";
 import ChallengeScroll from "../components/shared/ChallengeScroll";
 import MedalScroll from "../components/profile/medalScroll";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 function ProfilePage(props): JSX.Element {
@@ -241,11 +242,16 @@ function ProfilePage(props): JSX.Element {
             </TouchableHighlight>
         )
     }
+    const storeLogOut = async () => {
+        await AsyncStorage.setItem('loggedIn', 'false');
+    }
 
     const handleLogout = function() {
         console.log('logout')
-        signOut().then(response => {
-            props.navigation.navigate('Login')
+        storeLogOut().then((response) => {
+            signOut().then(response => {
+                props.navigation.navigate('Login')
+            })
         })
     }
 

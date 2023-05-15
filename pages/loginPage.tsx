@@ -6,75 +6,69 @@ import {
 
 import "../components/Sensors/healthKit";
 import LinearGradient from 'react-native-linear-gradient';
-
 import LoginButton from '../components/login/loginButton';
-
 import {LoginStyles} from '../css/login/Style';
 
 function Login(props): JSX.Element {
-
-
   return (
-      <View >
-        <LinearGradient
-          colors = {['#014421', '#012522']}
-          style = {LoginStyles.linearGradient}
-          start = {{x:1, y: 0}}
-        >
-          <Image
-            src={'https://i.imgur.com/FTHVwBA.png'}
-            style={LoginStyles.pushupImage}
-          />
+    <View >
+      <LinearGradient
+        colors = {['#014421', '#012522']}
+        style = {LoginStyles.linearGradient}
+        start = {{x:1, y: 0}}
+      >
+        <Image
+          src={'https://i.imgur.com/FTHVwBA.png'}
+          style={LoginStyles.pushupImage}
+        />
 
-          <Image
-            src={'https://i.imgur.com/7z2WZm7.png'}
-            style={LoginStyles.liftingImage}
-          />
+        <Image
+          src={'https://i.imgur.com/7z2WZm7.png'}
+          style={LoginStyles.liftingImage}
+        />
 
-          <Image
-            src={'https://i.imgur.com/JqkFVQC.png'}
-            style={LoginStyles.skiImage}
-          />
+        <Image
+          src={'https://i.imgur.com/JqkFVQC.png'}
+          style={LoginStyles.skiImage}
+        />
+        <View style = {LoginStyles.mainContainer}>
+          <View style = {LoginStyles.titleContainer}>
+            <Text style = {LoginStyles.titleText}>
+              Tread
+            </Text>
+          </View>
+          <View style = {LoginStyles.loginContainer}>
+            <LoginButton
+              filled={true}
+              text={'Log In'}
+              navigation={props.navigation}
+            >
+            </LoginButton>
+          </View>
+          <View style = {LoginStyles.separatorContainer}>
+              <View style = {LoginStyles.outsideSeparator}>
+              </View>
+              <View style = {LoginStyles.middleSeparator}>
+                <Text style = {LoginStyles.orText}>
+                    or
+                </Text>
+              </View>
+              <View style = {LoginStyles.outsideSeparator}>
+              </View>
+          </View>
+          <View style = {LoginStyles.signUpContainer}>
+            <LoginButton
+              filled={false}
+              text={'Sign Up'}
+              navigation={props.navigation}
+            >
+            </LoginButton>
+          </View>
 
+        </View>
 
-          <View style = {LoginStyles.mainContainer}>
-						<View style = {LoginStyles.titleContainer}>
-							<Text style = {LoginStyles.titleText}>
-								Tread
-							</Text>
-						</View>
-						<View style = {LoginStyles.loginContainer}>
-							<LoginButton
-								filled={true}
-                text={'Log In'}
-                navigation={props.navigation}
-							>
-							</LoginButton>
-						</View>
-						<View style = {LoginStyles.separatorContainer}>
-						    <View style = {LoginStyles.outsideSeparator}>
-						    </View>
-						    <View style = {LoginStyles.middleSeparator}>
-						        <Text style = {LoginStyles.orText}>
-						            or
-						        </Text>
-						    </View>
-						    <View style = {LoginStyles.outsideSeparator}>
-						    </View>
-						</View>
-						<View style = {LoginStyles.signUpContainer}>
-              <LoginButton
-                filled={false}
-                text={'Sign Up'}
-                navigation={props.navigation}
-              >
-              </LoginButton>
-						</View>
-
-					</View>
-
-        </LinearGradient>
-      </View>
+      </LinearGradient>
+    </View>
   )
 }
 

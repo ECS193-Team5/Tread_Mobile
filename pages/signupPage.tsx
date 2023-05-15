@@ -15,52 +15,10 @@ import {styles} from '../css/signup/Style';
 
 import CheckBox from '@react-native-community/checkbox';
 
-function Signup(props): JSX.Element {
+function Signup({route, navigation}): JSX.Element {
 
-  const getGoogleToken = async () => {
-//     console.log('Getting token')
-    try {
-      const item = await AsyncStorage.getItem('token');
-//       console.log(item)
-// 			console.log('Got token')
-      return String(item)
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  const getPhoto = async () => {
-//     console.log('Getting token')
-    try {
-      const item = await AsyncStorage.getItem('photo');
-//       console.log(item)
-// 			console.log('Got token')
-      return String(item)
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  const getFCMToken = async () => {
-//     console.log('Getting FCM token')
-    try {
-      const item = await AsyncStorage.getItem('fcmToken');
-//       console.log(item)
-// 			console.log('Got FCM token')
-// 			console.log(item)
-      return String(item)
-    } catch (err) {
-      console.log(err);
-    }
-
-  }
-
-
-  
   const handleOnPress = async function() {
-		const authToken = await getGoogleToken();
-		const deviceToken = await getFCMToken();
-		const picture = await getPhoto();
+		const picture = route.params.photo;
 
     var config = {
       method: 'post',
@@ -68,11 +26,9 @@ function Signup(props): JSX.Element {
       withCredentials: true,
       credentials: 'include',
       headers: {
-        'Authorization': authToken,
         Accept: 'application/json',
       },
       data: {
-        'deviceToken': deviceToken,
         'username' : userName,
         'displayName' : displayName,
         'picture' : picture
@@ -82,7 +38,7 @@ function Signup(props): JSX.Element {
     axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
-      props.navigation.navigate("Challenge");
+      navigation.navigate("Challenge");
     })
     .catch(function (error) {
       console.log(error);
@@ -97,7 +53,6 @@ function Signup(props): JSX.Element {
   }
 
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [userName, setUserName] = useState("");
 
@@ -106,10 +61,6 @@ function Signup(props): JSX.Element {
 
   const [displayNameStyle, setDisplayStyle] = useState(styles.invalidInput);
   const [userNameStyle, setUserStyle] = useState(styles.invalidInput);
-	
-  useEffect(() => {
-		getEmail();
-	}, []);
 
   const handleDisplayNameChange = function(item) {
     setDisplayName(item)
@@ -129,16 +80,6 @@ function Signup(props): JSX.Element {
 		}
   }
 
-	const getEmail = async () => {
-		try {
-			const item = await AsyncStorage.getItem('email');
-			console.log(item)
-      setEmail(item);
-		} catch (err) {
-			console.log(err);
-		}
-	}
-
   return (
 		<View style = {styles.mainContainer}>
 			<View style = {styles.titleContainer}>
@@ -148,7 +89,7 @@ function Signup(props): JSX.Element {
 			</View>
 			<View style = {styles.formContainer}>
 				<TextInput
-					placeholder = {email}
+					placeholder = {route.params.email}
 					style = {styles.validInput}
                     placeholderTextColor = "#014421"
 					editable = {false}
