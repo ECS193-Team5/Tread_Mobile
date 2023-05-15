@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const LoginStyles = StyleSheet.create({
   container : {
     paddingTop:(Platform.OS === 'ios') ? "12%" : 0
   },
@@ -110,8 +110,35 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#ffffff",
     fontWeight: "700"
-  }
+  },
+
+	pushupImage: {
+		height: '75%',
+		width: '75%',
+		resizeMode: 'contain',
+		position: "absolute",
+		left: '55%',
+		bottom: '40%'
+	},
+
+	liftingImage: {
+		height: '75%',
+		width: '75%',
+		resizeMode: 'contain',
+		position: "absolute",
+		right: '55%'
+	},
+
+	skiImage: {
+		height: '75%',
+		width: '75%',
+		resizeMode: 'contain',
+		position: "absolute",
+		top: '15%',
+		left: '35%'
+	}
+
 
 });
 
-export { styles}
+export {LoginStyles}
