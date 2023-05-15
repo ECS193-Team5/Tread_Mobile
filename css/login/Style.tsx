@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const LoginStyles = StyleSheet.create({
   container : {
     paddingTop:(Platform.OS === 'ios') ? "12%" : 0
   },
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
 
 });
 
-export { styles}
+export {LoginStyles}
