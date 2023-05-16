@@ -3,7 +3,7 @@ import {
   View,
   Text,
   TextInput,
-  Pressable,
+  Pressable, Image,
 } from 'react-native';
 
 import {BACKEND_URL} from '@env';
@@ -11,6 +11,7 @@ import axios from 'axios';
 
 import {styles} from '../css/signup/Style';
 import InputForm from "../components/shared/InputForm";
+import ImageUpload from "../components/shared/ImageUpload";
 
 import CheckBox from '@react-native-community/checkbox';
 
@@ -56,28 +57,7 @@ function Signup({route, navigation}): JSX.Element {
   const [userName, setUserName] = useState("");
 
   const [validDisplayName, setValidDisplayName] = useState(false);
-  const [validUserName, setValidUserName] = useState(true);
-
-  const [displayNameStyle, setDisplayStyle] = useState(styles.invalidInput);
-  const [userNameStyle, setUserStyle] = useState(styles.invalidInput);
-
-  const handleDisplayNameChange = function(item) {
-    setDisplayName(item)
-		if(checkValidName(item)) {
-			setValidDisplayName(true);
-		} else {
-			setValidDisplayName(false);
-		}
-  }
-
-  const handleUserNameChange = function(item) {
-    setUserName(item)
-		if(checkValidName(item)) {
-			setValidUserName(true);
-		} else {
-			setValidUserName(false);
-		}
-  }
+  const [validUserName, setValidUserName] = useState(false);
 
   return (
 		<View style = {styles.mainContainer}>
@@ -87,8 +67,7 @@ function Signup({route, navigation}): JSX.Element {
 				</Text>
 			</View>
 			<View style = {styles.formContainer}>
-        <View style={styles.choosePicContainer}>
-        </View>
+
         <View style={styles.displayNameContainer}>
           <InputForm
             placeholder={'Enter Display Name'}
@@ -97,14 +76,27 @@ function Signup({route, navigation}): JSX.Element {
             valid={validDisplayName}
             setValid={setValidDisplayName}
             editable={true}
-          >
-
-          </InputForm>
-
+          />
         </View>
         <View style={styles.userNameContainer}>
-
+          <InputForm
+            placeholder={'Enter Username'}
+            value={userName}
+            setValue={setUserName}
+            valid={validUserName}
+            setValid={setValidUserName}
+            editable={true}
+          />
         </View>
+
+        {/*<View style={styles.choosePicContainer}>*/}
+        {/*  <Image*/}
+        {/*</View>*/}
+
+        <ImageUpload
+          flex = {60}
+          placeholder = {route.params.photo}
+        ></ImageUpload>
 
 			</View>
 			{/*<View style = {styles.checkContainer}>*/}
