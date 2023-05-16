@@ -24,6 +24,7 @@ import {styles} from "../css/challenges/Style";
 import ChallengeScroll from "../components/shared/ChallengeScroll";
 import MedalScroll from "../components/profile/medalScroll";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {createProfilePictureURL} from "../components/Helpers/CloudinaryURLHelper";
 
 
 function ProfilePage(props): JSX.Element {
@@ -56,6 +57,7 @@ function ProfilePage(props): JSX.Element {
     const [medalInfoEarned, setMedalInfoEarned] = useState([])
 
     useEffect(() => {
+        console.log(createProfilePictureURL(userName.substring(1,)));
         getProfilePhoto()
         getDisplayName()
         getUserName()
@@ -334,7 +336,7 @@ function ProfilePage(props): JSX.Element {
                 <View style={ProfileStyles.ProfileTopContainer}>
                     <View style={ProfileStyles.ProfileImageContainer}>
                         <Image
-                            src={profilePhotoURL}
+                            src={createProfilePictureURL(userName.substring(1,))}
                             style={ProfileStyles.ProfileImage}
                         >
                         </Image>

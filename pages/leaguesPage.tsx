@@ -129,7 +129,7 @@ function LeaguesPage(props): JSX.Element {
   }
 
   return (
-    <View style = {styles.container}>
+    <View  style = {styles.container}>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
@@ -157,16 +157,16 @@ function LeaguesPage(props): JSX.Element {
           renderItem = {renderLeague}
           contentContainerStyle = {styles.FlatListContainer}
           refreshControl ={
-            <RefreshControl 
-              refreshing = {refreshing} 
-              onRefresh = {Refresh} 
+            <RefreshControl
+              refreshing = {refreshing}
+              onRefresh = {Refresh}
               colors = {['#014421']}
               tintColor = {'#014421'}
               progressViewOffset = {-10}
             />
           }
         />
-      </View> 
+      </View>
 
     </View>
   )
