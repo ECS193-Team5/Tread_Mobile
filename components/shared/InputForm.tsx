@@ -3,32 +3,31 @@ import {TextInput, View} from "react-native";
 import {InputFormStyle} from "../../css/shared/InputFormStyle";
 
 function InputForm(props): JSX.Element {
-  let initValue = "";
-  let curStyle = InputFormStyle.InitInput;
-  let textColor = '#9B9595';
-  // const [curStyle, setCurStyle] = useState(InputFormStyle.InitInput)
-  // const [textColor, setTextColor] = useState('#9B9595');
+  // let curStyle = {};
+  const [curStyle, setCurStyle] = useState(InputFormStyle.InitInput)
 
   useEffect(() => {
-    initValue = props.value;
-  },[])
+    console.log('Value: ' + props.value)
+    console.log('Recalculating style');
+    if(props.value === "") {
+      setCurStyle(InputFormStyle.InitInput)
+      // curStyle = InputFormStyle.InitInput;
+    } else {
+      if(props.valid) {
+        setCurStyle(InputFormStyle.ValidInput)
+
+        // curStyle = InputFormStyle.ValidInput
+      } else {
+        setCurStyle(InputFormStyle.InvalidInput)
+
+        // curStyle = InputFormStyle.InvalidInput;
+      }
+    }
+  })
   const isValid = (text) => {
     return text.length > 0
   }
   const handleTextChange = (text) => {
-    if(initValue === text) {
-      curStyle = InputFormStyle.InitInput;
-      textColor = '#9B9595';
-    } else {
-      if(props.valid) {
-        curStyle = InputFormStyle.ValidInput;
-        textColor = '#014421';
-      } else {
-        curStyle = InputFormStyle.InvalidInput;
-        textColor = '#C65656';
-      }
-    }
-
     props.setValid(isValid(text));
     props.setValue(text);
   }
@@ -37,8 +36,9 @@ function InputForm(props): JSX.Element {
     <View>
       <TextInput
         placeholder = {props.placeholder}
+        value={props.value}
         style = {curStyle}
-        placeholderTextColor = {textColor}
+        placeholderTextColor = {'#9B9595'}
         editable = {props.editable}
         onChangeText={handleTextChange}
       />
