@@ -4,14 +4,13 @@ import {
   Text,
   TextInput,
   Pressable,
-  // CheckBox,
 } from 'react-native';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {BACKEND_URL} from '@env';
 import axios from 'axios';
 
 import {styles} from '../css/signup/Style';
+import InputForm from "../components/shared/InputForm";
 
 import CheckBox from '@react-native-community/checkbox';
 
@@ -56,7 +55,7 @@ function Signup({route, navigation}): JSX.Element {
   const [displayName, setDisplayName] = useState("");
   const [userName, setUserName] = useState("");
 
-  const [validDisplayName, setValidDisplayName] = useState(true);
+  const [validDisplayName, setValidDisplayName] = useState(false);
   const [validUserName, setValidUserName] = useState(true);
 
   const [displayNameStyle, setDisplayStyle] = useState(styles.invalidInput);
@@ -88,43 +87,44 @@ function Signup({route, navigation}): JSX.Element {
 				</Text>
 			</View>
 			<View style = {styles.formContainer}>
-				<TextInput
-					placeholder = {route.params.email}
-					style = {styles.validInput}
-                    placeholderTextColor = "#014421"
-					editable = {false}
-				/>
-				<TextInput
-					placeholder = "Display Name"
-                    placeholderTextColor= "grey"
-					style = {validDisplayName ? styles.validInput : styles.invalidInput}
-					onChangeText = {handleDisplayNameChange}
-				/>
-				<TextInput
-					placeholder = "Username"
-                    placeholderTextColor= "grey"
-					style = {validUserName ? styles.validInput : styles.invalidInput}
-					onChangeText = {handleUserNameChange}
-				/>
+        <View style={styles.choosePicContainer}>
+        </View>
+        <View style={styles.displayNameContainer}>
+          <InputForm
+            placeholder={'Enter Display Name'}
+            value={displayName}
+            setValue={setDisplayName}
+            valid={validDisplayName}
+            setValid={setValidDisplayName}
+            editable={true}
+          >
+
+          </InputForm>
+
+        </View>
+        <View style={styles.userNameContainer}>
+
+        </View>
+
 			</View>
-			<View style = {styles.checkContainer}>
-      <CheckBox
-        disabled={false}
-        value={toggleCheckBox}
-        onValueChange={(newValue) => setToggleCheckBox(newValue)}
-        boxType = {'circle'}
-        onFillColor = '#014421'
-        onCheckColor= '#ffffff'
-        animationDuration={0.3}  
-        lineWidth = {2}
-      />
-      <Text style={styles.checkboxinput}>
-        By signing up you accept the
-        <Text style = {{color:"#014421"}}> Terms of service </Text>
-        and
-        <Text style = {{color:"#014421"}}> Privacy Policy</Text>
-      </Text>
-      </View>
+			{/*<View style = {styles.checkContainer}>*/}
+      {/*<CheckBox*/}
+      {/*  disabled={false}*/}
+      {/*  value={toggleCheckBox}*/}
+      {/*  onValueChange={(newValue) => setToggleCheckBox(newValue)}*/}
+      {/*  boxType = {'circle'}*/}
+      {/*  onFillColor = '#014421'*/}
+      {/*  onCheckColor= '#ffffff'*/}
+      {/*  animationDuration={0.3}  */}
+      {/*  lineWidth = {2}*/}
+      {/*/>*/}
+      {/*<Text style={styles.checkboxinput}>*/}
+      {/*  By signing up you accept the*/}
+      {/*  <Text style = {{color:"#014421"}}> Terms of service </Text>*/}
+      {/*  and*/}
+      {/*  <Text style = {{color:"#014421"}}> Privacy Policy</Text>*/}
+      {/*</Text>*/}
+      {/*</View>*/}
 			<View style = {styles.signupContainer}>
 				<Pressable style = {validUserName && validDisplayName && toggleCheckBox ? styles.validSignupButton : styles.invalidSignupButton}
 					disabled = {!(validUserName && validDisplayName && toggleCheckBox)}
@@ -134,12 +134,12 @@ function Signup({route, navigation}): JSX.Element {
 					</Text>
 				</Pressable>
 			</View>
-			<View style = {styles.signinContainer}>
-      <Text style={styles.checkboxinput}>
-        Already have an account ?
-        <Text style = {{color:"#014421"}}> Sign in </Text>
-      </Text>
-      </View>
+			{/*<View style = {styles.signinContainer}>*/}
+      {/*<Text style={styles.checkboxinput}>*/}
+      {/*  Already have an account ?*/}
+      {/*  <Text style = {{color:"#014421"}}> Sign in </Text>*/}
+      {/*</Text>*/}
+      {/*</View>*/}
 		</View>
   )
 }
