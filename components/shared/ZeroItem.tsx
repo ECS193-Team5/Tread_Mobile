@@ -9,13 +9,13 @@ import {
 
 import {ImageStyles} from '../../css/imageCluster/Style'
 import {SharedStyles} from '../../css/shared/Style'
-function ZeroItem({promptText, navigateToText, navigateToPage, props}): JSX.Element {
+function ZeroItem({promptText, navigateToText, navigateToPage, props, defaultView}): JSX.Element {
   return (
     <View>
       <Image style ={ImageStyles.ZeroImage} source={{uri: 'https://imgur.com/q4Uysme.png'}}/>
       <Text style = {SharedStyles.ZeroTextStyle}> {promptText} </Text>
       <TouchableHighlight
-        onPress={() => props.navigation.navigate('Add', {screen : navigateToPage})}
+        onPress={() => props.navigation.navigate('Add', {screen : navigateToPage, initial : false, params : {defaultView : defaultView}})}
         style = {{alignSelf : 'center', marginTop : '2%', borderRadius : 20}}
         underlayColor = 'rgba(0,0,0,0.15)'>
         <Text style = {SharedStyles.NavigatePrompt}> {navigateToText} </Text>

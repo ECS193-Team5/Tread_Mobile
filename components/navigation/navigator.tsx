@@ -86,7 +86,7 @@ function LeaguesStack(){
 function AddStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Add" component={AddPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "AddAll" component={AddPage} options={{ headerShown: false }}/>
     <Stack.Screen name = "AddChallenge" component={AddChallengePage} options={{ headerShown: false}}/>
     <Stack.Screen name = "AddFriend" component={AddFriendPage} options={{ headerShown: false }}/>
     <Stack.Screen name = "AddLeague" component={AddLeaguePage} options={{ headerShown: false }}/>

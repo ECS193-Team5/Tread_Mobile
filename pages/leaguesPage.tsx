@@ -88,7 +88,7 @@ function LeaguesPage(props): JSX.Element {
   }
 
 
-  const [IncomingImageUrl, setImage] = useState('')
+  const [IncomingImageUrl, setImage] = useState(getReceived)
   const [count, setCount] = useState(0)
   const [LeagueData, setLeagueData] = useState(getAllLeagueData)
   const [refreshing, setRefreshing] = useState(false)
@@ -176,6 +176,7 @@ function LeaguesPage(props): JSX.Element {
              navigateToText={currentView === 'All' ? 'Join or make one here' :  'Make one here'}
              navigateToPage={'AddLeague'}
              props = {props}
+             defaultView = {true}
            />    
         } 
       </View> 

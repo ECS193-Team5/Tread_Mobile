@@ -26,19 +26,18 @@ const options = [
 function AddLeaguePage(props): JSX.Element {
   const [qrValue, setQrValue] = useState('')
   const [openScanner, setOpenScanner] = useState(false)
-  const [defaultTab ,setDefaultTab] = useState(0)
-
+  const [defaultTab ,setDefaultTab] = useState(!props.route.params.defaultView)
   
   const onBarcodeScan = function(qrvalue) {
     setQrValue(qrvalue)
     setOpenScanner(false)
-    props.navigation.navigate("AddLeague")
+    props.navigation.navigate("AddLeague", {defaultView : false})
   }
 
   const handleBack = function(qrValue) {
     setDefaultTab(1)
     setOpenScanner(false)
-    props.navigation.navigate("AddLeague")
+    props.navigation.navigate("AddLeague", {defaultView : false})
   }
 
   const onOpenScanner = function() {
@@ -81,7 +80,7 @@ function AddLeaguePage(props): JSX.Element {
 
 	const [security, setSecurity] = useState("private");
 
-  const [isCreate, setIsCreate] = useState(true)
+  const [isCreate, setIsCreate] = useState(props.route.params.defaultView)
 
 	const switchOptions = [
 		{label: 'Private', value: 'private'},
