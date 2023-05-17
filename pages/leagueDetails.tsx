@@ -246,7 +246,7 @@ function LeagueDetails(props): JSX.Element {
     return (
       <TouchableHighlight
         onPress={clickedLeave}
-        style = {{borderBottomRightRadius : 20, borderBottomLeftRadius : 20}}
+        style = {{borderRadius : 20}}
         underlayColor = 'rgba(0,0,0,0.15)'
       >
         <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
@@ -261,7 +261,7 @@ function LeagueDetails(props): JSX.Element {
     return(
       <TouchableHighlight
       onPress={handleEdit}
-      style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
+      style = {{borderRadius : 20}}
       underlayColor = 'rgba(0,0,0,0.15)'
       >
         <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
@@ -274,7 +274,7 @@ function LeagueDetails(props): JSX.Element {
 
   const getOptions = function(){
     var options = []
-    if(role === 'owner' || role === 'admin'){
+    if(role === 'owner'){
       options.push(EditClickable)
     } 
     if (role === 'admin' || role === 'participant'){

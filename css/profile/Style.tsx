@@ -2,6 +2,7 @@ import { Platform, StyleSheet } from 'react-native';
 
 const ProfileStyles = StyleSheet.create({
     Background: {
+        paddingTop:(Platform.OS === 'ios') ? "12%" : 0,
         flexDirection: 'column',
         flex: 1,
         backgroundColor : "#E0E7E3"
@@ -91,7 +92,7 @@ const ProfileStyles = StyleSheet.create({
     },
 
     OtherInfoText: {
-        fontWeight: '400',
+        fontWeight: '600',
         fontSize: 18,
         color: '#014421'
     },
@@ -142,6 +143,7 @@ const ProfileStyles = StyleSheet.create({
 
     MedalScroll: {
         marginTop: '5%',
+        marginBottom : "37%",
         width: '100%'
     }
 });

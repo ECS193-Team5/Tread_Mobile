@@ -20,10 +20,9 @@ import QRModalPopUp from "../components/shared/QRModalPopUp";
 import MenuPopUp from "../components/profile/MenuPopUp";
 import {modalstyle} from "../css/shared/modalStyle";
 import SwitchSelector from "react-native-switch-selector";
-import {styles} from "../css/challenges/Style";
-import ChallengeScroll from "../components/shared/ChallengeScroll";
 import MedalScroll from "../components/profile/medalScroll";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { cardStyles } from '../css/cards/Style';
 
 
 function ProfilePage(props): JSX.Element {
@@ -260,11 +259,11 @@ function ProfilePage(props): JSX.Element {
         return(
             <TouchableHighlight
                 onPress={handleLogout}
-                style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
+                style = {{borderBottomRightRadius : 20, borderBottomLeftRadius : 20}}
                 underlayColor = 'rgba(0,0,0,0.15)'
             >
                 <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
-                    <Text style = {[modalstyle.PopUpOptionText , {flex : 50}]}> Logout </Text>
+                    <Text style = {[modalstyle.PopUpOptionText , {flex : 50, color : 'red'}]}> Logout </Text>
                     <Image style ={ImageStyles.Edit} source={{uri: 'https://i.imgur.com/Yv8lfL7.png'}}/>
                 </View>
             </TouchableHighlight>
@@ -279,7 +278,6 @@ function ProfilePage(props): JSX.Element {
         return(
             <TouchableHighlight
                 onPress={handleQRClick}
-                style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
                 underlayColor = 'rgba(0,0,0,0.15)'
             >
                 <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
@@ -329,7 +327,7 @@ function ProfilePage(props): JSX.Element {
           </Modal>
 
 
-          <View style={ProfileStyles.ProfileContainer}>
+          <View style={[ProfileStyles.ProfileContainer, cardStyles.shadowProp]}>
               <View style={ProfileStyles.ProfileCard}>
                 <View style={ProfileStyles.ProfileTopContainer}>
                     <View style={ProfileStyles.ProfileImageContainer}>
@@ -365,17 +363,17 @@ function ProfilePage(props): JSX.Element {
 
                     <View style={ProfileStyles.OtherInfoContainer}>
                         <Text style={ProfileStyles.OtherInfoText}>
-                            {numFriends.toString() + " Friends"}
+                            {numFriends.toString() + (numFriends === 1 ? " Friend" : " Friends")}
                         </Text>
                     </View>
                     <View style={ProfileStyles.OtherInfoContainer}>
                         <Text style={ProfileStyles.OtherInfoText}>
-                            {numLeagues.toString() + " Leagues"}
+                            {numLeagues.toString() + (numLeagues === 1 ? " League" : " Leagues")}
                         </Text>
                     </View>
                     <View style={ProfileStyles.OtherInfoContainer}>
                         <Text style={ProfileStyles.OtherInfoText}>
-                            {numMedals.toString() + " Medals"}
+                            {numMedals.toString() + (numMedals === 1 ? " Medals" : " Medals")}
                         </Text>
                     </View>
 
