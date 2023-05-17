@@ -36,9 +36,17 @@ const progressCardStyle = StyleSheet.create({
     borderColor : '#014421'
   },
 
-  TextStyle : {
+  ProgressTextStyle : {
+    color : "#F9A800",
+    fontWeight : '700',
+    marginLeft : '2%',
+    justifyContent : 'center',
+    position : 'absolute',    
+  },
+
+  ScoreTextStyle : {
     color : "#014421",
-    fontWeight : '700'
+    fontWeight : '700',
   },
   
 

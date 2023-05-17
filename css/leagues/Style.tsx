@@ -33,8 +33,9 @@ const LeagueStyles = StyleSheet.create({
 
   ToggleContainer : {
     flex : 20,
-    margin :"2.5%",
-    width : '60%',
+    flexDirection : 'row',
+    margin :"1.5%",
+    width : '100%',
     alignItems : 'center'
   },
 

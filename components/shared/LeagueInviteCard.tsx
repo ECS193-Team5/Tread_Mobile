@@ -3,13 +3,11 @@ import {
 	Pressable,
   Image,
   View,
-  Text,
-  StatusBar,
-  StyleSheet,
-  Dimensions,
-  Animated,
-  Button
+  Text
 } from 'react-native';
+
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
 
 import {cardStyles} from "../../css/cards/Style"
 import {styles} from "../../css/challenges/Style"
@@ -18,16 +16,13 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
 import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
+import { createLeaguePictureURL } from '../Helpers/CloudinaryURLHelper';
+import { showMessage } from 'react-native-flash-message';
 
 function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
   
-  // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
-  const getImage = function() {
-    return 'https://imgur.com/N31G5Sk.png'
-  }
-
-  const [image, setImage] = useState(getImage)
+  var image = createLeaguePictureURL(LeagueData._id)
 
   useEffect(() => {
     if (pageTitle === 'Sent'){
@@ -50,19 +45,111 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
 
   const RejectInvite = function(){
     if (pageTitle === 'Sent'){
-      console.log('unsent outgoing request')
       // backend call here 
+      var config = {
+        method: 'post',
+        url: BACKEND_URL + 'league/user_undo_request',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+        },
+        data : {
+          leagueID : LeagueData._id
+        }
+      };
+    
+      axios(config)
+        .then(function (response) {
+          console.log('unsent outgoing request league')
+          showMessage({
+            floating : true,
+            message : 'Unsent request to ' + LeagueData.leagueName,
+            backgroundColor : '#014421',
+            color : '#F9A800',
+          })
+          handler(LeagueData)
+        })
+        .catch(function (error) {
+          console.log(error)
+          showMessage({
+            floating : true,
+            message : 'Error unsending request to ' + LeagueData.leagueName,
+            type : 'danger',
+          })
+        })
     } else {
-      console.log('rejected incoming request')
       // backend call here
+      var config = {
+        method: 'post',
+        url: BACKEND_URL + 'league/user_decline_invite',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+        },
+        data : {
+          leagueID : LeagueData._id
+        }
+      };
+    
+      axios(config)
+        .then(function (response) {
+          console.log('rejected incoming request')
+          showMessage({
+            floating : true,
+            message : 'Rejected request from ' + LeagueData.leagueName,
+            backgroundColor : '#014421',
+            color : '#F9A800',
+          })
+          handler(LeagueData)
+        })
+        .catch(function (error) {
+          console.log(error)
+          showMessage({
+            floating : true,
+            message : 'Error rejecting request from ' + LeagueData.leagueName,
+            type : 'danger',
+          })
+        })
     }
-    handler(LeagueData)
   }
 
   const AcceptInvite = function(){
     console.log('accepted incoming request')
     //backend call here
-    handler(LeagueData)
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/user_accept_invite',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : LeagueData._id
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('accepted incoming request')
+        showMessage({
+          floating : true,
+          message : 'Accepted request from ' + LeagueData.leagueName,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(LeagueData)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error accepting request from ' + LeagueData.leagueName,
+          type : 'danger',
+        })
+      })
   }
   
   const renderRightActions = (progress, dragX, handler) => {

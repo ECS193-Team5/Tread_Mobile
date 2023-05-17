@@ -1,57 +1,128 @@
 import React, { useState } from 'react';
 import {
-	Pressable,
-  Image,
   View,
   Text,
-  StatusBar,
-  Modal,
-  StyleSheet,
-  FlatList
+  FlatList,  
 } from 'react-native';
 
-import { modalstyle } from '../../css/challenges/modalStyle';
+import { modalstyle } from '../../css/shared/modalStyle';
 import ChallengeCard from './ChallengeCard';
 import ProgressCard from './ProgressCard';
 
-// output of getLeaderboard Info with the convertProgress and makeLeaderBoardObj function applied
-// IssuedChallengesObj.js from the web frontend
-const ProgressInfo = [
-  {
-      "level": 1,
-      "name": "batman#6380",
-      "complete": 10018.243243243243,
-      "score": 44481
-  },
-  {
-      "level": 2,
-      "name": "batman#9320",
-      "complete": 50,
-      "score": 0
-  },
-  {
-      "level": 3,
-      "name": "Kauboy#8925",
-      "complete": 20,
-      "score": 0
-  }
-]
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
+import { calculateProgress } from '../Helpers/calculationHelpers';
 
-function ChallengeModalPopUp({Challenge}) {
+function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
+  const makeProgressObj = function(item, index){
+    var entry = {}
+    entry['level'] = index + 1
+    entry['name'] = item['username']
+    entry['complete'] = item['progress'] / totalBaseUnits * 100 
+    entry['score'] = calculateProgress(item['progress'], Challenge.exercise.unit)
+    return entry
+  }
   
+  const selfInTop5 = function(top5, selfData) {
+    var myUsername = selfData.username;
+
+    for (let i = 0; i < top5.length; i++) {
+        if (myUsername === top5[i].username) {
+            return true;
+        }
+    }
+    return false;
+  }
+
+  const buildGlobalLeaderboard= function(response) {
+    
+    let top5 = response.data[0];
+    let selfData = response.data[1];
+
+    let top5Info = top5.map(makeProgressObj);
+
+    if (!selfInTop5(top5, selfData)) {
+        let item = selfData.map(makeProgressObj);
+        item[0]["level"] = " - ";
+        top5Info.push(item[0]);
+    }
+
+    setProgressInfo(top5Info);
+  }
+
+  const getUsername = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'user/get_username',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    }
+  
+    axios(config)
+      .then(function (response) {
+        // console.log(response.data)
+        setUsername(response.data)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
+  const getProgressInfo = function(){
+    var route = isWeekly ? 'global_challenge/get_leaderboard' : 'challenges/get_challenge_leaderboard'
+    var challengeID = isWeekly ? Challenge.challengeID : Challenge._id
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + route,
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        challengeID : challengeID
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        isWeekly ? buildGlobalLeaderboard(response) :
+        setProgressInfo(response.data.map(makeProgressObj))
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+  
+  const [ProgressInfo, setProgressInfo] = useState(getProgressInfo)
+  const [username, setUsername] = useState(getUsername)
+
   const renderProgress = ({item}) => {
     return (
     <ProgressCard
-      ProgressObj = {item}/>
+      ProgressObj = {item}
+      Username = {username}/>
     )
   }
 
-  var time_left = ((new Date(Challenge.dueDate)-new Date(Challenge.issueDate))/(1000*60*60*24))
+  var time_left = Math.round((new Date(Challenge.dueDate)-new Date())/(1000*60*60*24))
+  var title = ''
+  var sentUser = ''
+  if (!isWeekly){
+    title = Challenge.challengeType.charAt(0).toUpperCase() + Challenge.challengeType.slice(1) + ' Challenge'
+    sentUser = "      " + Challenge.sentUser
+  } else {
+    title = 'Global Challenge'
+    sentUser = '     Tread Mobile'
 
+  }
   return(
     <View style={modalstyle.container}>
       <View style = {modalstyle.PopUpTextContainer}>
-        <Text style = {modalstyle.TitleTextStyle}> Challenge </Text>
+        <Text style = {modalstyle.TitleTextStyle}>{title}</Text>
       </View>
       <View style = {modalstyle.PopUpChallengeDescriptionContainer}>
         <View style = {modalstyle.ChallengeInfoIndividualContainer}> 
@@ -62,7 +133,7 @@ function ChallengeModalPopUp({Challenge}) {
         
         <View style = {modalstyle.ChallengeInfoIndividualContainer}> 
           <Text style = {modalstyle.InfoTypeTextStyle}>Assigned by      :     
-            <Text style = {modalstyle.InfoTextStyle}>{"      " + Challenge.sentUser}</Text>
+            <Text style = {modalstyle.InfoTextStyle}>{sentUser}</Text>
           </Text>
         </View>
         

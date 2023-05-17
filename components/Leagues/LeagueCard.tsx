@@ -5,29 +5,17 @@ import {
   View,
   Text,
   StatusBar,
-  StyleSheet,
-  Dimensions
 } from 'react-native';
 
 import {cardStyles} from "../../css/cards/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
-import ImageCluster from '../shared/ImageCluster';
+import { createLeaguePictureURL } from '../Helpers/CloudinaryURLHelper';
 
-// get challenge leaderboard backend call to get image data 
-// pass on that data to modal
-
-// cloudinary image hosting will get these images
-// const images = ['https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo',
-//                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo',
-//                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo',
-//               ]
-
-function LeagueCard({LeagueData, props}): JSX.Element {
-  var image = 'https://imgur.com/N31G5Sk.png'
-
+function LeagueCard({LeagueData, props, refresh}): JSX.Element {
+  var image = createLeaguePictureURL(LeagueData._id)
   const handleLeaguePress = function() {
     console.log(LeagueData.leagueName)
-    props.navigation.navigate("League Details", {leagueData : LeagueData})
+    props.navigation.navigate("League Details", {leagueData : LeagueData, refresh : refresh})
   }
 
   return (

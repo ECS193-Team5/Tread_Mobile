@@ -1,167 +1,76 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
   Text,
   Image,
   FlatList,
   LayoutAnimation,
   Platform,
-  UIManager
+  UIManager,
+  RefreshControl
 } from 'react-native';
 
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
+
 import {styles} from "../css/challenges/Style"
-import { SharedStyles } from '../css/shared/Style';
+
 
 import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
 import ChallengeInviteCard from '../components/shared/ChallengeInviteCard';
+import { createProfilePictureURL } from '../components/Helpers/CloudinaryURLHelper';
+import ZeroItem from '../components/shared/ZeroItem';
 
 const options = [
   { label : "Received" , value : 'Received'},
   { label : "Sent", value : 'Sent'},
 ]
 
-function getChallengeData() { 
-  return(
-    [{
-      "_id": "6446529ba46596242ddd94881",
-      "participants": [
-          "Kauboy#8925",
-          "Kauboy#5085"
-      ],
-      "sentUser": "Kauboy#8925",
-      "receivedUser": "Kauboy#5085",
-      "challengeType": "friend",
-      "issueDate": "2023-04-24T00:00:00.000Z",
-      "dueDate": "2023-04-27T00:00:00.000Z",
-      "exercise": {
-          "exerciseName": "Archery",
-          "unit": "ct",
-          "amount": 1,
-          "_id": "6446529ba46596242ddd9489",
-          "unitType": "count",
-          "convertedAmount": 1
-      },
-      "status": "pending",
-      "__v": 0
-    },
-    {
-      "_id": "6446529ba46596242ddd94882",
-      "participants": [
-          "Kauboy#8925",
-          "Kauboy#5085"
-      ],
-      "sentUser": "Kauboy#8925",
-      "receivedUser": "Kauboy#5085",
-      "challengeType": "friend",
-      "issueDate": "2023-04-24T00:00:00.000Z",
-      "dueDate": "2023-04-27T00:00:00.000Z",
-      "exercise": {
-          "exerciseName": "Chess",
-          "unit": "ct",
-          "amount": 1,
-          "_id": "6446529ba46596242ddd9489",
-          "unitType": "count",
-          "convertedAmount": 1
-      },
-      "status": "pending",
-      "__v": 0
-    },
-    {
-      "_id": "6446529ba46596242ddd94883",
-      "participants": [
-          "Kauboy#8925",
-          "Kauboy#5085"
-      ],
-      "sentUser": "Kauboy#8925",
-      "receivedUser": "Kauboy#5085",
-      "challengeType": "friend",
-      "issueDate": "2023-04-24T00:00:00.000Z",
-      "dueDate": "2023-04-27T00:00:00.000Z",
-      "exercise": {
-          "exerciseName": "Basketball",
-          "unit": "ct",
-          "amount": 1,
-          "_id": "6446529ba46596242ddd9489",
-          "unitType": "count",
-          "convertedAmount": 1
-      },
-      "status": "pending",
-      "__v": 0
-    },
-    {
-      "_id": "6446529ba46596242ddd94884",
-      "participants": [
-          "Kauboy#8925",
-          "Kauboy#5085"
-      ],
-      "sentUser": "Kauboy#8925",
-      "receivedUser": "Kauboy#5085",
-      "challengeType": "friend",
-      "issueDate": "2023-04-24T00:00:00.000Z",
-      "dueDate": "2023-04-27T00:00:00.000Z",
-      "exercise": {
-          "exerciseName": "Archery",
-          "unit": "ct",
-          "amount": 1,
-          "_id": "6446529ba46596242ddd9489",
-          "unitType": "count",
-          "convertedAmount": 1
-      },
-      "status": "pending",
-      "__v": 0
-    },
-    {
-      "_id": "6446529ba46596242ddd94885",
-      "participants": [
-          "Kauboy#8925",
-          "Kauboy#5085"
-      ],
-      "sentUser": "Kauboy#8925",
-      "receivedUser": "Kauboy#5085",
-      "challengeType": "friend",
-      "issueDate": "2023-04-24T00:00:00.000Z",
-      "dueDate": "2023-04-27T00:00:00.000Z",
-      "exercise": {
-          "exerciseName": "Chess",
-          "unit": "ct",
-          "amount": 1,
-          "_id": "6446529ba46596242ddd9489",
-          "unitType": "count",
-          "convertedAmount": 1
-      },
-      "status": "pending",
-      "__v": 0
-    },
-    {
-      "_id": "6446529ba46596242ddd94886",
-      "participants": [
-          "Kauboy#8925",
-          "Kauboy#5085"
-      ],
-      "sentUser": "Kauboy#8925",
-      "receivedUser": "Kauboy#5085",
-      "challengeType": "friend",
-      "issueDate": "2023-04-24T00:00:00.000Z",
-      "dueDate": "2023-04-27T00:00:00.000Z",
-      "exercise": {
-          "exerciseName": "Basketball",
-          "unit": "ct",
-          "amount": 1,
-          "_id": "6446529ba46596242ddd9489",
-          "unitType": "count",
-          "convertedAmount": 1
-      },
-      "status": "pending",
-      "__v": 0
-    }
-  ])
-}
-
-
 function IncomingChallengesPage(props): JSX.Element {
+  const getReceivedChallenges = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'challenges/received_challenges',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setChallengeData(response.data)
+        setCount(response.data.length)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  const getSentChallenges = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'challenges/sent_challenges',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setChallengeData(response.data)
+        setCount(response.data.length)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+  
+  
   var NavImageUrl = "https://imgur.com/nFRNXOB.png"  
 
   if (Platform.OS === 'android') {
@@ -183,18 +92,19 @@ function IncomingChallengesPage(props): JSX.Element {
   };
   
   const [pageTitle, setPageTitle] = useState('Received')
-  const [ChallengeData, setChallengeData] = useState(getChallengeData)
-
-  const getdropdownIcon = function(){
-    return (
-    <Image style = {{width : 10, height : 10}}source={{uri: "https://imgur.com/ybSDJeh.png"}}/>
-    )
-  }
-
+  const [count, setCount] = useState(0)
+  const [ChallengeData, setChallengeData] = useState(getReceivedChallenges)
+  const [refreshing, setRefreshing] = useState(false)
+  
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
     setPageTitle(selectedItem)
-    // set challenges array here
+    setChallengeData()
+    if(selectedItem === 'Received'){
+      getReceivedChallenges()
+    } else {
+      getSentChallenges()
+    }
   }
   
   const deleteItem = function(cData) {    
@@ -202,8 +112,18 @@ function IncomingChallengesPage(props): JSX.Element {
     console.log("deleted")
     const filteredData = ChallengeData.filter(item => item._id !== cData._id);
     setChallengeData(filteredData)
+    filteredData.length === 0 ? setCount(0) : null
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
+
+  const getImage = function(item) {
+    if (pageTitle === 'Received'){
+      return createProfilePictureURL(item.sentUser)
+    } else {
+      return createProfilePictureURL(item.receivedUser)
+    }
+  }
+
 
   const renderInvite = ({item, index}) => {
     return (
@@ -212,9 +132,27 @@ function IncomingChallengesPage(props): JSX.Element {
       index = {index}
       handler = {deleteItem}
       pageTitle = {pageTitle}
+      image = {getImage(item)}
       />
     )
   }
+
+  const handleRefresh = function(){
+    if(pageTitle === 'Received'){
+      getReceivedChallenges()
+    } else {
+      getSentChallenges()
+    }
+  }
+
+  const Refresh = function() {
+    setRefreshing(true);
+    setTimeout(() => {
+      handleRefresh()
+      setRefreshing(false);
+      }, 450);
+  }
+
   return (
     <View style = {styles.container}>
       <View style = {styles.topRightClickContainer}>
@@ -238,10 +176,28 @@ function IncomingChallengesPage(props): JSX.Element {
         />
       </View>
       <View style = {styles.ChallengesContainer}>
-        <FlatList
-          data = {ChallengeData}
-          renderItem = {renderInvite}
-        />
+        {count > 0 ? 
+          <FlatList
+            data = {ChallengeData}
+            renderItem = {renderInvite}
+            refreshControl ={
+              <RefreshControl 
+                refreshing = {refreshing} 
+                onRefresh = {Refresh} 
+                colors = {['#014421']}
+                tintColor = {'#014421'}
+                progressViewOffset = {-10}
+              />
+            }
+          />
+          :
+          <ZeroItem
+            promptText={'You have ' + (pageTitle === 'Received' ? 'no received' : 'not sent any') + ' Challenges'}
+            navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
+            navigateToPage='AddChallenge'
+            props = {props}
+          />    
+        } 
       </View>
 
     </View>

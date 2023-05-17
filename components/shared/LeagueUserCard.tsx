@@ -11,17 +11,17 @@ import {styles} from "../../css/challenges/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
-import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
+import {Swipeable} from 'react-native-gesture-handler';
+import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
-function LeagueUserCard({MemberData, index, handler, pageTitle}): JSX.Element {
+import {showMessage} from 'react-native-flash-message'
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
+
+function LeagueUserCard({MemberData, index, handler, pageTitle, id}): JSX.Element {
   const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
   
-  // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
-  const getImage = function() {
-    return 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo'
-  }
-
-  const [image, setImage] = useState(getImage)
+  const [image, setImage] = useState(createProfilePictureURL(MemberData.username))
 
   useEffect(() => {
     if (pageTitle === 'sent'){
@@ -44,25 +44,148 @@ function LeagueUserCard({MemberData, index, handler, pageTitle}): JSX.Element {
 
   const RejectInvite = function(){
     if (pageTitle === 'sent'){
-      console.log('unsent outgoing request')
-      // backend call here 
+      var config = {
+        method: 'post',
+        url: BACKEND_URL + 'league/undo_invite',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+        },
+        data : {
+          leagueID : id,
+          recipient : MemberData.username
+        }
+      };
+    
+      axios(config)
+        .then(function (response) {
+          console.log('unsent outgoing request league')
+          showMessage({
+            floating : true,
+            message : 'Unsent request to ' + MemberData.username,
+            backgroundColor : '#014421',
+            color : '#F9A800',
+          })
+          handler(MemberData)
+        })
+        .catch(function (error) {
+          console.log(error)
+          showMessage({
+            floating : true,
+            message : 'Error unsending request to ' + MemberData.username,
+            type : 'danger',
+          })
+        })
     } else {
-      console.log('rejected incoming request')
-      // backend call here
+      var config = {
+        method: 'post',
+        url: BACKEND_URL + 'league/decline_request',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+        },
+        data : {
+          leagueID : id,
+          recipient : MemberData.username
+        }
+      };
+    
+      axios(config)
+        .then(function (response) {
+          console.log('rejected incoming request league')
+          showMessage({
+            floating : true,
+            message : 'Rejected request from' + MemberData.username,
+            backgroundColor : '#014421',
+            color : '#F9A800',
+          })
+          handler(MemberData)
+        })
+        .catch(function (error) {
+          console.log(error)
+          showMessage({
+            floating : true,
+            message : 'Error rejecting request from ' + MemberData.username,
+            type : 'danger',
+          })
+        })
     }
-    handler(MemberData)
   }
 
   const UnbanUser = function(){
-    console.log('unbanned user')
-    // backend call here
+    console.log('unbanned user league')
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/unban_user',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : id,
+        recipient : MemberData.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('Unbanned ' +  MemberData.displayName)
+        showMessage({
+          floating : true,
+          message : 'Unbanned ' + MemberData.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(MemberData)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error unbanning ' + MemberData.username,
+          type : 'danger',
+        })
+      })
     handler(MemberData)
   }
 
   const AcceptInvite = function(){
-    console.log('accepted incoming request')
-    //backend call here
-    handler(MemberData)
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/accept_join_request',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : id,
+        recipient : MemberData.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('accepted user ' +  MemberData.displayName)
+        showMessage({
+          floating : true,
+          message : 'Accepted request from' + MemberData.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(MemberData)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error accepting request from ' + MemberData.username,
+          type : 'danger',
+        })
+      })
   }
   
   const renderRightActions = (progress, dragX, handler) => {

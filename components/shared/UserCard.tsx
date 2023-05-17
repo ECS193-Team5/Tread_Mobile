@@ -4,6 +4,7 @@ import {
   Image,
   View,
   Text,
+  Alert
 } from 'react-native';
 
 import {cardStyles} from "../../css/cards/Style"
@@ -11,12 +12,37 @@ import {styles} from "../../css/challenges/Style"
 import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
-import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
+import {showMessage} from 'react-native-flash-message'
+import {Swipeable} from 'react-native-gesture-handler';
 
-function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
-  const [SenderOrReceiver , setSenderOrReceiver] = useState("From")
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
+
+function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh}): JSX.Element {
+  const getUsername = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'user/get_username',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    }
+  
+    axios(config)
+      .then(function (response) {
+        console.log(response.data)
+        setCurrentUser(response.data)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+  
+  const [SenderOrReceiver , setSenderOrReceiver] = useState("To")
   const [cardRole, setCardRole] = useState('')
-  const [currentUser, setCurrentUser] = useState('Kauboy#8925')
+  const [currentUser, setCurrentUser] = useState(getUsername)
 
   useEffect(() =>{
     setCardRole(UserInfo.role)
@@ -30,13 +56,6 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     }
   })
 
-  // Get image from cloudinary based on page title (receiver(sent) or sender(for received))
-  const getImage = function() {
-    return 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo'
-  }
-
-  const [image, setImage] = useState(getImage)
-
   let row: Array<any> = [];
   let prevOpenedRow;
 
@@ -49,73 +68,520 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   };
 
   const AddFriend = function(){
-    console.log('sent friend request ' + UserInfo.username)
-    //backend call here
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/send_friend_request',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+      Accept: 'application/json',
+      },
+      data: {
+      'friendName' : UserInfo.username,
+      }
+    };
+
+    axios(config)
+    .then(function (response) {
+      console.log('sent friend request ' + UserInfo.username)
+      showMessage({
+        floating : true,
+        message : 'Sent Friend Request to ' + UserInfo.username,
+        backgroundColor : '#014421',
+        color : '#F9A800',
+      })
+    })
+    .catch(function (error) {
+      console.log(error)
+      showMessage({
+        floating : true,
+        message : 'Error sending friend request to ' + UserInfo.username,
+        type : 'danger',
+      })
+    })
   }
 
-  const RemoveFriend = function(){
-    console.log('removed friend ' + UserInfo.username)
-    //backend call here
-    handler(UserInfo)
 
+  const RemoveFriend = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/remove_friend',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        friendName : UserInfo.username
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log('removed friend ' + UserInfo.username)
+        showMessage({
+          floating : true,
+          message : 'Unfriended ' + UserInfo.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(UserInfo)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error unfriending ' + UserInfo.username,
+          type : 'danger',
+        })
+      })
+  }
+
+  const clickedUnfriend = function(){
+    Alert.alert('Unfriend ' + UserInfo.username + ' ?', 
+    'If you change your mind you will have to request to be friends with ' + UserInfo.username + ' again',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Unfriend', 
+        onPress: RemoveFriend,
+        style : 'destructive'
+      },
+    ]);
   }
 
   const BlockUser = function(){
-    console.log('blocked user ' +  UserInfo.displayName)
-    //backend call here
-    if (UserRole === 'All Friends'){
-      handler(UserInfo)
-    }
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/block_user',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        friendName : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('blocked user ' +  UserInfo.displayName)
+        showMessage({
+          floating : true,
+          message : 'Blocked ' + UserInfo.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        if (UserRole === 'All Friends' || UserRole === 'Received' || UserRole === 'Sent'){
+          handler(UserInfo)
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error blocking ' + UserInfo.username,
+          type : 'danger',
+        })
+      })
+  }
+
+  const clickedBlock = function(){
+    Alert.alert('Block ' + UserInfo.username + ' ?', 
+    'If you change your mind you will have to unblock ' + UserInfo.username + ' later',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Block', 
+        onPress: BlockUser,
+        style : 'destructive'
+      },
+    ]);
   }
 
   const KickUser = function(){
     console.log('kicked user ' +  UserInfo.displayName)
-    // backend call here 
-    handler(UserInfo)
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/kick_member',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id,
+        recipient : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('kicked user ' +  UserInfo.displayName)
+        showMessage({
+          floating : true,
+          message : 'Kicked ' + UserInfo.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(UserInfo)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error kicking ' + UserInfo.username,
+          type : 'danger',
+        })
+      })
+  }
+
+  const clickedKick = function(){
+    Alert.alert('Kick ' + UserInfo.username + ' ?', 
+    'This will remove ' + UserInfo.username + ' from your league',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Kick', 
+        onPress: KickUser,
+        style : 'destructive'
+      },
+    ]);
   }
 
   const BanUser = function(){
     console.log('banned user ' +  UserInfo.displayName)
-    // backend call here 
-    handler(UserInfo)
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/ban_user',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id,
+        recipient : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('banned user ' +  UserInfo.displayName)
+        showMessage({
+          floating : true,
+          message : 'Banned ' + UserInfo.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(UserInfo)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error banning ' + UserInfo.username,
+          type : 'danger',
+        })
+      })
   }
 
-  const unbanUser = function(){
-    console.log('unbanned user ' +  UserInfo.displayName)
-    // backend call here 
-    handler(UserInfo)
+  const clickedBan = function(){
+    Alert.alert('Ban ' + UserInfo.username + ' ?', 
+    'This will remove and ban ' + UserInfo.username + ' from your league',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Ban', 
+        onPress: BanUser,
+        style : 'destructive'
+      },
+    ]);
   }
 
-
-  const AdminAdd = function(){
-    console.log('added admin user ' +  UserInfo.displayName)
-    // backend call here 
-    // handler(UserInfo)
-  }
-
-  const AdminRemove = function(){
-    console.log('removed admin user ' +  UserInfo.displayName)
-    // backend call here 
-    // handler(UserInfo)
+  const unblockUser = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/unblock_user',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        friendName : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('unblock user friend ' +  UserInfo.displayName)
+        showMessage({
+          floating : true,
+          message : 'Unblocked ' + UserInfo.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(UserInfo)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error unblocking ' + UserInfo.username,
+          type : 'danger',
+        })
+      })
   }
 
   const RejectInvite = function(){
-    if (UserInfo === 'Sent'){
-      console.log('unsent outgoing request')
-      // backend call here 
-    } else {
-      console.log('rejected incoming request')
-      // backend call here
-    }
-    handler(UserInfo)
+    var route = UserRole === 'Sent' ? 'friend_list/remove_sent_request' : 'friend_list/remove_received_request'
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + route,
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        friendName : UserInfo.username
+      }
+    };
+    
+    axios(config)
+      .then(function (response) {
+        showMessage({
+          floating : true,
+          message : UserRole === 'Sent' ? 'Unsent Invite from  ' + UserInfo.username : 'Rejected Invite from  ' + UserInfo.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(UserInfo)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error rejecting invite ' + UserInfo.username,
+          type : 'danger',
+        })
+      })
   }
 
   const AcceptInvite = function(){
-    console.log('accepted incoming request')
-    //backend call here
-    handler(UserInfo)
+    console.log('accepted incoming request ' + UserInfo.username)
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/accept_received_request',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        friendName : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('added user friend ' +  UserInfo.displayName)
+        showMessage({
+          floating : true,
+          message : 'Accepted Invite from  ' + UserInfo.username,
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        handler(UserInfo)
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error accepting invite ' + UserInfo.username,
+          type : 'danger',
+        })
+      })
+  }
+
+  const AdminAdd = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/add_admin',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id,
+        recipient : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('added admin ' +  UserInfo.displayName)
+        showMessage({
+          floating : true,
+          message : 'Made ' + UserInfo.username + " an admin",
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        onRefresh()
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error making ' + UserInfo.username + ' an admin',
+          type : 'danger',
+        })
+      })
+  }
+
+  const clickedAddAdmin = function(){
+    Alert.alert('Make ' + UserInfo.username + ' an admin ?', 
+    'This will allow ' + UserInfo.username + ' to issue challenges and manage users and requests',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Make admin', 
+        onPress: AdminAdd,
+        style : 'default'
+      },
+    ]);
+  }
+
+  const AdminRemove = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/remove_admin',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id,
+        recipient : UserInfo.username
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('removed admin ' +  UserInfo.displayName)
+        showMessage({
+          floating : true,
+          message : 'Removed ' + UserInfo.username + " as an admin",
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        onRefresh()
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error removing ' + UserInfo.username + ' as an admin',
+          type : 'danger',
+        })
+      })
   }
   
+  const clickedRemoveAdmin = function(){
+    Alert.alert('Remove ' + UserInfo.username + ' an admin ?', 
+    'This will remove ' + UserInfo.username + '\'s ability to issue challenges and manage users and requests',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Remove admin', 
+        onPress: AdminRemove,
+        style : 'destructive'
+      },
+    ]);
+  }
+
+
+  const AdminRemoveSelf = function(){
+    console.log('Removed Self as Admin')
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/user_remove_admin',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id,
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log('removed admin ' +  UserInfo.displayName)
+        showMessage({
+          floating : true,
+          message : 'Gave up admin rights',
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        onRefresh()
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error giving up admin rights',
+          type : 'danger',
+        })
+      })
+  }
+
+  const clickedRemoveSelfAdmin = function(){
+    Alert.alert('Give up admin status ?', 
+    'This will remove your ability to issue challenges and manage users and requests',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Give up admin rights', 
+        onPress: AdminRemoveSelf,
+        style : 'destructive'
+      },
+    ]);
+  }
+
   const friend = function() {
     return (
         <Pressable
@@ -130,7 +596,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const unfriend = function() {
     return (
         <Pressable
-          onPress={RemoveFriend}
+          onPress={clickedUnfriend}
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/iD9p5iH.png'}}/>
@@ -141,7 +607,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const block = function() {
     return (
         <Pressable
-          onPress={BlockUser}
+          onPress={clickedBlock}
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/U7hfisP.png'}}/>
@@ -152,7 +618,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const kick = function(){
     return (
         <Pressable
-          onPress={KickUser}
+          onPress={clickedKick}
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ngSIL5J.png'}}/>
@@ -163,7 +629,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const ban = function(){
     return (
         <Pressable
-          onPress={BanUser}
+          onPress={clickedBan}
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/nDGURiM.png'}}/>
@@ -171,10 +637,10 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
     );
   }
 
-  const unban = function(){
+  const unblock = function(){
     return (
         <Pressable
-          onPress={unbanUser}
+          onPress={unblockUser}
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/q7fgVdM.png'}}/>
@@ -185,7 +651,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const addAdmin = function(){
     return (
         <Pressable
-          onPress={AdminAdd}
+          onPress={clickedAddAdmin}
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/cQntMzs.png'}}/>
@@ -196,12 +662,56 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   const removeAdmin = function(){
     return (
         <Pressable
-          onPress={AdminRemove}
+          onPress={clickedRemoveAdmin}
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
         </Pressable>   
     );
+  }
+
+
+  const removeSelfAsAdmin = function(){
+    return (
+        <Pressable
+          onPress={clickedRemoveSelfAdmin}
+          style = {{margin : "4%"}}
+        >
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
+        </Pressable>   
+    );
+  }
+
+  const rejectInvite = function(){
+    return (
+      <Pressable
+        onPress={RejectInvite}
+        style = {{margin : "4%"}}
+      >
+        <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
+      </Pressable>   
+    );
+  }
+
+  const addFriend = function(){
+    return(
+    <Pressable
+      onPress={AddFriend}
+      style = {{margin : "4%"}}
+    >
+      <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
+    </Pressable>
+    )
+  }
+
+  const acceptInvite = function(){
+    return(
+      <Pressable
+      onPress={AcceptInvite}
+    >
+      <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
+    </Pressable>  
+    )
   }
 
   const adminOptions = function() {
@@ -214,71 +724,60 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   
   const renderRightActions = (progress, dragX, handler) => {
     if (currentUser === UserInfo.username) {
-      return null
-    } else if (UserRole === 'Received' || UserRole === 'Sent') {
+      if(cardRole === 'admin'){
+        return (
+          <View style={SharedStyles.RightSliderContainer}>
+            {removeSelfAsAdmin()}
+          </View>
+        )
+      }
+    } else if(UserRole === 'Received' || UserRole === 'Sent'){
       return (
-        <View style={SharedStyles.RightSliderContainer}>
-          <Pressable
-            onPress={RejectInvite}
-          >
-            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
-          </Pressable>   
-        </View>
-      );
-    } else if (UserRole === 'All' || UserRole === 'All Friends'){
-      return(
         <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
           {block()}
-          {unfriend()}
+          {rejectInvite()}
         </View>
-      )
-    } else if (UserRole === 'Banned Friends'){
-      return(
-        <View style={SharedStyles.RightSliderContainer}>
-          {unban()}
-        </View>
-      )
-    }else if (UserRole === 'participant' || cardRole === 'owner'){
-      return(
-        <View style={SharedStyles.RightSliderContainer}>
+      );
+    } else if(UserRole === 'All Friends' || UserRole === 'Blocked Users'){
+        return (
+          <View style={UserRole === 'Blocked Users' ? SharedStyles.RightSliderContainer : [SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
+            {UserRole === 'All Friends' ? unfriend() : null}
+            {UserRole === 'All Friends' ? block() : unblock()}
+          </View>
+        );
+    } else {
+      return (
+        <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
+          {addFriend()}
           {block()}
+        </View>
+      )
+    } 
+  };
+
+  const renderLeftActions = (progress, dragX, handler) => {
+    if(currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Blocked Users' || UserRole === 'Sent' ||UserRole === 'participant' || cardRole === 'owner'){
+      return null
+    } else if (UserRole === 'Received') {
+      return (
+        <View style={SharedStyles.LeftSliderContainer}>
+          {acceptInvite()}
+        </View>
+      );
+    } else if (UserRole === 'Blocked Users'){
+      return(
+        <View style={SharedStyles.LeftSliderContainer}>
+          {unblock()}
         </View>
       )
     } else {
       return (
-        <View style={SharedStyles.MultipleRightSliderContainer}>
-          {block()}
+        <View style={[SharedStyles.MultipleLeftSliderContainer, {width :'32%'}]}>
           {kick()}
           {ban()}
           {adminOptions()}
         </View>
       )
-    }
-  };
-
-  const renderLeftActions = (progress, dragX, handler) => {
-    if (currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Banned Friends' || UserRole === 'Sent') {
-      return null
-    } else if(UserRole === 'Received'){
-      return (
-        <View style={SharedStyles.LeftSliderContainer}>
-          <Pressable
-            onPress={AcceptInvite}
-          >
-            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
-          </Pressable>   
-        </View>
-      );
-    } else {
-      return (
-        <View style={SharedStyles.LeftSliderContainer}>
-          <Pressable
-            onPress={AddFriend}
-          >
-            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
-          </Pressable>   
-        </View>
-      );
     }
   };
 
@@ -310,7 +809,7 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   }
 
   const isRoleInLeague = function(){
-    if(UserRole === 'All Friends' || UserRole === 'Banned Friends'){
+    if(UserRole === 'All Friends' || UserRole === 'Blocked Users'){
       return null
     } else if(UserRole === 'Sent' || UserRole === 'Received'){
       return getUserInfo()
@@ -328,11 +827,11 @@ function UserCard({UserInfo, index, handler, UserRole}): JSX.Element {
   return(
     <Swipeable
       key = {UserInfo.username}
-      renderRightActions={(progress, dragX) =>
-        renderRightActions(progress, dragX, handler)
-      }
       renderLeftActions={(progress, dragX) =>
         renderLeftActions(progress, dragX, handler)
+      }
+      renderRightActions={(progress, dragX) =>
+        renderRightActions(progress, dragX, handler)
       }
       onSwipeableOpen={() => closeRow(index)}
       ref={(ref) => (row[index] = ref)}

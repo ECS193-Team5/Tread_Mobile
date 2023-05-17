@@ -11,10 +11,9 @@ import {
 import {styles} from '../../css/add/friend/Style';
 import {BACKEND_URL} from '@env';
 import Invite from '../../components/shared/invite';
+import axios from 'axios';
 
 function AddFriendPage(props): JSX.Element {
-
-
 	var config = {
 	  method: 'post',
 	  url: BACKEND_URL + 'friend_list/send_friend_request',
@@ -32,8 +31,9 @@ function AddFriendPage(props): JSX.Element {
 	<Invite
 		text = 'Add Friend'
 		config = {config}
-	>
-	</Invite>
+    props = {props}
+    pagetoNav = "AddFriend"
+	/>
   )
 }
 

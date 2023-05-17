@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import {
 	Pressable,
-  Image,
   View,
   Text,
   StatusBar,
-  StyleSheet,
-  Dimensions
 } from 'react-native';
 
 import Modal from "react-native-modal"
@@ -15,33 +12,33 @@ import ProgressCircle from "progress-circle-react-native"
 import ImageCluster from '../shared/ImageCluster';
 import ChallengeModalPopUp from './ChallengeModalPopUp';
 import GestureRecognizer from 'react-native-swipe-gestures'
-
-// get challenge leaderboard backend call to get image data 
-// pass on that data to modal
-
-// cloudinary image hosting will get these images
-// const images = ['https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo',
-//                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo',
-//                 'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo',
-//               ]
+import { calculateProgress } from '../Helpers/calculationHelpers';
+import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
 function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
 	const [modalVisible, setModalVisible] = useState(false)
   var images = []
+  var ProgressPercent = 0
+  var totalBaseUnits = 0
   if (!isWeekly){
-    images = ['https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo',
-                'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo',
-                'https://media.licdn.com/dms/image/D5635AQFifIBR-OhDmw/profile-framedphoto-shrink_400_400/0/1629526954865?e=1683165600&v=beta&t=EU0EmYCCgMEGnLTGtcZ64L70bjMBTWJIJAP6BjaYjdo',
-              ]
+    for (let User of ChallengeData.participants){
+      images.push(createProfilePictureURL(User))
+    }
+    // console.log(images)
+    var myProgressBaseUnits = ChallengeData.progress.progress;
+    totalBaseUnits = ChallengeData.progress.exercise.convertedAmount;
+    var ProgressPercent = Math.min(100,Math.round(myProgressBaseUnits / totalBaseUnits * 100));
   }else {
     images = ['https://imgur.com/W03ovOf.png']
+    var myProgressBaseUnits = ChallengeData.progress;
+    totalBaseUnits = ChallengeData.exercise.convertedAmount;
+    ProgressPercent = Math.min(100, Math.round(myProgressBaseUnits / totalBaseUnits * 100));
   }
 
   const handleOnPress = function(){
     setModalVisible(!modalVisible)
   }
 
-  var ProgressPercent = Math.min(100, Math.round((ChallengeData.progress.progress)/(ChallengeData.exercise.amount) * 100))
 
   return (
     <Pressable 
@@ -56,9 +53,12 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
         hasBackdrop = {true}
         backdropColor = 'black'
         style = {{margin : 2}}
+        onBackdropPress = { () => setModalVisible(false)}
       >
         <ChallengeModalPopUp 
           Challenge = {ChallengeData}
+          isWeekly = {isWeekly}
+          totalBaseUnits = {totalBaseUnits}
         />
       </Modal>
     </GestureRecognizer>

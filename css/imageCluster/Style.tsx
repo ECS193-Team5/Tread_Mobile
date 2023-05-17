@@ -29,6 +29,14 @@ const ImageStyles = StyleSheet.create({
     marginLeft : -12
   },
 
+  medal : {
+    width :60,
+    height : 60 ,
+    borderRadius : 30,
+    borderWidth : 2,
+    borderColor : '#014421'
+  },
+
   thirdText : {
     width : "80%",
     alignSelf : 'center',
@@ -54,10 +62,58 @@ const ImageStyles = StyleSheet.create({
     height : 39 , 
   },
 
+  QR : {
+    width :28, 
+    height : 28,
+    paddingHorizontal : '8%',
+    alignSelf : 'center'
+  },
+
+  Options : {
+    width :30, 
+    height : 30,
+    paddingHorizontal : '8%',
+    alignSelf : 'center'
+  },
+
+  Leave : {
+    width :24, 
+    height : 24,
+    alignSelf : 'flex-end',
+    margin : '2%',
+    marginRight : '5%'
+  },
+
+  Edit : {
+    width :20, 
+    height : 20,
+    alignSelf : 'flex-end',
+    overflow : 'visible',
+    margin : '4%',
+    marginRight : '5%'
+  },
+
   LeagueImage : {
     width :110, 
     height : 110 , 
+    borderRadius : 55, 
+    borderWidth : 2, 
+    borderColor : '#014421'
+  },
+
+  QRCode : {
+    width :375, 
+    height : 375,
+    alignSelf : 'center'
+  },
+
+  ZeroImage : {
+    width :70, 
+    height : 70,
+    marginTop : '5%', 
+    alignSelf : 'center'
   }
+
 });
 
 export {ImageStyles} 
