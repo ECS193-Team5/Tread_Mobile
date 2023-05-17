@@ -17,7 +17,15 @@ function InputForm(props): JSX.Element {
     }
   })
   const isValid = (text) => {
-    return text.length > 0
+    if(text.length === 0 || text.length > 32) {
+      return false
+    }
+
+    if (!(/^[a-z0-9]+$/i.test(text))) {
+      return false;
+    }
+
+    return true
   }
 
   const handleTextChange = (text) => {

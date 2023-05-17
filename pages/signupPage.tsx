@@ -59,6 +59,9 @@ function Signup({route, navigation}): JSX.Element {
   const [validDisplayName, setValidDisplayName] = useState(false);
   const [validUserName, setValidUserName] = useState(false);
 
+  const [picture, setPicture] = useState({});
+  const [validPicture, setValidPicture] = useState(true);
+
   return (
 		<View style = {styles.mainContainer}>
 			<View style = {styles.titleContainer}>
@@ -96,6 +99,11 @@ function Signup({route, navigation}): JSX.Element {
         <ImageUpload
           flex = {60}
           placeholder = {route.params.photo}
+          picture={picture}
+          setPicture={setPicture}
+          valid={validPicture}
+          setValidPicture={setValidPicture}
+
         ></ImageUpload>
 
 			</View>
