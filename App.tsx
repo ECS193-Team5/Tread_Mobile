@@ -21,15 +21,10 @@ function App(): JSX.Element {
   });
 
   return (
-<<<<<<< HEAD
-      <Navigator/>
-
-=======
       <View style ={{flex:1}}>
         <Navigator/>
-        <FlashMessage position = 'top'/> 
+        <FlashMessage position = 'top'/>
       </View>
->>>>>>> 5b5841eff0ab4acc6e7878b55336ad95fbae23cf
   );
 }
 
