@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import IncomingSwap from '../components/shared/IncomingSwap';
 import {styles} from "../css/challenges/Style"
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
+import ZeroItem from '../components/shared/ZeroItem';
 
 const options = [
   { label : "All" , value : 'All'},
@@ -34,6 +35,7 @@ function LeaguesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
+        setCount(response.data.length)
       })
       .catch((error) =>
         console.log(error)
@@ -54,6 +56,7 @@ function LeaguesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
+        setCount(response.data.length)
       })
       .catch((error) =>
         console.log(error)
@@ -86,7 +89,7 @@ function LeaguesPage(props): JSX.Element {
 
 
   const [IncomingImageUrl, setImage] = useState('')
-  getReceived()
+  const [count, setCount] = useState(0)
   const [LeagueData, setLeagueData] = useState(getAllLeagueData)
   const [refreshing, setRefreshing] = useState(false)
   const [currentView, setCurrentView] = useState("All")
@@ -152,20 +155,29 @@ function LeaguesPage(props): JSX.Element {
         />
       </View>
       <View style = {styles.ChallengesContainer}>
-        <FlatList
-          data = {LeagueData}
-          renderItem = {renderLeague}
-          contentContainerStyle = {styles.FlatListContainer}
-          refreshControl ={
-            <RefreshControl 
-              refreshing = {refreshing} 
-              onRefresh = {Refresh} 
-              colors = {['#014421']}
-              tintColor = {'#014421'}
-              progressViewOffset = {-10}
-            />
-          }
-        />
+        {count > 0 ? 
+          <FlatList
+            data = {LeagueData}
+            renderItem = {renderLeague}
+            contentContainerStyle = {styles.FlatListContainer}
+            refreshControl ={
+              <RefreshControl 
+                refreshing = {refreshing} 
+                onRefresh = {Refresh} 
+                colors = {['#014421']}
+                tintColor = {'#014421'}
+                progressViewOffset = {-10}
+              />
+            }
+          />
+         :
+          <ZeroItem 
+              promptText={'You ' + (currentView === 'All' ? 'have not joined any' : 'are not an admin for any') + ' Leagues'}
+             navigateToText={currentView === 'All' ? 'Join or make one here' :  'Make one here'}
+             navigateToPage={'AddLeague'}
+             props = {props}
+           />    
+        } 
       </View> 
 
     </View>

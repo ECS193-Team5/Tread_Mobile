@@ -52,6 +52,19 @@ const SharedStyles = StyleSheet.create({
     alignItems: 'center',
     flexDirection : 'row',
     width: "20%",
+  },
+
+  ZeroTextStyle : {
+    alignSelf : 'center',
+    color : '#014221',
+    marginTop : '5%', 
+    fontSize : 13
+  },
+
+  NavigatePrompt : {
+    color : '#014221',
+    fontSize : 13,
+    textDecorationLine : 'underline'
   }
 });
 

@@ -64,6 +64,7 @@ function IncomingLeaguesPage(props): JSX.Element {
   }
 
   const [LeagueData, setLeagueData] = useState(getReceived)
+  const [count, setCount] = useState(0)
   const [pageTitle, setPageTitle] = useState('Sent')
   const [refreshing, setRefreshing] = useState(false)
 
