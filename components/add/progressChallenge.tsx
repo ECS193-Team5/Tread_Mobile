@@ -92,7 +92,6 @@ function ProgressChallenge(): JSX.Element {
                   backgroundColor : '#014421',
                   color : '#F9A800',
                 })
-
             })
             .catch(function (error) {
                 console.log(error)

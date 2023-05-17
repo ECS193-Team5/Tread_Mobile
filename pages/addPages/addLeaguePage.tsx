@@ -17,6 +17,7 @@ import SwitchSelector from "react-native-switch-selector";
 import {BACKEND_URL} from '@env';
 import axios from 'axios';
 import LeagueInvite from '../../components/shared/LeagueInvite';
+import { showMessage } from 'react-native-flash-message';
 
 const options = [
   { label : "Create" , value : true},
@@ -35,7 +36,6 @@ function AddLeaguePage(props): JSX.Element {
   }
 
   const handleBack = function(qrValue) {
-    setDefaultTab(1)
     setOpenScanner(false)
     props.navigation.navigate("AddLeague", {defaultView : false})
   }
@@ -159,9 +159,20 @@ function AddLeaguePage(props): JSX.Element {
 			setPicture("");
 			setLeagueName("");
 			setLeagueDesc("");
+      showMessage({
+        floating : true,
+        message : 'League Created',
+        backgroundColor : '#014421',
+        color : '#F9A800',
+      })
 		})
 		.catch(function (error) {
 			console.log(error);
+      showMessage({
+        floating : true,
+        message : 'Error creating league',
+        type : 'danger',
+      })
 		});
 	}
 

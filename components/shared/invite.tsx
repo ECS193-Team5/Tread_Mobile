@@ -119,7 +119,7 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                 type : 'warning',
               })
             } else {
-              message = 'Sent league invite to ' + friendID
+              message = pagetoNav === 'League Details' ? 'Sent league invite to ' + friendID :  'Sent friend request to ' + friendID 
               showMessage({
                 floating : true,
                 message : message,
