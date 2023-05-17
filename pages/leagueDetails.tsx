@@ -29,6 +29,7 @@ import {BACKEND_URL} from '@env';
 import { modalstyle } from '../css/shared/modalStyle';
 import MenuPopUp from '../components/shared/MenuPopUp';
 import { showMessage } from 'react-native-flash-message';
+import ZeroItem from '../components/shared/ZeroItem';
 
 function LeagueDetails(props): JSX.Element {
   const getChallengeData = function(){
@@ -48,6 +49,7 @@ function LeagueDetails(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setLeagueChallenges(response.data)
+        setCountChallenges(response.data.length)
       })
       .catch((error) =>
         console.log(error)
@@ -71,6 +73,7 @@ function LeagueDetails(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setLeagueMembers(response.data)
+        setCountMembers(response.data.length)
       })
       .catch(function (error) {
         console.log(error)
@@ -159,6 +162,8 @@ function LeagueDetails(props): JSX.Element {
   const [description, setDescription] = useState('description')
   const [security, setSecurity] = useState('private')
   getLeagueInfo()
+  const [countMembers, setCountMembers] = useState(0)
+  const [countChallenges, setCountChallenges] = useState(0)
 
   const [LeagueMembers, setLeagueMembers] = useState(getLeagueMembers)
   const [LeagueChallenges, setLeagueChallenges] = useState(getChallengeData)
@@ -372,14 +377,27 @@ function LeagueDetails(props): JSX.Element {
           setLeagueMembers = {setLeagueMembers}
           props = {props}
           onRefresh = {handleRefresh}
+          count = {countMembers}
+          setCount = {setCountMembers}
         /> 
       : 
       <View style = {LeagueStyles.MembersChallengesContainer}>
-        <ChallengeScroll
-          ChallengeData={LeagueChallenges}
-          isCurrent = {true}
-          onRefresh = {handleRefresh}
-        />
+        {countChallenges > 0 ?
+          <ChallengeScroll
+            ChallengeData={LeagueChallenges}
+            isCurrent = {true}
+            onRefresh = {handleRefresh}
+          />
+        :
+        <ZeroItem
+          promptText='There are no challenges at the moment'
+          navigateToText= {role === 'admin' || role === 'owner' ? 'Make one here' : null}
+          SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
+          navigateToPage="AddChallenge"
+          props = {props}
+        />    
+        }
+
       </View>
       } 
     </View>

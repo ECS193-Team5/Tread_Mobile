@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
 import ChallengeInviteCard from '../components/shared/ChallengeInviteCard';
 import { createProfilePictureURL } from '../components/Helpers/CloudinaryURLHelper';
+import ZeroItem from '../components/shared/ZeroItem';
 
 const options = [
   { label : "Received" , value : 'Received'},
@@ -41,6 +42,7 @@ function IncomingChallengesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setChallengeData(response.data)
+        setCount(response.data.length)
       })
       .catch(function (error) {
         console.log(error)
@@ -61,6 +63,7 @@ function IncomingChallengesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setChallengeData(response.data)
+        setCount(response.data.length)
       })
       .catch(function (error) {
         console.log(error)
@@ -89,14 +92,14 @@ function IncomingChallengesPage(props): JSX.Element {
   };
   
   const [pageTitle, setPageTitle] = useState('Received')
+  const [count, setCount] = useState(0)
   const [ChallengeData, setChallengeData] = useState(getReceivedChallenges)
   const [refreshing, setRefreshing] = useState(false)
-
-
+  
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
     setPageTitle(selectedItem)
-    setChallengeData([])
+    setChallengeData()
     if(selectedItem === 'Received'){
       getReceivedChallenges()
     } else {
@@ -109,6 +112,7 @@ function IncomingChallengesPage(props): JSX.Element {
     console.log("deleted")
     const filteredData = ChallengeData.filter(item => item._id !== cData._id);
     setChallengeData(filteredData)
+    filteredData.length === 0 ? setCount(0) : null
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
 
@@ -172,19 +176,28 @@ function IncomingChallengesPage(props): JSX.Element {
         />
       </View>
       <View style = {styles.ChallengesContainer}>
-        <FlatList
-          data = {ChallengeData}
-          renderItem = {renderInvite}
-          refreshControl ={
-            <RefreshControl 
-              refreshing = {refreshing} 
-              onRefresh = {Refresh} 
-              colors = {['#014421']}
-              tintColor = {'#014421'}
-              progressViewOffset = {-10}
-            />
-          }
-        />
+        {count > 0 ? 
+          <FlatList
+            data = {ChallengeData}
+            renderItem = {renderInvite}
+            refreshControl ={
+              <RefreshControl 
+                refreshing = {refreshing} 
+                onRefresh = {Refresh} 
+                colors = {['#014421']}
+                tintColor = {'#014421'}
+                progressViewOffset = {-10}
+              />
+            }
+          />
+          :
+          <ZeroItem
+            promptText={'You have ' + (pageTitle === 'Received' ? 'no received' : 'not sent any') + ' Challenges'}
+            navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
+            navigateToPage='AddChallenge'
+            props = {props}
+          />    
+        } 
       </View>
 
     </View>

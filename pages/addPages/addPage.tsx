@@ -18,7 +18,7 @@ function AddPage(props): JSX.Element {
 	}
 
 	onAddLeaguePress = function () {
-		props.navigation.navigate('AddLeague')
+		props.navigation.navigate('AddLeague' , {defaultView : true})
 	}
 
   return (
