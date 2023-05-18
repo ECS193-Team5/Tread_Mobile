@@ -55,11 +55,10 @@ const styles = StyleSheet.create({
 		borderRadius: 50,
 		borderColor: '#9B9595',
 		borderWidth: 1,
-		height: '40%',
-    width : '80%',
+    	width : '80%',
 		paddingLeft: 20,
 		color: 'grey',
-    marginLeft : '4%' 
+    marginLeft : '4%'
 	},
 
 	ButtonValid: {

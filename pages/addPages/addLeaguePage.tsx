@@ -30,6 +30,7 @@ function AddLeaguePage(props): JSX.Element {
   const [defaultTab, setDefaultTab] = useState(!props.route.params.defaultView)
 
   const sendLeagueRequest = (leagueID) => {
+    console.log("send league request");
     var config = {
       method: 'post',
       url: BACKEND_URL + 'league/user_request_to_join',
@@ -46,26 +47,26 @@ function AddLeaguePage(props): JSX.Element {
 
     axios(config)
       .then(function (response) {
+        console.log("sucessfully sent request");
         props.navigation.navigate("Leagues", { defaultView: false })
       })
-      .catch((error) =>
-        setQrValue("Failed to send league request")
+      .catch((error) =>{
+        console.log(error);
+        setQrValue("Already joined this league")}
       )
 
 
   }
 
   const onBarcodeScan = function (qrvalue) {
-    console.log("on barcode scan", qrvalue);
-    if (qrvalue.startsWith("https://tread.run/requestLeague?")) {
-      console.log("does start with");
-      //let leagueID = qrvalue.split("?")[1];
-      setQrValue("meow");
-      setOpenScanner(false)
-      //sendLeagueRequest(leagueID);
+    if(qrvalue.startsWith("https://tread.run/requestLeague?")){
+      console.log("does start with", qrvalue);
+      qrvalue = qrvalue.split("?")[1];
+      sendLeagueRequest(qrvalue);
     }
-    setQrValue("Failed to send league request");
+    setQrValue(qrvalue)
     setOpenScanner(false)
+    props.navigation.navigate("AddLeague", {defaultView : false})
 
   }
 
