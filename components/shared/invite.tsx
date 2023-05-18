@@ -21,10 +21,16 @@ import {showMessage} from 'react-native-flash-message'
 function Invite({text, config, props, pagetoNav}): JSX.Element {
 
   const [qrValue, setQrValue] = useState('')
-  const [openScanner, setOpenScanner] = useState(false)  
-  
+  const [openScanner, setOpenScanner] = useState(false)
+
   const onBarcodeScan = function(qrvalue) {
-    
+    if(!qrvalue.startsWith("https://tread.run/requestFriend?")){
+      qrvalue = "";
+    }
+    else{
+      qrvalue = qrvalue.split("?")[1];
+    }
+
     setQrValue(qrvalue)
     setValidID(true)
     setOpenScanner(false)
@@ -89,9 +95,9 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
     }
     const onSubmit = async function() {
       var message = ''
-      
+
       pagetoNav === 'AddFriend' ? config['data']['friendName'] = friendID : config['data']['recipient'] = friendID;
-    
+
       axios(config)
         .then(function (response) {
             var message = ''
@@ -119,7 +125,7 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                 type : 'warning',
               })
             } else {
-              message = pagetoNav === 'League Details' ? 'Sent league invite to ' + friendID :  'Sent friend request to ' + friendID 
+              message = pagetoNav === 'League Details' ? 'Sent league invite to ' + friendID :  'Sent friend request to ' + friendID
               showMessage({
                 floating : true,
                 message : message,
@@ -160,6 +166,7 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                   style = {styles.Input}
                   onChangeText = {onFriendChange}
                   value = {qrValue === '' ? friendID : qrValue}
+
                 >
                 </TextInput>
                 <View>

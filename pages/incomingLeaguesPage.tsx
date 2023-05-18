@@ -24,7 +24,7 @@ const options = [
 ]
 
 function IncomingLeaguesPage(props): JSX.Element {
-  function getReceived() { 
+  function getReceived() {
     var config = {
       method: 'post',
       url: BACKEND_URL + 'league/get_invited_leagues',
@@ -34,7 +34,7 @@ function IncomingLeaguesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
@@ -45,7 +45,7 @@ function IncomingLeaguesPage(props): JSX.Element {
       )
   }
 
-  function getSent() { 
+  function getSent() {
     var config = {
       method: 'post',
       url: BACKEND_URL + 'league/get_requested_leagues',
@@ -55,7 +55,7 @@ function IncomingLeaguesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
@@ -88,8 +88,8 @@ function IncomingLeaguesPage(props): JSX.Element {
   }
 
 
-  var imageUrl = "https://imgur.com/nFRNXOB.png"  
-  
+  var imageUrl = "https://imgur.com/nFRNXOB.png"
+
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -99,7 +99,7 @@ function IncomingLeaguesPage(props): JSX.Element {
   const layoutAnimConfig = {
     duration: 1000,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut, 
+      type: LayoutAnimation.Types.easeInEaseOut,
     },
     delete: {
       duration: 200,
@@ -118,13 +118,13 @@ function IncomingLeaguesPage(props): JSX.Element {
       getSent()
     }
   }
-  
-  const deleteItem = function(lData) {    
+
+  const deleteItem = function(lData) {
     console.log(lData._id)
     console.log("deleted")
     const filteredData = LeagueData.filter(item => item._id !== lData._id);
     setLeagueData(filteredData)
-    LayoutAnimation.configureNext(layoutAnimConfig) 
+    LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
   const renderInvite = ({item, index}) => {
@@ -138,6 +138,33 @@ function IncomingLeaguesPage(props): JSX.Element {
     )
   }
 
+  /**
+
+      {count > 0 ?
+
+        <FlatList
+          data = {LeagueData}
+          renderItem = {renderInvite}
+          refreshControl ={
+            <RefreshControl
+              refreshing = {refreshing}
+              onRefresh = {Refresh}
+              colors = {'#014421'}
+              tintColor = {'#014421'}
+              progressViewOffset = {-10}
+            />
+          }
+        />
+        :
+          <ZeroItem
+             promptText={'You have not ' + (pageTitle === 'Received' ? 'received any' : 'sent any') + ' league invites'}
+             navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
+             navigateToPage={'AddLeague'}
+             props = {props}
+             defaultView = {false}
+           />
+        }
+       */
   return (
     <View style = {styles.container}>
       <View style = {styles.topRightClickContainer}>
@@ -161,30 +188,30 @@ function IncomingLeaguesPage(props): JSX.Element {
         />
       </View>
       <View style = {styles.ChallengesContainer}>
-      {count > 0 ? 
+
+      {count > 0 ?
 
         <FlatList
-          data = {LeagueData}
-          renderItem = {renderInvite}
-          refreshControl ={
-            <RefreshControl 
-              refreshing = {refreshing} 
-              onRefresh = {Refresh} 
-              colors = {['#014421']}
-              tintColor = {'#014421'}
-              progressViewOffset = {-10}
-            />
-          }
+        data = {LeagueData}
+        renderItem = {renderInvite}
+        refreshControl ={
+          <RefreshControl
+            refreshing = {refreshing}
+            onRefresh = {Refresh}
+            tintColor = {'#014421'}
+            progressViewOffset = {-10}
+          />
+        }
         />
         :
-          <ZeroItem 
-             promptText={'You have not ' + (pageTitle === 'Received' ? 'received any' : 'sent any') + ' league invites'}
-             navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
-             navigateToPage={'AddLeague'}
-             props = {props}
-             defaultView = {false}
-           />    
-        } 
+          <ZeroItem
+            promptText={'You have not ' + (pageTitle === 'Received' ? 'received any' : 'sent any') + ' league invites'}
+            navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
+            navigateToPage={'AddLeague'}
+            props = {props}
+            defaultView = {false}
+          />
+        }
       </View>
     </View>
   )

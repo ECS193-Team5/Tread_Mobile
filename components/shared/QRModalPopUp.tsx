@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Pressable,
   Image,
@@ -10,11 +10,26 @@ import {
   FlatList
 } from 'react-native';
 import { ImageStyles } from '../../css/imageCluster/Style';
-
+import QRCode from 'react-native-qrcode-svg';
 import { modalstyle } from '../../css/shared/modalStyle';
 
 
-function QRModalPopUp({Name, isLeague, security}) {
+function QRModalPopUp({Name, isLeague, security, encodedInfo}) {
+  const [url, setURl] = useState("meow");
+  const [load, setLoad] = useState(false);
+
+  useEffect(() => {
+    if(!load){
+      if(isLeague){
+        setURl("https://tread.run/requestLeague?" +encodedInfo)
+      }
+      else{
+        setURl("https://tread.run/requestFriend?" +encodedInfo)
+      }
+      setLoad(true);
+    }
+  }, [load]);
+
   const GeneratePrompt = function(){
     if(isLeague){
       if(security === 'private'){
@@ -34,24 +49,28 @@ function QRModalPopUp({Name, isLeague, security}) {
       return ('Scan to add friend')
     }
   }
-  
+
   return(
     <View style={modalstyle.container}>
       <View style = {modalstyle.QRTextContainer}>
-        <Text style = {modalstyle.QRTitleTextStyle}> 
-          {GenerateScanPrompt()} 
+        <Text style = {modalstyle.QRTitleTextStyle}>
+          {GenerateScanPrompt()}
         </Text>
-        <Text style = {modalstyle.QRTitleTextStyle}> 
-          {Name}  
+        <Text style = {modalstyle.QRTitleTextStyle}>
+          {Name}
         </Text>
       </View>
 
       <View style = {modalstyle.ProgressContainer}>
         <View style = {modalstyle.QRCodeContainerStyle}>
-         <Image style ={ImageStyles.QRCode} source={{uri: 'https://i.imgur.com/vdw15Hl.png'}}/>
+        <QRCode
+        size={250}
+        backgroundColor={'#D9D9D9'}
+      value={url}
+    />
         </View>
         <View style = {modalstyle.QRCodePromptContainer}>
-          <Text style = {modalstyle.QRCodePromptTextStyle}> 
+          <Text style = {modalstyle.QRCodePromptTextStyle}>
             {GeneratePrompt()}
           </Text>
         </View>

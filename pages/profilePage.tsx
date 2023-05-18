@@ -310,6 +310,7 @@ function ProfilePage(props): JSX.Element {
                       Name = {userName}
                       isLeague = {false}
                       security = {""}
+                      encodedInfo={userName}
                   />
               </Modal>
           </GestureRecognizer>
