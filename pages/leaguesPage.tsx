@@ -132,7 +132,7 @@ function LeaguesPage(props): JSX.Element {
   }
 
   return (
-    <View style = {styles.container}>
+    <View  style = {styles.container}>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
