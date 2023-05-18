@@ -85,14 +85,11 @@ const modalstyle = StyleSheet.create({
 
   QRCodeContainerStyle : {
     borderRadius : 40,
-    height: 300,
     borderWidth : 2,
-    width : 300,
+    width : '90%',
     alignSelf : 'center',
     borderColor : '#F9A800',
-    backgroundColor : '#D9D9D9',
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor : '#D9D9D9'
   },
 
   QRCodePromptTextStyle : {
