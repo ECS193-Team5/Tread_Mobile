@@ -150,6 +150,102 @@ function AddLeaguePage(props): JSX.Element {
       });
   }
 
+  const getCreateCode = function(){
+    return (
+      <View style ={{flex : 1}}>
+        <View style={styles.InputContainer}>
+          <View style={styles.ChoosePicContainer}>
+            <ImageUpload
+              flex={1}
+              picture={picture}
+              setPicture={setPicture}
+              valid={validPicture}
+              setValidPicture={setValidPicture}
+            ></ImageUpload>
+          </View>
+
+          <View style={styles.EnterLeagueContainer}>
+            <InputForm
+              placeholder={'Enter league name'}
+              value={leagueName}
+              setValue={setLeagueName}
+              valid={validLeagueName}
+              setValid={setValidLeagueName}
+              editable={true}
+              name = {true}
+            >
+            </InputForm>
+          </View>
+
+          <View style={styles.EnterDescContainer}>
+            <InputForm
+              placeholder={'Enter league description'}
+              value={leagueDesc}
+              setValue={setLeagueDesc}
+              valid={validLeagueDesc}
+              setValid={setValidLeagueDesc}
+              editable={true}
+              multiline={true}
+              allowSpecial={true}
+              name = {false}
+            >
+
+            </InputForm>
+
+          </View>
+
+          <View style={styles.InputTitle}>
+            <Text style={styles.InputTitleText}>
+              Security
+            </Text>
+          </View>
+
+          <View style={styles.ChooseSecContainer}>
+            <SwitchSelector
+              options={switchOptions}
+              initial={0}
+              selectedColor='white'
+              textColor='#014421'
+              buttonColor='#014421'
+              borderColor='#014421'
+              onPress={setSecurity}
+              hasPadding={true}
+            >
+            </SwitchSelector>
+          </View>
+
+          <View style={styles.EnterButtonContainer}>
+            <Pressable
+              style={(validPicture && validLeagueName && validLeagueDesc) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
+              onPress={onSubmit}
+              disabled={!(validPicture && validLeagueName && validLeagueDesc)}
+            >
+              <Text style={styles.ChoosePicText}>
+                Submit
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.SeparatorContainer} />
+      </View>
+    )
+  }
+
+  const getJoinCode = function(){
+    return(
+      <View style ={{flex : 1}}>
+        <View style={styles.InputContainer}>
+          <LeagueInvite
+            text='Join League'
+            onPress={onOpenScanner}
+            qrValue={qrValue}
+          />
+        </View>
+        <View style={styles.SuggestedSeparatorContainer} />
+      </View>
+    )
+  }
+
   return (
     <View style={styles.Background}>
       <StatusBar
@@ -172,92 +268,8 @@ function AddLeaguePage(props): JSX.Element {
             />
           </View>
 
-          {isCreate ?
-            <View style={styles.InputContainer}>
-
-              <View style={styles.ChoosePicContainer}>
-                <ImageUpload
-                  flex={1}
-                  picture={picture}
-                  setPicture={setPicture}
-                  valid={validPicture}
-                  setValidPicture={setValidPicture}
-                ></ImageUpload>
-              </View>
-
-              <View style={styles.EnterLeagueContainer}>
-                <InputForm
-                  placeholder={'Enter league name'}
-                  value={leagueName}
-                  setValue={setLeagueName}
-                  valid={validLeagueName}
-                  setValid={setValidLeagueName}
-                  editable={true}
-                  name = {true}
-                >
-                </InputForm>
-              </View>
-
-              <View style={styles.EnterDescContainer}>
-                <InputForm
-                  placeholder={'Enter league description'}
-                  value={leagueDesc}
-                  setValue={setLeagueDesc}
-                  valid={validLeagueDesc}
-                  setValid={setValidLeagueDesc}
-                  editable={true}
-                  multiline={true}
-                  allowSpecial={true}
-                  name = {false}
-                >
-
-                </InputForm>
-
-              </View>
-
-              <View style={styles.InputTitle}>
-                <Text style={styles.InputTitleText}>
-                  Security
-                </Text>
-              </View>
-
-              <View style={styles.ChooseSecContainer}>
-                <SwitchSelector
-                  options={switchOptions}
-                  initial={0}
-                  selectedColor='white'
-                  textColor='#014421'
-                  buttonColor='#014421'
-                  borderColor='#014421'
-                  onPress={setSecurity}
-                  hasPadding={true}
-                >
-                </SwitchSelector>
-              </View>
-
-              <View style={styles.EnterButtonContainer}>
-                <Pressable
-                  style={(validPicture && validLeagueName && validLeagueDesc) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
-                  onPress={onSubmit}
-                  disabled={!(validPicture && validLeagueName && validLeagueDesc)}
-                >
-                  <Text style={styles.ChoosePicText}>
-                    Submit
-                  </Text>
-                </Pressable>
-              </View>
-            </View>
-            :
-            <View style={styles.InputContainer}>
-              <LeagueInvite
-                text='Join League'
-                // config={config}
-                onPress={onOpenScanner}
-                qrValue={qrValue}
-              />
-            </View>
-          }
-          <View style={styles.SeparatorContainer} />
+          {isCreate ? getCreateCode() : getJoinCode() }
+          {/* {isCreate ?  : null} */}
         </View>
       }
     </View>

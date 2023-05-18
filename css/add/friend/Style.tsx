@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
 	Background : {
 		flexDirection: 'column',
 		flex: 1,
-		backgroundColor : "#E0E7E3"
+		backgroundColor : "#E0E7E3",
+    paddingTop:(Platform.OS === 'ios') ? '2%' : 0,
 	},
 
 	TitleContainer : {
@@ -12,6 +13,15 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
     marginHorizontal : '6%',
+	},
+
+  LeagueTitleContainer : {
+		flex: 20, 
+		flexDirection: 'column',
+		justifyContent: 'center',
+    // backgroundColor : 'green',
+    marginHorizontal : '2%',
+    marginBottom : '2%',
 	},
 
   SuggestedTitleContainer : {

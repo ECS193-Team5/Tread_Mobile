@@ -7,6 +7,11 @@ const styles = StyleSheet.create({
 		backgroundColor : "#E0E7E3"
 	},
 
+  SuggestedSeparatorContainer : {
+		flex: 180,
+    backgroundColor : 'blue'
+	},
+
 	TitleContainer : {
     position : 'relative',
     height : '9%',

@@ -68,7 +68,7 @@ function IncomingLeaguesPage(props): JSX.Element {
 
   const [LeagueData, setLeagueData] = useState(getReceived)
   const [count, setCount] = useState(0)
-  const [pageTitle, setPageTitle] = useState('Sent')
+  const [pageTitle, setPageTitle] = useState('Received')
   const [refreshing, setRefreshing] = useState(false)
 
   const handleRefresh = function(){
@@ -124,6 +124,7 @@ function IncomingLeaguesPage(props): JSX.Element {
     console.log("deleted")
     const filteredData = LeagueData.filter(item => item._id !== lData._id);
     setLeagueData(filteredData)
+    filteredData.length === 0 ? setCount(0) : null
     LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
@@ -151,7 +152,7 @@ function IncomingLeaguesPage(props): JSX.Element {
       </View>
       <View style = {styles.filterContainer}>
       <SwitchSelector
-          initial= {1}
+          initial= {0}
           onPress = {value => handleDropDown(value)}
           textColor = {'#014421'}
           selectedColor = {'#F9A800'}

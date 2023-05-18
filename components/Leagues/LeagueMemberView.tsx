@@ -21,11 +21,11 @@ import Invite from '../shared/invite';
 import ZeroItem from '../shared/ZeroItem';
 
 const options = [
-  { label : "All" , value : 'all'},
-  { label : "Pending", value : 'pending'},
+  { label : "Members" , value : 'all'},
+  { label : "Received", value : 'pending'},
   { label : "Sent", value : 'sent'},
   { label : "Banned", value : 'banned'},
-  { label : "Invite" , value : 'invite'}
+  { label : "Add User" , value : 'invite'}
 ]
 
 function getRequests() {
