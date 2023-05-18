@@ -2,7 +2,7 @@ import { NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
-import {Image} from 'react-native'
+import {Image, Platform} from 'react-native'
 
 import Login from '../../pages/loginPage';
 import Signup from '../../pages/signupPage';
@@ -73,7 +73,14 @@ function SearchSwipeStack() {
 function ChallengesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
+    {Platform.OS === 'android' &&
+        <Stack.Screen name = "Challenges" component={Challenge} options={{ headerShown: false }}/>
+    }
+
+    {Platform.OS === 'ios' &&
+        <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
+    }
+
     <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false}}/>
   </Stack.Navigator>
   )
@@ -82,7 +89,14 @@ function ChallengesStack(){
 function LeaguesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
+    {Platform.OS === 'android' &&
+        <Stack.Screen name = "Leagues" component={LeaguesPage} options={{ headerShown: false}}/>
+    }
+
+    {Platform.OS === 'ios' &&
+        <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
+    }
+
     <Stack.Screen name = "Incoming Leagues" component={IncomingLeaguesPage} options={{ headerShown: false }}/>
     <Stack.Screen name = "EditLeague" component={EditLeaguePage} options={{ headerShown: false }}/>
     <Stack.Screen name = "League Details" component={LeagueDetails} options={{headerShown: false ,
@@ -108,7 +122,15 @@ function AddStack(){
 function SearchStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Search" component={SearchSwipeStack} options={{ headerShown: false }}/>
+
+    {Platform.OS === 'android' &&
+        <Stack.Screen name = "Search" component={FriendPage} options={{ headerShown: false }}/>
+    }
+
+    {Platform.OS === 'ios' &&
+        <Stack.Screen name = "Search" component={SearchSwipeStack} options={{ headerShown: false }}/>
+    }
+
     <Stack.Screen name = "Incoming Friends" component={IncomingFriendsPage} options={{ headerShown: false}}/>
   </Stack.Navigator>
   )
