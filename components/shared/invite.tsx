@@ -24,12 +24,6 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
   const [openScanner, setOpenScanner] = useState(false)
 
   const onBarcodeScan = function(qrvalue) {
-    if(!qrvalue.startsWith("https://tread.run/requestFriend?")){
-      qrvalue = "";
-    }
-    else{
-      qrvalue = qrvalue.split("?")[1];
-    }
 
     setQrValue(qrvalue)
     setValidID(true)
