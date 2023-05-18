@@ -148,7 +148,7 @@ const ListenerComponentHealthKit = (props) =>{
                             });
 
                             let uniqueExerciseList = reduceExercisesToUnique(allResults);
-                            sendExerciseList(exerciseList, uniqueExerciseList, "healthKit");
+                            sendExerciseList(allResults, uniqueExerciseList, "healthKit");
                         },
                     );
 

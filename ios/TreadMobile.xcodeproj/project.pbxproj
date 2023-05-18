@@ -516,7 +516,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RRVDW6CPA6;
+				DEVELOPMENT_TEAM = URY2D3D7CG;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TreadMobile/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tread;
@@ -550,7 +550,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RRVDW6CPA6;
+				DEVELOPMENT_TEAM = URY2D3D7CG;
 				INFOPLIST_FILE = TreadMobile/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tread;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
