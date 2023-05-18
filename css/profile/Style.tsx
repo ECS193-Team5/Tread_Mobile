@@ -2,6 +2,7 @@ import { Platform, StyleSheet } from 'react-native';
 
 const ProfileStyles = StyleSheet.create({
     Background: {
+        paddingTop:(Platform.OS === 'ios') ? "12%" : 0,
         flexDirection: 'column',
         flex: 1,
         backgroundColor : "#E0E7E3"
@@ -14,7 +15,6 @@ const ProfileStyles = StyleSheet.create({
     ProfileContainer: {
         flex: 23,
         flexDirection: 'column',
-        // backgroundColor: 'blue',
         alignItems: 'center'
     },
 
@@ -27,9 +27,14 @@ const ProfileStyles = StyleSheet.create({
         backgroundColor : "#FFFFFF",
     },
 
+    ProfileSettingsContainer: {
+      flex: 30,
+      flexDirection: 'row',
+      width: '100%'
+    },
+
     ProfileTopContainer: {
-        flex: 70,
-        // backgroundColor: 'blue',
+        flex: 100,
         flexDirection: 'row',
         width: '100%'
     },
@@ -38,13 +43,11 @@ const ProfileStyles = StyleSheet.create({
         flex: 40,
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
-        // backgroundColor: 'blue'
+        justifyContent: 'center',
     },
 
     ProfileNameContainer: {
         flex: 60,
-        // backgroundColor: 'yellow'
     },
 
     ProfileImage: {
@@ -56,9 +59,8 @@ const ProfileStyles = StyleSheet.create({
     },
 
     DisplayNameContainer: {
-        flex: 25,
+        flex: 35,
         width: '100%',
-        // backgroundColor: 'green',
         flexDirection: 'column',
         justifyContent: 'flex-end'
     },
@@ -70,9 +72,8 @@ const ProfileStyles = StyleSheet.create({
     },
 
     UsernameContainer: {
-        flex: 45,
+        flex: 25,
         width: '100%',
-        // backgroundColor: 'yellow'
     },
 
     UsernameText: {
@@ -85,36 +86,38 @@ const ProfileStyles = StyleSheet.create({
         flex: 15,
         width: '100%',
         flexDirection: 'row',
-        // backgroundColor: 'blue'
         justifyContent: 'center'
 
     },
 
     OtherInfoText: {
-        fontWeight: '400',
+        fontWeight: '600',
         fontSize: 18,
-        color: '#014421'
+        color: '#014421',
     },
 
+    SecondaryText: {
+      fontWeight: '500',
+      fontSize: 18,
+      color: '#014421',
+  },
+
     ProfileBottomContainer: {
-        flex: 30,
-        // backgroundColor: 'yellow',
+        flex: 60,
         flexDirection: 'row',
-        width: '100%'
+        width: '100%',
     },
 
     OptionsContainer: {
-        flex: 30,
-        // backgroundColor: 'blue',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        marginRight: '10%'
-    },
+      flex: 30,
+      flexDirection: 'column',
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
+      marginRight: '3%',
+  },
 
     QRContainer: {
         flex: 1,
-        // backgroundColor: 'red',
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
@@ -124,7 +127,6 @@ const ProfileStyles = StyleSheet.create({
     MedalsContainer: {
         flex: 55,
         flexDirection: 'column',
-        // backgroundColor: 'yellow',
         alignItems: 'center'
     },
 
@@ -142,6 +144,7 @@ const ProfileStyles = StyleSheet.create({
 
     MedalScroll: {
         marginTop: '5%',
+        marginBottom : "37%",
         width: '100%'
     }
 });

@@ -3,7 +3,8 @@ import {
 	Text,
 	Pressable,
 	View,
-	Image
+	Image,
+  TouchableHighlight
 } from 'react-native';
 
 import {styles} from '../../css/add/home/Style';
@@ -11,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 function AddButton({onPress, title, description, imageUrl}): JSX.Element {
 	return (
-			<Pressable onPress = {onPress} style = {styles.Button}>
+			<TouchableHighlight onPress = {onPress} style = {styles.Button}>
 				<LinearGradient
           colors={['rgba(1, 63, 33,1)', 'rgba(1, 63, 33,0.5)', 'rgb(1, 100, 0)']}
           style={styles.GradientStyle}
@@ -36,7 +37,7 @@ function AddButton({onPress, title, description, imageUrl}): JSX.Element {
 					</View>
 
 				</LinearGradient>
-			</Pressable>
+			</TouchableHighlight>
 	)
 }
 

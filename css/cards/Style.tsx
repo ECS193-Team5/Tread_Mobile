@@ -71,6 +71,13 @@ const cardStyles = StyleSheet.create({
     justifyContent : 'center'
   },
 
+  ChallengeOpenImageContainer : {
+    flex : 10,
+    flexDirection : 'row',
+    justifyContent : 'center',
+    marginRight : '3%'
+  },
+
   ChallengeNameContainer : {
     flex : 90,
     alignItems : 'flex-start',
@@ -108,7 +115,7 @@ const cardStyles = StyleSheet.create({
 
   MedalNameText : {
     fontWeight : "500",
-    fontSize : 16,
+    fontSize : 14,
     lineHeight : 16,
     color : "#014421",
     marginVertical : "1.5%"

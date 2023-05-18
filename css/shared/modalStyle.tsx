@@ -2,6 +2,12 @@ import { Platform, StyleSheet } from 'react-native';
 
 const modalstyle = StyleSheet.create({
 
+  dragDownContainer : {
+    flex : 0.5,
+    alignItems : 'center',
+    margin : '1%'
+  },
+
   container : {
     backgroundColor : "#E0E7E3",
     flex :1,
@@ -112,7 +118,7 @@ const modalstyle = StyleSheet.create({
     backgroundColor : '#E0E7E3',
     position : 'relative',
     bottom : '18.5%',
-    left : '16%',
+    left : '12%', 
     width : '35%',
     borderRadius : 20,
     borderWidth : 1,

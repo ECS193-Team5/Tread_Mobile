@@ -20,7 +20,6 @@ import IncomingSwap from '../components/shared/IncomingSwap';
 import { ImageStyles } from '../css/imageCluster/Style';
 import ChallengeScroll from '../components/shared/ChallengeScroll';
 import LeagueMemberView from '../components/Leagues/LeagueMemberView';
-import GestureRecognizer from 'react-native-swipe-gestures';
 import QRModalPopUp from '../components/shared/QRModalPopUp';
 import { createLeaguePictureURL } from '../components/Helpers/CloudinaryURLHelper';
 
@@ -220,8 +219,6 @@ function LeagueDetails(props): JSX.Element {
   const handleQR = function() {
     console.log("QR")
     setModalVisibleQR(true)
-    //backend call to leave league
-    // props.navigation.navigate("Leagues")
   }
 
   const clickedLeave = function(){
@@ -246,7 +243,7 @@ function LeagueDetails(props): JSX.Element {
     return (
       <TouchableHighlight
         onPress={clickedLeave}
-        style = {{borderBottomRightRadius : 20, borderBottomLeftRadius : 20}}
+        style = {{borderRadius : 20}}
         underlayColor = 'rgba(0,0,0,0.15)'
       >
         <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
@@ -261,7 +258,7 @@ function LeagueDetails(props): JSX.Element {
     return(
       <TouchableHighlight
       onPress={handleEdit}
-      style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
+      style = {{borderRadius : 20}}
       underlayColor = 'rgba(0,0,0,0.15)'
       >
         <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
@@ -274,7 +271,7 @@ function LeagueDetails(props): JSX.Element {
 
   const getOptions = function(){
     var options = []
-    if(role === 'owner' || role === 'admin'){
+    if(role === 'owner'){
       options.push(EditClickable)
     }
     if (role === 'admin' || role === 'participant'){
@@ -285,13 +282,13 @@ function LeagueDetails(props): JSX.Element {
 
   return (
     <View style = {styles.container}>
-      <GestureRecognizer
-        onSwipeDown={() => setModalVisibleQR(false)}
-      >
         <Modal
           isVisible={modalVisibleQR}
           hasBackdrop = {true}
           backdropColor = 'black'
+          swipeDirection = 'down'
+          onSwipeComplete={(e) => setModalVisibleQR(false)}
+          onBackdropPress = { () => setModalVisibleQR(false)}
           style = {{margin : 2}}
         >
           <QRModalPopUp
@@ -302,7 +299,6 @@ function LeagueDetails(props): JSX.Element {
             encodedInfo={props.route.params.leagueData._id}
           />
         </Modal>
-      </GestureRecognizer>
 
       <Modal
         isVisible={modalVisiblePopUp}

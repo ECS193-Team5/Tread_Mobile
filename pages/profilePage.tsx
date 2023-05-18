@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     View,
     Button,
@@ -14,16 +14,14 @@ import {
 	GoogleSignin,
 } from '@react-native-google-signin/google-signin';
 import axios from "axios/index";
-import GestureRecognizer from "react-native-swipe-gestures";
 import Modal from "react-native-modal";
 import QRModalPopUp from "../components/shared/QRModalPopUp";
 import MenuPopUp from "../components/profile/MenuPopUp";
 import {modalstyle} from "../css/shared/modalStyle";
 import SwitchSelector from "react-native-switch-selector";
-import {styles} from "../css/challenges/Style";
-import ChallengeScroll from "../components/shared/ChallengeScroll";
 import MedalScroll from "../components/profile/medalScroll";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { cardStyles } from '../css/cards/Style';
 import {createProfilePictureURL} from "../components/Helpers/CloudinaryURLHelper";
 
 
@@ -50,6 +48,8 @@ function ProfilePage(props): JSX.Element {
     const [numMedals, setNumMedals] = useState(0);
 
     const [modalVisibleQR, setModalVisibleQR] = useState(false)
+    const [openQR, setOpenQR] = useState(false)
+
     const [modalVisiblePopUp, setModalVisiblePopUp] = useState(false)
     const [medalType, setMedalType] = useState('progress');
 
@@ -262,11 +262,11 @@ function ProfilePage(props): JSX.Element {
         return(
             <TouchableHighlight
                 onPress={handleLogout}
-                style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
+                style = {{borderBottomRightRadius : 20, borderBottomLeftRadius : 20}}
                 underlayColor = 'rgba(0,0,0,0.15)'
             >
                 <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
-                    <Text style = {[modalstyle.PopUpOptionText , {flex : 50}]}> Logout </Text>
+                    <Text style = {[modalstyle.PopUpOptionText , {flex : 50, color : 'red'}]}> Logout </Text>
                     <Image style ={ImageStyles.Edit} source={{uri: 'https://i.imgur.com/Yv8lfL7.png'}}/>
                 </View>
             </TouchableHighlight>
@@ -274,14 +274,13 @@ function ProfilePage(props): JSX.Element {
     }
 
     const handleQRClick = function() {
-        setModalVisiblePopUp(false);
-        setModalVisibleQR(true);
+        setModalVisiblePopUp(false)
+        setOpenQR(true)
     }
     const QRClickable = function(){
         return(
             <TouchableHighlight
                 onPress={handleQRClick}
-                style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
                 underlayColor = 'rgba(0,0,0,0.15)'
             >
                 <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
@@ -292,18 +291,26 @@ function ProfilePage(props): JSX.Element {
         )
     }
 
+    const handleQRModal = function(){
+      if(openQR){
+        setModalVisibleQR(true)
+      } 
+      setOpenQR(false)
+    }
+  
+    const switchRef = useRef(null)
+
     return (
       <View style={ProfileStyles.Background}>
           <View style={ProfileStyles.TopSeparator}>
           </View>
-
-          <GestureRecognizer
-              onSwipeDown={() => setModalVisibleQR(false)}
-          >
               <Modal
                   isVisible={modalVisibleQR}
                   hasBackdrop = {true}
+                  swipeDirection = 'down'
+                  onSwipeComplete={(e) => setModalVisibleQR(false)}
                   backdropColor = 'black'
+                  onBackdropPress = {() => setModalVisibleQR(false)}
                   style = {{margin : 2}}
               >
                   <QRModalPopUp
@@ -313,13 +320,13 @@ function ProfilePage(props): JSX.Element {
                       encodedInfo={userName}
                   />
               </Modal>
-          </GestureRecognizer>
 
           <Modal
               isVisible={modalVisiblePopUp}
               hasBackdrop = {true}
               backdropColor = 'rgba(0,0,0,0.7)'
               onBackdropPress = { () => setModalVisiblePopUp(false)}
+              onModalHide = {handleQRModal}
               style = {{margin : 2}}
               animationIn = 'fadeIn'
               animationInTiming={160}
@@ -332,8 +339,18 @@ function ProfilePage(props): JSX.Element {
           </Modal>
 
 
-          <View style={ProfileStyles.ProfileContainer}>
+          <View style={[ProfileStyles.ProfileContainer, cardStyles.shadowProp]}>
               <View style={ProfileStyles.ProfileCard}>
+                <View style = {ProfileStyles.ProfileSettingsContainer}>
+                  <View style={ProfileStyles.OptionsContainer}>
+                    <Pressable
+                        onPress={handlePopup}
+                    >
+                        <Image style ={ImageStyles.Options} source={{uri: 'https://i.imgur.com/RtnN9Hu.png'}}/>
+                    </Pressable>
+                  </View>
+                </View>
+                
                 <View style={ProfileStyles.ProfileTopContainer}>
                     <View style={ProfileStyles.ProfileImageContainer}>
                         <Image
@@ -344,13 +361,6 @@ function ProfilePage(props): JSX.Element {
                     </View>
 
                     <View style={ProfileStyles.ProfileNameContainer}>
-                        <View style={ProfileStyles.OptionsContainer}>
-                                <Pressable
-                                    onPress={handlePopup}
-                                >
-                                    <Image style ={ImageStyles.Options} source={{uri: 'https://i.imgur.com/RtnN9Hu.png'}}/>
-                                </Pressable>
-                        </View>
                         <View style={ProfileStyles.DisplayNameContainer}>
                             <Text style={ProfileStyles.DisplayNameText}>
                                 {displayName}
@@ -365,23 +375,48 @@ function ProfilePage(props): JSX.Element {
                     </View>
                 </View>
                 <View style={ProfileStyles.ProfileBottomContainer}>
-
                     <View style={ProfileStyles.OtherInfoContainer}>
-                        <Text style={ProfileStyles.OtherInfoText}>
-                            {numFriends.toString() + " Friends"}
-                        </Text>
+                      <TouchableHighlight
+                          onPress={() => props.navigation.navigate('Friends')}
+                          style = {{alignSelf : 'center', borderRadius : 1}}
+                          underlayColor = 'rgba(0,0,0,0.15)'
+                          >
+                          <Text style={ProfileStyles.OtherInfoText}>
+                            {numFriends.toString()}  
+                            <Text style = {ProfileStyles.SecondaryText}>
+                               {(numFriends === 1 ? " Friend" : " Friends")}
+                            </Text>
+                          </Text>
+                      </TouchableHighlight>
                     </View>
                     <View style={ProfileStyles.OtherInfoContainer}>
-                        <Text style={ProfileStyles.OtherInfoText}>
-                            {numLeagues.toString() + " Leagues"}
-                        </Text>
+                      <TouchableHighlight
+                          onPress={() => props.navigation.navigate('Leagues', {screen : 'Leagues'})}
+                          style = {{alignSelf : 'center',borderRadius : 1}}
+                          underlayColor = 'rgba(0,0,0,0.15)'
+                          >
+                          <Text style={ProfileStyles.OtherInfoText}>
+                            {numLeagues.toString()}  
+                            <Text style = {ProfileStyles.SecondaryText}>
+                               {(numLeagues === 1 ? " League" : " Leagues")}
+                            </Text>
+                          </Text>
+                      </TouchableHighlight>
                     </View>
                     <View style={ProfileStyles.OtherInfoContainer}>
-                        <Text style={ProfileStyles.OtherInfoText}>
-                            {numMedals.toString() + " Medals"}
-                        </Text>
+                      <TouchableHighlight
+                          onPress={() => switchRef.current?.toggleItem(1)}
+                          style = {{alignSelf : 'center',borderRadius : 1}}
+                          underlayColor = 'rgba(0,0,0,0.15)'
+                          >
+                          <Text style={ProfileStyles.OtherInfoText}>
+                            {numMedals.toString()}  
+                            <Text style = {ProfileStyles.SecondaryText}>
+                               {(numMedals === 1 ? " Medal" : " Medals")}
+                            </Text>
+                          </Text>
+                      </TouchableHighlight>
                     </View>
-
                 </View>
               </View>
           </View>
@@ -391,6 +426,7 @@ function ProfilePage(props): JSX.Element {
 
             <View style={ProfileStyles.MedalType}>
               <SwitchSelector
+                  ref = {switchRef}
                   initial= {0}
                   onPress = {setMedalType}
                   textColor = {'#014421'}
