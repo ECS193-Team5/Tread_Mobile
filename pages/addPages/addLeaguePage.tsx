@@ -56,15 +56,15 @@ function AddLeaguePage(props): JSX.Element {
   }
 
   const onBarcodeScan = function (qrvalue) {
-
+    console.log("on barcode scan", qrvalue);
     if (qrvalue.startsWith("https://tread.run/requestLeague?")) {
-      let leagueID = qrvalue.split("?")[1];
-
-      sendLeagueRequest(leagueID);
+      console.log("does start with");
+      //let leagueID = qrvalue.split("?")[1];
+      setQrValue("meow");
+      setOpenScanner(false)
+      //sendLeagueRequest(leagueID);
     }
     setQrValue("Failed to send league request");
-
-
     setOpenScanner(false)
 
   }
