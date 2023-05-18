@@ -9,7 +9,7 @@ import {styles} from '../../css/add/friend/Style';
 import axios from "axios";
 import {CameraScreen} from 'react-native-camera-kit';
 
-function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {  
+function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {
   return (
       <View style = {styles.Background}>
         <View style = {[styles.InputContainer, {flex: 20, marginTop : '0%', marginHorizontal : '0%'}]}>
@@ -29,7 +29,7 @@ function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {
         <View style = {styles.SeparatorContainer}>
         </View>
       </View>
-    // } 
+    // }
     // </View>
   )
 }
