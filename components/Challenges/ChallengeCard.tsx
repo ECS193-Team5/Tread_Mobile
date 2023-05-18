@@ -4,6 +4,7 @@ import {
   View,
   Text,
   StatusBar,
+  Image,
 } from 'react-native';
 
 import Modal from "react-native-modal"
@@ -11,8 +12,6 @@ import {cardStyles} from "../../css/cards/Style"
 import ProgressCircle from "progress-circle-react-native"
 import ImageCluster from '../shared/ImageCluster';
 import ChallengeModalPopUp from './ChallengeModalPopUp';
-import GestureRecognizer from 'react-native-swipe-gestures'
-import { calculateProgress } from '../Helpers/calculationHelpers';
 import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
 function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
@@ -24,7 +23,6 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
     for (let User of ChallengeData.participants){
       images.push(createProfilePictureURL(User))
     }
-    // console.log(images)
     var myProgressBaseUnits = ChallengeData.progress.progress;
     totalBaseUnits = ChallengeData.progress.exercise.convertedAmount;
     var ProgressPercent = Math.min(100,Math.round(myProgressBaseUnits / totalBaseUnits * 100));
@@ -45,11 +43,10 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
       onPress={() => setModalVisible(true)}
       style = {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}
     >
-    <GestureRecognizer
-      onSwipeDown={() => setModalVisible(false)}
-    >
       <Modal
         isVisible={modalVisible}
+        swipeDirection = 'down'
+        onSwipeComplete={(e) => setModalVisible(false)}
         hasBackdrop = {true}
         backdropColor = 'black'
         style = {{margin : 2}}
@@ -61,8 +58,6 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
           totalBaseUnits = {totalBaseUnits}
         />
       </Modal>
-    </GestureRecognizer>
-
       <StatusBar
         barStyle="dark-content"
       />
@@ -90,7 +85,12 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
             bgColor='#FFFFFF'
           >
           <Text style = {cardStyles.ChallengeProgressText}>{ProgressPercent + "%"}</Text>
-        </ProgressCircle>
+          </ProgressCircle>
+
+        </View>
+        <View style = {cardStyles.ChallengeOpenImageContainer}>
+           <Image style ={{width : 15, height : 15, alignSelf: 'center'}}
+            source={{uri: 'https://i.imgur.com/aNoUoZK.png' }}/>
         </View>
       </View>
     </Pressable>

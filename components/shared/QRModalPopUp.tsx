@@ -12,6 +12,7 @@ import {
 import { ImageStyles } from '../../css/imageCluster/Style';
 import QRCode from 'react-native-qrcode-svg';
 import { modalstyle } from '../../css/shared/modalStyle';
+import DragDownBar from './DragDownBar';
 
 
 function QRModalPopUp({Name, isLeague, security, encodedInfo}) {
@@ -52,6 +53,9 @@ function QRModalPopUp({Name, isLeague, security, encodedInfo}) {
 
   return(
     <View style={modalstyle.container}>
+      <View style = {modalstyle.dragDownContainer}>
+        <DragDownBar/>
+      </View>
       <View style = {modalstyle.QRTextContainer}>
         <Text style = {modalstyle.QRTitleTextStyle}>
           {GenerateScanPrompt()}

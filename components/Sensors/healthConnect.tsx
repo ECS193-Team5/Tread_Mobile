@@ -20,7 +20,13 @@ const ListenerComponentHealthConnect = (props) => {
     useEffect(() => {
         if(props.update){
             props.setUpdate(false);
-            readSampleData();
+            try{
+                console.log("Attempt to read sample data");
+                readSampleData();
+            }
+            catch(error){
+                console.log("Error - Either HealthConnect failed or this is an Apple Device");
+            }
         }
     }, );
 
@@ -35,13 +41,18 @@ const ListenerComponentHealthConnect = (props) => {
 
 
     const readGrantedPermissions = () => {
+        try{
         getGrantedPermissions().then((permissions) => {
             console.log('Granted permissions ', { permissions });
         });
+    }
+    catch(error){
+        console.log("Error - Either HealthConnect failed or this is an Apple Device");
+    }
     };
 
     const checkAvailability = async () => {
-
+        try{
         const status = await getSdkStatus();
         if (status === SdkAvailabilityStatus.SDK_AVAILABLE) {
             console.log('SDK is available');
@@ -59,6 +70,10 @@ const ListenerComponentHealthConnect = (props) => {
             console.log('SDK is not available, provider update required');
             return false;
         }
+        }
+        catch(error){
+            console.log("Error - Either HealthConnect failed or this is an Apple Device");
+        }      
     }
 
     const getLastReadDate = async () => {
@@ -96,7 +111,7 @@ const ListenerComponentHealthConnect = (props) => {
 
             })
             .catch(function (error) {
-                console.log(error);
+                console.log("Error - Either HealthConnect failed or this is an Apple Device");
                 return;
             });
     }
@@ -128,6 +143,7 @@ const ListenerComponentHealthConnect = (props) => {
 
     const readSampleData = async () => {
         // Intialize the Client
+        try{
         const isInitialized = await initialize();
 
         const grantedPermissions = await requestPermission([
@@ -144,6 +160,11 @@ const ListenerComponentHealthConnect = (props) => {
         }
 
         await getLastReadDate();
+        }
+        catch{
+            console.log("Error - Either HealthConnect failed or this is an Apple Device");
+        }
+
     }
 
 

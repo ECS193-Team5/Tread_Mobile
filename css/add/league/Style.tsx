@@ -37,11 +37,27 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		marginRight: '5%',
-		marginLeft: '5%',
+		marginLeft: '5%',		
+    marginTop: '5%',
 		backgroundColor: 'white',
 		borderRadius: 20,
-		marginTop: '5%'
 	},
+
+  PageInfoContainer : {
+    position : 'relative',
+    height : '9%',
+    width : "90%",
+  	alignItems: 'flex-start',
+    alignSelf : 'center',
+    justifyContent : 'center',
+  },
+
+  TitleText : {
+    fontWeight : "700",
+    fontSize : 32.5,
+    lineHeight : 34,
+    color : "#014421"
+  },
 
 	SeparatorContainer : {
 		flex: 12
@@ -66,7 +82,7 @@ const styles = StyleSheet.create({
 // 		backgroundColor: 'green',
 		marginLeft: '10%',
 		marginRight: '10%',
-		marginTop: '10%',
+		marginTop: '5%',
 		flexDirection: 'column',
 		justifyContent: 'center'
 	},
@@ -95,8 +111,8 @@ const styles = StyleSheet.create({
 		marginLeft: '10%',
 		flexDirection: 'column',
 		justifyContent: 'center',
-		marginBottom: '5%'
-// 		backgroundColor: 'green'
+		marginBottom: '5%',
+		// backgroundColor: 'green'
 	},
 
 	NameInput: {
@@ -109,7 +125,7 @@ const styles = StyleSheet.create({
 	},
 
 	DescInput: {
-		borderRadius: 25,
+		borderRadius: 50,
 		borderColor: '#9B9595',
 		borderWidth: 1,
 		height: '80%',
@@ -123,8 +139,8 @@ const styles = StyleSheet.create({
 		marginRight: '10%',
 		marginLeft: '10%',
 		flexDirection: 'column',
-		justifyContent: 'center'
-// 		backgroundColor: 'green'
+		justifyContent: 'center',
+		// backgroundColor: 'green'
 	},
 
 	ChooseSecContainer : {
@@ -132,9 +148,9 @@ const styles = StyleSheet.create({
 		marginRight: '15%',
 		marginLeft: '15%',
 		flexDirection: 'column',
-		justifyContent: 'center'
+		justifyContent: 'center',
 // 		marginTop: '2%'
-// 		backgroundColor: 'green'
+		// backgroundColor: 'green'
 	},
 
 	EnterButtonContainer : {

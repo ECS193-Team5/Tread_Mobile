@@ -2,7 +2,7 @@ import React from 'react';
 import {
 	Pressable,
   Image,
-  View
+  View,
 } from 'react-native';
 
 import {styles} from '../../css/login/Style';

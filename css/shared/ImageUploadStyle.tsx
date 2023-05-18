@@ -4,7 +4,6 @@ const ImageUploadStyles = StyleSheet.create({
   MainContainer: {
     flexDirection: 'column',
     width: '100%',
-    // backgroundColor: 'green',
   },
 
   ImagePreviewContainer: {
@@ -15,9 +14,10 @@ const ImageUploadStyles = StyleSheet.create({
   },
 
   ImagePreview: {
-    height: '100%',
-    width: '35%',
+    height: 130,
+    width: 130,
     borderWidth: 2,
+    borderRadius : 65,
     borderColor: '#014421'
   },
 

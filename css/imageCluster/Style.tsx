@@ -72,7 +72,6 @@ const ImageStyles = StyleSheet.create({
   Options : {
     width :30, 
     height : 30,
-    paddingHorizontal : '8%',
     alignSelf : 'center'
   },
 

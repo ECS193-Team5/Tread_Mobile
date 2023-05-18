@@ -16,10 +16,16 @@ import AddChallengePage from '../../pages/addPages/addChallengePage'
 import AddFriendPage from '../../pages/addPages/addFriendPage'
 import AddLeaguePage from '../../pages/addPages/addLeaguePage'
 import IncomingLeaguesPage from '../../pages/incomingLeaguesPage';
+import EditLeaguePage from '../../pages/editLeague';
 import LeagueDetails from '../../pages/leagueDetails';
 import IncomingFriendsPage from '../../pages/incomingFriendsPage';
 import CameraView from '../../pages/CameraView';
 import EditProfile from "../../pages/editProfile";
+import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
+
+import axios from 'axios';
+import {BACKEND_URL} from '@env';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +34,7 @@ const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
 import {styles} from '../../css/navigation/Style';
+import { useState } from 'react';
 
 
 function ChallengesSwipeStack() {
@@ -75,11 +82,13 @@ function ChallengesStack(){
 function LeaguesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
     <Stack.Screen name = "Incoming Leagues" component={IncomingLeaguesPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "EditLeague" component={EditLeaguePage} options={{ headerShown: false }}/>
     <Stack.Screen name = "League Details" component={LeagueDetails} options={{headerShown: false ,
                                                                               animationTypeForReplace: 'push',
                                                                               animation:'slide_from_right'}}/>
+
   </Stack.Navigator>
   )
 }
@@ -115,11 +124,36 @@ function ProfileStack(){
 }
 
 function ShowTabs(){
+  const getUserName = function() {
+    var config = {
+        method: 'post',
+        url: BACKEND_URL + 'user/get_username',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+            Accept: 'application/json',
+        }
+    };
+  
+    axios(config)
+        .then(function (response) {
+            setPicture(createProfilePictureURL(response.data))
+        })
+        .catch((error) =>
+            console.log(error)
+        )
+  }
+
+  const [picture, setPicture] = useState('')
+  getUserName()
+  
   return (
   <Tab.Navigator
     screenOptions={({route}) => ({
       tabBarIcon:({focused, color, size}) => {
         let iconName;
+        let boolIsProfile;
+        let borderColor;
 
         if (route.name === 'Challenges') {
           iconName = focused
@@ -139,12 +173,17 @@ function ShowTabs(){
           ? "https://imgur.com/6mdmwb6.png"
           : "https://imgur.com/OdvBddd.png"
         } else if (route.name === 'Profile') {
-          iconName = focused
-          ? "https://imgur.com/zZnCC7M.png"
-          : "https://imgur.com/R5bFbb3.png"
+          iconName = picture
+          borderColor = focused
+          ? "#F9A800"
+          : "#014421"
+          boolIsProfile = true 
         }
 
-       return <Image style ={{width : 30, height : 30}} source={{uri: iconName}}/>
+       return <Image 
+        style ={ boolIsProfile ? {width : 32, height : 32 , borderRadius : 16, borderWidth : 2, borderColor : borderColor} : {width : 30, height : 30}} 
+        source={{uri: iconName}}
+        />
       },
       tabBarActiveTintColor: '#F9A800',
       tabBarInactiveTintColor: '#9B9595',
