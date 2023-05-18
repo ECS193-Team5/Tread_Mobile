@@ -299,7 +299,6 @@ function LeagueDetails(props): JSX.Element {
             idUserName = {props.route.params.leagueData._id}
             isLeague = {true}
             security = {security}
-            encodedInfo={props.route.params.leagueData._id}
           />
         </Modal>
       </GestureRecognizer>
