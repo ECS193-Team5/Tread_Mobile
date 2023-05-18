@@ -13,7 +13,7 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
 import {showMessage} from 'react-native-flash-message'
-import {Swipeable} from 'react-native-gesture-handler';
+import {GestureHandlerRootView,Swipeable} from 'react-native-gesture-handler';
 
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
@@ -825,33 +825,35 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
   }
 
   return(
-    <Swipeable
-      key = {UserInfo.username}
-      renderLeftActions={(progress, dragX) =>
-        renderLeftActions(progress, dragX, handler)
-      }
-      renderRightActions={(progress, dragX) =>
-        renderRightActions(progress, dragX, handler)
-      }
-      onSwipeableOpen={() => closeRow(index)}
-      ref={(ref) => (row[index] = ref)}
-      friction = {1.5}
-      leftThreshold = {30}
-      rightThreshold = {30}
-      childrenContainerStyle = {styles.FlatListContainer}>
-      <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, UserInfo.username === currentUser ? {borderColor : '#014421', borderWidth : 2} : null]}>
-        <View style = {cardStyles.ImageContainer}>
-          <Image style ={ImageStyles.single} source={{uri: image}}/>
-        </View>
+    <GestureHandlerRootView>
+      <Swipeable
+        key = {UserInfo.username}
+        renderLeftActions={(progress, dragX) =>
+          renderLeftActions(progress, dragX, handler)
+        }
+        renderRightActions={(progress, dragX) =>
+          renderRightActions(progress, dragX, handler)
+        }
+        onSwipeableOpen={() => closeRow(index)}
+        ref={(ref) => (row[index] = ref)}
+        friction = {1.5}
+        leftThreshold = {30}
+        rightThreshold = {30}
+        childrenContainerStyle = {styles.FlatListContainer}>
+        <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, UserInfo.username === currentUser ? {borderColor : '#014421', borderWidth : 2} : null]}>
+          <View style = {cardStyles.ImageContainer}>
+            <Image style ={ImageStyles.single} source={{uri: image}}/>
+          </View>
 
-        <View style = {cardStyles.seperator}/>
+          <View style = {cardStyles.seperator}/>
 
-        <View style = {cardStyles.ChallengeCardTextContainer}>
+          <View style = {cardStyles.ChallengeCardTextContainer}>
             {UserInfoOrRecipientInfo()}
             {isRoleInLeague()}
+          </View>
         </View>
-      </View>
-    </Swipeable>
+      </Swipeable>
+    </GestureHandlerRootView>
   )
 }
 

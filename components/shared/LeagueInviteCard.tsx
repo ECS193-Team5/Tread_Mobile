@@ -15,7 +15,7 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 
 import { SharedStyles } from '../../css/shared/Style';
 
-import {Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
+import {GestureHandlerRootView, Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
 import { createLeaguePictureURL } from '../Helpers/CloudinaryURLHelper';
 import { showMessage } from 'react-native-flash-message';
 
@@ -181,47 +181,50 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
   };
 
   return(
-    <Swipeable
-      key = {LeagueData._id}
-      renderRightActions={(progress, dragX) =>
-        renderRightActions(progress, dragX, handler)
-      }
-      renderLeftActions={(progress, dragX) =>
-        renderLeftActions(progress, dragX, handler)
-      }
-      onSwipeableOpen={() => closeRow(index)}
-      ref={(ref) => (row[index] = ref)}
-      friction = {1.5}
-      leftThreshold = {30}
-      rightThreshold = {30}
-      childrenContainerStyle = {styles.FlatListContainer}>
-      <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
-        <View style = {cardStyles.ImageContainer}>
-          <Image style ={ImageStyles.single} source={{uri: image}}/>
-        </View>
-
-        <View style = {cardStyles.seperator}/>
-
-        <View style = {cardStyles.ChallengeCardTextContainer}>
-          <View style = {cardStyles.LeagueAddressContainer}>
-            <Text style = {cardStyles.ChallengeNameText}>
-              {SenderOrReceiver + " : "}
-            </Text>
+    <GestureHandlerRootView>
+      <Swipeable
+        key = {LeagueData._id}
+        renderRightActions={(progress, dragX) =>
+          renderRightActions(progress, dragX, handler)
+        }
+        renderLeftActions={(progress, dragX) =>
+          renderLeftActions(progress, dragX, handler)
+        }
+        onSwipeableOpen={() => closeRow(index)}
+        ref={(ref) => (row[index] = ref)}
+        friction = {1.5}
+        leftThreshold = {30}
+        rightThreshold = {30}
+        childrenContainerStyle = {styles.FlatListContainer}>
+        <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
+          <View style = {cardStyles.ImageContainer}>
+            <Image style ={ImageStyles.single} source={{uri: image}}/>
           </View>
-          <View style = {cardStyles.ChallengeNameContainer}>
-            <Text style = {cardStyles.LeagueNameText}>
-            {LeagueData.leagueName}
-            </Text>
-            <Text style = {cardStyles.ChallengeNameText}>
-              {LeagueData.members.length + (LeagueData.members.length > 1 ? " Members" : " Member")}
-            </Text>
-            <Text style = {[cardStyles.ChallengeNameText , {color : "#F9A800"}]}>
-              {LeagueData.activeChallenges + " Active Challenges"}
-            </Text>
+
+          <View style = {cardStyles.seperator}/>
+
+          <View style = {cardStyles.ChallengeCardTextContainer}>
+            <View style = {cardStyles.LeagueAddressContainer}>
+              <Text style = {cardStyles.ChallengeNameText}>
+                {SenderOrReceiver + " : "}
+              </Text>
+            </View>
+            <View style = {cardStyles.ChallengeNameContainer}>
+              <Text style = {cardStyles.LeagueNameText}>
+                {LeagueData.leagueName}
+              </Text>
+              <Text style = {cardStyles.ChallengeNameText}>
+                {LeagueData.members.length + (LeagueData.members.length > 1 ? " Members" : " Member")}
+              </Text>
+              <Text style = {[cardStyles.ChallengeNameText , {color : "#F9A800"}]}>
+                {LeagueData.activeChallenges + " Active Challenges"}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
-    </Swipeable>
+      </Swipeable>
+
+    </GestureHandlerRootView>
   )
 }
 
