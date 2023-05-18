@@ -162,7 +162,7 @@ function AddLeaguePage(props): JSX.Element {
         <View style={{ flex: 1 }}>
           <View style={styles.TitleContainer}>
             <SwitchSelector
-              initial={defaultTab}
+              initial={defaultTab ? 1: 0}
               onPress={value => handleDropDown(value)}
               textColor={'#014421'}
               selectedColor={'#F9A800'}

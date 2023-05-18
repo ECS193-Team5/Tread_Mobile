@@ -138,33 +138,6 @@ function IncomingLeaguesPage(props): JSX.Element {
     )
   }
 
-  /**
-
-      {count > 0 ?
-
-        <FlatList
-          data = {LeagueData}
-          renderItem = {renderInvite}
-          refreshControl ={
-            <RefreshControl
-              refreshing = {refreshing}
-              onRefresh = {Refresh}
-              colors = {'#014421'}
-              tintColor = {'#014421'}
-              progressViewOffset = {-10}
-            />
-          }
-        />
-        :
-          <ZeroItem
-             promptText={'You have not ' + (pageTitle === 'Received' ? 'received any' : 'sent any') + ' league invites'}
-             navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
-             navigateToPage={'AddLeague'}
-             props = {props}
-             defaultView = {false}
-           />
-        }
-       */
   return (
     <View style = {styles.container}>
       <View style = {styles.topRightClickContainer}>
