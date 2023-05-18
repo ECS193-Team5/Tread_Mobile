@@ -456,6 +456,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Manual;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -475,6 +476,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = run.tread.treadmobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = implicit;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TreadMobile.app/TreadMobile";
 			};
 			name = Debug;
@@ -487,6 +489,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = "";
 				INFOPLIST_FILE = TreadMobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -502,6 +505,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = run.tread.treadmobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = implicit;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TreadMobile.app/TreadMobile";
 			};
 			name = Release;
