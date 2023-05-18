@@ -262,12 +262,17 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh, count
       )
     } else {
       return (
-        <Invite
-          text = 'Invite to League'
-          config={config}
-          props = {props}
-          pagetoNav = 'League Details'
-        />
+        <View style = {{flex : 1}}>
+          <View style =  {{flex : 50}}> 
+            <Invite
+              text = 'Invite to League'
+              config={config}
+              props = {props}
+              pagetoNav = 'League Details'
+            />
+          </View>
+          <View style = {{flex : 30}}/>
+        </View>
       )
     }
   }

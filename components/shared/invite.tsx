@@ -187,8 +187,6 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                   </Pressable>
               </View>
             </View>
-            <View style = {styles.SeparatorContainer}>
-            </View>
           </View>
           }
       </View>

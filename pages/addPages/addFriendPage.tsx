@@ -27,13 +27,33 @@ function AddFriendPage(props): JSX.Element {
 	  }
 	};
 
+  const getSeperatorContent = function(){
+    return (
+    <View style = {styles.TitleContainer}>
+      <Text style = {styles.Title}>
+          Suggested Friends
+      </Text>
+    </View> 
+    )
+  }
+
   return (
-	<Invite
-		text = 'Add Friend'
-		config = {config}
-    props = {props}
-    pagetoNav = "AddFriend"
-	/>
+  <View style = {[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}>
+    <View style = {{flex : 40}}> 
+      <Invite
+        text = 'Add Friend'
+        config = {config}
+        props = {props}
+        pagetoNav = "AddFriend"
+      />
+    </View>
+
+    <View style = {styles.SeparatorContainer}>
+    </View>
+
+  </View>
+
+
   )
 }
 

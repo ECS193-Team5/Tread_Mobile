@@ -8,10 +8,10 @@ const styles = StyleSheet.create({
 	},
 
 	TitleContainer : {
-		flex: 10,
+		flex: 5,
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
-  marginHorizontal : '5%'
+    marginHorizontal : '5%'
 	},
 
 	InputContainer : {
@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
 	},
 
 	SeparatorContainer : {
-		flex: 60
+		flex: 60,
+    backgroundColor : 'red'
 	},
 
 	Title: {
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     	width : '80%',
 		paddingLeft: 20,
 		color: 'grey',
-    marginLeft : '4%',
+    marginLeft : '5%',
     height : '35%'
 	},
 
