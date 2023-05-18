@@ -7,27 +7,13 @@ function ImageUpload(props): JSX.Element {
   const [image, setImage] = useState(<Image/>);
 
   useEffect(() => {
-    // console.log(props.picture)
-    // console.log(Object.keys(props.picture).length !== 0)
-    if(Object.keys(props.picture).length !== 0) {
-      setImage(
-        <Image
-          style={ImageUploadStyles.ImagePreview}
-          source={{uri: props.picture}}
-        >
-        </Image>
-      )
-
-    } else {
-      // console.log("Use placeholder")
-      setImage(
-        <Image
-          style={ImageUploadStyles.ImagePreview}
-          src={props.placeholder}
-        >
-        </Image>
-      )
-    }
+    setImage(
+      <Image
+        style={ImageUploadStyles.ImagePreview}
+        source={{uri: (Object.keys(props.picture).length === 0) ? props.placeholder : props.picture}}
+      >
+      </Image>
+    )
   },[])
 
 
@@ -40,7 +26,6 @@ function ImageUpload(props): JSX.Element {
 
     launchImageLibrary(options, (response) => {
       if(!response['didCancel']) {
-        // console.log('Picture Chosen');
         const source = response['assets'][0]["base64"];
         setImage(
           <Image

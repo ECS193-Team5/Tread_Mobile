@@ -8,37 +8,54 @@ const styles = StyleSheet.create({
     marginRight: '10%'
   },
   titleContainer: {
-  	flex: 20,
+  	flex: 15,
   	justifyContent: 'flex-end',
-    backgroundColor: 'yellow'
+    // backgroundColor: 'yellow'
   },
   formContainer: {
-    flex: 43,
+    flex: 53,
   	justifyContent: 'space-around',
     // backgroundColor: 'blue'
   },
 
   displayNameContainer: {
-    flex: 20,
+    flex: 13,
     // backgroundColor: 'black',
     marginBottom: '10%'
   },
 
   userNameContainer: {
-    flex: 20,
+    flex: 13,
     marginBottom: '10%',
     // backgroundColor: 'green'
   },
 
   choosePicContainer: {
     flex: 60,
-    backgroundColor: 'purple',
+    // backgroundColor: 'purple',
     marginTop: '10%'
   },
 
   signupContainer: {
-    backgroundColor: 'red',
-  	flex: 14,
+    // backgroundColor: 'red',
+  	flex: 19,
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
+
+  checkBoxContainer: {
+    flex: 20,
+    // backgroundColor: 'purple',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  checkboxinput: {
+    color: '#9B9595',
+    height : 55,
+    fontSize : 16,
+    paddingLeft : 10,
+    paddingRight: 10,
   },
 
   title: {
@@ -49,13 +66,13 @@ const styles = StyleSheet.create({
   },
   validSignupButton: {
   	backgroundColor: '#014421',
-  	height: '35%',
+  	height: '25%',
   	borderRadius: 50,
   	justifyContent: 'center'
   },
   invalidSignupButton: {
   	backgroundColor: '#9B9595',
-  	height: '35%',
+  	height: '25%',
   	borderRadius: 50,
   	justifyContent: 'center'
   },
@@ -65,31 +82,6 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		fontWeight: 700
   },
-//     ChoosePicContainer : {
-//         flex: 12,
-// // 		backgroundColor: 'green',
-//         marginLeft: '20%',
-//         marginRight: '20%',
-//         flexDirection: 'column',
-//         justifyContent: 'center'
-//     },
-//
-//     ChoosePicButton : {
-//         width: '100%',
-//         height: '20%',
-//         borderRadius: 50,
-//         borderWidth: 1,
-//         backgroundColor: '#014421',
-//         borderColor: '#014421',
-//         flexDirection: 'column',
-//         justifyContent: 'center',
-//         alignItems: 'center'
-//     },
-//     ChoosePicText : {
-//         color: 'white',
-//         fontWeight: 700,
-//         fontSize: 14
-//     },
 
 
 });
