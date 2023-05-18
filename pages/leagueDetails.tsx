@@ -10,7 +10,7 @@ import {
   TouchableHighlight,
   Alert,
 } from 'react-native';
- 
+
 import Modal from "react-native-modal"
 import SwitchSelector from "react-native-switch-selector"
 import {styles} from "../css/challenges/Style"
@@ -44,7 +44,7 @@ function LeagueDetails(props): JSX.Element {
         leagueID : props.route.params.leagueData._id
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setLeagueChallenges(response.data)
@@ -68,7 +68,7 @@ function LeagueDetails(props): JSX.Element {
         leagueID : props.route.params.leagueData._id
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setLeagueMembers(response.data)
@@ -93,7 +93,7 @@ function LeagueDetails(props): JSX.Element {
         leagueID : props.route.params.leagueData._id
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setSecurity(response.data['leagueType'])
@@ -103,9 +103,9 @@ function LeagueDetails(props): JSX.Element {
         console.log(error)
       )
   }
-  
-  
-  var imageUrl = "https://imgur.com/nFRNXOB.png"  
+
+
+  var imageUrl = "https://imgur.com/nFRNXOB.png"
   var LeagueImage = createLeaguePictureURL(props.route.params.leagueData._id)
 
   const [modalVisibleQR, setModalVisibleQR] = useState(false)
@@ -120,7 +120,7 @@ function LeagueDetails(props): JSX.Element {
   const layoutAnimConfig = {
     duration: 1000,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut, 
+      type: LayoutAnimation.Types.easeInEaseOut,
     },
     delete: {
       duration: 200,
@@ -128,7 +128,7 @@ function LeagueDetails(props): JSX.Element {
       property: LayoutAnimation.Properties.opacity,
     },
   };
-  
+
   const options = [
     { label : "Members" , value : true},
     { label : "Challenges", value : false}
@@ -147,7 +147,7 @@ function LeagueDetails(props): JSX.Element {
         leagueID : props.route.params.leagueData._id
       }
     }
-  
+
     axios(config)
       .then(function (response) {
         setRole(response.data)
@@ -186,7 +186,7 @@ function LeagueDetails(props): JSX.Element {
         leagueID : props.route.params.leagueData._id
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log('leave')
@@ -196,7 +196,7 @@ function LeagueDetails(props): JSX.Element {
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-        props.route.params.refresh()   
+        props.route.params.refresh()
         props.navigation.navigate("Leagues")
       })
       .catch((error) =>
@@ -223,7 +223,7 @@ function LeagueDetails(props): JSX.Element {
 
   const clickedLeave = function(){
     setModalVisiblePopUp(false)
-    Alert.alert('Leave ' + props.route.params.leagueData.leagueName + ' ?', 
+    Alert.alert('Leave ' + props.route.params.leagueData.leagueName + ' ?',
     security === 'private' ? 'You are about to leave this league' : 'If you change your mind you will have to request to join again',
     [
       {
@@ -232,7 +232,7 @@ function LeagueDetails(props): JSX.Element {
         style: 'cancel',
       },
       {
-        text: 'Leave', 
+        text: 'Leave',
         onPress: handleLeave,
         style : 'destructive'
       },
@@ -273,7 +273,7 @@ function LeagueDetails(props): JSX.Element {
     var options = []
     if(role === 'owner'){
       options.push(EditClickable)
-    } 
+    }
     if (role === 'admin' || role === 'participant'){
       options.push(LeaveClickable)
     }
@@ -296,6 +296,7 @@ function LeagueDetails(props): JSX.Element {
             idUserName = {props.route.params.leagueData._id}
             isLeague = {true}
             security = {security}
+            encodedInfo={props.route.params.leagueData._id}
           />
         </Modal>
 
@@ -323,21 +324,21 @@ function LeagueDetails(props): JSX.Element {
       </View>
 
       <View style = {LeagueStyles.LeagueInfoCardContainer}>
-        <View style = {[LeagueStyles.LeagueInfoCard, cardStyles.shadowProp]}>   
-          <View style = {LeagueStyles.LeagueInfoContainer}> 
+        <View style = {[LeagueStyles.LeagueInfoCard, cardStyles.shadowProp]}>
+          <View style = {LeagueStyles.LeagueInfoContainer}>
             <View style = {LeagueStyles.LeagueImageContainer}>
               <Image style ={ImageStyles.LeagueImage} source={{uri: LeagueImage}}/>
             </View>
-        
+
             <View style = {LeagueStyles.LeagueNameContainer}>
               <Text style = {[styles.TitleText, {fontSize : 25}]}>{props.route.params.leagueData.leagueName}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-2%'}]}>{description}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{security.charAt(0).toUpperCase() + security.slice(1)}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{props.route.params.leagueData.activeChallenges + ' Active Challenges'}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{props.route.params.leagueData.members.length + ' Members'}</Text>
-            </View>            
+            </View>
           </View>
-        
+
           <View style = {[LeagueStyles.ToggleContainer]}>
             <Pressable
               onPress={handlePopup}
@@ -367,7 +368,7 @@ function LeagueDetails(props): JSX.Element {
 
       <View style = {styles.seperator}/>
 
-      {isMembers ? 
+      {isMembers ?
         <LeagueMemberView
           MemberData={LeagueMembers}
           setLeagueMembers = {setLeagueMembers}
@@ -375,8 +376,8 @@ function LeagueDetails(props): JSX.Element {
           onRefresh = {handleRefresh}
           count = {countMembers}
           setCount = {setCountMembers}
-        /> 
-      : 
+        />
+      :
       <View style = {LeagueStyles.MembersChallengesContainer}>
         {countChallenges > 0 ?
           <ChallengeScroll
@@ -391,11 +392,11 @@ function LeagueDetails(props): JSX.Element {
           SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
           navigateToPage="AddChallenge"
           props = {props}
-        />    
+        />
         }
 
       </View>
-      } 
+      }
     </View>
   )
 }

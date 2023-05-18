@@ -70,7 +70,7 @@
   "WheelchairRunPace":"Wheelchair Run",
   "TaiChi":"TaiChi",
   "MixedCardio":"MixedCardio",
-  "HandCycling":"HandCycling",
+  "HandCycling":"HandCycling"
   },
 "HealthConnect":{
   "2":"Badminton",
@@ -133,5 +133,10 @@
   "81":"Weightlifting",
   "82":"Wheelchair Walking",
   "83":"Yoga"
+},
+"unitTypes":{
+  "distance":["m", "km", "ft", "yd", "mi"],
+  "time":["min", "hr"],
+  "count":["ct"]
 }
 }

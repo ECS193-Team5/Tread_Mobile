@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
+  Button,
+  StyleSheet,
+  Image,
+  Pressable,
+  ScrollView,
+  FlatList,
+  Linking,
   StatusBar
 } from 'react-native';
 import { Text } from 'react-native-elements';
@@ -18,6 +25,14 @@ import ListenerComponentHealthConnect from '../components/Sensors/healthConnect'
 import ZeroItem from '../components/shared/ZeroItem';
 
 function ChallengesPage(props): JSX.Element {
+  const [update, setUpdate] = useState(true);
+  useEffect(() => {
+    // Get the deep link used to open the app
+    props.navigation.addListener('focus', () => {
+      setUpdate(true);
+    });
+  }, [props.navigation]);
+
   const getChallengeData = function(){
     var config = {
       method: 'post',
@@ -28,7 +43,7 @@ function ChallengesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setAvailableCount(response.data.length + ' available')
@@ -50,7 +65,7 @@ function ChallengesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         if (response.data.length > 0){
@@ -64,7 +79,7 @@ function ChallengesPage(props): JSX.Element {
       })
   }
 
-  const getGlobalChallengeData = function(){  
+  const getGlobalChallengeData = function(){
     var config = {
       method: 'post',
       url: BACKEND_URL + 'global_challenge/get_challenges',
@@ -74,7 +89,7 @@ function ChallengesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setAvailableCount(response.data.length + ' available')
@@ -113,6 +128,9 @@ function ChallengesPage(props): JSX.Element {
     }
   }
 
+  // Check for invitations and update icon, but for now
+  var IncomingImageUrl = "https://imgur.com/ULlEPhH.png"
+
   const handleRefresh = function(){
     if (isCurrent === true) {
       getChallengeData()
@@ -121,7 +139,7 @@ function ChallengesPage(props): JSX.Element {
     }
   }
 
-  
+
   const [titleName, setTitleName] = useState('Current')
   const [count, setCount] = useState(0)
   const [ChallengeData, setChallengeData] = useState(getChallengeData)
@@ -129,14 +147,14 @@ function ChallengesPage(props): JSX.Element {
   const [isCurrent, setIsCurrent] = useState(true)
   const [challengeImage, setChallengeImage] = useState("https://imgur.com/2BHAmsN.png")
   const [IncomingImage, setIncomingImage] = useState(getIncomingImage)
-  
+
   return (
     <View style = {styles.container}>
       <StatusBar
         barStyle="dark-content"
       />
-      <ListenerComponentHealthConnect/>
-      <ListenerComponentHealthKit/>
+      <ListenerComponentHealthConnect update={update} setUpdate = {setUpdate}/>
+      <ListenerComponentHealthKit update = {update} setUpdate = {setUpdate}/>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
@@ -160,11 +178,11 @@ function ChallengesPage(props): JSX.Element {
       <View style = {styles.seperator}/>
 
       <View style = {styles.ChallengesContainer}>
-        {count > 0 ? 
+        {count > 0 ?
           <ChallengeScroll
             ChallengeData={ChallengeData}
             isCurrent = {isCurrent}
-            onRefresh = {handleRefresh} 
+            onRefresh = {handleRefresh}
           />
         :
         <ZeroItem
@@ -172,7 +190,7 @@ function ChallengesPage(props): JSX.Element {
           navigateToText='Make one here'
           navigateToPage="AddChallenge"
           props = {props}
-        />    
+        />
         }
       </View>
 

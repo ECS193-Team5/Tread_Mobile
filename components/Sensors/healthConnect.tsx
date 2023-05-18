@@ -2,7 +2,7 @@ import {
     View,
 } from 'react-native';
 import axios from 'axios';
-import {useEffect} from "react";
+import {useState, useEffect} from "react";
 import {
     initialize,
     requestPermission,
@@ -11,12 +11,28 @@ import {
     getSdkStatus,
     SdkAvailabilityStatus,
 } from 'react-native-health-connect';
-import {BACKEND_URL} from '@env';
 import {HealthConnect} from "./exerciseNameConverstion.json";
-const ListenerComponentHealthConnect = () => {
+import {reduceExercisesToUnique, sendExerciseList } from './sensorHelperFunctions';
+
+const ListenerComponentHealthConnect = (props) => {
+    const [dataResults, setDataResults] = useState([]);
+
     useEffect(() => {
-        readSampleData();
-    });
+        if(props.update){
+            props.setUpdate(false);
+            readSampleData();
+        }
+    }, );
+
+    useEffect(() => {
+        if(dataResults){
+            let exerciseList = dataResults.map(convertWorkoutTime);
+            let uniqueExerciseList = reduceExercisesToUnique(exerciseList);
+
+            sendExerciseList(exerciseList, uniqueExerciseList, "healtConnect");
+        }
+    }, [dataResults]);
+
 
     const readGrantedPermissions = () => {
         getGrantedPermissions().then((permissions) => {
@@ -48,28 +64,44 @@ const ListenerComponentHealthConnect = () => {
     const getLastReadDate = async () => {
         var config = {
             method: 'post',
-            url: BACKEND_URL + 'sensors/get_sensor_date',
+            url: 'https://tread-backend-wvh22rj5mq-uw.a.run.app/data_origin/get_origin_last_import_date',
             withCredentials: true,
             credentials: 'include',
             headers: {
               Accept: 'application/json',
             },
             data:{
-                sensorType:"HealthConnect"
+                dataOrigin:"healthConnect"
             }
           };
 
           axios(config)
-            .then((response) => {
-                return new Date(response.data).toISOString()
+            .then(async (response) => {
+                let timeString = new Date(0).toISOString();
+                if (response.data.healthConnectLastPostedDate){
+                    timeString = response.data.healthConnectLastPostedDate;
+                }
+                console.log(timeString);
+
+                const result = await readRecords('ExerciseSession', {
+                    timeRangeFilter: {
+                        operator: 'between',
+                        startTime: timeString,
+                        endTime: '2023-08-09T23:53:15.405Z',
+                    },
+                });
+                setDataResults(result);
+
+
+
             })
             .catch(function (error) {
-                return new Date().toISOString();
+                console.log(error);
+                return;
             });
     }
 
-
-    const convertWorkout = (workout) => {
+    const convertWorkoutTime = (workout) => {
 
         let name = "";
 
@@ -85,34 +117,13 @@ const ListenerComponentHealthConnect = () => {
         let timeMin = (end-start)/(1000*60);
         return ({
                 loggedDate: start,
-                unit: "min",
-                amount: timeMin,
-                exerciseName: name
+                exercise: {
+                    unit: "min",
+                    amount: timeMin,
+                    exerciseName: name
+                }
         });
 
-    }
-
-    const sendExerciseList = (result) => {
-        var config = {
-            method: 'post',
-            url: BACKEND_URL + 'sensors/add_exercise_list',
-            withCredentials: true,
-            credentials: 'include',
-            headers: {
-              Accept: 'application/json',
-            },
-            data:{
-                exerciseList: result
-            }
-          };
-
-          axios(config)
-            .then((response) => {
-                console.log("Successfully sent exercises")
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
 
     const readSampleData = async () => {
@@ -132,18 +143,9 @@ const ListenerComponentHealthConnect = () => {
             return;
         }
 
-        const startTimeString = new Date(1672534861000).toISOString();//await getLastReadDate();
-
-        const result = await readRecords('ExerciseSession', {
-            timeRangeFilter: {
-                operator: 'between',
-                startTime: startTimeString,
-                endTime: '2023-08-09T23:53:15.405Z',
-            },
-        });
-        let exerciseList = result.map(convertWorkout)
-        sendExerciseList(exerciseList);
+        await getLastReadDate();
     }
+
 
     return (<View></View>);
 }

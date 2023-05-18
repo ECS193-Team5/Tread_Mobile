@@ -52,8 +52,22 @@ function LoginButton({filled, text, navigation}): JSX.Element {
 
 	const getFCMToken = async() => {
 		await messaging().registerDeviceForRemoteMessages();
-		const fcmToken = await messaging().getToken({vapidKey: VAPID_KEY});
-    return fcmToken;
+		messaging().hasPermission().then(enabled => {
+			if(enabled) {
+				messaging().getToken({vapidKey: VAPID_KEY}).then(token => {
+					return token
+				});
+			} else {
+				messaging().requestPermission().then(() => {
+					messaging().getToken({vapidKey: VAPID_KEY}).then(token => {
+						return token
+					});
+				})
+					.catch(error => {
+						console.log('PERMISSION REQUEST :: notification permission rejected');
+					})
+			}
+		})
 	}
 
 	const storeLogIn = async () => {
