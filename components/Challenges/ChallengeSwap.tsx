@@ -15,7 +15,6 @@ function ChallengesSwap({onPress,text, available, imageURL}): JSX.Element {
 	return (
     <TouchableHighlight 
       onPress = {onPress}
-      underlayColor = 'rgba(0,0,0,0.15)'
       style = {[cardStyles.ChallengeSwapCardContainer]}
     >
       <LinearGradient
