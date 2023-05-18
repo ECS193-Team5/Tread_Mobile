@@ -15,7 +15,6 @@ const ProfileStyles = StyleSheet.create({
     ProfileContainer: {
         flex: 23,
         flexDirection: 'column',
-        // backgroundColor: 'blue',
         alignItems: 'center'
     },
 
@@ -29,7 +28,7 @@ const ProfileStyles = StyleSheet.create({
     },
 
     ProfileTopContainer: {
-        flex: 70,
+        flex: 60,
         // backgroundColor: 'blue',
         flexDirection: 'row',
         width: '100%'
@@ -39,13 +38,11 @@ const ProfileStyles = StyleSheet.create({
         flex: 40,
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center'
-        // backgroundColor: 'blue'
+        justifyContent: 'center',
     },
 
     ProfileNameContainer: {
         flex: 60,
-        // backgroundColor: 'yellow'
     },
 
     ProfileImage: {
@@ -59,7 +56,6 @@ const ProfileStyles = StyleSheet.create({
     DisplayNameContainer: {
         flex: 25,
         width: '100%',
-        // backgroundColor: 'green',
         flexDirection: 'column',
         justifyContent: 'flex-end'
     },
@@ -73,7 +69,6 @@ const ProfileStyles = StyleSheet.create({
     UsernameContainer: {
         flex: 45,
         width: '100%',
-        // backgroundColor: 'yellow'
     },
 
     UsernameText: {
@@ -86,7 +81,7 @@ const ProfileStyles = StyleSheet.create({
         flex: 15,
         width: '100%',
         flexDirection: 'row',
-        // backgroundColor: 'blue'
+        // backgroundColor: 'blue',
         justifyContent: 'center'
 
     },
@@ -94,14 +89,14 @@ const ProfileStyles = StyleSheet.create({
     OtherInfoText: {
         fontWeight: '600',
         fontSize: 18,
-        color: '#014421'
+        color: '#014421',
     },
 
     ProfileBottomContainer: {
         flex: 30,
-        // backgroundColor: 'yellow',
         flexDirection: 'row',
-        width: '100%'
+        width: '100%',
+        // backgroundColor : 'red'
     },
 
     OptionsContainer: {

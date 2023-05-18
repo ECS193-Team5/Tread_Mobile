@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     View,
     Button,
@@ -297,6 +297,8 @@ function ProfilePage(props): JSX.Element {
       setOpenQR(false)
     }
   
+    const switchRef = useRef(null)
+
     return (
       <View style={ProfileStyles.Background}>
           <View style={ProfileStyles.TopSeparator}>
@@ -372,19 +374,34 @@ function ProfilePage(props): JSX.Element {
                 </View>
                 <View style={ProfileStyles.ProfileBottomContainer}>
                     <View style={ProfileStyles.OtherInfoContainer}>
-                        <Text style={ProfileStyles.OtherInfoText}>
-                            {numFriends.toString() + (numFriends === 1 ? " Friend" : " Friends")}
-                        </Text>
+                      <Pressable
+                          onPress={() => props.navigation.navigate('Friends')}
+                          style = {{borderRadius : 1}}
+                          >
+                          <Text style={ProfileStyles.OtherInfoText}>
+                              {numFriends.toString() + (numFriends === 1 ? " Friend" : " Friends")}
+                          </Text>
+                      </Pressable>
                     </View>
                     <View style={ProfileStyles.OtherInfoContainer}>
-                        <Text style={ProfileStyles.OtherInfoText}>
+                      <Pressable
+                          onPress={() => props.navigation.navigate('Leagues')}
+                          style = {{borderRadius : 1}}
+                          >
+                          <Text style={ProfileStyles.OtherInfoText}>
                             {numLeagues.toString() + (numLeagues === 1 ? " League" : " Leagues")}
-                        </Text>
+                          </Text>
+                      </Pressable>
                     </View>
                     <View style={ProfileStyles.OtherInfoContainer}>
-                        <Text style={ProfileStyles.OtherInfoText}>
+                      <Pressable
+                          onPress={() => switchRef.current?.toggleItem(1)}
+                          style = {{borderRadius : 1}}
+                          >
+                          <Text style={ProfileStyles.OtherInfoText}>
                             {numMedals.toString() + (numMedals === 1 ? " Medals" : " Medals")}
                         </Text>
+                      </Pressable>
                     </View>
                 </View>
               </View>
@@ -395,6 +412,7 @@ function ProfilePage(props): JSX.Element {
 
             <View style={ProfileStyles.MedalType}>
               <SwitchSelector
+                  ref = {switchRef}
                   initial= {0}
                   onPress = {setMedalType}
                   textColor = {'#014421'}
