@@ -170,7 +170,7 @@ function IncomingLeaguesPage(props): JSX.Element {
             <RefreshControl 
               refreshing = {refreshing} 
               onRefresh = {Refresh} 
-              colors = {'#014421'} 
+              colors = {['#014421']}
               tintColor = {'#014421'}
               progressViewOffset = {-10}
             />

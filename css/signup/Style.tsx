@@ -8,67 +8,71 @@ const styles = StyleSheet.create({
     marginRight: '10%'
   },
   titleContainer: {
-  	flex: 20,
+  	flex: 15,
   	justifyContent: 'flex-end',
+    // backgroundColor: 'yellow'
   },
   formContainer: {
-    flex: 25,
+    flex: 53,
   	justifyContent: 'space-around',
+    // backgroundColor: 'blue'
   },
-  checkContainer: {
-  	flex: 8,
-    flexDirection: 'row',
-    paddingTop: 10,
+
+  displayNameContainer: {
+    flex: 13,
+    // backgroundColor: 'black',
+    marginBottom: '10%'
   },
+
+  userNameContainer: {
+    flex: 13,
+    marginBottom: '10%',
+    // backgroundColor: 'green'
+  },
+
+  choosePicContainer: {
+    flex: 60,
+    // backgroundColor: 'purple',
+    marginTop: '10%'
+  },
+
   signupContainer: {
-  	flex: 14,
+    // backgroundColor: 'red',
+  	flex: 19,
+    flexDirection: 'column',
+    justifyContent: 'center'
   },
-  signinContainer: {
-    flex: 10,
-    alignItems:'center'
+
+  checkBoxContainer: {
+    flex: 20,
+    // backgroundColor: 'purple',
+    flexDirection: 'row',
+    alignItems: 'center'
   },
+
+  checkboxinput: {
+    color: '#9B9595',
+    height : 55,
+    fontSize : 16,
+    paddingLeft : 10,
+    paddingRight: 10,
+  },
+
   title: {
   	color: '#014421',
   	fontSize: 32,
   	fontWeight: 400,
     paddingVertical : 30,
   },
-  validInput: {
-  	borderRadius: 50,
-  	borderColor: '#9B9595',
-  	borderWidth: 2,
-  	paddingLeft: 25,
-  	color: '#9B9595',
-    height : 55,
-    fontSize : 16
-  },
-
-  invalidInput: {
-    borderRadius: 50,
-    borderColor: '#C65656',
-    borderWidth: 2,
-    paddingLeft: 25,
-//     color: '#C65656',
-    height : 55,
-    fontSize : 16
-  },
-
-  checkboxinput: {
-  	color: '#9B9595',
-    height : 55,
-    fontSize : 16,
-    paddingLeft : 10,
-    paddingRight: 10,
-  },
   validSignupButton: {
   	backgroundColor: '#014421',
-  	height: '35%',
+  	height: '25%',
   	borderRadius: 50,
   	justifyContent: 'center'
   },
   invalidSignupButton: {
   	backgroundColor: '#9B9595',
-  	height: '35%',
+  	height: '25%',
   	borderRadius: 50,
   	justifyContent: 'center'
   },
@@ -78,31 +82,6 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		fontWeight: 700
   },
-    ChoosePicContainer : {
-        flex: 12,
-// 		backgroundColor: 'green',
-        marginLeft: '20%',
-        marginRight: '20%',
-        flexDirection: 'column',
-        justifyContent: 'center'
-    },
-
-    ChoosePicButton : {
-        width: '100%',
-        height: '20%',
-        borderRadius: 50,
-        borderWidth: 1,
-        backgroundColor: '#014421',
-        borderColor: '#014421',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    ChoosePicText : {
-        color: 'white',
-        fontWeight: 700,
-        fontSize: 14
-    },
 
 
 });
