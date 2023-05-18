@@ -17,11 +17,15 @@ function InputForm(props): JSX.Element {
     }
   })
   const isValid = (text) => {
-    if(text.length === 0 || text.length > 32) {
+    if(text.length === 0) {
       return false
     }
 
-    if (!(/^[a-z0-9]+$/i.test(text))) {
+    if(!props.multiline && text.length === 0) {
+      return false
+    }
+
+    if (props.allowSpecial === null && !(/^[a-z0-9]+$/i.test(text))) {
       return false;
     }
 
@@ -38,10 +42,11 @@ function InputForm(props): JSX.Element {
       <TextInput
         placeholder = {props.placeholder}
         value={props.value}
-        style = {curStyle}
+        style = {[curStyle, {textAlignVertical: props.multiline ? 'top' : 'center'}]}
         placeholderTextColor = {'#9B9595'}
         editable = {props.editable}
         onChangeText={handleTextChange}
+        multiline={props.multiline !== null && props.multiline}
       />
     </View>
   )

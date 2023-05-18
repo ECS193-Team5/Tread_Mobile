@@ -18,6 +18,9 @@ import { BACKEND_URL } from '@env';
 import axios from 'axios';
 import LeagueInvite from '../../components/shared/LeagueInvite';
 import { showMessage } from 'react-native-flash-message';
+import ImageUpload from "../../components/shared/ImageUpload";
+import InputForm from "../../components/shared/InputForm";
+import createLeague from "../../routes/add/createLeague";
 
 const options = [
   { label: "Create", value: true },
@@ -29,8 +32,25 @@ function AddLeaguePage(props): JSX.Element {
   const [openScanner, setOpenScanner] = useState(false)
   const [defaultTab, setDefaultTab] = useState(!props.route.params.defaultView)
 
+  const [picture, setPicture] = useState('https://i.imgur.com/sXwXq45.png');
+  const [validPicture, setValidPicture] = useState(true);
+
+  const [leagueName, setLeagueName] = useState("");
+  const [validLeagueName, setValidLeagueName] = useState(false);
+
+  const [leagueDesc, setLeagueDesc] = useState("");
+  const [validLeagueDesc, setValidLeagueDesc] = useState(false);
+
+  const [security, setSecurity] = useState("private");
+
+  const [isCreate, setIsCreate] = useState(props.route.params.defaultView)
+
+  const switchOptions = [
+    { label: 'Private', value: 'private' },
+    { label: 'Public', value: 'public' }
+  ];
+
   const sendLeagueRequest = (leagueID) => {
-    console.log("send league request");
     var config = {
       method: 'post',
       url: BACKEND_URL + 'league/user_request_to_join',
@@ -47,7 +67,6 @@ function AddLeaguePage(props): JSX.Element {
 
     axios(config)
       .then(function (response) {
-        console.log("sucessfully sent request");
         props.navigation.navigate("Leagues", { defaultView: false })
       })
       .catch((error) =>{
@@ -60,7 +79,6 @@ function AddLeaguePage(props): JSX.Element {
 
   const onBarcodeScan = function (qrvalue) {
     if(qrvalue.startsWith("https://tread.run/requestLeague?")){
-      console.log("does start with", qrvalue);
       qrvalue = qrvalue.split("?")[1];
       sendLeagueRequest(qrvalue);
     }
@@ -104,67 +122,6 @@ function AddLeaguePage(props): JSX.Element {
     }
   }
 
-  const [picture, setPicture] = useState({});
-  const [validPicture, setValidPicture] = useState(false);
-
-  const [leagueName, setLeagueName] = useState("");
-  const [validLeagueName, setValidLeagueName] = useState(false);
-
-  const [leagueDesc, setLeagueDesc] = useState("");
-  const [validLeagueDesc, setValidLeagueDesc] = useState(false);
-
-  const [security, setSecurity] = useState("private");
-
-  const [isCreate, setIsCreate] = useState(props.route.params.defaultView)
-
-  const switchOptions = [
-    { label: 'Private', value: 'private' },
-    { label: 'Public', value: 'public' }
-  ];
-
-  const onChoosePicPress = function () {
-    const options = {
-      'includeBase64': true,
-      'maxWidth': 200,
-      'maxHeight': 200
-    }
-
-    launchImageLibrary(options, (response) => {
-      if (!response['didCancel']) {
-        console.log('Picture Chosen');
-        const source = response['assets'][0]["base64"];
-        setPicture("data:image/jpeg;base64," + source)
-        setValidPicture(true);
-      }
-    });
-  }
-
-  const onLeagueNameChange = function (name) {
-    console.log('Name changed');
-    setLeagueName(name);
-    if (checkValidLeagueName(name)) {
-      setValidLeagueName(true);
-    } else {
-      setValidLeagueName(false);
-    }
-  }
-
-  const onLeagueDescChange = function (desc) {
-    setLeagueDesc(desc);
-    if (checkValidLeagueDesc(desc)) {
-      setValidLeagueDesc(true);
-    } else {
-      setValidLeagueDesc(false);
-    }
-  }
-
-  const checkValidLeagueName = function (name) {
-    return name.length > 0
-  }
-
-  const checkValidLeagueDesc = function (desc) {
-    return desc.length > 0
-  }
 
   const handleDropDown = function (selectedItem) {
     console.log(selectedItem)
@@ -172,28 +129,10 @@ function AddLeaguePage(props): JSX.Element {
   }
 
   const onSubmit = function () {
-    var config = {
-      method: 'post',
-      url: BACKEND_URL + 'league/create_league',
-      withCredentials: true,
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-      },
-      data: {
-        'leagueName': leagueName,
-        'leagueDescription': leagueDesc,
-        'leagueType': security,
-        'leaguePicture': picture
-      }
-    };
-
-    axios(config)
+    axios(createLeague(leagueName, leagueDesc, security, picture))
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        setPicture("");
-        setLeagueName("");
-        setLeagueDesc("");
+        props.navigation.navigate('AddAll')
         showMessage({
           floating: true,
           message: 'League Created',
@@ -235,53 +174,44 @@ function AddLeaguePage(props): JSX.Element {
 
           {isCreate ?
             <View style={styles.InputContainer}>
-              <View style={styles.InputTitle}>
-                <Text style={styles.InputTitleText}>
-                  Picture
-                </Text>
-              </View>
 
               <View style={styles.ChoosePicContainer}>
-                <Pressable style={styles.ChoosePicButton} onPress={onChoosePicPress}>
-                  <Text style={styles.ChoosePicText}>
-                    Choose Picture
-                  </Text>
-                </Pressable>
-              </View>
-
-              <View style={styles.InputTitle}>
-                <Text style={styles.InputTitleText}>
-                  Name
-                </Text>
+                <ImageUpload
+                  flex={1}
+                  picture={picture}
+                  setPicture={setPicture}
+                  valid={validPicture}
+                  setValidPicture={setValidPicture}
+                ></ImageUpload>
               </View>
 
               <View style={styles.EnterLeagueContainer}>
-                <TextInput
-                  placeholder="Enter league name"
-                  placeholderTextColor="grey"
-                  style={styles.NameInput}
-                  onChangeText={onLeagueNameChange}
+                <InputForm
+                  placeholder={'Enter league name'}
                   value={leagueName}
+                  setValue={setLeagueName}
+                  valid={validLeagueName}
+                  setValid={setValidLeagueName}
+                  editable={true}
                 >
-                </TextInput>
-              </View>
 
-              <View style={styles.InputTitle}>
-                <Text style={styles.InputTitleText}>
-                  Description
-                </Text>
+                </InputForm>
               </View>
 
               <View style={styles.EnterDescContainer}>
-                <TextInput
-                  placeholder="Enter league description"
-                  placeholderTextColor="grey"
-                  style={styles.DescInput}
-                  onChangeText={onLeagueDescChange}
+                <InputForm
+                  placeholder={'Enter league description'}
                   value={leagueDesc}
+                  setValue={setLeagueDesc}
+                  valid={validLeagueDesc}
+                  setValid={setValidLeagueDesc}
+                  editable={true}
                   multiline={true}
+                  allowSpecial={true}
                 >
-                </TextInput>
+
+                </InputForm>
+
               </View>
 
               <View style={styles.InputTitle}>

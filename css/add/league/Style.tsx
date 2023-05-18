@@ -62,10 +62,11 @@ const styles = StyleSheet.create({
 	},
 
 	ChoosePicContainer : {
-		flex: 12,
+		flex: 36,
 // 		backgroundColor: 'green',
-		marginLeft: '20%',
-		marginRight: '20%',
+		marginLeft: '10%',
+		marginRight: '10%',
+		marginTop: '10%',
 		flexDirection: 'column',
 		justifyContent: 'center'
 	},
@@ -89,12 +90,12 @@ const styles = StyleSheet.create({
 	},
 
 	EnterLeagueContainer : {
-		flex: 12,
+		flex: 8,
 		marginRight: '10%',
 		marginLeft: '10%',
 		flexDirection: 'column',
-		justifyContent: 'center'
-// 		marginTop: '5%'
+		justifyContent: 'center',
+		marginBottom: '5%'
 // 		backgroundColor: 'green'
 	},
 
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
 	},
 
 	EnterDescContainer : {
-		flex: 15,
+		flex: 14,
 		marginRight: '10%',
 		marginLeft: '10%',
 		flexDirection: 'column',
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
 	},
 
 	ChooseSecContainer : {
-		flex: 12,
+		flex: 16,
 		marginRight: '15%',
 		marginLeft: '15%',
 		flexDirection: 'column',
