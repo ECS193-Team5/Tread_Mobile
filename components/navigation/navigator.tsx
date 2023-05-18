@@ -134,8 +134,6 @@ function ShowTabs(){
   
     axios(config)
         .then(function (response) {
-            console.log('navigator')
-            console.log(createProfilePictureURL(response.data))
             setPicture(createProfilePictureURL(response.data))
         })
         .catch((error) =>

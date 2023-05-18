@@ -220,8 +220,6 @@ function LeagueDetails(props): JSX.Element {
   const handleQR = function() {
     console.log("QR")
     setModalVisibleQR(true)
-    //backend call to leave league
-    // props.navigation.navigate("Leagues")
   }
 
   const clickedLeave = function(){
@@ -292,6 +290,7 @@ function LeagueDetails(props): JSX.Element {
           isVisible={modalVisibleQR}
           hasBackdrop = {true}
           backdropColor = 'black'
+          onBackdropPress = { () => setModalVisibleQR(false)}
           style = {{margin : 2}}
         >
           <QRModalPopUp

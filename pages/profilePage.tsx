@@ -271,8 +271,7 @@ function ProfilePage(props): JSX.Element {
     }
 
     const handleQRClick = function() {
-        setModalVisiblePopUp(false);
-        setModalVisibleQR(true);
+        setModalVisiblePopUp(false)
     }
     const QRClickable = function(){
         return(
@@ -300,6 +299,7 @@ function ProfilePage(props): JSX.Element {
                   isVisible={modalVisibleQR}
                   hasBackdrop = {true}
                   backdropColor = 'black'
+                  onBackdropPress = { () => setModalVisibleQR(false)}
                   style = {{margin : 2}}
               >
                   <QRModalPopUp
@@ -315,6 +315,7 @@ function ProfilePage(props): JSX.Element {
               hasBackdrop = {true}
               backdropColor = 'rgba(0,0,0,0.7)'
               onBackdropPress = { () => setModalVisiblePopUp(false)}
+              onModalHide = {() => setModalVisibleQR(true)}
               style = {{margin : 2}}
               animationIn = 'fadeIn'
               animationInTiming={160}
@@ -360,7 +361,6 @@ function ProfilePage(props): JSX.Element {
                     </View>
                 </View>
                 <View style={ProfileStyles.ProfileBottomContainer}>
-
                     <View style={ProfileStyles.OtherInfoContainer}>
                         <Text style={ProfileStyles.OtherInfoText}>
                             {numFriends.toString() + (numFriends === 1 ? " Friend" : " Friends")}
@@ -376,7 +376,6 @@ function ProfilePage(props): JSX.Element {
                             {numMedals.toString() + (numMedals === 1 ? " Medals" : " Medals")}
                         </Text>
                     </View>
-
                 </View>
               </View>
           </View>

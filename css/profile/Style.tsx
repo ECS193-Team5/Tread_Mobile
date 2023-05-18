@@ -105,13 +105,13 @@ const ProfileStyles = StyleSheet.create({
     },
 
     OptionsContainer: {
-        flex: 30,
-        // backgroundColor: 'blue',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-        marginRight: '10%'
-    },
+      flex: 30,
+      // backgroundColor: 'blue',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
+      marginRight: '10%'
+  },
 
     QRContainer: {
         flex: 1,
