@@ -46,6 +46,10 @@ function LeagueCard({LeagueData, props, refresh}): JSX.Element {
           </Text>
         </View>
       </View>
+      <View style = {cardStyles.ChallengeOpenImageContainer}>
+           <Image style ={{width : 15, height : 15, alignSelf: 'center'}}
+            source={{uri: 'https://i.imgur.com/aNoUoZK.png' }}/>
+      </View>
     </Pressable>
 	)
 }
