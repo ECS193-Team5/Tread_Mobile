@@ -26,12 +26,20 @@ function QRModalPopUp({Name, isLeague, security}) {
       return ('This will send a friend request to ' + Name)
     }
   }
+
+  const GenerateScanPrompt = function(){
+    if(isLeague){
+      return ('Scan to join')
+    } else {
+      return ('Scan to add friend')
+    }
+  }
   
   return(
     <View style={modalstyle.container}>
       <View style = {modalstyle.QRTextContainer}>
         <Text style = {modalstyle.QRTitleTextStyle}> 
-          {'Scan to join :'}  
+          {GenerateScanPrompt()} 
         </Text>
         <Text style = {modalstyle.QRTitleTextStyle}> 
           {Name}  

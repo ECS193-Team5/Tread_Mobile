@@ -18,6 +18,7 @@ import { LeagueStyles } from '../../css/leagues/Style';
 import UserScroll from '../shared/UserScroll';
 import LeagueUserCard from '../shared/LeagueUserCard';
 import Invite from '../shared/invite';
+import ZeroItem from '../shared/ZeroItem';
 
 const options = [
   { label : "All" , value : 'all'},
@@ -31,7 +32,7 @@ function getRequests() {
   return ([])
 } 
 
-function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX.Element {  
+function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh, count, setCount}): JSX.Element {  
   const getLeagueRole = function(){
     var config = {
       method: 'post',
@@ -72,6 +73,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
     axios(config)
       .then(function (response) {
         setRequests(response.data)
+        setCountRequests(response.data.length)
       })
       .catch((error) =>
         console.log(error)
@@ -115,6 +117,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
       route = 'league/get_banned_list'
     }
     setRequests([])
+    setCountRequests(1)
     updateRequests(route)
   }
 
@@ -155,6 +158,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
     console.log("deleted")
     const filteredData = requests.filter(item => item.username !== mData.username);
     setRequests(filteredData)
+    filteredData.length === 0 ? setCountRequests(0) : null 
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
 
@@ -163,6 +167,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
     console.log("deleted")
     // when writing the backend call instead of setting the filtered data, set the actual member list to update everything accordingly
     const filteredData = MemberData.filter(item => item.username !== mData.username);
+    filteredData.length === 1 ? setCount(1) : null 
     setLeagueMembers(filteredData)
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
@@ -181,6 +186,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
 
   const [isAdminOwnerParticipant, setIsAdminOwnerParticipant] = useState("")
   const [currentView, setCurrentView] = useState("all")
+  const [countRequests, setCountRequests] = useState(1)
   const [requests, setRequests] = useState(getRequests);
   const [refreshing, setRefreshing] = useState(false)
 
@@ -208,16 +214,31 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
 
   const typeOfView = function() {
     if (currentView === 'all') {
-      return (<UserScroll
-        UserData={MemberData}
-        handler = {deleteMember}
-        UserRole = {isAdminOwnerParticipant}
-        props = {props}
-        onRefresh = {onRefresh}
-      />)
+      return (
+        <View>
+          <UserScroll
+            UserData={MemberData}
+            handler = {deleteMember}
+            UserRole = {isAdminOwnerParticipant}
+            props = {props}
+            onRefresh = {onRefresh}
+          />
+          {count === 1 ? 
+            <ZeroItem
+                promptText='You are the only member'
+                SecondaryPrompt = 'Invite more people in the Invite Tab or tell your friends!'
+                props={props}     
+              />
+            :
+            null 
+          }
+        </View>
+      )
     } else if (currentView !== 'invite'){
       return (
-        <FlatList
+        <View>
+        {countRequests > 0 ? 
+          <FlatList
           data = {requests}
           renderItem = {renderInvite}
           refreshControl ={
@@ -230,6 +251,14 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
             />
           }
         />
+        :
+        <ZeroItem
+          promptText={currentView === 'pending' || currentView === 'sent' ? ('No ' + currentView + ' invites') : ('No banned users')}
+          SecondaryPrompt = {currentView === 'sent' ? 'Invite more people in the Invite Tab' : null}
+          props={props}     
+        />  
+      }
+      </View>
       )
     } else {
       return (
@@ -242,8 +271,6 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh}): JSX
       )
     }
   }
-
-
 
   return(
     <View style = {LeagueStyles.MembersChallengesContainer}>

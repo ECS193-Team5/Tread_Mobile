@@ -39,9 +39,6 @@ const progressCardStyle = StyleSheet.create({
   ProgressTextStyle : {
     color : "#F9A800",
     fontWeight : '700',
-    // alignSelf : 'flex-end',
-    // marginRight : '2%', 
-    // marginLeft : '2%',
     marginLeft : '2%',
     justifyContent : 'center',
     position : 'absolute',    

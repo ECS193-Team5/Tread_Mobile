@@ -63,7 +63,7 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
   
     axios(config)
       .then(function (response) {
-        console.log(response.data)
+        // console.log(response.data)
         setUsername(response.data)
       })
       .catch((error) =>

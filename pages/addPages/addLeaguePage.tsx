@@ -17,6 +17,7 @@ import SwitchSelector from "react-native-switch-selector";
 import {BACKEND_URL} from '@env';
 import axios from 'axios';
 import LeagueInvite from '../../components/shared/LeagueInvite';
+import { showMessage } from 'react-native-flash-message';
 
 const options = [
   { label : "Create" , value : true},
@@ -26,19 +27,17 @@ const options = [
 function AddLeaguePage(props): JSX.Element {
   const [qrValue, setQrValue] = useState('')
   const [openScanner, setOpenScanner] = useState(false)
-  const [defaultTab ,setDefaultTab] = useState(0)
-
+  const [defaultTab ,setDefaultTab] = useState(!props.route.params.defaultView)
   
   const onBarcodeScan = function(qrvalue) {
     setQrValue(qrvalue)
     setOpenScanner(false)
-    props.navigation.navigate("AddLeague")
+    props.navigation.navigate("AddLeague", {defaultView : false})
   }
 
   const handleBack = function(qrValue) {
-    setDefaultTab(1)
     setOpenScanner(false)
-    props.navigation.navigate("AddLeague")
+    props.navigation.navigate("AddLeague", {defaultView : false})
   }
 
   const onOpenScanner = function() {
@@ -81,7 +80,7 @@ function AddLeaguePage(props): JSX.Element {
 
 	const [security, setSecurity] = useState("private");
 
-  const [isCreate, setIsCreate] = useState(true)
+  const [isCreate, setIsCreate] = useState(props.route.params.defaultView)
 
 	const switchOptions = [
 		{label: 'Private', value: 'private'},
@@ -160,9 +159,20 @@ function AddLeaguePage(props): JSX.Element {
 			setPicture("");
 			setLeagueName("");
 			setLeagueDesc("");
+      showMessage({
+        floating : true,
+        message : 'League Created',
+        backgroundColor : '#014421',
+        color : '#F9A800',
+      })
 		})
 		.catch(function (error) {
 			console.log(error);
+      showMessage({
+        floating : true,
+        message : 'Error creating league',
+        type : 'danger',
+      })
 		});
 	}
 

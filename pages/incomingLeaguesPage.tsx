@@ -16,6 +16,7 @@ import SwitchSelector from "react-native-switch-selector"
 import LeagueInviteCard from '../components/shared/LeagueInviteCard';
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
+import ZeroItem from '../components/shared/ZeroItem';
 
 const options = [
   { label : "Received" , value : 'Received'},
@@ -37,6 +38,7 @@ function IncomingLeaguesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
+        setCount(response.data.length)
       })
       .catch((error) =>
         console.log(error)
@@ -57,6 +59,7 @@ function IncomingLeaguesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
+        setCount(response.data.length)
       })
       .catch((error) =>
         console.log(error)
@@ -64,6 +67,7 @@ function IncomingLeaguesPage(props): JSX.Element {
   }
 
   const [LeagueData, setLeagueData] = useState(getReceived)
+  const [count, setCount] = useState(0)
   const [pageTitle, setPageTitle] = useState('Sent')
   const [refreshing, setRefreshing] = useState(false)
 
@@ -104,12 +108,6 @@ function IncomingLeaguesPage(props): JSX.Element {
     },
   };
 
-  const getdropdownIcon = function(){
-    return (
-    <Image style = {{width : 10, height : 10}}source={{uri: "https://imgur.com/ybSDJeh.png"}}/>
-    )
-  }
-  
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
     setPageTitle(selectedItem)
@@ -163,6 +161,8 @@ function IncomingLeaguesPage(props): JSX.Element {
         />
       </View>
       <View style = {styles.ChallengesContainer}>
+      {count > 0 ? 
+
         <FlatList
           data = {LeagueData}
           renderItem = {renderInvite}
@@ -176,6 +176,15 @@ function IncomingLeaguesPage(props): JSX.Element {
             />
           }
         />
+        :
+          <ZeroItem 
+             promptText={'You have not ' + (pageTitle === 'Received' ? 'received any' : 'sent any') + ' league invites'}
+             navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
+             navigateToPage={'AddLeague'}
+             props = {props}
+             defaultView = {false}
+           />    
+        } 
       </View>
     </View>
   )

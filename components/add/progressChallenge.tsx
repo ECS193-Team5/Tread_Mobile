@@ -15,6 +15,7 @@ import {
     TextInput,
     Pressable,
 } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 
 function ProgressChallenge(): JSX.Element {
 
@@ -85,10 +86,20 @@ function ProgressChallenge(): JSX.Element {
                 setValueUnits(null)
                 setChallengeAmount(0)
                 setStartDate(new Date())
-
+                showMessage({
+                  floating : true,
+                  message : 'Progress Logged',
+                  backgroundColor : '#014421',
+                  color : '#F9A800',
+                })
             })
             .catch(function (error) {
                 console.log(error)
+                showMessage({
+                  floating : true,
+                  message : 'Error logging challenge',
+                  type : 'danger',
+                })
             })
     }
 

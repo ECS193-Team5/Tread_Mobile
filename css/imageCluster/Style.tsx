@@ -107,6 +107,12 @@ const ImageStyles = StyleSheet.create({
     alignSelf : 'center'
   },
 
+  ZeroImage : {
+    width :70, 
+    height : 70,
+    marginTop : '5%', 
+    alignSelf : 'center'
+  }
 
 });
 

@@ -92,8 +92,6 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
       
       pagetoNav === 'AddFriend' ? config['data']['friendName'] = friendID : config['data']['recipient'] = friendID;
     
-
-      
       axios(config)
         .then(function (response) {
             var message = ''
@@ -119,6 +117,14 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                 floating : true,
                 message : message,
                 type : 'warning',
+              })
+            } else {
+              message = pagetoNav === 'League Details' ? 'Sent league invite to ' + friendID :  'Sent friend request to ' + friendID 
+              showMessage({
+                floating : true,
+                message : message,
+                backgroundColor : '#014421',
+                color : '#F9A800',
               })
             }
             onFriendChange("");

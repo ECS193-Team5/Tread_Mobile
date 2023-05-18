@@ -359,7 +359,7 @@ function IssueChallenge(): JSX.Element {
                         <DatePicker
                             modal = {true}
                             mode = {'date'}
-                            open={showEndDatePicker && startDateSet}
+                            open={showEndDatePicker}
                             minimumDate={startDate}
                             date={startDate}
                             onConfirm={(date) => {

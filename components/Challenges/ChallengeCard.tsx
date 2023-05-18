@@ -27,16 +27,12 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
     // console.log(images)
     var myProgressBaseUnits = ChallengeData.progress.progress;
     totalBaseUnits = ChallengeData.progress.exercise.convertedAmount;
-    var totalRealUnits = ChallengeData.progress.exercise.amount;
-    var myProgressRealUnits = calculateProgress(myProgressBaseUnits, ChallengeData.exercise.unit);
     var ProgressPercent = Math.min(100,Math.round(myProgressBaseUnits / totalBaseUnits * 100));
   }else {
     images = ['https://imgur.com/W03ovOf.png']
     var myProgressBaseUnits = ChallengeData.progress;
     totalBaseUnits = ChallengeData.exercise.convertedAmount;
-    var totalRealUnits = ChallengeData.exercise.amount;
     ProgressPercent = Math.min(100, Math.round(myProgressBaseUnits / totalBaseUnits * 100));
-    var myProgressRealUnits = calculateProgress(myProgressBaseUnits, ChallengeData.exercise.unit);
   }
 
   const handleOnPress = function(){
@@ -57,6 +53,7 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
         hasBackdrop = {true}
         backdropColor = 'black'
         style = {{margin : 2}}
+        onBackdropPress = { () => setModalVisible(false)}
       >
         <ChallengeModalPopUp 
           Challenge = {ChallengeData}
