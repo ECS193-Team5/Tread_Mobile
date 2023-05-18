@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
 	Pressable,
   Image,
@@ -10,26 +10,11 @@ import {
   FlatList
 } from 'react-native';
 import { ImageStyles } from '../../css/imageCluster/Style';
-import QRCode from 'react-native-qrcode-svg';
+
 import { modalstyle } from '../../css/shared/modalStyle';
 
 
-function QRModalPopUp({Name, isLeague, security, encodedInfo}) {
-  const [url, setURl] = useState("meow");
-  const [load, setLoad] = useState(false);
-
-  useEffect(() => {
-    if(!load){
-      if(isLeague){
-        setURl("https://tread.run/requestLeague?" +encodedInfo)
-      }
-      else{
-        setURl("https://tread.run/requestFriend?" +encodedInfo)
-      }
-      setLoad(true);
-    }
-  }, [load]);
-
+function QRModalPopUp({Name, isLeague, security}) {
   const GeneratePrompt = function(){
     if(isLeague){
       if(security === 'private'){
@@ -63,11 +48,7 @@ function QRModalPopUp({Name, isLeague, security, encodedInfo}) {
 
       <View style = {modalstyle.ProgressContainer}>
         <View style = {modalstyle.QRCodeContainerStyle}>
-        <QRCode
-        size={250}
-        backgroundColor={'#D9D9D9'}
-      value={url}
-    />
+         <Image style ={ImageStyles.QRCode} source={{uri: 'https://i.imgur.com/vdw15Hl.png'}}/>
         </View>
         <View style = {modalstyle.QRCodePromptContainer}>
           <Text style = {modalstyle.QRCodePromptTextStyle}>
