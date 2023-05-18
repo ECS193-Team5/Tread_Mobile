@@ -96,6 +96,7 @@ function LeagueDetails(props): JSX.Element {
 
     axios(config)
       .then(function (response) {
+        setName(response.data['leagueName'])
         setSecurity(response.data['leagueType'])
         setDescription(response.data['leagueDescription'])
       })
@@ -107,6 +108,7 @@ function LeagueDetails(props): JSX.Element {
 
   var imageUrl = "https://imgur.com/nFRNXOB.png"
   var LeagueImage = createLeaguePictureURL(props.route.params.leagueData._id)
+  console.log(LeagueImage)
 
   const [modalVisibleQR, setModalVisibleQR] = useState(false)
   const [modalVisiblePopUp, setModalVisiblePopUp] = useState(false)
@@ -158,8 +160,10 @@ function LeagueDetails(props): JSX.Element {
   }
 
   const [isMembers, setIsMembers] = useState("Members")
-  const [description, setDescription] = useState('description')
-  const [security, setSecurity] = useState('private')
+  const [description, setDescription] = useState('')
+  const [name, setName] = useState('')
+
+  const [security, setSecurity] = useState('')
   getLeagueInfo()
   const [countMembers, setCountMembers] = useState(0)
   const [countChallenges, setCountChallenges] = useState(0)
@@ -206,6 +210,14 @@ function LeagueDetails(props): JSX.Element {
 
   const handleEdit = function() {
     console.log('edit')
+    setModalVisiblePopUp(false)
+    props.navigation.navigate('EditLeague', {leagueData : props.route.params.leagueData, name : name ,  description : description, security : security})
+  }
+
+  const handleDelete = function() {
+    console.log('Delete')
+    setModalVisiblePopUp(false)
+    // props.navigation.navigate('EditLeague')
   }
 
   const handleRefresh = function() {
@@ -258,7 +270,7 @@ function LeagueDetails(props): JSX.Element {
     return(
       <TouchableHighlight
       onPress={handleEdit}
-      style = {{borderRadius : 20}}
+      style = {{borderTopLeftRadius : 20, borderTopRightRadius : 20}}
       underlayColor = 'rgba(0,0,0,0.15)'
       >
         <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
@@ -269,10 +281,26 @@ function LeagueDetails(props): JSX.Element {
     )
   }
 
+  const DeleteClickable = function(){
+    return(
+      <TouchableHighlight
+      onPress={handleDelete}
+      style = {{borderBottomLeftRadius : 20, borderBottomRightRadius : 20}}
+      underlayColor = 'rgba(0,0,0,0.15)'
+      >
+        <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
+          <Text style = {[modalstyle.PopUpOptionText , {flex : 50, color : 'red'}]}> Delete </Text>
+          <Image style ={ImageStyles.Edit} source={{uri: 'https://i.imgur.com/Tt2kctJ.png'}}/>
+        </View>
+      </TouchableHighlight>
+    )
+  }
+
   const getOptions = function(){
     var options = []
     if(role === 'owner'){
       options.push(EditClickable)
+      options.push(DeleteClickable)
     }
     if (role === 'admin' || role === 'participant'){
       options.push(LeaveClickable)
@@ -331,7 +359,7 @@ function LeagueDetails(props): JSX.Element {
             </View>
 
             <View style = {LeagueStyles.LeagueNameContainer}>
-              <Text style = {[styles.TitleText, {fontSize : 25}]}>{props.route.params.leagueData.leagueName}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 25}]}>{name}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-2%'}]}>{description}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{security.charAt(0).toUpperCase() + security.slice(1)}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{props.route.params.leagueData.activeChallenges + ' Active Challenges'}</Text>

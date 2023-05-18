@@ -166,7 +166,6 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                   style = {styles.Input}
                   onChangeText = {onFriendChange}
                   value = {qrValue === '' ? friendID : qrValue}
-
                 >
                 </TextInput>
                 <View>
