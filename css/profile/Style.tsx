@@ -27,9 +27,14 @@ const ProfileStyles = StyleSheet.create({
         backgroundColor : "#FFFFFF",
     },
 
+    ProfileSettingsContainer: {
+      flex: 30,
+      flexDirection: 'row',
+      width: '100%'
+    },
+
     ProfileTopContainer: {
-        flex: 60,
-        // backgroundColor: 'blue',
+        flex: 100,
         flexDirection: 'row',
         width: '100%'
     },
@@ -54,7 +59,7 @@ const ProfileStyles = StyleSheet.create({
     },
 
     DisplayNameContainer: {
-        flex: 25,
+        flex: 35,
         width: '100%',
         flexDirection: 'column',
         justifyContent: 'flex-end'
@@ -67,7 +72,7 @@ const ProfileStyles = StyleSheet.create({
     },
 
     UsernameContainer: {
-        flex: 45,
+        flex: 25,
         width: '100%',
     },
 
@@ -81,7 +86,6 @@ const ProfileStyles = StyleSheet.create({
         flex: 15,
         width: '100%',
         flexDirection: 'row',
-        // backgroundColor: 'blue',
         justifyContent: 'center'
 
     },
@@ -99,24 +103,21 @@ const ProfileStyles = StyleSheet.create({
   },
 
     ProfileBottomContainer: {
-        flex: 30,
+        flex: 60,
         flexDirection: 'row',
         width: '100%',
-        // backgroundColor : 'red'
     },
 
     OptionsContainer: {
       flex: 30,
-      // backgroundColor: 'blue',
-      flexDirection: 'row',
+      flexDirection: 'column',
       justifyContent: 'flex-end',
       alignItems: 'flex-end',
-      marginRight: '10%'
+      marginRight: '3%',
   },
 
     QRContainer: {
         flex: 1,
-        // backgroundColor: 'red',
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
@@ -126,7 +127,6 @@ const ProfileStyles = StyleSheet.create({
     MedalsContainer: {
         flex: 55,
         flexDirection: 'column',
-        // backgroundColor: 'yellow',
         alignItems: 'center'
     },
 

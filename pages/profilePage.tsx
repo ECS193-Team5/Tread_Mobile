@@ -342,6 +342,16 @@ function ProfilePage(props): JSX.Element {
 
           <View style={[ProfileStyles.ProfileContainer, cardStyles.shadowProp]}>
               <View style={ProfileStyles.ProfileCard}>
+                <View style = {ProfileStyles.ProfileSettingsContainer}>
+                  <View style={ProfileStyles.OptionsContainer}>
+                    <Pressable
+                        onPress={handlePopup}
+                    >
+                        <Image style ={ImageStyles.Options} source={{uri: 'https://i.imgur.com/RtnN9Hu.png'}}/>
+                    </Pressable>
+                  </View>
+                </View>
+                
                 <View style={ProfileStyles.ProfileTopContainer}>
                     <View style={ProfileStyles.ProfileImageContainer}>
                         <Image
@@ -352,13 +362,6 @@ function ProfilePage(props): JSX.Element {
                     </View>
 
                     <View style={ProfileStyles.ProfileNameContainer}>
-                        <View style={ProfileStyles.OptionsContainer}>
-                                <Pressable
-                                    onPress={handlePopup}
-                                >
-                                    <Image style ={ImageStyles.Options} source={{uri: 'https://i.imgur.com/RtnN9Hu.png'}}/>
-                                </Pressable>
-                        </View>
                         <View style={ProfileStyles.DisplayNameContainer}>
                             <Text style={ProfileStyles.DisplayNameText}>
                                 {displayName}
@@ -374,9 +377,10 @@ function ProfilePage(props): JSX.Element {
                 </View>
                 <View style={ProfileStyles.ProfileBottomContainer}>
                     <View style={ProfileStyles.OtherInfoContainer}>
-                      <Pressable
+                      <TouchableHighlight
                           onPress={() => props.navigation.navigate('Friends')}
-                          style = {{borderRadius : 1}}
+                          style = {{alignSelf : 'center', borderRadius : 1}}
+                          underlayColor = 'rgba(0,0,0,0.15)'
                           >
                           <Text style={ProfileStyles.OtherInfoText}>
                             {numFriends.toString()}  
@@ -384,12 +388,13 @@ function ProfilePage(props): JSX.Element {
                                {(numFriends === 1 ? " Friend" : " Friends")}
                             </Text>
                           </Text>
-                      </Pressable>
+                      </TouchableHighlight>
                     </View>
                     <View style={ProfileStyles.OtherInfoContainer}>
-                      <Pressable
+                      <TouchableHighlight
                           onPress={() => props.navigation.navigate('Leagues', {screen : 'Leagues'})}
-                          style = {{borderRadius : 1}}
+                          style = {{alignSelf : 'center',borderRadius : 1}}
+                          underlayColor = 'rgba(0,0,0,0.15)'
                           >
                           <Text style={ProfileStyles.OtherInfoText}>
                             {numLeagues.toString()}  
@@ -397,12 +402,13 @@ function ProfilePage(props): JSX.Element {
                                {(numLeagues === 1 ? " League" : " Leagues")}
                             </Text>
                           </Text>
-                      </Pressable>
+                      </TouchableHighlight>
                     </View>
                     <View style={ProfileStyles.OtherInfoContainer}>
-                      <Pressable
+                      <TouchableHighlight
                           onPress={() => switchRef.current?.toggleItem(1)}
-                          style = {{borderRadius : 1}}
+                          style = {{alignSelf : 'center',borderRadius : 1}}
+                          underlayColor = 'rgba(0,0,0,0.15)'
                           >
                           <Text style={ProfileStyles.OtherInfoText}>
                             {numMedals.toString()}  
@@ -410,7 +416,7 @@ function ProfilePage(props): JSX.Element {
                                {(numMedals === 1 ? " Medal" : " Medals")}
                             </Text>
                           </Text>
-                      </Pressable>
+                      </TouchableHighlight>
                     </View>
                 </View>
               </View>
