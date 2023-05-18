@@ -92,6 +92,12 @@ const ProfileStyles = StyleSheet.create({
         color: '#014421',
     },
 
+    SecondaryText: {
+      fontWeight: '500',
+      fontSize: 18,
+      color: '#014421',
+  },
+
     ProfileBottomContainer: {
         flex: 30,
         flexDirection: 'row',

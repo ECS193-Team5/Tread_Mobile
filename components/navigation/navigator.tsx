@@ -81,7 +81,7 @@ function ChallengesStack(){
 function LeaguesStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
     <Stack.Screen name = "Incoming Leagues" component={IncomingLeaguesPage} options={{ headerShown: false }}/>
     <Stack.Screen name = "League Details" component={LeagueDetails} options={{headerShown: false ,
                                                                               animationTypeForReplace: 'push',

@@ -379,17 +379,23 @@ function ProfilePage(props): JSX.Element {
                           style = {{borderRadius : 1}}
                           >
                           <Text style={ProfileStyles.OtherInfoText}>
-                              {numFriends.toString() + (numFriends === 1 ? " Friend" : " Friends")}
+                            {numFriends.toString()}  
+                            <Text style = {ProfileStyles.SecondaryText}>
+                               {(numFriends === 1 ? " Friend" : " Friends")}
+                            </Text>
                           </Text>
                       </Pressable>
                     </View>
                     <View style={ProfileStyles.OtherInfoContainer}>
                       <Pressable
-                          onPress={() => props.navigation.navigate('Leagues')}
+                          onPress={() => props.navigation.navigate('Leagues', {screen : 'Leagues'})}
                           style = {{borderRadius : 1}}
                           >
                           <Text style={ProfileStyles.OtherInfoText}>
-                            {numLeagues.toString() + (numLeagues === 1 ? " League" : " Leagues")}
+                            {numLeagues.toString()}  
+                            <Text style = {ProfileStyles.SecondaryText}>
+                               {(numLeagues === 1 ? " League" : " Leagues")}
+                            </Text>
                           </Text>
                       </Pressable>
                     </View>
@@ -399,8 +405,11 @@ function ProfilePage(props): JSX.Element {
                           style = {{borderRadius : 1}}
                           >
                           <Text style={ProfileStyles.OtherInfoText}>
-                            {numMedals.toString() + (numMedals === 1 ? " Medals" : " Medals")}
-                        </Text>
+                            {numMedals.toString()}  
+                            <Text style = {ProfileStyles.SecondaryText}>
+                               {(numMedals === 1 ? " Medal" : " Medals")}
+                            </Text>
+                          </Text>
                       </Pressable>
                     </View>
                 </View>
