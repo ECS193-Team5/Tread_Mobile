@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
     	width : '80%',
 		paddingLeft: 20,
 		color: 'grey',
-    marginLeft : '4%'
+    marginLeft : '4%',
+    height : '35%'
 	},
 
 	ButtonValid: {

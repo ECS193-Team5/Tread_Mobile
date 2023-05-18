@@ -16,6 +16,7 @@ import AddChallengePage from '../../pages/addPages/addChallengePage'
 import AddFriendPage from '../../pages/addPages/addFriendPage'
 import AddLeaguePage from '../../pages/addPages/addLeaguePage'
 import IncomingLeaguesPage from '../../pages/incomingLeaguesPage';
+import EditLeaguePage from '../../pages/editLeague';
 import LeagueDetails from '../../pages/leagueDetails';
 import IncomingFriendsPage from '../../pages/incomingFriendsPage';
 import CameraView from '../../pages/CameraView';
@@ -83,9 +84,11 @@ function LeaguesStack(){
   <Stack.Navigator>
     <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
     <Stack.Screen name = "Incoming Leagues" component={IncomingLeaguesPage} options={{ headerShown: false }}/>
+    <Stack.Screen name = "EditLeague" component={EditLeaguePage} options={{ headerShown: false }}/>
     <Stack.Screen name = "League Details" component={LeagueDetails} options={{headerShown: false ,
                                                                               animationTypeForReplace: 'push',
                                                                               animation:'slide_from_right'}}/>
+
   </Stack.Navigator>
   )
 }

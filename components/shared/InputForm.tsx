@@ -3,16 +3,29 @@ import {TextInput, View} from "react-native";
 import {InputFormStyle} from "../../css/shared/InputFormStyle";
 
 function InputForm(props): JSX.Element {
+
   const [curStyle, setCurStyle] = useState(InputFormStyle.InitInput)
 
   useEffect(() => {
     if(props.value === "") {
-      setCurStyle(InputFormStyle.InitInput)
+      if(props.name){
+        setCurStyle(InputFormStyle.InitInput)
+      } else{
+        setCurStyle(InputFormStyle.DescInput)
+      }
     } else {
       if(props.valid) {
-        setCurStyle(InputFormStyle.ValidInput)
+        if(props.name){
+          setCurStyle(InputFormStyle.ValidInputInit)
+        } else{
+          setCurStyle(InputFormStyle.ValidInputDesc)
+        }
       } else {
-        setCurStyle(InputFormStyle.InvalidInput)
+        if(props.name){
+          setCurStyle(InputFormStyle.InvalidInputInit)
+        } else{
+          setCurStyle(InputFormStyle.InvalidInputDesc)
+        }      
       }
     }
   })
@@ -33,6 +46,7 @@ function InputForm(props): JSX.Element {
   }
 
   const handleTextChange = (text) => {
+    // props.setIsChange(true)
     props.setValid(isValid(text));
     props.setValue(text);
   }

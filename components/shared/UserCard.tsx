@@ -370,7 +370,7 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       .then(function (response) {
         showMessage({
           floating : true,
-          message : UserRole === 'Sent' ? 'Unsent Invite from  ' + UserInfo.username : 'Rejected Invite from  ' + UserInfo.username,
+          message : UserRole === 'Sent' ? 'Unsent Invite to ' + UserInfo.username : 'Rejected Invite from ' + UserInfo.username,
           backgroundColor : '#014421',
           color : '#F9A800',
         })

@@ -193,8 +193,8 @@ function AddLeaguePage(props): JSX.Element {
                   valid={validLeagueName}
                   setValid={setValidLeagueName}
                   editable={true}
+                  name = {true}
                 >
-
                 </InputForm>
               </View>
 
@@ -208,6 +208,7 @@ function AddLeaguePage(props): JSX.Element {
                   editable={true}
                   multiline={true}
                   allowSpecial={true}
+                  name = {false}
                 >
 
                 </InputForm>
