@@ -25,6 +25,14 @@ import ListenerComponentHealthConnect from '../components/Sensors/healthConnect'
 import ZeroItem from '../components/shared/ZeroItem';
 
 function ChallengesPage(props): JSX.Element {
+  const [update, setUpdate] = useState(true);
+  useEffect(() => {
+    // Get the deep link used to open the app
+    props.navigation.addListener('focus', () => {
+      setUpdate(true);
+    });
+  }, [props.navigation]);
+
   const getChallengeData = function(){
     var config = {
       method: 'post',
@@ -145,8 +153,8 @@ function ChallengesPage(props): JSX.Element {
       <StatusBar
         barStyle="dark-content"
       />
-      <ListenerComponentHealthConnect/>
-      <ListenerComponentHealthKit/>
+      <ListenerComponentHealthConnect update={update} setUpdate = {setUpdate}/>
+      <ListenerComponentHealthKit update = {update} setUpdate = {setUpdate}/>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}

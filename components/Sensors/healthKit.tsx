@@ -14,13 +14,15 @@ import { BACKEND_URL } from '@env';
 import { Int32 } from 'react-native/Libraries/Types/CodegenTypes';
 import { reduceExercisesToUnique, sendExerciseList } from './sensorHelperFunctions';
 
-const ListenerComponentHealthKit = () =>{
+const ListenerComponentHealthKit = (props) =>{
     useEffect(() => {
+
+
+        if(props.update){
+            props.setUpdate(false);
         try{
-        console.log("Setting off the Apple Version of Health");
         AppleHealthKit.isAvailable((err: Object, available: boolean) => {
             if (err) {
-                console.log('error initializing Healthkit: ', err)
                 throw err;
             }
         })
@@ -28,7 +30,6 @@ const ListenerComponentHealthKit = () =>{
         new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
             'healthKit:Cycling:new',
             async () => {
-                console.log('--> Cycling observer triggered');
                 pullSamples();
             },
         );
@@ -36,7 +37,6 @@ const ListenerComponentHealthKit = () =>{
         new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
             'healthKit:Running:new',
             async () => {
-                console.log('--> Running observer triggered');
                 pullSamples();
             },
         );
@@ -44,28 +44,24 @@ const ListenerComponentHealthKit = () =>{
         new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
             'healthKit:StairClimbing:new',
             async () => {
-                console.log('--> StairClimbing observer triggered');
                 pullSamples();
             },
         );
         new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
             'healthKit:Swimming:new',
             async () => {
-                console.log('--> Swimming observer triggered');
                 pullSamples();
             },
         );
         new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
             'healthKit:Walking:new',
             async () => {
-                console.log('--> Walking observer triggered');
                 pullSamples();
             },
         );
         new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
             'healthKit:Workout:new',
             async () => {
-                console.log('--> Workout observer triggered');
                 pullSamples();
             },
         );
@@ -74,7 +70,8 @@ const ListenerComponentHealthKit = () =>{
         catch(err){
             console.log("Error in HealthKit - Either this is not an apple device or permissions was not given");
         }
-    });
+    }
+    }, [props.update]);
 
         const permissions = {
             permissions: {
@@ -100,7 +97,6 @@ const ListenerComponentHealthKit = () =>{
 
         try{
         AppleHealthKit.getAuthStatus(permissions, (err, results) => {
-            console.log(err, results)
             if (err){
                 throw err
             }
@@ -159,7 +155,6 @@ const ListenerComponentHealthKit = () =>{
 
                 })
                 .catch(function (error) {
-                    console.log(error);
                     return;
                 });
 
@@ -212,7 +207,6 @@ const ListenerComponentHealthKit = () =>{
             AppleHealthKit.initHealthKit(permissions, (error: string) => {
 
                 if (error) {
-                    console.log("No permission for Apple Device");
                     return;
                 }
 

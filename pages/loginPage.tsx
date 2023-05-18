@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text, Image
@@ -10,6 +10,12 @@ import LoginButton from '../components/login/loginButton';
 import {LoginStyles} from '../css/login/Style';
 
 function Login(props): JSX.Element {
+
+  useEffect(() => {
+    // Get the deep link used to open the app
+    console.log("This use effect is triggered in login.tsx");
+  });
+
   return (
     <View >
       <LinearGradient

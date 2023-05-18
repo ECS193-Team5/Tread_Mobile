@@ -14,16 +14,15 @@ import {
 import {HealthConnect} from "./exerciseNameConverstion.json";
 import {reduceExercisesToUnique, sendExerciseList } from './sensorHelperFunctions';
 
-const ListenerComponentHealthConnect = () => {
-    const [load, setLoad] = useState(false);
+const ListenerComponentHealthConnect = (props) => {
     const [dataResults, setDataResults] = useState([]);
 
     useEffect(() => {
-        if(!load){
+        if(props.update){
+            props.setUpdate(false);
             readSampleData();
-            setLoad(true);
         }
-    });
+    }, );
 
     useEffect(() => {
         if(dataResults){
