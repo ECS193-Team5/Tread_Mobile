@@ -71,6 +71,13 @@ const cardStyles = StyleSheet.create({
     justifyContent : 'center'
   },
 
+  ChallengeOpenImageContainer : {
+    flex : 10,
+    flexDirection : 'row',
+    justifyContent : 'center',
+    marginRight : '3%'
+  },
+
   ChallengeNameContainer : {
     flex : 90,
     alignItems : 'flex-start',

@@ -12,6 +12,7 @@ import {
 import { ImageStyles } from '../../css/imageCluster/Style';
 
 import { modalstyle } from '../../css/shared/modalStyle';
+import DragDownBar from './DragDownBar';
 
 
 function QRModalPopUp({Name, isLeague, security}) {
@@ -37,6 +38,9 @@ function QRModalPopUp({Name, isLeague, security}) {
   
   return(
     <View style={modalstyle.container}>
+      <View style = {modalstyle.dragDownContainer}>
+        <DragDownBar/>
+      </View>
       <View style = {modalstyle.QRTextContainer}>
         <Text style = {modalstyle.QRTitleTextStyle}> 
           {GenerateScanPrompt()} 

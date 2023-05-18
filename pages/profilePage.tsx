@@ -14,7 +14,6 @@ import {
 	GoogleSignin,
 } from '@react-native-google-signin/google-signin';
 import axios from "axios/index";
-import GestureRecognizer from "react-native-swipe-gestures";
 import Modal from "react-native-modal";
 import QRModalPopUp from "../components/shared/QRModalPopUp";
 import MenuPopUp from "../components/profile/MenuPopUp";
@@ -303,13 +302,11 @@ function ProfilePage(props): JSX.Element {
       <View style={ProfileStyles.Background}>
           <View style={ProfileStyles.TopSeparator}>
           </View>
-
-          <GestureRecognizer
-              onSwipeDown={() => setModalVisibleQR(false)}
-          >
               <Modal
                   isVisible={modalVisibleQR}
                   hasBackdrop = {true}
+                  swipeDirection = 'down'
+                  onSwipeComplete={(e) => setModalVisibleQR(false)}
                   backdropColor = 'black'
                   onBackdropPress = {() => setModalVisibleQR(false)}
                   style = {{margin : 2}}
@@ -320,7 +317,6 @@ function ProfilePage(props): JSX.Element {
                       security = {""}
                   />
               </Modal>
-          </GestureRecognizer>
 
           <Modal
               isVisible={modalVisiblePopUp}
