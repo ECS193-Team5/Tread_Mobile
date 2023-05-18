@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
   Text,
-  Image,
-  FlatList,
   LayoutAnimation,
   Platform,
   UIManager
 } from 'react-native';
 
 import {styles} from "../css/challenges/Style"
-import { SharedStyles } from '../css/shared/Style';
 
 import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
-import ChallengeInviteCard from '../components/shared/ChallengeInviteCard';
 import UserScroll from '../components/shared/UserScroll';
 
 import axios from 'axios';
@@ -63,6 +57,7 @@ function IncomingFriendsPage(props): JSX.Element {
   
     axios(config)
       .then(function (response) {
+        console.log(response.data)
         setRequests(response.data)
         setCount(response.data.length)
       })

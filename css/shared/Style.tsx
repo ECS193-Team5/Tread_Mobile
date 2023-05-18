@@ -72,7 +72,17 @@ const SharedStyles = StyleSheet.create({
     color : '#014221',
     fontSize : 13,
     textDecorationLine : 'underline'
-  }
+  },
+
+  seperator : {
+    borderWidth : 0.5,
+    borderColor : "#F9A800",
+    alignSelf: 'stretch',
+    justifyContent : 'center',
+    marginTop : "3.5%",
+    marginHorizontal : '3.5%',
+    marginBottom : '2.5%'
+  },
 });
 
 export {SharedStyles}

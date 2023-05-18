@@ -11,13 +11,21 @@ const styles = StyleSheet.create({
 		flex: 5,
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
-    marginHorizontal : '5%'
+    marginHorizontal : '6%',
+	},
+
+  SuggestedTitleContainer : {
+		flex: 2,
+    marginHorizontal : '5%',
+	},
+
+  SuggestedUserContainer : {
+		flex: 20,
 	},
 
 	InputContainer : {
 		flex: 30,
-		// flexDirection: 'column',
-		// justifyContent: 'flex-start',
+
     marginHorizontal : '5%',
 		backgroundColor: 'white',
 		borderRadius: 20,
@@ -26,14 +34,14 @@ const styles = StyleSheet.create({
 
 	SeparatorContainer : {
 		flex: 60,
-    backgroundColor : 'red'
 	},
 
 	Title: {
 		fontSize: 28,
-		fontWeight: 700,
+		fontWeight: '700',
 		color: '#014421',
-		marginLeft: '1%'
+		// marginLeft: '1%'
+    // backgroundColor : 'green'
 	},
 
 	FriendContainer: {
