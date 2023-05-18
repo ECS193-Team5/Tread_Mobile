@@ -48,6 +48,8 @@ function ProfilePage(props): JSX.Element {
     const [numMedals, setNumMedals] = useState(0);
 
     const [modalVisibleQR, setModalVisibleQR] = useState(false)
+    const [openQR, setOpenQR] = useState(false)
+
     const [modalVisiblePopUp, setModalVisiblePopUp] = useState(false)
     const [medalType, setMedalType] = useState('progress');
 
@@ -272,6 +274,7 @@ function ProfilePage(props): JSX.Element {
 
     const handleQRClick = function() {
         setModalVisiblePopUp(false)
+        setOpenQR(true)
     }
     const QRClickable = function(){
         return(
@@ -287,6 +290,13 @@ function ProfilePage(props): JSX.Element {
         )
     }
 
+    const handleQRModal = function(){
+      if(openQR){
+        setModalVisibleQR(true)
+      } 
+      setOpenQR(false)
+    }
+  
     return (
       <View style={ProfileStyles.Background}>
           <View style={ProfileStyles.TopSeparator}>
@@ -299,7 +309,7 @@ function ProfilePage(props): JSX.Element {
                   isVisible={modalVisibleQR}
                   hasBackdrop = {true}
                   backdropColor = 'black'
-                  onBackdropPress = { () => setModalVisibleQR(false)}
+                  onBackdropPress = {() => setModalVisibleQR(false)}
                   style = {{margin : 2}}
               >
                   <QRModalPopUp
@@ -315,7 +325,7 @@ function ProfilePage(props): JSX.Element {
               hasBackdrop = {true}
               backdropColor = 'rgba(0,0,0,0.7)'
               onBackdropPress = { () => setModalVisiblePopUp(false)}
-              onModalHide = {() => setModalVisibleQR(true)}
+              onModalHide = {handleQRModal}
               style = {{margin : 2}}
               animationIn = 'fadeIn'
               animationInTiming={160}
