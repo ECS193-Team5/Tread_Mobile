@@ -34,7 +34,7 @@ function InputForm(props): JSX.Element {
       return false
     }
 
-    if(!props.multiline && text.length === 0) {
+    if(!props.multiline && text.length >= 32) {
       return false
     }
 

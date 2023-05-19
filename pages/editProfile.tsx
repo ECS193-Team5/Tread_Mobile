@@ -7,51 +7,63 @@ import {
     // CheckBox,
 } from 'react-native';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {BACKEND_URL} from '@env';
 import axios from 'axios';
 
-import {styles} from '../css/signup/Style';
-import {launchImageLibrary} from 'react-native-image-picker';
 
-import CheckBox from '@react-native-community/checkbox';
+import styles from '../css/profile/edit/Styles'
+import ImageUpload from "../components/shared/ImageUpload";
+import InputForm from "../components/shared/InputForm";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {GoogleSignin} from "@react-native-google-signin/google-signin";
 
-function EditProfile(props): JSX.Element {
+function EditProfile({route, navigation}): JSX.Element {
 
     const [displayName, setDisplayName] = useState("");
-    const [validDisplayName, setValidDisplayName] = useState(true);
-    const [oldDisplayName, setOldDisplayName] = useState("");
-
+    const [validDisplayName, setValidDisplayName] = useState(false);
 
     const [picture, setPicture] = useState({});
     const [validPicture, setValidPicture] = useState(false);
 
-
-    useEffect(() => {
-        getDisplayName()
-    }, [])
-
-    const onChoosePicPress = function() {
-        const options = {
-            'includeBase64': true,
-            'maxWidth': 200,
-            'maxHeight': 200
+    const handleOnSubmit = function() {
+        if(validDisplayName) {
+            updateDisplayName()
         }
 
-        launchImageLibrary(options, (response) => {
-            if(!response['didCancel']) {
-                console.log('Picture Chosen');
-                const source = response['assets'][0]["base64"];
-                setPicture("data:image/jpeg;base64," + source)
-                setValidPicture(true);
-            }
-        });
+        if(validPicture) {
+            updatePicture()
+        }
     }
 
-    const getDisplayName = function() {
+    const handleOnDelete = function() {
+        deleteAccount();
+    }
+
+    const storeLogOut = async () => {
+        await AsyncStorage.setItem('loggedIn', 'false');
+    }
+
+    const logout = function() {
+        // console.log('logout')
+        storeLogOut().then((response) => {
+            signOut().then(response => {
+                navigation.navigate('Login')
+            })
+        })
+    }
+
+    const signOut = async () => {
+        try {
+            await GoogleSignin.signOut();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const deleteAccount = async function() {
         var config = {
-            method: 'post',
-            url: BACKEND_URL + 'user/get_display_name',
+            method: 'delete',
+            url: BACKEND_URL + 'delete_user',
             withCredentials: true,
             credentials: 'include',
             headers: {
@@ -60,14 +72,12 @@ function EditProfile(props): JSX.Element {
         };
 
         axios(config)
-            .then(function (response) {
-                // console.log(response.data['displayName'])
-                setDisplayName(response.data['displayName'])
-                setOldDisplayName(response.data['displayName'])
-            })
-            .catch((error) =>
-                console.log(error)
-            )
+          .then(function (response) {
+              logout();
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
     }
 
     const updatePicture = async function() {
@@ -86,7 +96,9 @@ function EditProfile(props): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data));
+                navigation.navigate('Profile',{
+                    refresh: true
+                })
             })
             .catch(function (error) {
                 console.log(error);
@@ -110,76 +122,70 @@ function EditProfile(props): JSX.Element {
         console.log(displayName);
         axios(config)
             .then(function (response) {
-                console.log('Updated display name')
-                console.log(JSON.stringify(response.data));
+                navigation.navigate('Profile',{
+                    refresh: true
+                })
             })
             .catch(function (error) {
                 console.log(error);
             });
     }
 
-    const handleOnPress = async function() {
-        if(validPicture) {
-            await updatePicture();
-        }
-
-        if(validDisplayName && (displayName !== oldDisplayName)) {
-            await updateDisplayName()
-        }
-    }
-//
-    const checkValidName = function(name) {
-        // console.log(name)
-        return name.length > 0
-    }
-
-    const handleDisplayNameChange = function(item) {
-        setDisplayName(item)
-        if(checkValidName(item)) {
-            setValidDisplayName(true);
-        } else {
-            setValidDisplayName(false);
-        }
-    }
-
     return (
-        <View style = {styles.mainContainer}>
-            <View style = {styles.titleContainer}>
-                <Text style = {styles.title}>
-                    Edit profile
-                </Text>
-            </View>
-            <View style = {styles.formContainer}>
-                <TextInput
-                    placeholder = "Display Name"
-                    placeholderTextColor= "grey"
-                    style = {validDisplayName ? styles.validInput : styles.invalidInput}
-                    onChangeText = {handleDisplayNameChange}
-                    value = {displayName}
-                />
+      <View style={styles.MainContainer}>
+          <View style={styles.TitleContainer}>
+              <Text style={styles.TitleText}>
+                  Edit Profile
+              </Text>
+          </View>
 
-                <Pressable style = {styles.ChoosePicButton} onPress = {onChoosePicPress}>
-                    <Text style = {styles.ChoosePicText}>
-                        Choose Picture
-                    </Text>
-                </Pressable>
+          <View style={styles.InputContainers}>
+              <ImageUpload
+                flex = {4.5}
+                placeholder = {route.params.picture}
+                picture={picture}
+                setPicture={setPicture}
+                valid={validPicture}
+                setValidPicture={setValidPicture}
 
-            </View>
-            <View style = {styles.checkContainer}>
-            </View>
-            <View style = {styles.signupContainer}>
-                <Pressable style = {(validDisplayName && (displayName !== oldDisplayName)) || validPicture ? styles.validSignupButton : styles.invalidSignupButton}
-                           disabled = {!((validDisplayName && (displayName !== oldDisplayName)) || validPicture)}
-                           onPress = {handleOnPress}>
-                    <Text style = {styles.signupText}>
-                        Edit Profile
-                    </Text>
-                </Pressable>
+              ></ImageUpload>
+              <View style={styles.DisplayNameInput}>
+                  <InputForm
+                    placeholder={route.params.displayName}
+                    value={displayName}
+                    setValue={setDisplayName}
+                    valid={validDisplayName}
+                    setValid={setValidDisplayName}
+                    editable={true}
+                    allowSpecial={null}
+                  >
+                  </InputForm>
+              </View>
 
-            </View>
-            <View style = {styles.signinContainer}>
-            </View>
-        </View>
+          </View>
+
+          <View style={styles.SubmitContainer}>
+              <Pressable style = {(validDisplayName || validPicture)? styles.validSignupButton : styles.invalidSignupButton}
+                         disabled = {!((validDisplayName || validPicture))}
+                         onPress = {handleOnSubmit}>
+                  <Text style = {styles.signupText}>
+                      Update Profile
+                  </Text>
+              </Pressable>
+
+          </View>
+
+          <View style={styles.DeleteContainer}>
+              <Pressable style = {styles.deleteButton}
+                         onPress = {handleOnDelete}>
+                  <Text style = {styles.signupText}>
+                      Delete Account
+                  </Text>
+              </Pressable>
+
+          </View>
+
+      </View>
     )
 }
 
