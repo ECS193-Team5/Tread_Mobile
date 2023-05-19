@@ -39,7 +39,7 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
 
 
   return (
-    <Pressable 
+    <Pressable
       onPress={() => setModalVisible(true)}
       style = {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}
     >
@@ -52,7 +52,7 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
         style = {{margin : 2}}
         onBackdropPress = { () => setModalVisible(false)}
       >
-        <ChallengeModalPopUp 
+        <ChallengeModalPopUp
           Challenge = {ChallengeData}
           isWeekly = {isWeekly}
           totalBaseUnits = {totalBaseUnits}
@@ -61,12 +61,12 @@ function ChallengeCard({ChallengeData, isWeekly}): JSX.Element {
       <StatusBar
         barStyle="dark-content"
       />
-      
-      <ImageCluster 
+
+      <ImageCluster
         images = {images}
         isWeekly = {isWeekly}
       />
-      
+
       <View style = {cardStyles.seperator}/>
 
       <View style = {cardStyles.ChallengeCardTextContainer}>

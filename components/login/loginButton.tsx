@@ -30,7 +30,6 @@ function LoginButton({filled, text, navigation}): JSX.Element {
 	const configureGoogleSignIn = function() {
 		GoogleSignin.configure({
 			offlineAccess: true,
-			androidClientId: ANDROID_CLIENT,
 			webClientId: WEB_CLIENT,
 			iosClientId: IOS_CLIENT
 		});
@@ -108,7 +107,7 @@ function LoginButton({filled, text, navigation}): JSX.Element {
 
 
 	return (
-		<Pressable 
+		<Pressable
 			style = {filled ? LoginStyles.loginButton : LoginStyles.signupButton}
 			onPress={onLoginPress}
 		>
