@@ -3,16 +3,19 @@ import {
 	Pressable,
   Image,
   View,
-  Text
+  Text,
+  TouchableHighlight
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import {cardStyles} from "../../css/cards/Style"
+import { styles } from '../../css/challenges/Style';
 
 function ChallengesSwap({onPress,text, available, imageURL}): JSX.Element {
 	return (
-    <Pressable 
+    <TouchableHighlight 
       onPress = {onPress}
+      style = {[cardStyles.ChallengeSwapCardContainer]}
     >
       <LinearGradient
       colors={['rgba(1, 63, 33,1)', 'rgba(1, 63, 33,0.5)', 'rgb(1, 100, 0)']}
@@ -31,7 +34,7 @@ function ChallengesSwap({onPress,text, available, imageURL}): JSX.Element {
         </View>
       </View>
       </LinearGradient>
-    </Pressable>
+    </TouchableHighlight>
 	)
 }
 

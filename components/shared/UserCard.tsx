@@ -13,7 +13,7 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 import { SharedStyles } from '../../css/shared/Style';
 
 import {showMessage} from 'react-native-flash-message'
-import {Swipeable} from 'react-native-gesture-handler';
+import {GestureHandlerRootView,Swipeable} from 'react-native-gesture-handler';
 
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
@@ -90,6 +90,7 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
         backgroundColor : '#014421',
         color : '#F9A800',
       })
+      UserRole === 'Mutual' ?  handler(UserInfo) : null
     })
     .catch(function (error) {
       console.log(error)
@@ -177,7 +178,7 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-        if (UserRole === 'All Friends' || UserRole === 'Received' || UserRole === 'Sent'){
+        if (UserRole === 'All Friends' || UserRole === 'Received' || UserRole === 'Sent' || UserRole === 'Mutual'){
           handler(UserInfo)
         }
       })
@@ -370,7 +371,7 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       .then(function (response) {
         showMessage({
           floating : true,
-          message : UserRole === 'Sent' ? 'Unsent Invite from  ' + UserInfo.username : 'Rejected Invite from  ' + UserInfo.username,
+          message : UserRole === 'Sent' ? 'Unsent Invite to ' + UserInfo.username : 'Rejected Invite from ' + UserInfo.username,
           backgroundColor : '#014421',
           color : '#F9A800',
         })
@@ -756,7 +757,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
-    if(currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Blocked Users' || UserRole === 'Sent' ||UserRole === 'participant' || cardRole === 'owner'){
+    if(currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Blocked Users' || UserRole === 'Sent' ||
+       UserRole === 'participant' || UserRole === 'Mutual' || cardRole === 'owner'){
       return null
     } else if (UserRole === 'Received') {
       return (
@@ -784,9 +786,13 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
   const getUserInfo = function(){
     return (
       <View style = {[cardStyles.ChallengeNameContainer, {flexDirection : 'column'}]}>            
+        {UserRole === 'Mutual' ? 
+        null 
+        :
         <Text style = {cardStyles.ChallengeNameText}>
           {UserInfo.displayName}
         </Text>
+        }
         <Text style = {[cardStyles.ChallengeNameText, {color : "#F9A800"}]}>
           {UserInfo.username}
         </Text> 
@@ -813,6 +819,14 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       return null
     } else if(UserRole === 'Sent' || UserRole === 'Received'){
       return getUserInfo()
+    } else if (UserRole === 'Mutual'){
+      return (
+      <View style = {[cardStyles.ChallengeNameContainer, {alignItems : 'center'}]}>
+          <Text style = {cardStyles.ChallengeNameText}>
+            {UserInfo.mutuals + (UserInfo.mutuals === 1 ? ' Mutual Friend' : ' Mutual Friends')}
+          </Text>
+        </View>
+      )          
     } else {
       return (
         <View style = {[cardStyles.ChallengeNameContainer, {alignItems : 'center'}]}>
@@ -825,33 +839,35 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
   }
 
   return(
-    <Swipeable
-      key = {UserInfo.username}
-      renderLeftActions={(progress, dragX) =>
-        renderLeftActions(progress, dragX, handler)
-      }
-      renderRightActions={(progress, dragX) =>
-        renderRightActions(progress, dragX, handler)
-      }
-      onSwipeableOpen={() => closeRow(index)}
-      ref={(ref) => (row[index] = ref)}
-      friction = {1.5}
-      leftThreshold = {30}
-      rightThreshold = {30}
-      childrenContainerStyle = {styles.FlatListContainer}>
-      <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, UserInfo.username === currentUser ? {borderColor : '#014421', borderWidth : 2} : null]}>
-        <View style = {cardStyles.ImageContainer}>
-          <Image style ={ImageStyles.single} source={{uri: image}}/>
-        </View>
+    <GestureHandlerRootView>
+      <Swipeable
+        key = {UserInfo.username}
+        renderLeftActions={(progress, dragX) =>
+          renderLeftActions(progress, dragX, handler)
+        }
+        renderRightActions={(progress, dragX) =>
+          renderRightActions(progress, dragX, handler)
+        }
+        onSwipeableOpen={() => closeRow(index)}
+        ref={(ref) => (row[index] = ref)}
+        friction = {1.5}
+        leftThreshold = {30}
+        rightThreshold = {30}
+        childrenContainerStyle = {styles.FlatListContainer}>
+        <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, UserInfo.username === currentUser ? {borderColor : '#014421', borderWidth : 2} : null]}>
+          <View style = {cardStyles.ImageContainer}>
+            <Image style ={ImageStyles.single} source={{uri: image}}/>
+          </View>
 
-        <View style = {cardStyles.seperator}/>
+          <View style = {cardStyles.seperator}/>
 
-        <View style = {cardStyles.ChallengeCardTextContainer}>
+          <View style = {cardStyles.ChallengeCardTextContainer}>
             {UserInfoOrRecipientInfo()}
             {isRoleInLeague()}
+          </View>
         </View>
-      </View>
-    </Swipeable>
+      </Swipeable>
+    </GestureHandlerRootView>
   )
 }
 

@@ -1,26 +1,21 @@
 import React, { useState } from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
   Text,
-  Image,
-  FlatList,
   LayoutAnimation,
   Platform,
   UIManager
 } from 'react-native';
 
 import {styles} from "../css/challenges/Style"
-import { SharedStyles } from '../css/shared/Style';
 
 import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
-import ChallengeInviteCard from '../components/shared/ChallengeInviteCard';
 import UserScroll from '../components/shared/UserScroll';
 
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
+import ZeroItem from '../components/shared/ZeroItem';
 
 const options = [
   { label : "Received" , value : 'Received'},
@@ -42,6 +37,7 @@ function IncomingFriendsPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setRequests(response.data)
+        setCount(response.data.length)
       })
       .catch(function (error) {
         console.log(error)
@@ -61,7 +57,9 @@ function IncomingFriendsPage(props): JSX.Element {
   
     axios(config)
       .then(function (response) {
+        console.log(response.data)
         setRequests(response.data)
+        setCount(response.data.length)
       })
       .catch(function (error) {
         console.log(error)
@@ -71,6 +69,7 @@ function IncomingFriendsPage(props): JSX.Element {
   var NavImageUrl = "https://imgur.com/nFRNXOB.png"  
   const [RequestData, setRequests] = useState(getReceivedRequests)
   const [pageTitle, setPageTitle] = useState('Received')
+  const [count, setCount] = useState(0)
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -115,6 +114,7 @@ function IncomingFriendsPage(props): JSX.Element {
     console.log("deleted request")
     const filteredData = RequestData.filter(item => item.username !== rData.username);
     setRequests(filteredData)
+    filteredData.length === 0 ? setCount(0) : null
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
 
@@ -141,12 +141,21 @@ function IncomingFriendsPage(props): JSX.Element {
         />
       </View>
       <View style = {styles.ChallengesContainer}>
-        <UserScroll
-          UserData={RequestData}
-          handler = {deleteItem}
-          UserRole = {pageTitle}
-          onRefresh = {handleRefresh}
-        />
+        {count > 0 ?
+          <UserScroll
+            UserData={RequestData}
+            handler = {deleteItem}
+            UserRole = {pageTitle}
+            onRefresh = {handleRefresh}
+          />
+        :
+          <ZeroItem
+            promptText={'You have ' + (pageTitle === 'Received' ? 'not received any' : 'not sent any') + ' friend requests'}
+            navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
+            navigateToPage='AddFriend'
+            props = {props}
+          />    
+        }
       </View>
 
     </View>

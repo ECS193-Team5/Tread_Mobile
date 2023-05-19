@@ -9,16 +9,16 @@ import {styles} from '../../css/add/home/Style'
 import AddButton from '../../components/add/addButton';
 
 function AddPage(props): JSX.Element {
-	onAddChallengePress = function () {
-		props.navigation.navigate('AddChallenge')
+	const onAddChallengePress = function () {
+		props.navigation.navigate('AddChallenge', {defaultView : true})
 	}
 
-	onAddFriendPress = function () {
+	const onAddFriendPress = function () {
 		props.navigation.navigate('AddFriend')
 	}
 
-	onAddLeaguePress = function () {
-		props.navigation.navigate('AddLeague')
+	const onAddLeaguePress = function () {
+		props.navigation.navigate('AddLeague' , {defaultView : true})
 	}
 
   return (

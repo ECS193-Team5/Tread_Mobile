@@ -6,12 +6,12 @@ import {
 } from 'react-native';
 
 import { modalstyle } from '../../css/shared/modalStyle';
-import ChallengeCard from './ChallengeCard';
 import ProgressCard from './ProgressCard';
 
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import { calculateProgress } from '../Helpers/calculationHelpers';
+import DragDownBar from '../shared/DragDownBar';
 
 function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
   const makeProgressObj = function(item, index){
@@ -63,7 +63,7 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
   
     axios(config)
       .then(function (response) {
-        console.log(response.data)
+        // console.log(response.data)
         setUsername(response.data)
       })
       .catch((error) =>
@@ -121,6 +121,9 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
   }
   return(
     <View style={modalstyle.container}>
+      <View style = {modalstyle.dragDownContainer}>
+        <DragDownBar/>
+      </View>
       <View style = {modalstyle.PopUpTextContainer}>
         <Text style = {modalstyle.TitleTextStyle}>{title}</Text>
       </View>

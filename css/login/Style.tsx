@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
+const LoginStyles = StyleSheet.create({
   container : {
     paddingTop:(Platform.OS === 'ios') ? "12%" : 0
   },
@@ -15,33 +15,29 @@ const styles = StyleSheet.create({
 		flex: 1,
 		marginLeft: '12.5%',
 		marginRight: '12.5%',
-// 		backgroundColor: 'yellow'
   },
 
   titleContainer : {
   	flex: 20,
-//   	backgroundColor: 'red',
   	justifyContent: 'flex-end'
   },
 
   titleText: {
   	color: '#F9A800',
   	fontSize: 55,
-  	fontWeight: 400
+  	fontWeight: '400'
   },
 
   loginContainer : {
  		flex: 50,
  		alignItems: 'center',
  		justifyContent: 'flex-end',
-//  		backgroundColor: 'blue'
   },
 
   separatorContainer : {
   	flex: 10,
   	flexDirection: 'row',
   	alignItems: 'center'
-//   	backgroundColor: 'green'
   },
 
   outsideSeparator: {
@@ -69,15 +65,6 @@ const styles = StyleSheet.create({
   	justifyContent: 'flex-start'
   },
 
-//   LoginButtonContainer: {
-// //     alignSelf : 'center',
-// //     position : 'relative',
-// //     width : '85%',
-// //     top : '75%',
-//     backgroundColor: "#d9d9d9",
-//     borderRadius: 30,
-//     paddingVertical: 10,
-//   },
 	loginButton : {
 		backgroundColor: 'white',
 		borderRadius: 50,
@@ -110,8 +97,33 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#ffffff",
     fontWeight: "700"
-  }
+  },
 
+	pushupImage: {
+		height: '75%',
+		width: '75%',
+		resizeMode: 'contain',
+		position: "absolute",
+		left: '55%',
+		bottom: '40%'
+	},
+
+	liftingImage: {
+		height: '75%',
+		width: '75%',
+		resizeMode: 'contain',
+		position: "absolute",
+		right: '55%'
+	},
+
+	skiImage: {
+		height: '75%',
+		width: '75%',
+		resizeMode: 'contain',
+		position: "absolute",
+		top: '15%',
+		left: '35%'
+	}
 });
 
-export { styles}
+export {LoginStyles}

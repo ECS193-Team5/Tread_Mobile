@@ -21,10 +21,16 @@ import {showMessage} from 'react-native-flash-message'
 function Invite({text, config, props, pagetoNav}): JSX.Element {
 
   const [qrValue, setQrValue] = useState('')
-  const [openScanner, setOpenScanner] = useState(false)  
-  
+  const [openScanner, setOpenScanner] = useState(false)
+
   const onBarcodeScan = function(qrvalue) {
-    
+    if(!qrvalue.startsWith("https://tread.run/requestFriend?")){
+      qrvalue = "";
+    }
+    else{
+      qrvalue = qrvalue.split("?")[1];
+    }
+
     setQrValue(qrvalue)
     setValidID(true)
     setOpenScanner(false)
@@ -89,11 +95,9 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
     }
     const onSubmit = async function() {
       var message = ''
-      
-      pagetoNav === 'AddFriend' ? config['data']['friendName'] = friendID : config['data']['recipient'] = friendID;
-    
 
-      
+      pagetoNav === 'AddFriend' ? config['data']['friendName'] = friendID : config['data']['recipient'] = friendID;
+
       axios(config)
         .then(function (response) {
             var message = ''
@@ -119,6 +123,14 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                 floating : true,
                 message : message,
                 type : 'warning',
+              })
+            } else {
+              message = pagetoNav === 'League Details' ? 'Sent league invite to ' + friendID :  'Sent friend request to ' + friendID
+              showMessage({
+                floating : true,
+                message : message,
+                backgroundColor : '#014421',
+                color : '#F9A800',
               })
             }
             onFriendChange("");
@@ -149,7 +161,7 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
             <View style = {styles.InputContainer}>
               <View style = {styles.FriendContainer}>
                 <TextInput
-                  placeholder = "Enter User id"
+                  placeholder = "Enter User ID"
                   placeholderTextColor= "grey"
                   style = {styles.Input}
                   onChangeText = {onFriendChange}
@@ -174,8 +186,6 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                       </Text>
                   </Pressable>
               </View>
-            </View>
-            <View style = {styles.SeparatorContainer}>
             </View>
           </View>
           }

@@ -10,6 +10,17 @@ const progressCardStyle = StyleSheet.create({
     alignItems : 'center',
   }, 
 
+  LeagueCardContainer : {
+    width : "89%",
+    borderRadius : 20,
+    flexDirection : 'row',
+    marginBottom: ".6%",
+    paddingVertical : "3%",
+    alignItems : 'center',
+    backgroundColor : '#FFFFFF'
+  }, 
+
+
   ImageSwapSection : {
     flex : 40,
     alignItems : "center",
@@ -39,9 +50,6 @@ const progressCardStyle = StyleSheet.create({
   ProgressTextStyle : {
     color : "#F9A800",
     fontWeight : '700',
-    // alignSelf : 'flex-end',
-    // marginRight : '2%', 
-    // marginLeft : '2%',
     marginLeft : '2%',
     justifyContent : 'center',
     position : 'absolute',    

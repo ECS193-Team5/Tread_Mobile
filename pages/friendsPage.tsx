@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
   Text,
-  Image,
-  FlatList,
   Platform,
   UIManager,
   LayoutAnimation
 } from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
-import ChallengesSwap from '../components/Challenges/ChallengeSwap';
-import LeagueCard from '../components/Leagues/LeagueCard';
 
 import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
@@ -21,6 +14,7 @@ import UserScroll from '../components/shared/UserScroll';
 
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
+import ZeroItem from '../components/shared/ZeroItem';
 
 const options = [
   { label : "All" , value : 'All Friends'},
@@ -68,6 +62,7 @@ function LeaguesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setFriendData(response.data)
+        setCount(response.data.length)
       })
       .catch(function (error) {
         console.log(error)
@@ -88,16 +83,17 @@ function LeaguesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setFriendData(response.data)
+        setCount(response.data.length)
       })
       .catch(function (error) {
         console.log(error)
       })
   }
   
-  // Check for invitations and update icon, but for now
   const [IncomingImageUrl, setIncomingImage] = useState(getIncomingImage)
   const [FriendData, setFriendData] = useState(getFriends)
   const [friendType, setFriendType] = useState('All Friends')
+  const [count, setCount] = useState(0)
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -141,6 +137,7 @@ function LeaguesPage(props): JSX.Element {
     // when writing the backend call instead of setting the filtered data, set the actual member list to update everything accordingly
     const filteredData = FriendData.filter(item => item.username !== fData.username);
     setFriendData(filteredData)
+    filteredData.length === 0 ? setCount(0) : null
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
 
@@ -168,12 +165,22 @@ function LeaguesPage(props): JSX.Element {
         />
       </View>
       <View style = {styles.ChallengesContainer}>
-        <UserScroll
-          UserData={FriendData}
-          handler = {deleteMember}
-          UserRole = {friendType}
-          onRefresh = {handleRefresh}
-        />
+        {count > 0 ?
+          <UserScroll
+            UserData={FriendData}
+            handler = {deleteMember}
+            UserRole = {friendType}
+            onRefresh = {handleRefresh}
+          />
+          :
+          <ZeroItem
+            promptText= {'You ' + (friendType === 'All Friends' ? 'don\'t have any friends yet' : 'haven\'t blocked anyone yet')}
+            navigateToText= {friendType === 'All Friends' ? 'Make some here!' : null}
+            navigateToPage="AddFriend"
+            props = {props}
+          />    
+        }
+
       </View> 
 
     </View>

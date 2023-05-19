@@ -6,7 +6,8 @@ const ImageStyles = StyleSheet.create({
     height : 39 , 
     borderRadius : 19.5, 
     borderWidth : 2, 
-    borderColor : '#014421'
+    borderColor : '#014421',
+    backgroundColor : '#FFFFFF'
   },
   
   second: {
@@ -15,7 +16,8 @@ const ImageStyles = StyleSheet.create({
     borderRadius : 19.5, 
     borderWidth : 2, 
     borderColor : '#014421', 
-    marginLeft : -12
+    marginLeft : -12,
+    backgroundColor : '#FFFFFF'
   },
 
   third : {
@@ -65,15 +67,22 @@ const ImageStyles = StyleSheet.create({
   QR : {
     width :28, 
     height : 28,
-    paddingHorizontal : '8%',
+    paddingHorizontal : '6%',
     alignSelf : 'center'
   },
 
   Options : {
     width :30, 
     height : 30,
-    paddingHorizontal : '8%',
-    alignSelf : 'center'
+    alignSelf : 'center',
+    paddingHorizontal : '6%',
+  },
+
+  Settings : {
+    width :30, 
+    height : 30,
+    alignSelf : 'center',
+    paddingHorizontal : '2%',
   },
 
   Leave : {
@@ -107,6 +116,12 @@ const ImageStyles = StyleSheet.create({
     alignSelf : 'center'
   },
 
+  ZeroImage : {
+    width :70, 
+    height : 70,
+    marginTop : '5%', 
+    alignSelf : 'center'
+  }
 
 });
 

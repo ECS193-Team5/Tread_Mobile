@@ -2,7 +2,7 @@ import {
     View,
 } from 'react-native';
 import axios from 'axios';
-import {useEffect} from "react";
+import {useState, useEffect} from "react";
 import {
     initialize,
     requestPermission,
@@ -11,21 +11,48 @@ import {
     getSdkStatus,
     SdkAvailabilityStatus,
 } from 'react-native-health-connect';
-import {BACKEND_URL} from '@env';
 import {HealthConnect} from "./exerciseNameConverstion.json";
-const ListenerComponentHealthConnect = () => {
+import {reduceExercisesToUnique, sendExerciseList } from './sensorHelperFunctions';
+
+const ListenerComponentHealthConnect = (props) => {
+    const [dataResults, setDataResults] = useState([]);
+
     useEffect(() => {
-        readSampleData();
-    });
+        if(props.update){
+            props.setUpdate(false);
+            try{
+                console.log("Attempt to read sample data");
+                readSampleData();
+            }
+            catch(error){
+                console.log("Error - Either HealthConnect failed or this is an Apple Device");
+            }
+        }
+    }, );
+
+    useEffect(() => {
+        if(dataResults){
+            let exerciseList = dataResults.map(convertWorkoutTime);
+            let uniqueExerciseList = reduceExercisesToUnique(exerciseList);
+
+            sendExerciseList(exerciseList, uniqueExerciseList, "healtConnect");
+        }
+    }, [dataResults]);
+
 
     const readGrantedPermissions = () => {
+        try{
         getGrantedPermissions().then((permissions) => {
             console.log('Granted permissions ', { permissions });
         });
+    }
+    catch(error){
+        console.log("Error - Either HealthConnect failed or this is an Apple Device");
+    }
     };
 
     const checkAvailability = async () => {
-
+        try{
         const status = await getSdkStatus();
         if (status === SdkAvailabilityStatus.SDK_AVAILABLE) {
             console.log('SDK is available');
@@ -43,33 +70,53 @@ const ListenerComponentHealthConnect = () => {
             console.log('SDK is not available, provider update required');
             return false;
         }
+        }
+        catch(error){
+            console.log("Error - Either HealthConnect failed or this is an Apple Device");
+        }      
     }
 
     const getLastReadDate = async () => {
         var config = {
             method: 'post',
-            url: BACKEND_URL + 'sensors/get_sensor_date',
+            url: 'https://tread-backend-wvh22rj5mq-uw.a.run.app/data_origin/get_origin_last_import_date',
             withCredentials: true,
             credentials: 'include',
             headers: {
               Accept: 'application/json',
             },
             data:{
-                sensorType:"HealthConnect"
+                dataOrigin:"healthConnect"
             }
           };
 
           axios(config)
-            .then((response) => {
-                return new Date(response.data).toISOString()
+            .then(async (response) => {
+                let timeString = new Date(0).toISOString();
+                if (response.data.healthConnectLastPostedDate){
+                    timeString = response.data.healthConnectLastPostedDate;
+                }
+                console.log(timeString);
+
+                const result = await readRecords('ExerciseSession', {
+                    timeRangeFilter: {
+                        operator: 'between',
+                        startTime: timeString,
+                        endTime: '2023-08-09T23:53:15.405Z',
+                    },
+                });
+                setDataResults(result);
+
+
+
             })
             .catch(function (error) {
-                return new Date().toISOString();
+                console.log("Error - Either HealthConnect failed or this is an Apple Device");
+                return;
             });
     }
 
-
-    const convertWorkout = (workout) => {
+    const convertWorkoutTime = (workout) => {
 
         let name = "";
 
@@ -85,38 +132,18 @@ const ListenerComponentHealthConnect = () => {
         let timeMin = (end-start)/(1000*60);
         return ({
                 loggedDate: start,
-                unit: "min",
-                amount: timeMin,
-                exerciseName: name
+                exercise: {
+                    unit: "min",
+                    amount: timeMin,
+                    exerciseName: name
+                }
         });
 
     }
 
-    const sendExerciseList = (result) => {
-        var config = {
-            method: 'post',
-            url: BACKEND_URL + 'sensors/add_exercise_list',
-            withCredentials: true,
-            credentials: 'include',
-            headers: {
-              Accept: 'application/json',
-            },
-            data:{
-                exerciseList: result
-            }
-          };
-
-          axios(config)
-            .then((response) => {
-                console.log("Successfully sent exercises")
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
     const readSampleData = async () => {
         // Intialize the Client
+        try{
         const isInitialized = await initialize();
 
         const grantedPermissions = await requestPermission([
@@ -132,18 +159,14 @@ const ListenerComponentHealthConnect = () => {
             return;
         }
 
-        const startTimeString = new Date(1672534861000).toISOString();//await getLastReadDate();
+        await getLastReadDate();
+        }
+        catch{
+            console.log("Error - Either HealthConnect failed or this is an Apple Device");
+        }
 
-        const result = await readRecords('ExerciseSession', {
-            timeRangeFilter: {
-                operator: 'between',
-                startTime: startTimeString,
-                endTime: '2023-08-09T23:53:15.405Z',
-            },
-        });
-        let exerciseList = result.map(convertWorkout)
-        sendExerciseList(exerciseList);
     }
+
 
     return (<View></View>);
 }

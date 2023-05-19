@@ -16,6 +16,8 @@ import SwitchSelector from "react-native-switch-selector"
 import LeagueInviteCard from '../components/shared/LeagueInviteCard';
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
+import ZeroItem from '../components/shared/ZeroItem';
+import LeagueInviteScroll from '../components/shared/LeagueInviteScroll';
 
 const options = [
   { label : "Received" , value : 'Received'},
@@ -23,7 +25,7 @@ const options = [
 ]
 
 function IncomingLeaguesPage(props): JSX.Element {
-  function getReceived() { 
+  function getReceived() {
     var config = {
       method: 'post',
       url: BACKEND_URL + 'league/get_invited_leagues',
@@ -33,17 +35,18 @@ function IncomingLeaguesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
+        setCount(response.data.length)
       })
       .catch((error) =>
         console.log(error)
       )
   }
 
-  function getSent() { 
+  function getSent() {
     var config = {
       method: 'post',
       url: BACKEND_URL + 'league/get_requested_leagues',
@@ -53,10 +56,11 @@ function IncomingLeaguesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
+        setCount(response.data.length)
       })
       .catch((error) =>
         console.log(error)
@@ -64,8 +68,8 @@ function IncomingLeaguesPage(props): JSX.Element {
   }
 
   const [LeagueData, setLeagueData] = useState(getReceived)
-  const [pageTitle, setPageTitle] = useState('Sent')
-  const [refreshing, setRefreshing] = useState(false)
+  const [count, setCount] = useState(0)
+  const [pageTitle, setPageTitle] = useState('Received')
 
   const handleRefresh = function(){
     if(pageTitle === 'Received'){
@@ -75,17 +79,8 @@ function IncomingLeaguesPage(props): JSX.Element {
     }
   }
 
-  const Refresh = function() {
-    setRefreshing(true);
-    setTimeout(() => {
-      handleRefresh()
-      setRefreshing(false);
-      }, 450);
-  }
+  var imageUrl = "https://imgur.com/nFRNXOB.png"
 
-
-  var imageUrl = "https://imgur.com/nFRNXOB.png"  
-  
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -95,7 +90,7 @@ function IncomingLeaguesPage(props): JSX.Element {
   const layoutAnimConfig = {
     duration: 1000,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut, 
+      type: LayoutAnimation.Types.easeInEaseOut,
     },
     delete: {
       duration: 200,
@@ -104,12 +99,6 @@ function IncomingLeaguesPage(props): JSX.Element {
     },
   };
 
-  const getdropdownIcon = function(){
-    return (
-    <Image style = {{width : 10, height : 10}}source={{uri: "https://imgur.com/ybSDJeh.png"}}/>
-    )
-  }
-  
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
     setPageTitle(selectedItem)
@@ -120,24 +109,14 @@ function IncomingLeaguesPage(props): JSX.Element {
       getSent()
     }
   }
-  
-  const deleteItem = function(lData) {    
+
+  const deleteItem = function(lData) {
     console.log(lData._id)
     console.log("deleted")
     const filteredData = LeagueData.filter(item => item._id !== lData._id);
     setLeagueData(filteredData)
-    LayoutAnimation.configureNext(layoutAnimConfig) 
-  }
-
-  const renderInvite = ({item, index}) => {
-    return (
-    <LeagueInviteCard
-      LeagueData= {item}
-      index = {index}
-      handler = {deleteItem}
-      pageTitle = {pageTitle}
-      />
-    )
+    filteredData.length === 0 ? setCount(0) : null
+    LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
   return (
@@ -153,7 +132,7 @@ function IncomingLeaguesPage(props): JSX.Element {
       </View>
       <View style = {styles.filterContainer}>
       <SwitchSelector
-          initial= {1}
+          initial= {0}
           onPress = {value => handleDropDown(value)}
           textColor = {'#014421'}
           selectedColor = {'#F9A800'}
@@ -163,19 +142,23 @@ function IncomingLeaguesPage(props): JSX.Element {
         />
       </View>
       <View style = {styles.ChallengesContainer}>
-        <FlatList
-          data = {LeagueData}
-          renderItem = {renderInvite}
-          refreshControl ={
-            <RefreshControl 
-              refreshing = {refreshing} 
-              onRefresh = {Refresh} 
-              colors = {'#014421'} 
-              tintColor = {'#014421'}
-              progressViewOffset = {-10}
-            />
-          }
+
+      {count > 0 ?
+        <LeagueInviteScroll 
+          LeagueData={LeagueData} 
+          handler={deleteItem} 
+          onRefresh={handleRefresh} 
+          pageTitle={pageTitle}          
         />
+        :
+          <ZeroItem
+            promptText={'You have not ' + (pageTitle === 'Received' ? 'received any' : 'sent any') + ' league invites'}
+            navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
+            navigateToPage={'AddLeague'}
+            props = {props}
+            defaultView = {false}
+          />
+        }
       </View>
     </View>
   )
