@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
 
   SuggestedSeparatorContainer : {
 		flex: 180,
-    backgroundColor : 'blue'
 	},
 
 	TitleContainer : {
@@ -189,6 +188,15 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center'
+	},
+
+  SuggestedTitleContainer : {
+		flex: 2,
+    marginHorizontal : '5%',
+	},
+
+  SuggestedLeagueContainer : {
+		flex: 20,
 	},
 
 });

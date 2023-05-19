@@ -17,6 +17,7 @@ import LeagueInviteCard from '../components/shared/LeagueInviteCard';
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import ZeroItem from '../components/shared/ZeroItem';
+import LeagueInviteScroll from '../components/shared/LeagueInviteScroll';
 
 const options = [
   { label : "Received" , value : 'Received'},
@@ -69,7 +70,6 @@ function IncomingLeaguesPage(props): JSX.Element {
   const [LeagueData, setLeagueData] = useState(getReceived)
   const [count, setCount] = useState(0)
   const [pageTitle, setPageTitle] = useState('Received')
-  const [refreshing, setRefreshing] = useState(false)
 
   const handleRefresh = function(){
     if(pageTitle === 'Received'){
@@ -78,15 +78,6 @@ function IncomingLeaguesPage(props): JSX.Element {
       getSent()
     }
   }
-
-  const Refresh = function() {
-    setRefreshing(true);
-    setTimeout(() => {
-      handleRefresh()
-      setRefreshing(false);
-      }, 450);
-  }
-
 
   var imageUrl = "https://imgur.com/nFRNXOB.png"
 
@@ -128,17 +119,6 @@ function IncomingLeaguesPage(props): JSX.Element {
     LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
-  const renderInvite = ({item, index}) => {
-    return (
-    <LeagueInviteCard
-      LeagueData= {item}
-      index = {index}
-      handler = {deleteItem}
-      pageTitle = {pageTitle}
-      />
-    )
-  }
-
   return (
     <View style = {styles.container}>
       <View style = {styles.topRightClickContainer}>
@@ -164,18 +144,11 @@ function IncomingLeaguesPage(props): JSX.Element {
       <View style = {styles.ChallengesContainer}>
 
       {count > 0 ?
-
-        <FlatList
-        data = {LeagueData}
-        renderItem = {renderInvite}
-        refreshControl ={
-          <RefreshControl
-            refreshing = {refreshing}
-            onRefresh = {Refresh}
-            tintColor = {'#014421'}
-            progressViewOffset = {-10}
-          />
-        }
+        <LeagueInviteScroll 
+          LeagueData={LeagueData} 
+          handler={deleteItem} 
+          onRefresh={handleRefresh} 
+          pageTitle={pageTitle}          
         />
         :
           <ZeroItem

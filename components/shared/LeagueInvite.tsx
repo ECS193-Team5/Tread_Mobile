@@ -17,7 +17,7 @@ function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {
               {text}
           </Text>
         </View>
-        <View style = {[styles.InputContainer, {flex: 90, marginTop : '0%', marginHorizontal : '0%', backgroundColor : 'green'}]}>
+        <View style = {[styles.InputContainer, {flex: 90, marginTop : '0%', marginHorizontal : '0%'}]}>
           <View style = {[styles.SubmitContainer,{justifyContent : 'center'}]}>
             <Pressable style = {styles.ButtonValid}
               onPress = {onPress}

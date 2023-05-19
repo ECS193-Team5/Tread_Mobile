@@ -7,6 +7,8 @@ import {
   Platform,
   PermissionsAndroid,
   StatusBar,
+  UIManager,
+  LayoutAnimation,
 } from 'react-native';
 
 import { styles } from '../../css/add/league/Style';
@@ -21,6 +23,9 @@ import { showMessage } from 'react-native-flash-message';
 import ImageUpload from "../../components/shared/ImageUpload";
 import InputForm from "../../components/shared/InputForm";
 import createLeague from "../../routes/add/createLeague";
+import { SharedStyles } from '../../css/shared/Style';
+import LeagueInviteScroll from '../../components/shared/LeagueInviteScroll';
+import ZeroItem from '../../components/shared/ZeroItem';
 
 const options = [
   { label: "Create", value: true },
@@ -64,17 +69,27 @@ function AddLeaguePage(props): JSX.Element {
       }
     };
 
-
     axios(config)
       .then(function (response) {
         props.navigation.navigate("Leagues", { defaultView: false })
+        showMessage({
+          floating : true,
+          message : 'Joined League',
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
       })
       .catch((error) =>{
         console.log(error);
-        setQrValue("Already joined this league")}
+        setQrValue("Already joined this league")
+        showMessage({
+          floating : true,
+          message : 'Already in this League',
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+      }  
       )
-
-
   }
 
   const onBarcodeScan = function (qrvalue) {
@@ -231,6 +246,67 @@ function AddLeaguePage(props): JSX.Element {
     )
   }
 
+  if (Platform.OS === 'android') {
+    if (UIManager.setLayoutAnimationEnabledExperimental) {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }
+
+  const layoutAnimConfig = {
+    duration: 1000,
+    update: {
+      type: LayoutAnimation.Types.easeInEaseOut, 
+    },
+    delete: {
+      duration: 200,
+      type: LayoutAnimation.Types.easeOut,
+      property: LayoutAnimation.Properties.opacity,
+    },
+  };
+
+
+  // const getReccLeagues = function(){
+
+  // }
+
+  function getReccLeagues() {
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/get_recommended',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data)
+        setSuggestedLeagues(response.data)
+        setCount(response.data.length)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
+  const handleRefresh = function(){
+    getReccLeagues()
+  }
+
+  const deleteItem = function(lData) {
+    console.log(lData._id)
+    console.log("deleted")
+    const filteredData = suggestedLeagues.filter(item => item._id !== lData._id);
+    setSuggestedLeagues(filteredData)
+    filteredData.length === 0 ? setCount(0) : null
+    LayoutAnimation.configureNext(layoutAnimConfig)
+  }
+
+  const [suggestedLeagues, setSuggestedLeagues] = useState(getReccLeagues);
+  const [count, setCount] = useState(0);
+
   const getJoinCode = function(){
     return(
       <View style ={{flex : 1}}>
@@ -241,7 +317,28 @@ function AddLeaguePage(props): JSX.Element {
             qrValue={qrValue}
           />
         </View>
-        <View style={styles.SuggestedSeparatorContainer} />
+        <View style={styles.SuggestedSeparatorContainer}>
+          <View style = {[SharedStyles.seperator, {marginTop : '0%'}]}/>
+          <View style = {styles.SuggestedTitleContainer}>
+            <Text style = {styles.Title}>
+                Suggested Leagues
+            </Text>
+          </View> 
+          <View style = {styles.SuggestedLeagueContainer}>
+          {count > 0 ?
+            <LeagueInviteScroll 
+              LeagueData={suggestedLeagues} 
+              handler={deleteItem} 
+              onRefresh={handleRefresh} 
+              pageTitle='suggested'          
+            />
+            :
+            <ZeroItem
+              promptText={'No recommended leagues yet'}
+            />    
+          }
+          </View> 
+        </View>
       </View>
     )
   }

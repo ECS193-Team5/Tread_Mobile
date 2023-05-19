@@ -17,13 +17,10 @@ import {BACKEND_URL} from '@env';
 import Invite from '../../components/shared/invite';
 import axios from 'axios';
 import getReccFriend from "../../routes/add/recommend_friend";
-import {resolve} from "react-native-svg/lib/typescript/lib/resolve";
 import UserScroll from '../../components/shared/UserScroll';
 import ZeroItem from '../../components/shared/ZeroItem';
 
 function AddFriendPage(props): JSX.Element {
-
-
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
