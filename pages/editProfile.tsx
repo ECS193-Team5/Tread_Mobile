@@ -43,7 +43,6 @@ function EditProfile({route, navigation}): JSX.Element {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {
@@ -60,7 +59,6 @@ function EditProfile({route, navigation}): JSX.Element {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {

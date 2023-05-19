@@ -144,7 +144,6 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
       {
@@ -198,7 +197,6 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
       {
@@ -252,7 +250,6 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
       {
@@ -306,7 +303,6 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
       {
@@ -465,7 +461,6 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
       {
@@ -518,7 +513,6 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
       {
@@ -572,7 +566,6 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
       {
