@@ -14,6 +14,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "171571653869-8sts19ebi7ohuh5vuh03uf8panotqrnv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.treadmobile",
+            "certificate_hash": "6640e2bcd0f8667403d37a56c15647037f74e064"
+          }
+        },
+        {
+          "client_id": "171571653869-b41lsfaj7c542l51lk4mahekomrq3v49.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.treadmobile",
+            "certificate_hash": "c06ea4690452e78f3dc986ce3ff77e2e4d4d7193"
+          }
+        },
+        {
+          "client_id": "171571653869-phstkuqhfrhgqr41keab72nmu9h62hjh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.treadmobile",
+            "certificate_hash": "7f5c923e2d78288dae7eb70909fcc1001a79acd3"
+          }
+        },
+        {
           "client_id": "171571653869-ls5iqdlo1boe6isj7r1koo2tvi57g62m.apps.googleusercontent.com",
           "client_type": 3
         }
