@@ -151,21 +151,71 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
         })
       })
   }
+
+  const SendInvite = function(){
+    console.log('send invite to league')
+
+    //backend call here
+      var config = {
+        method: 'post',
+        url: BACKEND_URL + 'league/user_request_to_join',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+        },
+        data: {
+          leagueID: LeagueData._id
+        }
+      };
+  
+      axios(config)
+        .then(function (response) {
+          handler(LeagueData)
+          showMessage({
+            floating : true,
+            message : 'Joined League',
+            backgroundColor : '#014421',
+            color : '#F9A800',
+          })
+        })
+        .catch((error) =>{
+          console.log(error);
+          showMessage({
+            floating : true,
+            message : 'Error joining league',
+            type : 'danger',
+          })
+        })
+    }
   
   const renderRightActions = (progress, dragX, handler) => {
-    return (
-      <View style={SharedStyles.RightSliderContainer}>
+    if(pageTitle === 'suggested'){
+      return (
+        <View style={SharedStyles.RightSliderContainer}>
         <Pressable
-          onPress={RejectInvite}
+          onPress={SendInvite}
         >
-          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
+          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/JP8ae2t.png'}}/>
         </Pressable>   
       </View>
-    );
+      )
+      return null
+    } else {
+      return (
+        <View style={SharedStyles.RightSliderContainer}>
+          <Pressable
+            onPress={RejectInvite}
+          >
+            <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
+          </Pressable>   
+        </View>
+      );
+    }
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
-    if (pageTitle === 'Sent'){
+    if (pageTitle === 'Sent' || pageTitle === 'suggested'){
       return ('')
     } else {
       return (
@@ -204,22 +254,34 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
           <View style = {cardStyles.seperator}/>
 
           <View style = {cardStyles.ChallengeCardTextContainer}>
-            <View style = {cardStyles.LeagueAddressContainer}>
-              <Text style = {cardStyles.ChallengeNameText}>
-                {SenderOrReceiver + " : "}
-              </Text>
-            </View>
-            <View style = {cardStyles.ChallengeNameContainer}>
-              <Text style = {cardStyles.LeagueNameText}>
-                {LeagueData.leagueName}
-              </Text>
-              <Text style = {cardStyles.ChallengeNameText}>
-                {LeagueData.members.length + (LeagueData.members.length > 1 ? " Members" : " Member")}
-              </Text>
-              <Text style = {[cardStyles.ChallengeNameText , {color : "#F9A800"}]}>
-                {LeagueData.activeChallenges + " Active Challenges"}
-              </Text>
-            </View>
+            {pageTitle !== 'suggested' ? 
+              <View style = {cardStyles.LeagueAddressContainer}>
+                <Text style = {cardStyles.ChallengeNameText}>
+                  {SenderOrReceiver + " : "}
+                </Text>
+              </View>
+              :
+              null
+            }
+            {pageTitle !== 'suggested' ? 
+              <View style = {cardStyles.ChallengeNameContainer}>
+                <Text style = {cardStyles.LeagueNameText}>
+                  {LeagueData.leagueName}
+                </Text>
+                <Text style = {cardStyles.ChallengeNameText}>
+                  {LeagueData.members.length + (LeagueData.members.length > 1 ? " Members" : " Member")}
+                </Text>
+                <Text style = {[cardStyles.ChallengeNameText , {color : "#F9A800"}]}>
+                  {LeagueData.activeChallenges + " Active Challenges"}
+                </Text>
+              </View>
+              :
+              <View style = {cardStyles.ChallengeNameContainer}>
+                <Text style = {cardStyles.LeagueNameText}>
+                  {LeagueData.leagueName}
+                </Text>
+              </View>
+            }
           </View>
         </View>
       </Swipeable>

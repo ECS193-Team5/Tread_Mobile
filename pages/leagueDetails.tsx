@@ -203,9 +203,14 @@ function LeagueDetails(props): JSX.Element {
         props.route.params.refresh()
         props.navigation.navigate("Leagues")
       })
-      .catch((error) =>
+      .catch(function (error) {
         console.log(error)
-      )
+        showMessage({
+          floating : true,
+          message : 'Error leaving league',
+          type : 'danger',
+        })
+      })
   }
 
   const handleEdit = function() {
@@ -214,9 +219,60 @@ function LeagueDetails(props): JSX.Element {
     props.navigation.navigate('EditLeague', {leagueData : props.route.params.leagueData, name : name ,  description : description, security : security})
   }
 
+  const deleteLeague = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/delete_league',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log('leave')
+        showMessage({
+          floating : true,
+          message : 'Deleted League',
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+        props.route.params.refresh()
+        props.navigation.navigate("Leagues")
+      })
+      .catch(function (error) {
+        console.log(error)
+        showMessage({
+          floating : true,
+          message : 'Error deleting league',
+          type : 'danger',
+        })
+      })
+  }
+
   const handleDelete = function() {
     console.log('Delete')
     setModalVisiblePopUp(false)
+    Alert.alert('Delete ' + name, 
+    'This will permanently delete your league. You will lose all the previous challenges, leaderboard, and history. There will be no recovery',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Delete League', 
+        onPress: deleteLeague,
+        style : 'destructive'
+      },
+    ]);
+    
     // props.navigation.navigate('EditLeague')
   }
 
@@ -235,7 +291,7 @@ function LeagueDetails(props): JSX.Element {
 
   const clickedLeave = function(){
     setModalVisiblePopUp(false)
-    Alert.alert('Leave ' + props.route.params.leagueData.leagueName + ' ?',
+    Alert.alert('Leave ' + {name} + ' ?',
     security === 'private' ? 'You are about to leave this league' : 'If you change your mind you will have to request to join again',
     [
       {
@@ -320,7 +376,7 @@ function LeagueDetails(props): JSX.Element {
           style = {{margin : 2}}
         >
           <QRModalPopUp
-            Name = {props.route.params.leagueData.leagueName}
+            Name = {name}
             idUserName = {props.route.params.leagueData._id}
             isLeague = {true}
             security = {security}

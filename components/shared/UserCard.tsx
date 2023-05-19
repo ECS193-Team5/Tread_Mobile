@@ -90,6 +90,7 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
         backgroundColor : '#014421',
         color : '#F9A800',
       })
+      UserRole === 'Mutual' ?  handler(UserInfo) : null
     })
     .catch(function (error) {
       console.log(error)
@@ -177,7 +178,7 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-        if (UserRole === 'All Friends' || UserRole === 'Received' || UserRole === 'Sent'){
+        if (UserRole === 'All Friends' || UserRole === 'Received' || UserRole === 'Sent' || UserRole === 'Mutual'){
           handler(UserInfo)
         }
       })
@@ -756,7 +757,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
-    if(currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Blocked Users' || UserRole === 'Sent' ||UserRole === 'participant' || cardRole === 'owner'){
+    if(currentUser === UserInfo.username || UserRole === 'All Friends' || UserRole === 'Blocked Users' || UserRole === 'Sent' ||
+       UserRole === 'participant' || UserRole === 'Mutual' || cardRole === 'owner'){
       return null
     } else if (UserRole === 'Received') {
       return (
@@ -784,9 +786,13 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
   const getUserInfo = function(){
     return (
       <View style = {[cardStyles.ChallengeNameContainer, {flexDirection : 'column'}]}>            
+        {UserRole === 'Mutual' ? 
+        null 
+        :
         <Text style = {cardStyles.ChallengeNameText}>
           {UserInfo.displayName}
         </Text>
+        }
         <Text style = {[cardStyles.ChallengeNameText, {color : "#F9A800"}]}>
           {UserInfo.username}
         </Text> 
@@ -813,6 +819,14 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       return null
     } else if(UserRole === 'Sent' || UserRole === 'Received'){
       return getUserInfo()
+    } else if (UserRole === 'Mutual'){
+      return (
+      <View style = {[cardStyles.ChallengeNameContainer, {alignItems : 'center'}]}>
+          <Text style = {cardStyles.ChallengeNameText}>
+            {UserInfo.mutuals + (UserInfo.mutuals === 1 ? ' Mutual Friend' : ' Mutual Friends')}
+          </Text>
+        </View>
+      )          
     } else {
       return (
         <View style = {[cardStyles.ChallengeNameContainer, {alignItems : 'center'}]}>

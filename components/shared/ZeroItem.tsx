@@ -15,12 +15,16 @@ function ZeroItem({promptText, SecondaryPrompt, navigateToText, navigateToPage, 
       <Image style ={ImageStyles.ZeroImage} source={{uri: 'https://imgur.com/q4Uysme.png'}}/>
       <Text style = {SharedStyles.ZeroTextStyle}> {promptText} </Text>
       {SecondaryPrompt !== undefined ? <Text style = {SharedStyles.SecondaryPromptStyle}> {SecondaryPrompt} </Text>: null}
-      <TouchableHighlight
-        onPress={() => props.navigation.navigate('Add', {screen : navigateToPage, initial : false, params : {defaultView : defaultView}})}
-        style = {{alignSelf : 'center', marginTop : '2%', borderRadius : 20}}
-        underlayColor = 'rgba(0,0,0,0.15)'>
-        <Text style = {SharedStyles.NavigatePrompt}> {navigateToText} </Text>
-      </TouchableHighlight>
+      {navigateToText !== null ?
+        <TouchableHighlight
+          onPress={() => props.navigation.navigate('Add', {screen : navigateToPage, initial : false, params : {defaultView : defaultView}})}
+          style = {{alignSelf : 'center', marginTop : '2%', borderRadius : 20}}
+          underlayColor = 'rgba(0,0,0,0.15)'>
+          <Text style = {SharedStyles.NavigatePrompt}> {navigateToText} </Text>
+        </TouchableHighlight>
+        :
+        null
+      }
     </View>
     )
 }

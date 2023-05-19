@@ -7,6 +7,8 @@ import {
   Platform,
   PermissionsAndroid,
   StatusBar,
+  UIManager,
+  LayoutAnimation,
 } from 'react-native';
 
 import { styles } from '../../css/add/league/Style';
@@ -21,6 +23,9 @@ import { showMessage } from 'react-native-flash-message';
 import ImageUpload from "../../components/shared/ImageUpload";
 import InputForm from "../../components/shared/InputForm";
 import createLeague from "../../routes/add/createLeague";
+import { SharedStyles } from '../../css/shared/Style';
+import LeagueInviteScroll from '../../components/shared/LeagueInviteScroll';
+import ZeroItem from '../../components/shared/ZeroItem';
 
 const options = [
   { label: "Create", value: true },
@@ -64,17 +69,27 @@ function AddLeaguePage(props): JSX.Element {
       }
     };
 
-
     axios(config)
       .then(function (response) {
         props.navigation.navigate("Leagues", { defaultView: false })
+        showMessage({
+          floating : true,
+          message : 'Joined League',
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
       })
       .catch((error) =>{
         console.log(error);
-        setQrValue("Already joined this league")}
+        setQrValue("Already joined this league")
+        showMessage({
+          floating : true,
+          message : 'Already in this League',
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+      }  
       )
-
-
   }
 
   const onBarcodeScan = function (qrvalue) {
@@ -150,6 +165,184 @@ function AddLeaguePage(props): JSX.Element {
       });
   }
 
+  const getCreateCode = function(){
+    return (
+      <View style ={{flex : 1}}>
+        <View style={styles.InputContainer}>
+          <View style={styles.ChoosePicContainer}>
+            <ImageUpload
+              flex={1}
+              picture={picture}
+              setPicture={setPicture}
+              valid={validPicture}
+              setValidPicture={setValidPicture}
+            ></ImageUpload>
+          </View>
+
+          <View style={styles.EnterLeagueContainer}>
+            <InputForm
+              placeholder={'Enter league name'}
+              value={leagueName}
+              setValue={setLeagueName}
+              valid={validLeagueName}
+              setValid={setValidLeagueName}
+              editable={true}
+              name = {true}
+            >
+            </InputForm>
+          </View>
+
+          <View style={styles.EnterDescContainer}>
+            <InputForm
+              placeholder={'Enter league description'}
+              value={leagueDesc}
+              setValue={setLeagueDesc}
+              valid={validLeagueDesc}
+              setValid={setValidLeagueDesc}
+              editable={true}
+              multiline={true}
+              allowSpecial={true}
+              name = {false}
+            >
+
+            </InputForm>
+
+          </View>
+
+          <View style={styles.InputTitle}>
+            <Text style={styles.InputTitleText}>
+              Security
+            </Text>
+          </View>
+
+          <View style={styles.ChooseSecContainer}>
+            <SwitchSelector
+              options={switchOptions}
+              initial={0}
+              selectedColor='white'
+              textColor='#014421'
+              buttonColor='#014421'
+              borderColor='#014421'
+              onPress={setSecurity}
+              hasPadding={true}
+            >
+            </SwitchSelector>
+          </View>
+
+          <View style={styles.EnterButtonContainer}>
+            <Pressable
+              style={(validPicture && validLeagueName && validLeagueDesc) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
+              onPress={onSubmit}
+              disabled={!(validPicture && validLeagueName && validLeagueDesc)}
+            >
+              <Text style={styles.ChoosePicText}>
+                Submit
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+        <View style={styles.SeparatorContainer} />
+      </View>
+    )
+  }
+
+  if (Platform.OS === 'android') {
+    if (UIManager.setLayoutAnimationEnabledExperimental) {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }
+
+  const layoutAnimConfig = {
+    duration: 1000,
+    update: {
+      type: LayoutAnimation.Types.easeInEaseOut, 
+    },
+    delete: {
+      duration: 200,
+      type: LayoutAnimation.Types.easeOut,
+      property: LayoutAnimation.Properties.opacity,
+    },
+  };
+
+
+  // const getReccLeagues = function(){
+
+  // }
+
+  function getReccLeagues() {
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/get_recommended',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data)
+        setSuggestedLeagues(response.data)
+        setCount(response.data.length)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
+  const handleRefresh = function(){
+    getReccLeagues()
+  }
+
+  const deleteItem = function(lData) {
+    console.log(lData._id)
+    console.log("deleted")
+    const filteredData = suggestedLeagues.filter(item => item._id !== lData._id);
+    setSuggestedLeagues(filteredData)
+    filteredData.length === 0 ? setCount(0) : null
+    LayoutAnimation.configureNext(layoutAnimConfig)
+  }
+
+  const [suggestedLeagues, setSuggestedLeagues] = useState(getReccLeagues);
+  const [count, setCount] = useState(0);
+
+  const getJoinCode = function(){
+    return(
+      <View style ={{flex : 1}}>
+        <View style={styles.InputContainer}>
+          <LeagueInvite
+            text='Join League'
+            onPress={onOpenScanner}
+            qrValue={qrValue}
+          />
+        </View>
+        <View style={styles.SuggestedSeparatorContainer}>
+          <View style = {[SharedStyles.seperator, {marginTop : '0%'}]}/>
+          <View style = {styles.SuggestedTitleContainer}>
+            <Text style = {styles.Title}>
+                Suggested Leagues
+            </Text>
+          </View> 
+          <View style = {styles.SuggestedLeagueContainer}>
+          {count > 0 ?
+            <LeagueInviteScroll 
+              LeagueData={suggestedLeagues} 
+              handler={deleteItem} 
+              onRefresh={handleRefresh} 
+              pageTitle='suggested'          
+            />
+            :
+            <ZeroItem
+              promptText={'No recommended leagues yet'}
+            />    
+          }
+          </View> 
+        </View>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.Background}>
       <StatusBar
@@ -172,92 +365,8 @@ function AddLeaguePage(props): JSX.Element {
             />
           </View>
 
-          {isCreate ?
-            <View style={styles.InputContainer}>
-
-              <View style={styles.ChoosePicContainer}>
-                <ImageUpload
-                  flex={1}
-                  picture={picture}
-                  setPicture={setPicture}
-                  valid={validPicture}
-                  setValidPicture={setValidPicture}
-                ></ImageUpload>
-              </View>
-
-              <View style={styles.EnterLeagueContainer}>
-                <InputForm
-                  placeholder={'Enter league name'}
-                  value={leagueName}
-                  setValue={setLeagueName}
-                  valid={validLeagueName}
-                  setValid={setValidLeagueName}
-                  editable={true}
-                  name = {true}
-                >
-                </InputForm>
-              </View>
-
-              <View style={styles.EnterDescContainer}>
-                <InputForm
-                  placeholder={'Enter league description'}
-                  value={leagueDesc}
-                  setValue={setLeagueDesc}
-                  valid={validLeagueDesc}
-                  setValid={setValidLeagueDesc}
-                  editable={true}
-                  multiline={true}
-                  allowSpecial={true}
-                  name = {false}
-                >
-
-                </InputForm>
-
-              </View>
-
-              <View style={styles.InputTitle}>
-                <Text style={styles.InputTitleText}>
-                  Security
-                </Text>
-              </View>
-
-              <View style={styles.ChooseSecContainer}>
-                <SwitchSelector
-                  options={switchOptions}
-                  initial={0}
-                  selectedColor='white'
-                  textColor='#014421'
-                  buttonColor='#014421'
-                  borderColor='#014421'
-                  onPress={setSecurity}
-                  hasPadding={true}
-                >
-                </SwitchSelector>
-              </View>
-
-              <View style={styles.EnterButtonContainer}>
-                <Pressable
-                  style={(validPicture && validLeagueName && validLeagueDesc) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
-                  onPress={onSubmit}
-                  disabled={!(validPicture && validLeagueName && validLeagueDesc)}
-                >
-                  <Text style={styles.ChoosePicText}>
-                    Submit
-                  </Text>
-                </Pressable>
-              </View>
-            </View>
-            :
-            <View style={styles.InputContainer}>
-              <LeagueInvite
-                text='Join League'
-                // config={config}
-                onPress={onOpenScanner}
-                qrValue={qrValue}
-              />
-            </View>
-          }
-          <View style={styles.SeparatorContainer} />
+          {isCreate ? getCreateCode() : getJoinCode() }
+          {/* {isCreate ?  : null} */}
         </View>
       }
     </View>

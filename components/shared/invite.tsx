@@ -161,7 +161,7 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
             <View style = {styles.InputContainer}>
               <View style = {styles.FriendContainer}>
                 <TextInput
-                  placeholder = "Enter User id"
+                  placeholder = "Enter User ID"
                   placeholderTextColor= "grey"
                   style = {styles.Input}
                   onChangeText = {onFriendChange}
@@ -186,8 +186,6 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                       </Text>
                   </Pressable>
               </View>
-            </View>
-            <View style = {styles.SeparatorContainer}>
             </View>
           </View>
           }

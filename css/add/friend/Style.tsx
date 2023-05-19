@@ -4,20 +4,38 @@ const styles = StyleSheet.create({
 	Background : {
 		flexDirection: 'column',
 		flex: 1,
-		backgroundColor : "#E0E7E3"
+		backgroundColor : "#E0E7E3",
+    paddingTop:(Platform.OS === 'ios') ? '2%' : 0,
 	},
 
 	TitleContainer : {
-		flex: 10,
+		flex: 5,
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
-  marginHorizontal : '5%'
+    marginHorizontal : '6%',
+	},
+
+  LeagueTitleContainer : {
+		flex: 20, 
+		flexDirection: 'column',
+		justifyContent: 'center',
+    // backgroundColor : 'green',
+    marginHorizontal : '2%',
+    marginBottom : '2%',
+	},
+
+  SuggestedTitleContainer : {
+		flex: 2,
+    marginHorizontal : '5%',
+	},
+
+  SuggestedUserContainer : {
+		flex: 20,
 	},
 
 	InputContainer : {
 		flex: 30,
-		// flexDirection: 'column',
-		// justifyContent: 'flex-start',
+
     marginHorizontal : '5%',
 		backgroundColor: 'white',
 		borderRadius: 20,
@@ -25,14 +43,15 @@ const styles = StyleSheet.create({
 	},
 
 	SeparatorContainer : {
-		flex: 60
+		flex: 60,
 	},
 
 	Title: {
 		fontSize: 28,
-		fontWeight: 700,
+		fontWeight: '700',
 		color: '#014421',
-		marginLeft: '1%'
+		// marginLeft: '1%'
+    // backgroundColor : 'green'
 	},
 
 	FriendContainer: {
@@ -58,7 +77,7 @@ const styles = StyleSheet.create({
     	width : '80%',
 		paddingLeft: 20,
 		color: 'grey',
-    marginLeft : '4%',
+    marginLeft : '5%',
     height : '35%'
 	},
 
