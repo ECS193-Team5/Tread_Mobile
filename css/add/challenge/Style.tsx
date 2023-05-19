@@ -13,8 +13,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: '10%',
-        marginRight: '10%'
+        // marginLeft: '10%',
+        // marginRight: '10%'
+        marginHorizontal : '5%'
     },
 
     ChallengeContainer : {
@@ -38,20 +39,37 @@ const styles = StyleSheet.create({
         flex: 17,
         // backgroundColor: 'blue',
         marginLeft: '5%',
-        marginRight: '5%'
+        marginRight: '5%',
+        marginBottom : '2%'
+
+    },
+
+    RecommendChallengeContainer: {
+      // flex: 6,
+      height : '9%',
+      justifyContent : 'center',
+      marginTop : '2%',
+      marginHorizontal : '22%'
+    },
+
+    RecommendTextContainer: {
+      // flex: 3,
+      height : '3%',
+      justifyContent : 'center',
+      marginTop : '2%',
+      marginHorizontal : '22%'
     },
 
     CustomChalContainer: {
-        // backgroundColor: 'red',
-        flex: 13,
+        flex: 8,
         marginLeft: '5%',
         marginRight: '5%'
     },
 
     EnterOwnContainer : {
         flex: 1,
-        // backgroundColor: 'blue'
-        marginTop: '5%'
+        // backgroundColor: 'blue',
+        marginTop: '1%'
     },
 
     validInput: {
@@ -149,8 +167,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '400',
         borderColor : '#014421',
-        borderWidth : 2,
-        borderRadius : 8
+        borderWidth : 0.5,
+        borderRadius : 4
     },
 
     ToText: {
@@ -245,11 +263,30 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
+    RecommendButton : {
+      width: '100%',
+      height: '60%',
+      borderRadius: 50,
+      borderWidth: 1,
+      backgroundColor: '#014421',
+      borderColor: '#014421',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+
     IssueChallengeText : {
         color: 'white',
         fontWeight: 700,
         fontSize: 14
     },
+
+    RecommendMessageText : {
+      color: '#014421',
+      fontWeight: 700,
+      fontSize: 14,
+      alignSelf : 'center'
+  },
 
 
 

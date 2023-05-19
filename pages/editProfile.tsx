@@ -4,6 +4,7 @@ import {
     Text,
     TextInput,
     Pressable,
+    Alert,
     // CheckBox,
     Alert
 } from 'react-native';
@@ -38,19 +39,37 @@ function EditProfile({route, navigation}): JSX.Element {
         }
     }
 
+    const makeSure = function() {
+      Alert.alert('Are you sure you want to delete your account ?', undefined,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: deleteAccount,
+          style : 'destructive'
+        },
+      ]);  
+    }
+
     const handleOnDelete = function() {
-        Alert.alert(
-          'Delete Account?',
-          'This will permanently delete your account. You will lose all your friends, leagues, and medals. All your information will be gone with no way to recover it.',[
-              {
-                  text: 'Delete',
-                  onPress: () => deleteAccount()
-              }
-          ],
-          {
-              cancelable: true
-          }
-        )
+      Alert.alert('Delete your account ?',
+      'This will permanently delete your account. You will lose all your friends, leagues, and medals. All your information will be gone with no way to recover it.',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Delete Account',
+          onPress: makeSure,
+          style : 'destructive'
+        },
+      ]);  
     }
 
     const storeLogOut = async () => {

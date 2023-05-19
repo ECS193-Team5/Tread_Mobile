@@ -339,6 +339,7 @@ function AddLeaguePage(props): JSX.Element {
               navigateToText='Start Logging Here'
               navigateToPage='AddChallenge'
               defaultView={false}
+              fromLeague = {false}
               props = {props}
             />    
           }

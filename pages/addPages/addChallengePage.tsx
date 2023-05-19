@@ -19,17 +19,16 @@ function AddChallengePage(props): JSX.Element {
   ];
 
   const [pageType, setPageType] = useState("issue");
-  const [pageContent, setPageContent] = useState(<IssueChallenge/>);
   const [defaultTab, setDefaultTab] = useState(!props.route.params.defaultView)
+  const [fromLeague, setFromLeague] = useState(props.route.params.fromLeague)
 
-
-  useEffect(() => {
+  const getPageContent = function(){
     if(pageType === 'issue') {
-      setPageContent(<IssueChallenge/>);
+      return(<IssueChallenge fromLeague = {fromLeague} id = {props.route.params.id}/>);
     } else {
-      setPageContent(<ProgressChallenge/>);
+      return(<ProgressChallenge/>);
     }
-  }, [pageType])
+  }
 
   return (
     <View style = {styles.Background}>
@@ -40,13 +39,12 @@ function AddChallengePage(props): JSX.Element {
             selectedColor = 'white'
             textColor = '#014421'
             buttonColor = '#014421'
-            borderColor = '#014421'
             onPress = {setPageType}
             hasPadding = {true}
         >
         </SwitchSelector>
       </View>
-        {pageContent}
+        {getPageContent()}
       <View style = {styles.BottomSeparator}>
 
       </View>

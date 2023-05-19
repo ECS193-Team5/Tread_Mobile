@@ -261,7 +261,7 @@ function LeagueDetails(props): JSX.Element {
   const handleDelete = function() {
     console.log('Delete')
     setModalVisiblePopUp(false)
-    Alert.alert('Delete ' + name, 
+    Alert.alert('Delete ' + name + ' ?', 
     'This will permanently delete your league. You will lose all the previous challenges, leaderboard, and history. There will be no recovery',
     [
       {
@@ -427,6 +427,8 @@ function LeagueDetails(props): JSX.Element {
             SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
             navigateToPage="AddChallenge"
             defaultView={true}
+            fromLeague={true}
+            id = {props.route.params.leagueData._id}
             props = {props}
           />
           }

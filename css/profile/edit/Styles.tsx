@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
 
   deleteButton: {
-    backgroundColor: '#C65656',
+    backgroundColor: '#d93030',
     height: '25%',
     borderRadius: 50,
     justifyContent: 'center'
