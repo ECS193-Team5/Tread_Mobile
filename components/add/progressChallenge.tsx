@@ -3,7 +3,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 DropDownPicker.setListMode("MODAL")
 import mappedChallengeList from "./challengeList";
 import unitList from "./unitList";
-import {styles} from '../../css/add/progress/Style';
+import {styles} from '../../css/add/challenge/Style';
 import NumericInput from 'react-native-numeric-input'
 import DatePicker from 'react-native-date-picker'
 import axios from "axios";
@@ -130,8 +130,6 @@ function ProgressChallenge(): JSX.Element {
                     placeholder={'Choose an activity'}
                 >
                 </DropDownPicker>
-
-
             </View>
 
             {customTextEditable &&
@@ -141,7 +139,7 @@ function ProgressChallenge(): JSX.Element {
                         <TextInput
                             placeholder={"Enter custom activity"}
                             placeholderTextColor={validCustomActivity ? 'grey' : '#C65656'}
-                            style = {validCustomActivity ? styles.validInput : styles.invalidInput}
+                            style = {validCustomActivity ? [styles.validInput , {height : '70%'}] : [styles.invalidInput, {height : '70%'}]}
                             editable={customTextEditable}
                             value={customActivity}
                             onChangeText={handleCustomActivityChange}
@@ -150,7 +148,6 @@ function ProgressChallenge(): JSX.Element {
                     </View>
 
                 </View>
-
             }
 
             <View style={styles.ChallengeAmountContainer}>
