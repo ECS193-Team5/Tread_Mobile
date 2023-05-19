@@ -41,13 +41,13 @@ function EditProfile({route, navigation}): JSX.Element {
           'Delete Account?',
           'This will permanently delete your account. You will lose all your friends, leagues, and medals. All your information will be gone with no way to recover it.',[
               {
+                  text: 'Cancel'
+              },
+              {
                   text: 'Delete',
                   onPress: () => deleteAccount()
               }
-          ],
-          {
-              cancelable: true
-          }
+          ]
         )
     }
 
