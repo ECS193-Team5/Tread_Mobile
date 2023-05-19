@@ -14,6 +14,8 @@ import axios from 'axios';
 import styles from '../css/profile/edit/Styles'
 import ImageUpload from "../components/shared/ImageUpload";
 import InputForm from "../components/shared/InputForm";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {GoogleSignin} from "@react-native-google-signin/google-signin";
 
 function EditProfile({route, navigation}): JSX.Element {
 
@@ -32,6 +34,53 @@ function EditProfile({route, navigation}): JSX.Element {
             updatePicture()
         }
     }
+
+    const handleOnDelete = function() {
+        deleteAccount();
+    }
+
+    const storeLogOut = async () => {
+        await AsyncStorage.setItem('loggedIn', 'false');
+    }
+
+    const logout = function() {
+        // console.log('logout')
+        storeLogOut().then((response) => {
+            signOut().then(response => {
+                navigation.navigate('Login')
+            })
+        })
+    }
+
+    const signOut = async () => {
+        try {
+            await GoogleSignin.signOut();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const deleteAccount = async function() {
+        var config = {
+            method: 'delete',
+            url: BACKEND_URL + 'delete_user',
+            withCredentials: true,
+            credentials: 'include',
+            headers: {
+                Accept: 'application/json',
+            }
+        };
+
+        axios(config)
+          .then(function (response) {
+              // console.log(JSON.stringify(response.data));
+              logout();
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
+    }
+
     const updatePicture = async function() {
         var config = {
             method: 'post',
@@ -131,7 +180,7 @@ function EditProfile({route, navigation}): JSX.Element {
 
           <View style={styles.DeleteContainer}>
               <Pressable style = {styles.deleteButton}
-                         onPress = {handleOnSubmit}>
+                         onPress = {handleOnDelete}>
                   <Text style = {styles.signupText}>
                       Delete Account
                   </Text>
