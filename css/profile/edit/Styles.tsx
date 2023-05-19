@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   TitleContainer: {
     flex: 20,
     flexDirection: 'column',
-    // backgroundColor: 'red',
     justifyContent: 'center',
     marginHorizontal: '10%'
   },
@@ -18,19 +17,16 @@ const styles = StyleSheet.create({
     color: '#014421',
     fontSize: 32,
     fontWeight: '400',
-    // paddingVertical : 30,
   },
 
   InputContainers: {
     flex: 40,
     flexDirection: 'column',
-    // backgroundColor: 'yellow'
   },
 
   SubmitContainer: {
     flex: 20,
     flexDirection: 'column',
-    // backgroundColor: 'purple',
     justifyContent: 'center',
     marginHorizontal: '25%'
   },
@@ -38,7 +34,6 @@ const styles = StyleSheet.create({
   DeleteContainer: {
     flex: 20,
     flexDirection: 'column',
-    // backgroundColor: 'green',
     marginHorizontal: '15%'
   },
 
@@ -46,7 +41,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    // backgroundColor: 'black',
     marginHorizontal: '10%',
   },
 

@@ -73,7 +73,6 @@ function EditProfile({route, navigation}): JSX.Element {
 
         axios(config)
           .then(function (response) {
-              // console.log(JSON.stringify(response.data));
               logout();
           })
           .catch(function (error) {
@@ -97,7 +96,6 @@ function EditProfile({route, navigation}): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                // console.log(JSON.stringify(response.data));
                 navigation.navigate('Profile',{
                     refresh: true
                 })
@@ -124,7 +122,6 @@ function EditProfile({route, navigation}): JSX.Element {
         console.log(displayName);
         axios(config)
             .then(function (response) {
-                // console.log(JSON.stringify(response.data));
                 navigation.navigate('Profile',{
                     refresh: true
                 })
