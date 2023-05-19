@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '400',
         borderColor : '#014421',
-        borderWidth : 2,
+        borderWidth : 1.5,
         borderRadius : 8
     },
 
