@@ -78,6 +78,13 @@ const ImageStyles = StyleSheet.create({
     paddingHorizontal : '6%',
   },
 
+  Settings : {
+    width :30, 
+    height : 30,
+    alignSelf : 'center',
+    paddingHorizontal : '2%',
+  },
+
   Leave : {
     width :24, 
     height : 24,

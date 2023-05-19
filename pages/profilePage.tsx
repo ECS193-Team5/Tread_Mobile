@@ -346,7 +346,7 @@ function ProfilePage(props): JSX.Element {
                     <Pressable
                         onPress={handlePopup}
                     >
-                        <Image style ={ImageStyles.Options} source={{uri: 'https://i.imgur.com/RtnN9Hu.png'}}/>
+                        <Image style ={ImageStyles.Settings} source={{uri: 'https://i.imgur.com/RtnN9Hu.png'}}/>
                     </Pressable>
                   </View>
                 </View>
