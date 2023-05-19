@@ -5,6 +5,7 @@ import {
     TextInput,
     Pressable,
     // CheckBox,
+    Alert
 } from 'react-native';
 
 import {BACKEND_URL} from '@env';
@@ -38,7 +39,18 @@ function EditProfile({route, navigation}): JSX.Element {
     }
 
     const handleOnDelete = function() {
-        deleteAccount();
+        Alert.alert(
+          'Delete Account?',
+          'This will permanently delete your account. You will lose all your friends, leagues, and medals. All your information will be gone with no way to recover it.',[
+              {
+                  text: 'Delete',
+                  onPress: () => deleteAccount()
+              }
+          ],
+          {
+              cancelable: true
+          }
+        )
     }
 
     const storeLogOut = async () => {
