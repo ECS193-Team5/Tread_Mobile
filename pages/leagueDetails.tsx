@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -29,6 +29,13 @@ import { modalstyle } from '../css/shared/modalStyle';
 import MenuPopUp from '../components/shared/MenuPopUp';
 import { showMessage } from 'react-native-flash-message';
 import ZeroItem from '../components/shared/ZeroItem';
+import LeagueLeaderboard from '../components/Leagues/LeagueLeaderboard';
+
+const options = [
+  { label : "Members" , value : 0},
+  { label : "Challenges", value : 1},
+  { label : 'Leaderboard', value : 2}
+]
 
 function LeagueDetails(props): JSX.Element {
   const getChallengeData = function(){
@@ -80,7 +87,7 @@ function LeagueDetails(props): JSX.Element {
   }
 
   const getLeagueInfo = function(){
-    console.log(props.route.params.leagueData._id)
+    // console.log(props.route.params.leagueData._id)
     var config = {
       method: 'post',
       url: BACKEND_URL + 'league/get_league_name_description_type',
@@ -108,7 +115,6 @@ function LeagueDetails(props): JSX.Element {
 
   var imageUrl = "https://imgur.com/nFRNXOB.png"
   var LeagueImage = createLeaguePictureURL(props.route.params.leagueData._id)
-  console.log(LeagueImage)
 
   const [modalVisibleQR, setModalVisibleQR] = useState(false)
   const [modalVisiblePopUp, setModalVisiblePopUp] = useState(false)
@@ -131,10 +137,7 @@ function LeagueDetails(props): JSX.Element {
     },
   };
 
-  const options = [
-    { label : "Members" , value : true},
-    { label : "Challenges", value : false}
-  ]
+
 
   const getRole = function(){
     var config = {
@@ -159,7 +162,7 @@ function LeagueDetails(props): JSX.Element {
       )
   }
 
-  const [isMembers, setIsMembers] = useState("Members")
+  const [isMembers, setIsMembers] = useState(0)
   const [description, setDescription] = useState('')
   const [name, setName] = useState('')
 
@@ -272,15 +275,15 @@ function LeagueDetails(props): JSX.Element {
         style : 'destructive'
       },
     ]);
-    
-    // props.navigation.navigate('EditLeague')
-  }
+   }
 
   const handleRefresh = function() {
-    if (isMembers){
+    if (isMembers === 0){
       getLeagueMembers()
-    } else {
+    } else if (isMembers === 1){
       getChallengeData()
+    } else {
+      getLeaderboardInfo()
     }
   }
 
@@ -364,6 +367,89 @@ function LeagueDetails(props): JSX.Element {
     return options
   }
 
+  const getLeaderboardInfo = function(){
+    var route = 'league/get_leaderboard'
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + route,
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setLeaderboardInfo(response.data)
+        setCountLeaderboard(response.data.length)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
+  const [leaderboardInfo, setLeaderboardInfo] = useState([])
+  const [countLeaderboard, setCountLeaderboard] = useState(0)
+
+  useEffect(() => 
+    getLeaderboardInfo()
+  )
+
+  const getMainContent = function(){
+    if (isMembers === 0){
+      return (
+      <LeagueMemberView
+        MemberData={LeagueMembers}
+        setLeagueMembers = {setLeagueMembers}
+        props = {props}
+        onRefresh = {handleRefresh}
+        count = {countMembers}
+        setCount = {setCountMembers}
+      />
+      )
+    } else if (isMembers === 1){
+      return (
+        <View style = {LeagueStyles.MembersChallengesContainer}>
+          {countChallenges > 0 ?
+            <ChallengeScroll
+              ChallengeData={LeagueChallenges}
+              isCurrent = {true}
+              onRefresh = {handleRefresh}
+            />
+          :
+          <ZeroItem
+            promptText='There are no challenges at the moment'
+            navigateToText= {role === 'admin' || role === 'owner' ? 'Make one here' : null}
+            SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
+            navigateToPage="AddChallenge"
+            defaultView={true}
+            props = {props}
+          />
+          }
+        </View>
+      )
+    } else {
+      return(
+      <View style = {LeagueStyles.MembersChallengesContainer}>
+        {countLeaderboard > 0 ?
+          <LeagueLeaderboard
+            progressInfo = {leaderboardInfo}
+          />
+        :
+        <ZeroItem
+          promptText='No Leaderboard Yet'
+          SecondaryPrompt = 'Tell the members to start completing challenges!'
+        />
+        }
+      </View>
+      )
+    }
+  }
+
   return (
     <View style = {styles.container}>
         <Modal
@@ -429,6 +515,7 @@ function LeagueDetails(props): JSX.Element {
             >
               <Image style ={ImageStyles.Options} source={{uri: 'https://imgur.com/G0SHXKl.png'}}/>
             </Pressable>
+            
             <View style = {LeagueStyles.ToggleContainer}>
               <SwitchSelector
                 initial= {0}
@@ -452,35 +539,7 @@ function LeagueDetails(props): JSX.Element {
 
       <View style = {styles.seperator}/>
 
-      {isMembers ?
-        <LeagueMemberView
-          MemberData={LeagueMembers}
-          setLeagueMembers = {setLeagueMembers}
-          props = {props}
-          onRefresh = {handleRefresh}
-          count = {countMembers}
-          setCount = {setCountMembers}
-        />
-      :
-      <View style = {LeagueStyles.MembersChallengesContainer}>
-        {countChallenges > 0 ?
-          <ChallengeScroll
-            ChallengeData={LeagueChallenges}
-            isCurrent = {true}
-            onRefresh = {handleRefresh}
-          />
-        :
-        <ZeroItem
-          promptText='There are no challenges at the moment'
-          navigateToText= {role === 'admin' || role === 'owner' ? 'Make one here' : null}
-          SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
-          navigateToPage="AddChallenge"
-          props = {props}
-        />
-        }
-
-      </View>
-      }
+      {getMainContent()}
     </View>
   )
 }

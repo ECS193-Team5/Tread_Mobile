@@ -195,6 +195,7 @@ function IncomingChallengesPage(props): JSX.Element {
             promptText={'You have ' + (pageTitle === 'Received' ? 'no received' : 'not sent any') + ' Challenges'}
             navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
             navigateToPage='AddChallenge'
+            defaultView={true}
             props = {props}
           />    
         } 

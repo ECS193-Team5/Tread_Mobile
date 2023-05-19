@@ -189,6 +189,7 @@ function ChallengesPage(props): JSX.Element {
           promptText='You have no accepted Challenges'
           navigateToText='Make one here'
           navigateToPage="AddChallenge"
+          defaultView={true}
           props = {props}
         />
         }

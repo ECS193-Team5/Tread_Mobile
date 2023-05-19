@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 
 import { modalstyle } from '../../css/shared/modalStyle';
-import ChallengeCard from './ChallengeCard';
 import ProgressCard from './ProgressCard';
 
 import axios from 'axios';
