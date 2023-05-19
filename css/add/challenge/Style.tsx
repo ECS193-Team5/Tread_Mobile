@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '400',
         borderColor : '#014421',
-        borderWidth : 1.5,
-        borderRadius : 8
+        borderWidth : 0.5,
+        borderRadius : 4
     },
 
     ToText: {
