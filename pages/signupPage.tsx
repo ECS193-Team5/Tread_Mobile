@@ -72,6 +72,7 @@ function Signup({route, navigation}): JSX.Element {
             valid={validDisplayName}
             setValid={setValidDisplayName}
             editable={true}
+            allowSpecial={null}
           />
         </View>
         <View style={styles.userNameContainer}>
@@ -82,6 +83,7 @@ function Signup({route, navigation}): JSX.Element {
             valid={validUserName}
             setValid={setValidUserName}
             editable={true}
+            allowSpecial={null}
           />
         </View>
         <View style={styles.checkBoxContainer}>
