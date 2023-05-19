@@ -6,7 +6,6 @@ import {
     Pressable,
     Alert,
     // CheckBox,
-    Alert
 } from 'react-native';
 
 import {BACKEND_URL} from '@env';

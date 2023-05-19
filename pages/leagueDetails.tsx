@@ -266,7 +266,6 @@ function LeagueDetails(props): JSX.Element {
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
       {
@@ -299,7 +298,6 @@ function LeagueDetails(props): JSX.Element {
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
       {
