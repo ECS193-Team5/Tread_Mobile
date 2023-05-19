@@ -6,7 +6,8 @@ const ImageStyles = StyleSheet.create({
     height : 39 , 
     borderRadius : 19.5, 
     borderWidth : 2, 
-    borderColor : '#014421'
+    borderColor : '#014421',
+    backgroundColor : '#FFFFFF'
   },
   
   second: {
@@ -15,7 +16,8 @@ const ImageStyles = StyleSheet.create({
     borderRadius : 19.5, 
     borderWidth : 2, 
     borderColor : '#014421', 
-    marginLeft : -12
+    marginLeft : -12,
+    backgroundColor : '#FFFFFF'
   },
 
   third : {
