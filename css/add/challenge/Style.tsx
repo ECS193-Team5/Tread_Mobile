@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     },
 
     BottomSeparator: {
-        flex: 10
+        flex: 12
     },
 
     MainDropdown: {
@@ -148,6 +148,15 @@ const styles = StyleSheet.create({
         color: '#014421',
         fontSize: 16,
         fontWeight: '400',
+        borderColor : '#014421',
+        borderWidth : 2,
+        borderRadius : 8
+    },
+
+    ToText: {
+      color: '#014421',
+      fontSize: 16,
+      fontWeight: '400'
     },
 
     EndButton: {
@@ -174,12 +183,23 @@ const styles = StyleSheet.create({
     },
 
     IssueToContainer: {
-        flex: 25,
+        flex: 15,
         flexDirection: 'column',
         // backgroundColor: 'red',
         marginLeft: '5%',
         marginRight: '5%'
     },
+
+    DropDownContainer: {
+      flex: 10,
+      // flexDirection: 'column',
+      // justifyContent : 'center',
+      // alignItems : 'center',
+      // backgroundColor: 'green',
+      marginLeft: '5%',
+      marginRight: '5%',
+      paddingTop : '5%'
+  },
 
     PickIssueTarget: {
         flex: 1,

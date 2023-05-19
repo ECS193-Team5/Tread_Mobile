@@ -348,7 +348,7 @@ function IssueChallenge(): JSX.Element {
                         </Text>
                     </Pressable>
                     <View style={styles.ToTextContainer}>
-                        <Text style={styles.DateText}>
+                        <Text style={styles.ToText}>
                             to
                         </Text>
                     </View>
@@ -381,58 +381,55 @@ function IssueChallenge(): JSX.Element {
 
             </View>
             <View style = {styles.IssueToContainer}>
-                <Text style={styles.ActivityTitle}>
-                    Issue To
-                </Text>
-                <View style={styles.PickIssueTarget}>
-                    <SwitchSelector
-                        options = {switchOptions}
-                        initial = {0}
-                        selectedColor = 'white'
-                        textColor = '#014421'
-                        buttonColor = '#014421'
-                        borderColor = '#014421'
-                        onPress = {setTargetType}
-                        hasPadding = {true}
-                    >
-                    </SwitchSelector>
-
-                </View>
-                {
-                    targetType === "friend" &&
-                    <View style={styles.SelectTarget}>
-                        <DropDownPicker
-                            setValue={setValueFriends}
-                            value={valueFriends}
-                            items={itemsFriends}
-                            open={openFriends}
-                            setOpen={setOpenFriends}
-                            placeholder={'Choose friend'}
-                        >
-                        </DropDownPicker>
-
-
-                    </View>
-                }
-
-                {
-                    targetType === "league" &&
-                    <View style={styles.SelectTarget}>
-                        <DropDownPicker
-                            setValue={setValueLeagues}
-                            value={valueLeagues}
-                            items={itemsLeagues}
-                            open={openLeagues}
-                            setOpen={setOpenLeagues}
-                            placeholder={'Choose a league'}
-                        >
-                        </DropDownPicker>
-
-
-                    </View>
-
-                }
+              <Text style={styles.ActivityTitle}>
+                  Issue To
+              </Text>
+              <View style={styles.PickIssueTarget}>
+                  <SwitchSelector
+                      options = {switchOptions}
+                      initial = {0}
+                      selectedColor = 'white'
+                      textColor = '#014421'
+                      buttonColor = '#014421'
+                      borderColor = '#014421'
+                      onPress = {setTargetType}
+                      hasPadding = {true}
+                  >
+                  </SwitchSelector>
+              </View>
             </View>
+
+            {targetType === "friend" &&
+                <View style = {styles.DropDownContainer}>
+                <View style={styles.SelectTarget}>
+                    <DropDownPicker
+                        setValue={setValueFriends}
+                        value={valueFriends}
+                        items={itemsFriends}
+                        open={openFriends}
+                        setOpen={setOpenFriends}
+                        placeholder={'Choose friend'}
+                    >
+                    </DropDownPicker>
+                </View>
+              </View>
+            }
+
+            {targetType === "league" &&
+                <View style = {styles.DropDownContainer}>
+                  <View style={styles.SelectTarget}>
+                      <DropDownPicker
+                          setValue={setValueLeagues}
+                          value={valueLeagues}
+                          items={itemsLeagues}
+                          open={openLeagues}
+                          setOpen={setOpenLeagues}
+                          placeholder={'Choose a league'}
+                      >
+                      </DropDownPicker>
+                  </View>
+                </View>
+            }
             <View style = {styles.SubmitContainer}>
                 <Pressable
                     style={validInfo() ? styles.EnterButtonValid : styles.EnterButtonInvalid}
@@ -443,7 +440,6 @@ function IssueChallenge(): JSX.Element {
                         Issue
                     </Text>
                 </Pressable>
-
             </View>
 
         </View>

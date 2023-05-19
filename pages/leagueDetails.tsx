@@ -294,7 +294,7 @@ function LeagueDetails(props): JSX.Element {
 
   const clickedLeave = function(){
     setModalVisiblePopUp(false)
-    Alert.alert('Leave ' + {name} + ' ?',
+    Alert.alert('Leave ' + name + ' ?',
     security === 'private' ? 'You are about to leave this league' : 'If you change your mind you will have to request to join again',
     [
       {
