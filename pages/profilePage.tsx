@@ -25,7 +25,7 @@ import { cardStyles } from '../css/cards/Style';
 import {createProfilePictureURL} from "../components/Helpers/CloudinaryURLHelper";
 
 
-function ProfilePage(props): JSX.Element {
+function ProfilePage({route, navigation}): JSX.Element {
 	const signOut = async () => {
 		try {
 			await GoogleSignin.signOut();
@@ -57,7 +57,6 @@ function ProfilePage(props): JSX.Element {
     const [medalInfoEarned, setMedalInfoEarned] = useState([])
 
     useEffect(() => {
-        console.log(createProfilePictureURL(userName.substring(1,)));
         getProfilePhoto()
         getDisplayName()
         getUserName()
@@ -66,6 +65,13 @@ function ProfilePage(props): JSX.Element {
         getMedalsEarned()
         getMedalsProgress()
     }, [])
+
+    useEffect(() => {
+        if(route.params !== undefined && route.params.refresh) {
+            getDisplayName()
+            route.params.refresh = false;
+        }
+    })
     const getProfilePhoto = function() {
         var config = {
             method: 'post',
@@ -216,17 +222,21 @@ function ProfilePage(props): JSX.Element {
     }
 
     const handleRefresh = function() {
+        getDisplayName()
         getMedalsProgress()
     }
 
     const handlePopup = function() {
-        console.log(modalVisiblePopUp)
+        // console.log(modalVisiblePopUp)
         setModalVisiblePopUp(true)
     }
 
     const handleEdit = function() {
         setModalVisiblePopUp(false)
-        props.navigation.navigate('EditProfile')
+        navigation.navigate('EditProfile', {
+            picture: createProfilePictureURL(userName.substring(1,)),
+            displayName: displayName
+        })
         // console.log('edit')
     }
 
@@ -249,10 +259,10 @@ function ProfilePage(props): JSX.Element {
     }
 
     const handleLogout = function() {
-        console.log('logout')
+        // console.log('logout')
         storeLogOut().then((response) => {
             signOut().then(response => {
-                props.navigation.navigate('Login')
+                navigation.navigate('Login')
             })
         })
     }
@@ -377,7 +387,7 @@ function ProfilePage(props): JSX.Element {
                 <View style={ProfileStyles.ProfileBottomContainer}>
                     <View style={ProfileStyles.OtherInfoContainer}>
                       <TouchableHighlight
-                          onPress={() => props.navigation.navigate('Friends')}
+                          onPress={() => navigation.navigate('Friends')}
                           style = {{alignSelf : 'center', borderRadius : 1}}
                           underlayColor = 'rgba(0,0,0,0.15)'
                           >
@@ -391,7 +401,7 @@ function ProfilePage(props): JSX.Element {
                     </View>
                     <View style={ProfileStyles.OtherInfoContainer}>
                       <TouchableHighlight
-                          onPress={() => props.navigation.navigate('Leagues', {screen : 'Leagues'})}
+                          onPress={() => navigation.navigate('Leagues', {screen : 'Leagues'})}
                           style = {{alignSelf : 'center',borderRadius : 1}}
                           underlayColor = 'rgba(0,0,0,0.15)'
                           >
