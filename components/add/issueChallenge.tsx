@@ -43,6 +43,7 @@ import {
     Text,
     TextInput,
     Pressable,
+    TouchableHighlight,
 } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 
@@ -245,8 +246,35 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
         return activitySelected && unitSelected && validDate && targetSelected;
     }
 
+    const [showMessage, setShowMessage] = useState(false)
+    const handleRecommendPress = function(){
+      console.log('pressed Recommend')
+      setShowMessage(true)
+    }
+
     return (
         <View style={styles.ChallengeContainer}>
+            <View style = {styles.RecommendChallengeContainer}>
+              <TouchableHighlight
+                    style={styles.RecommendButton}
+                    onPress={handleRecommendPress}
+                    underlayColor = '#013319'
+                    >
+                    <Text style={styles.IssueChallengeText}>
+                        Recommend Challenge
+                    </Text>
+              </TouchableHighlight>
+            </View>
+            {showMessage ? 
+              <View style = {styles.RecommendTextContainer}>
+                <Text style={styles.RecommendMessageText}>
+                    Message Text
+                </Text>
+              </View>
+              :
+              null
+            }
+
             <View style={styles.ChallengeDropContainer}>
                 <Text style={styles.ActivityTitle}>
                     Activity
@@ -260,8 +288,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                     placeholder={'Choose an activity'}
                 >
                 </DropDownPicker>
-
-
             </View>
 
             {customTextEditable &&
@@ -271,14 +297,13 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                         <TextInput
                             placeholder={"Enter custom activity"}
                             placeholderTextColor={validCustomActivity ? 'grey' : '#C65656'}
-                            style = {validCustomActivity ? styles.validInput : styles.invalidInput}
+                            style = {validCustomActivity ? [styles.validInput , {height : '100%'}] : [styles.invalidInput, {height : '100%'}]}
                             editable={customTextEditable}
                             value={customActivity}
                             onChangeText={handleCustomActivityChange}
                         >
                         </TextInput>
                     </View>
-
                 </View>
 
             }

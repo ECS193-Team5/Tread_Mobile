@@ -39,7 +39,6 @@ function AddChallengePage(props): JSX.Element {
             selectedColor = 'white'
             textColor = '#014421'
             buttonColor = '#014421'
-            borderColor = '#014421'
             onPress = {setPageType}
             hasPadding = {true}
         >
