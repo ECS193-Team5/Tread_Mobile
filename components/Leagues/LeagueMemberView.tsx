@@ -226,7 +226,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh, count
           {count === 1 ? 
             <ZeroItem
                 promptText='You are the only member'
-                SecondaryPrompt = 'Invite more people in the Invite Tab or tell your friends!'
+                SecondaryPrompt = 'Invite more people in the Add User Tab or tell your friends!'
                 props={props}     
               />
             :
@@ -254,7 +254,7 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh, count
         :
         <ZeroItem
           promptText={currentView === 'pending' || currentView === 'sent' ? ('No ' + currentView + ' invites') : ('No banned users')}
-          SecondaryPrompt = {currentView === 'sent' ? 'Invite more people in the Invite Tab' : null}
+          SecondaryPrompt = {currentView === 'sent' ? 'Invite more people in the Add User Tab' : null}
           props={props}     
         />  
       }
