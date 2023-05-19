@@ -20,6 +20,8 @@ function AddChallengePage(props): JSX.Element {
 
   const [pageType, setPageType] = useState("issue");
   const [pageContent, setPageContent] = useState(<IssueChallenge/>);
+  const [defaultTab, setDefaultTab] = useState(!props.route.params.defaultView)
+
 
   useEffect(() => {
     if(pageType === 'issue') {
@@ -34,7 +36,7 @@ function AddChallengePage(props): JSX.Element {
       <View style = {styles.ToggleContainer}>
         <SwitchSelector
             options = {switchOptions}
-            initial = {0}
+            initial = {defaultTab ? 1 : 0}
             selectedColor = 'white'
             textColor = '#014421'
             buttonColor = '#014421'

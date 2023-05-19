@@ -67,14 +67,15 @@ const ImageStyles = StyleSheet.create({
   QR : {
     width :28, 
     height : 28,
-    paddingHorizontal : '8%',
+    paddingHorizontal : '6%',
     alignSelf : 'center'
   },
 
   Options : {
     width :30, 
     height : 30,
-    alignSelf : 'center'
+    alignSelf : 'center',
+    paddingHorizontal : '6%',
   },
 
   Leave : {

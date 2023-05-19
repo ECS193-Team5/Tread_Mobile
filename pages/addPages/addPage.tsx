@@ -10,7 +10,7 @@ import AddButton from '../../components/add/addButton';
 
 function AddPage(props): JSX.Element {
 	const onAddChallengePress = function () {
-		props.navigation.navigate('AddChallenge')
+		props.navigation.navigate('AddChallenge', {defaultView : true})
 	}
 
 	const onAddFriendPress = function () {

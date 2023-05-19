@@ -335,6 +335,11 @@ function AddLeaguePage(props): JSX.Element {
             :
             <ZeroItem
               promptText={'No recommended leagues yet'}
+              SecondaryPrompt = 'We suggest leagues based on your activity'
+              navigateToText='Start Logging Here'
+              navigateToPage='AddChallenge'
+              defaultView={false}
+              props = {props}
             />    
           }
           </View> 
@@ -366,7 +371,6 @@ function AddLeaguePage(props): JSX.Element {
           </View>
 
           {isCreate ? getCreateCode() : getJoinCode() }
-          {/* {isCreate ?  : null} */}
         </View>
       }
     </View>
