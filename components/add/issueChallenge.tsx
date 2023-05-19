@@ -46,7 +46,7 @@ import {
 } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 
-function IssueChallenge(): JSX.Element {
+function IssueChallenge({fromLeague, id}): JSX.Element {
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
@@ -68,10 +68,11 @@ function IssueChallenge(): JSX.Element {
 
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
     const [endDate, setEndDate] = useState(new Date())
+    endDate.setDate(startDate.getDate() + 1)
 
     const [startDateSet, setStartDateSet] = useState(false);
+    const [targetType, setTargetType] = useState(fromLeague === true ? "league" : "self")
 
-    const [targetType, setTargetType] = useState("self")
     const switchOptions = [
         {label: 'Self', value: 'self'},
         {label: 'Friends', value: 'friend'},
@@ -86,7 +87,7 @@ function IssueChallenge(): JSX.Element {
     const [itemsFriends, setItemsFriends] = useState([]);
 
     const [openLeagues, setOpenLeagues] = useState(false);
-    const [valueLeagues, setValueLeagues] = useState(null);
+    const [valueLeagues, setValueLeagues] = useState(fromLeague === true ? id : null);
     const [itemsLeagues, setItemsLeagues] = useState([]);
 
     useEffect(() => {
@@ -360,8 +361,8 @@ function IssueChallenge(): JSX.Element {
                             modal = {true}
                             mode = {'date'}
                             open={showEndDatePicker}
-                            minimumDate={startDate}
-                            date={startDate}
+                            minimumDate={endDate}
+                            date={endDate}
                             onConfirm={(date) => {
                                 setShowEndDatePicker(false)
                                 setEndDate(date)
@@ -387,7 +388,7 @@ function IssueChallenge(): JSX.Element {
               <View style={styles.PickIssueTarget}>
                   <SwitchSelector
                       options = {switchOptions}
-                      initial = {0}
+                      initial = {fromLeague === true ? 2 : 0}
                       selectedColor = 'white'
                       textColor = '#014421'
                       buttonColor = '#014421'

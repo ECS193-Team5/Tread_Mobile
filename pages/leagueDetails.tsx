@@ -427,6 +427,8 @@ function LeagueDetails(props): JSX.Element {
             SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
             navigateToPage="AddChallenge"
             defaultView={true}
+            fromLeague={true}
+            id = {props.route.params.leagueData._id}
             props = {props}
           />
           }

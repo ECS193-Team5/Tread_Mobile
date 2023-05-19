@@ -190,6 +190,7 @@ function ChallengesPage(props): JSX.Element {
           navigateToText='Make one here'
           navigateToPage="AddChallenge"
           defaultView={true}
+          fromLeague = {false}
           props = {props}
         />
         }

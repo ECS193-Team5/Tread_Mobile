@@ -196,6 +196,7 @@ function IncomingChallengesPage(props): JSX.Element {
             navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
             navigateToPage='AddChallenge'
             defaultView={true}
+            fromLeague = {false}
             props = {props}
           />    
         } 
