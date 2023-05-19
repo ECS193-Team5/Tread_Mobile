@@ -486,12 +486,7 @@ function LeagueDetails(props): JSX.Element {
         />
       </Modal>
 
-      <View style = {styles.topRightClickContainer}>
-        <IncomingSwap
-          props = {props}
-          PageToSwap = {"Leagues"}
-          imageUrl = {imageUrl}/>
-      </View>
+      <View style = {{flex : 2}}/>
 
       <View style = {LeagueStyles.LeagueInfoCardContainer}>
         <View style = {[LeagueStyles.LeagueInfoCard, cardStyles.shadowProp]}>
