@@ -19,8 +19,10 @@ import {GoogleSignin} from "@react-native-google-signin/google-signin";
 
 function EditProfile({route, navigation}): JSX.Element {
 
-    const [displayName, setDisplayName] = useState("");
-    const [validDisplayName, setValidDisplayName] = useState(false);
+    const [oldDisplayName, setOldDisplayName] = useState(route.params.displayName);
+    const [displayName, setDisplayName] = useState(route.params.displayName);
+    const [validDisplayName, setValidDisplayName] = useState(true);
+
 
     const [picture, setPicture] = useState({});
     const [validPicture, setValidPicture] = useState(false);
@@ -151,13 +153,11 @@ function EditProfile({route, navigation}): JSX.Element {
               ></ImageUpload>
               <View style={styles.DisplayNameInput}>
                   <InputForm
-                    placeholder={route.params.displayName}
                     value={displayName}
                     setValue={setDisplayName}
                     valid={validDisplayName}
                     setValid={setValidDisplayName}
                     editable={true}
-                    allowSpecial={null}
                   >
                   </InputForm>
               </View>
@@ -165,8 +165,8 @@ function EditProfile({route, navigation}): JSX.Element {
           </View>
 
           <View style={styles.SubmitContainer}>
-              <Pressable style = {(validDisplayName || validPicture)? styles.validSignupButton : styles.invalidSignupButton}
-                         disabled = {!((validDisplayName || validPicture))}
+              <Pressable style = {((validDisplayName && (displayName !== oldDisplayName)) || validPicture)? styles.validSignupButton : styles.invalidSignupButton}
+                         disabled = {!(((validDisplayName && (displayName !== oldDisplayName)) || validPicture))}
                          onPress = {handleOnSubmit}>
                   <Text style = {styles.signupText}>
                       Update Profile

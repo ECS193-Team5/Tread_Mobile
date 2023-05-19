@@ -15,7 +15,7 @@ function AddChallengePage(props): JSX.Element {
 
   const switchOptions = [
     {label: 'Issue', value: 'issue'},
-    {label: 'Progress', value: 'progress'}
+    {label: 'Log', value: 'progress'}
   ];
 
   const [pageType, setPageType] = useState("issue");

@@ -279,7 +279,3 @@ function EditLeaguePage(props): JSX.Element {
 }
 
 export default EditLeaguePage;
-
-
-// style={((validLeagueName && (leagueName !== oldleagueName)) || (validLeagueDesc && (leagueDesc !== oldleagueDesc)) ||  (oldsecurity === security) || validPicture) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
-// disabled={!((validLeagueName && (leagueName !== oldleagueName)) || (validLeagueDesc && (leagueDesc !== oldleagueDesc)) || (oldsecurity === security) || validPicture)}

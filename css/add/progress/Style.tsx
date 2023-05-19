@@ -147,6 +147,9 @@ const styles = StyleSheet.create({
         color: '#014421',
         fontSize: 16,
         fontWeight: '400',
+        borderColor : '#014421',
+        borderWidth : 2,
+        borderRadius : 8
     },
 
     EndButton: {
