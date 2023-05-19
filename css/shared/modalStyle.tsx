@@ -25,6 +25,14 @@ const modalstyle = StyleSheet.create({
     justifyContent : 'center'
   },
 
+  LeaguePopUpTextContainer : {
+    flex: 6,
+    alignItems : 'center',
+    justifyContent : 'center',
+    marginTop : '-3%',
+    marginBottom : '2%',
+  },
+
   PopUpChallengeDescriptionContainer : {
     flex: 9,
     width : "80%",

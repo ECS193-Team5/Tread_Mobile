@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -29,6 +29,7 @@ import { modalstyle } from '../css/shared/modalStyle';
 import MenuPopUp from '../components/shared/MenuPopUp';
 import { showMessage } from 'react-native-flash-message';
 import ZeroItem from '../components/shared/ZeroItem';
+import LeagueLeaderboard from '../components/Leagues/LeagueLeaderboard';
 
 const options = [
   { label : "Members" , value : 0},
@@ -86,7 +87,7 @@ function LeagueDetails(props): JSX.Element {
   }
 
   const getLeagueInfo = function(){
-    console.log(props.route.params.leagueData._id)
+    // console.log(props.route.params.leagueData._id)
     var config = {
       method: 'post',
       url: BACKEND_URL + 'league/get_league_name_description_type',
@@ -114,7 +115,6 @@ function LeagueDetails(props): JSX.Element {
 
   var imageUrl = "https://imgur.com/nFRNXOB.png"
   var LeagueImage = createLeaguePictureURL(props.route.params.leagueData._id)
-  console.log(LeagueImage)
 
   const [modalVisibleQR, setModalVisibleQR] = useState(false)
   const [modalVisiblePopUp, setModalVisiblePopUp] = useState(false)
@@ -278,10 +278,12 @@ function LeagueDetails(props): JSX.Element {
    }
 
   const handleRefresh = function() {
-    if (isMembers){
+    if (isMembers === 0){
       getLeagueMembers()
-    } else {
+    } else if (isMembers === 1){
       getChallengeData()
+    } else {
+      getLeaderboardInfo()
     }
   }
 
@@ -365,6 +367,38 @@ function LeagueDetails(props): JSX.Element {
     return options
   }
 
+  const getLeaderboardInfo = function(){
+    var route = 'league/get_leaderboard'
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + route,
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+      data : {
+        leagueID : props.route.params.leagueData._id
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        setLeaderboardInfo(response.data)
+        setCountLeaderboard(response.data.length)
+      })
+      .catch((error) =>
+        console.log(error)
+      )
+  }
+
+  const [leaderboardInfo, setLeaderboardInfo] = useState([])
+  const [countLeaderboard, setCountLeaderboard] = useState(0)
+
+  useEffect(() => 
+    getLeaderboardInfo()
+  )
+
   const getMainContent = function(){
     if (isMembers === 0){
       return (
@@ -401,10 +435,16 @@ function LeagueDetails(props): JSX.Element {
     } else {
       return(
       <View style = {LeagueStyles.MembersChallengesContainer}>
+        {countLeaderboard > 0 ?
+          <LeagueLeaderboard
+            progressInfo = {leaderboardInfo}
+          />
+        :
         <ZeroItem
           promptText='No Leaderboard Yet'
-          SecondaryPrompt = 'Tell your league mates to start completing challenges!'
+          SecondaryPrompt = 'Tell the members to start completing challenges!'
         />
+        }
       </View>
       )
     }

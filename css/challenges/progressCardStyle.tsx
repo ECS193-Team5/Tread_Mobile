@@ -10,6 +10,17 @@ const progressCardStyle = StyleSheet.create({
     alignItems : 'center',
   }, 
 
+  LeagueCardContainer : {
+    width : "89%",
+    borderRadius : 20,
+    flexDirection : 'row',
+    marginBottom: ".6%",
+    paddingVertical : "3%",
+    alignItems : 'center',
+    backgroundColor : '#FFFFFF'
+  }, 
+
+
   ImageSwapSection : {
     flex : 40,
     alignItems : "center",
