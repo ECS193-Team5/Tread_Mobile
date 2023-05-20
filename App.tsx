@@ -5,6 +5,9 @@ import FlashMessage from 'react-native-flash-message'
 import axios from "axios";
 import { BACKEND_URL } from '@env';
 
+import { Alert } from 'react-native';
+import messaging from '@react-native-firebase/messaging';
+
 const sendLeagueRequest = (leagueID) => {
   console.log("send league request");
   var config = {
@@ -95,6 +98,15 @@ function App(): JSX.Element {
     // Get the deep link used to open the app
     console.log("This use effect is triggered in app.tsx");
   });
+
+  // useEffect(() => {
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //     console.log('Received a message')
+  //     Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+  //   });
+  //
+  //   return unsubscribe;
+  // }, []);
 
   return (
       <View style ={{flex:1}}>

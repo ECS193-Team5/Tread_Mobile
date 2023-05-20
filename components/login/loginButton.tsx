@@ -12,6 +12,7 @@ import loginConfig from "../../routes/login/login";
 
 import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
 import messaging from "@react-native-firebase/messaging";
+import {PermissionsAndroid} from 'react-native';
 
 function LoginButton({filled, text, navigation}): JSX.Element {
 	useEffect(() => {
@@ -50,15 +51,21 @@ function LoginButton({filled, text, navigation}): JSX.Element {
 	}
 
 	const getFCMToken = async() => {
-		await messaging().registerDeviceForRemoteMessages();
+		// await messaging().registerDeviceForRemoteMessages();
 		messaging().hasPermission().then(enabled => {
+			console.log("Has permissions")
 			if(enabled) {
+				console.log("Permissions is enabled")
 				messaging().getToken({vapidKey: VAPID_KEY}).then(token => {
+					console.log(token)
 					return token
 				});
 			} else {
+				console.log("Permissions not enabled")
+				PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
 				messaging().requestPermission().then(() => {
 					messaging().getToken({vapidKey: VAPID_KEY}).then(token => {
+						console.log(token)
 						return token
 					});
 				})
@@ -84,9 +91,9 @@ function LoginButton({filled, text, navigation}): JSX.Element {
 	}
 
 	const login = async (email, authToken, photo) => {
-		// const deviceToken = await getFCMToken();
-    // console.log(deviceToken)
-		axios(loginConfig(authToken, null))
+		const deviceToken = await getFCMToken();
+    console.log(deviceToken)
+		axios(loginConfig(authToken, deviceToken))
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {

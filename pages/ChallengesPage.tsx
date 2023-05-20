@@ -8,7 +8,7 @@ import {
   ScrollView,
   FlatList,
   Linking,
-  StatusBar
+  StatusBar, Alert
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
@@ -23,6 +23,7 @@ import {BACKEND_URL} from '@env';
 import ListenerComponentHealthKit from '../components/Sensors/healthKit';
 import ListenerComponentHealthConnect from '../components/Sensors/healthConnect';
 import ZeroItem from '../components/shared/ZeroItem';
+import messaging from "@react-native-firebase/messaging";
 
 function ChallengesPage(props): JSX.Element {
   const [update, setUpdate] = useState(true);
@@ -32,6 +33,15 @@ function ChallengesPage(props): JSX.Element {
       setUpdate(true);
     });
   }, [props.navigation]);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log('Received a message')
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
+  }, []);
 
   const getChallengeData = function(){
     var config = {
