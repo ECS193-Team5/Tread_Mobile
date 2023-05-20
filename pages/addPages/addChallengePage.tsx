@@ -18,8 +18,9 @@ function AddChallengePage(props): JSX.Element {
     {label: 'Log', value: 'progress'}
   ];
 
-  const [pageType, setPageType] = useState("issue");
+  const [pageType, setPageType] = useState(!props.route.params.defaultView ? "progress" : "issue");
   const [defaultTab, setDefaultTab] = useState(!props.route.params.defaultView)
+  
   const [fromLeague, setFromLeague] = useState(props.route.params.fromLeague)
 
   const getPageContent = function(){
@@ -36,7 +37,7 @@ function AddChallengePage(props): JSX.Element {
         <SwitchSelector
             options = {switchOptions}
             initial = {defaultTab ? 1 : 0}
-            selectedColor = 'white'
+            selectedColor = '#F9A800'
             textColor = '#014421'
             buttonColor = '#014421'
             onPress = {setPageType}
@@ -44,7 +45,12 @@ function AddChallengePage(props): JSX.Element {
         >
         </SwitchSelector>
       </View>
-        {getPageContent()}
+        {/* {getPageContent()} */}
+      {pageType === 'issue' ? 
+        <IssueChallenge fromLeague = {fromLeague} id = {props.route.params.id}/>
+        :
+        <ProgressChallenge/>
+      }
       <View style = {styles.BottomSeparator}>
 
       </View>

@@ -414,7 +414,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                   <SwitchSelector
                       options = {switchOptions}
                       initial = {fromLeague === true ? 2 : 0}
-                      selectedColor = 'white'
+                      selectedColor = '#F9A800'
                       textColor = '#014421'
                       buttonColor = '#014421'
                       borderColor = '#014421'
