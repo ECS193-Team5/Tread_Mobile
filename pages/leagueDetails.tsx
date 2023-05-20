@@ -31,7 +31,6 @@ import MenuPopUp from '../components/shared/MenuPopUp';
 import { showMessage } from 'react-native-flash-message';
 import ZeroItem from '../components/shared/ZeroItem';
 import LeagueLeaderboard from '../components/Leagues/LeagueLeaderboard';
-import GestureRecognizer from 'react-native-swipe-gestures';
 
 const options = [
   { label : "Members" , value : 0},

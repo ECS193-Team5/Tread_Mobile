@@ -18,7 +18,6 @@ import axios from 'axios';
 import { showMessage } from 'react-native-flash-message';
 import ImageUpload from "../components/shared/ImageUpload";
 import InputForm from "../components/shared/InputForm";
-import createLeague from "../routes/add/createLeague";
 import { createLeaguePictureURL } from '../components/Helpers/CloudinaryURLHelper';
 import GestureRecognizer from 'react-native-swipe-gestures';
 

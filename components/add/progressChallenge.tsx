@@ -6,7 +6,6 @@ import unitList from "./unitList";
 import {styles} from '../../css/add/challenge/Style';
 import NumericInput from 'react-native-numeric-input'
 import DatePicker from 'react-native-date-picker'
-import GestureRecognizer from 'react-native-swipe-gestures';
 import axios from "axios";
 import {BACKEND_URL} from '@env';
 
