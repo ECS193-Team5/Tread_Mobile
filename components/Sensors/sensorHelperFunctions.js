@@ -35,7 +35,11 @@ export const sendExerciseList = (exerciseList, uniqueExercises, dataOrigin) => {
         console.log("No exercises to update");
         return;
     }
-
+    console.log({
+        exerciseList: exerciseList,
+        uniqueExercises: uniqueExercises,
+        dataOrigin: dataOrigin
+    });
     var config = {
         method: 'post',
         url: 'https://tread-backend-wvh22rj5mq-uw.a.run.app/exercise_log/add_exercise_list',
