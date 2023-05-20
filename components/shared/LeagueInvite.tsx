@@ -6,8 +6,7 @@ import {
 } from 'react-native';
 
 import {styles} from '../../css/add/friend/Style';
-import axios from "axios";
-import {CameraScreen} from 'react-native-camera-kit';
+
 
 function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {
   return (
@@ -29,7 +28,6 @@ function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {
           </View>
         </View>
         <Text style = {styles.RequestText}>
-            {qrValue}
         </Text>
       </View>
   )
