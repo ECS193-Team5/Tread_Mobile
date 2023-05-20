@@ -31,7 +31,7 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
       qrvalue = qrvalue.split("?")[1];
     }
 
-    setQrValue(qrvalue)
+    setFriendID(qrvalue)
     setValidID(true)
     setOpenScanner(false)
     if(pagetoNav == 'League Details'){
@@ -165,7 +165,7 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                   placeholderTextColor= "grey"
                   style = {styles.Input}
                   onChangeText = {onFriendChange}
-                  value = {qrValue === '' ? friendID : qrValue}
+                  value = {friendID}
                 >
                 </TextInput>
                 <View>
