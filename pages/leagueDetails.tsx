@@ -9,6 +9,7 @@ import {
   LayoutAnimation,
   TouchableHighlight,
   Alert,
+  Keyboard,
 } from 'react-native';
 
 import Modal from "react-native-modal"
@@ -30,6 +31,7 @@ import MenuPopUp from '../components/shared/MenuPopUp';
 import { showMessage } from 'react-native-flash-message';
 import ZeroItem from '../components/shared/ZeroItem';
 import LeagueLeaderboard from '../components/Leagues/LeagueLeaderboard';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const options = [
   { label : "Members" , value : 0},
@@ -453,7 +455,10 @@ function LeagueDetails(props): JSX.Element {
   }
 
   return (
-    <View style = {styles.container}>
+    <GestureRecognizer
+      onSwipeDown = {() => Keyboard.dismiss()}
+      style = {styles.container}
+    >
         <Modal
           isVisible={modalVisibleQR}
           hasBackdrop = {true}
@@ -537,7 +542,7 @@ function LeagueDetails(props): JSX.Element {
       <View style = {styles.seperator}/>
 
       {getMainContent()}
-    </View>
+    </GestureRecognizer>
   )
 }
 

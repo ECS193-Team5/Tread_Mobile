@@ -2,9 +2,9 @@ import React, { useState, useEffect} from 'react';
 import {
     View,
     Text,
-    TextInput,
     Pressable,
     Alert,
+    Keyboard,
     // CheckBox,
 } from 'react-native';
 
@@ -17,6 +17,7 @@ import ImageUpload from "../components/shared/ImageUpload";
 import InputForm from "../components/shared/InputForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {GoogleSignin} from "@react-native-google-signin/google-signin";
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 function EditProfile({route, navigation}): JSX.Element {
 
@@ -162,7 +163,10 @@ function EditProfile({route, navigation}): JSX.Element {
     }
 
     return (
-      <View style={styles.MainContainer}>
+      <GestureRecognizer
+        onSwipeDown = {() => Keyboard.dismiss()}
+        style={styles.MainContainer}      
+      >
           <View style={styles.TitleContainer}>
               <Text style={styles.TitleText}>
                   Edit Profile
@@ -213,7 +217,7 @@ function EditProfile({route, navigation}): JSX.Element {
 
           </View>
 
-      </View>
+      </GestureRecognizer>
     )
 }
 

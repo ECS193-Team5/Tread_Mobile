@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {TextInput, View, Pressable, Text, Image} from "react-native";
+import {View, Pressable, Text, Image} from "react-native";
 import {ImageUploadStyles} from "../../css/shared/ImageUploadStyle";
 import {launchImageLibrary} from 'react-native-image-picker';
 

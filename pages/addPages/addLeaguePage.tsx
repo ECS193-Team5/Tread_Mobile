@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  TextInput,
   Pressable,
   Platform,
   PermissionsAndroid,
   StatusBar,
   UIManager,
   LayoutAnimation,
+  Keyboard,
 } from 'react-native';
 
 import { styles } from '../../css/add/league/Style';
@@ -26,6 +26,7 @@ import createLeague from "../../routes/add/createLeague";
 import { SharedStyles } from '../../css/shared/Style';
 import LeagueInviteScroll from '../../components/shared/LeagueInviteScroll';
 import ZeroItem from '../../components/shared/ZeroItem';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const options = [
   { label: "Create", value: true },
@@ -264,11 +265,6 @@ function AddLeaguePage(props): JSX.Element {
     },
   };
 
-
-  // const getReccLeagues = function(){
-
-  // }
-
   function getReccLeagues() {
     var config = {
       method: 'post',
@@ -350,7 +346,10 @@ function AddLeaguePage(props): JSX.Element {
   }
 
   return (
-    <View style={styles.Background}>
+    <GestureRecognizer
+      onSwipeDown = {() => Keyboard.dismiss()}
+      style={styles.Background}
+    >
       <StatusBar
         barStyle="dark-content"
       />
@@ -374,7 +373,7 @@ function AddLeaguePage(props): JSX.Element {
           {isCreate ? getCreateCode() : getJoinCode() }
         </View>
       }
-    </View>
+    </GestureRecognizer>
   )
 }
 

@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  TextInput,
   Pressable,
   Platform,
-  PermissionsAndroid,
   StatusBar,
+  Keyboard,
 } from 'react-native';
 
 import { styles } from '../css/add/league/Style';
@@ -21,6 +20,7 @@ import ImageUpload from "../components/shared/ImageUpload";
 import InputForm from "../components/shared/InputForm";
 import createLeague from "../routes/add/createLeague";
 import { createLeaguePictureURL } from '../components/Helpers/CloudinaryURLHelper';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const switchOptions = [
   { label: 'Private', value: 'private' },
@@ -194,7 +194,10 @@ function EditLeaguePage(props): JSX.Element {
   }
 
   return (
-    <View style={[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}>
+    <GestureRecognizer
+    onSwipeDown = {() => Keyboard.dismiss()}
+    style={[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]} 
+    >
       <StatusBar
         barStyle="dark-content"
       />
@@ -274,7 +277,7 @@ function EditLeaguePage(props): JSX.Element {
             </Pressable>
           </View>
         </View>
-    </View>
+    </GestureRecognizer>
   )
 }
 

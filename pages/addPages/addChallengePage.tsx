@@ -4,13 +4,15 @@ import {
   Button,
   StyleSheet,
   Text,
-  Image
+  Image,
+  Keyboard
 } from 'react-native';
 
 import {styles} from '../../css/add/challenge/Style';
 import SwitchSelector from "react-native-switch-selector";
 import IssueChallenge from "../../components/add/issueChallenge";
 import ProgressChallenge from "../../components/add/progressChallenge";
+import GestureRecognizer from 'react-native-swipe-gestures';
 function AddChallengePage(props): JSX.Element {
 
   const switchOptions = [
@@ -23,16 +25,11 @@ function AddChallengePage(props): JSX.Element {
   
   const [fromLeague, setFromLeague] = useState(props.route.params.fromLeague)
 
-  const getPageContent = function(){
-    if(pageType === 'issue') {
-      return(<IssueChallenge fromLeague = {fromLeague} id = {props.route.params.id}/>);
-    } else {
-      return(<ProgressChallenge/>);
-    }
-  }
-
   return (
-    <View style = {styles.Background}>
+    <GestureRecognizer
+      onSwipeDown = {() => Keyboard.dismiss()}
+      style = {styles.Background}
+    >
       <View style = {styles.ToggleContainer}>
         <SwitchSelector
             options = {switchOptions}
@@ -45,7 +42,6 @@ function AddChallengePage(props): JSX.Element {
         >
         </SwitchSelector>
       </View>
-        {/* {getPageContent()} */}
       {pageType === 'issue' ? 
         <IssueChallenge fromLeague = {fromLeague} id = {props.route.params.id}/>
         :
@@ -55,7 +51,7 @@ function AddChallengePage(props): JSX.Element {
 
       </View>
 
-    </View>
+    </GestureRecognizer>
   )
 }
 

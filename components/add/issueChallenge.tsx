@@ -7,6 +7,7 @@ import {styles} from '../../css/add/challenge/Style';
 import NumericInput from 'react-native-numeric-input'
 import DatePicker from 'react-native-date-picker'
 import SwitchSelector from "react-native-switch-selector";
+import GestureRecognizer from 'react-native-swipe-gestures';
 import axios from "axios";
 import {BACKEND_URL} from '@env';
 
@@ -44,8 +45,8 @@ import {
     TextInput,
     Pressable,
     TouchableHighlight,
+    Keyboard,
 } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
 
 function IssueChallenge({fromLeague, id}): JSX.Element {
 
@@ -253,7 +254,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
     }
 
     return (
-        <View style={styles.ChallengeContainer}>
+      <View style = {styles.ChallengeContainer} >
             <View style = {styles.RecommendChallengeContainer}>
               <TouchableHighlight
                     style={styles.RecommendButton}
@@ -467,8 +468,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                     </Text>
                 </Pressable>
             </View>
-
-        </View>
+      </View>
     )
 }
 
