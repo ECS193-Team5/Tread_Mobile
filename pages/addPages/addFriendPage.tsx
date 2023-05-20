@@ -102,14 +102,17 @@ function AddFriendPage(props): JSX.Element {
     // onSwipeDown = {() => Keyboard.dismiss()}
     style = {[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}  
   >
-    <View style = {{flex : 32}}> 
+    <GestureRecognizer
+      onSwipeDown = {() => Keyboard.dismiss()}
+      style = {{flex : 32}}
+    >
       <Invite
         text = 'Add Friend'
         config = {config}
         props = {props}
         pagetoNav = "AddFriend"
       />
-    </View>
+    </GestureRecognizer>
 
     <View style = {styles.SeparatorContainer}>
       <View style = {SharedStyles.seperator}/>
