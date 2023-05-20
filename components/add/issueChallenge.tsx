@@ -232,7 +232,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
 
         let unitSelected = (valueUnits !== null);
         let validDate = endDate >= startDate;
-
+        let validAmount = challengeAmount > 0
         let targetSelected = true;
 
         if(targetType === 'friend') {
@@ -243,7 +243,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
             targetSelected = targetSelected && (valueLeagues !== null)
         }
 
-        return activitySelected && unitSelected && validDate && targetSelected;
+        return activitySelected && unitSelected && validDate && targetSelected && validAmount;
     }
 
     const [showMessage, setShowMessage] = useState(false)
@@ -361,6 +361,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             minimumDate = {new Date()}
                             onConfirm={(date) => {
                                 setShowStartDatePicker(false)
+                                console.log('start')
                                 console.log(date)
                                 setStartDate(date)
                                 setStartDateSet(true)
@@ -389,6 +390,8 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             minimumDate={endDate}
                             date={endDate}
                             onConfirm={(date) => {
+                                console.log('end')
+                                console.log(date)
                                 setShowEndDatePicker(false)
                                 setEndDate(date)
                             }}
