@@ -219,7 +219,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       },
       data : {
         leagueID : props.route.params.leagueData._id,
-        recipient : UserInfo.username
+        recipient : UserInfo.username,
+        leagueName : props.route.params.leagueData.leagueName
       }
     };
   
@@ -272,7 +273,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       },
       data : {
         leagueID : props.route.params.leagueData._id,
-        recipient : UserInfo.username
+        recipient : UserInfo.username,
+        leagueName : props.route.params.leagueData.leagueName
       }
     };
   
@@ -430,7 +432,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       },
       data : {
         leagueID : props.route.params.leagueData._id,
-        recipient : UserInfo.username
+        recipient : UserInfo.username,
+        leagueName : props.route.params.leagueData.leagueName
       }
     };
   
@@ -482,7 +485,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       },
       data : {
         leagueID : props.route.params.leagueData._id,
-        recipient : UserInfo.username
+        recipient : UserInfo.username,
+        leagueName : props.route.params.leagueData.leagueName
       }
     };
   
