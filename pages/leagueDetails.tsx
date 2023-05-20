@@ -88,7 +88,6 @@ function LeagueDetails(props): JSX.Element {
   }
 
   const getLeagueInfo = function(){
-    // console.log(props.route.params.leagueData._id)
     var config = {
       method: 'post',
       url: BACKEND_URL + 'league/get_league_name_description_type',
@@ -460,8 +459,8 @@ function LeagueDetails(props): JSX.Element {
               <Text style = {[styles.TitleText, {fontSize : 25}]}>{name}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-2%'}]}>{description}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{security.charAt(0).toUpperCase() + security.slice(1)}</Text>
-              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{props.route.params.leagueData.activeChallenges + ' Active Challenges'}</Text>
-              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{props.route.params.leagueData.members.length + ' Members'}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{countMembers + ' Members'}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{countChallenges + ' Active Challenges'}</Text>
             </View>
           </View>
 
