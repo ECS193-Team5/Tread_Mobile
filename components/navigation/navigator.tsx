@@ -34,7 +34,7 @@ const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
 import {styles} from '../../css/navigation/Style';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 function ChallengesSwipeStack() {
@@ -167,7 +167,15 @@ function ShowTabs(){
   }
 
   const [picture, setPicture] = useState('')
-  getUserName()
+  const [load, setLoad] = useState(false)
+  useEffect(() => {
+    if(!load){
+      setLoad(true)
+      getUserName()
+    }
+
+  }, [load])
+  
   
   return (
   <Tab.Navigator
