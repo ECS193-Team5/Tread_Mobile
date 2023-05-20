@@ -142,7 +142,11 @@ function ChallengesPage(props): JSX.Element {
 
   useFocusEffect(
     React.useCallback(() => {
-      handleRefresh(),
+      if (isCurrent === true) {
+        getChallengeData()
+      } else {
+        getGlobalChallengeData()
+      }
       getIncomingImage()
     }, [])
   );

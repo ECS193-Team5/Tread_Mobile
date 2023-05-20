@@ -19,6 +19,7 @@ import UserScroll from '../shared/UserScroll';
 import LeagueUserCard from '../shared/LeagueUserCard';
 import Invite from '../shared/invite';
 import ZeroItem from '../shared/ZeroItem';
+import { useFocusEffect } from '@react-navigation/native';
 
 const options = [
   { label : "Members" , value : 'all'},
@@ -120,6 +121,20 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh, count
     setCountRequests(1)
     updateRequests(route)
   }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      var route = ''
+      if(currentView === 'pending'){
+        route = 'league/get_pending_request_list'
+      } else if(currentView === 'sent'){
+        route = 'league/get_sent_invite_list'
+      } else if(currentView === 'banned'){
+        route = 'league/get_banned_list'
+      }
+      updateRequests(route)
+    }, [])
+  );
 
   function handleRefresh() {
     var route = ''

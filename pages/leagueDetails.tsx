@@ -17,7 +17,6 @@ import SwitchSelector from "react-native-switch-selector"
 import {styles} from "../css/challenges/Style"
 import { LeagueStyles} from '../css/leagues/Style';
 import {cardStyles} from "../css/cards/Style"
-import IncomingSwap from '../components/shared/IncomingSwap';
 import { ImageStyles } from '../css/imageCluster/Style';
 import ChallengeScroll from '../components/shared/ChallengeScroll';
 import LeagueMemberView from '../components/Leagues/LeagueMemberView';
@@ -31,6 +30,7 @@ import MenuPopUp from '../components/shared/MenuPopUp';
 import { showMessage } from 'react-native-flash-message';
 import ZeroItem from '../components/shared/ZeroItem';
 import LeagueLeaderboard from '../components/Leagues/LeagueLeaderboard';
+import { useFocusEffect } from '@react-navigation/native';
 
 const options = [
   { label : "Members" , value : 0},
@@ -277,6 +277,19 @@ function LeagueDetails(props): JSX.Element {
     ]);
    }
 
+   useFocusEffect(
+    React.useCallback(() => {
+      if (isMembers === 0){
+        getLeagueMembers()
+      } else if (isMembers === 1){
+        getChallengeData()
+      } else {
+        getLeaderboardInfo()
+      }
+    }, [])
+  );
+
+
   const handleRefresh = function() {
     if (isMembers === 0){
       getLeagueMembers()
@@ -397,62 +410,7 @@ function LeagueDetails(props): JSX.Element {
   useEffect(() => 
     getLeaderboardInfo()
   )
-
-  const getMainContent = function(){
-    if (isMembers === 0){
-      return (
-      <LeagueMemberView
-        MemberData={LeagueMembers}
-        setLeagueMembers = {setLeagueMembers}
-        props = {props}
-        onRefresh = {handleRefresh}
-        count = {countMembers}
-        setCount = {setCountMembers}
-      />
-      )
-    } else if (isMembers === 1){
-      return (
-        <View style = {LeagueStyles.MembersChallengesContainer}>
-          <View style = {[styles.ChallengesContainer, {marginBottom : "19%"}]}>
-          {countChallenges > 0 ?
-            <ChallengeScroll
-              ChallengeData={LeagueChallenges}
-              isCurrent = {true}
-              onRefresh = {handleRefresh}
-            />
-          :
-          <ZeroItem
-            promptText='There are no challenges at the moment'
-            navigateToText= {role === 'admin' || role === 'owner' ? 'Make one here' : null}
-            SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
-            navigateToPage="AddChallenge"
-            defaultView={true}
-            fromLeague={true}
-            id = {props.route.params.leagueData._id}
-            props = {props}
-          />
-          }
-          </View>
-        </View>
-      )
-    } else {
-      return(
-      <View style = {LeagueStyles.MembersChallengesContainer}>
-        {countLeaderboard > 0 ?
-          <LeagueLeaderboard
-            progressInfo = {leaderboardInfo}
-          />
-        :
-        <ZeroItem
-          promptText='No Leaderboard Yet'
-          SecondaryPrompt = 'Tell the members to start completing challenges!'
-        />
-        }
-      </View>
-      )
-    }
-  }
-
+  
   return (
     <View style = {styles.container}>
         <Modal
@@ -537,7 +495,58 @@ function LeagueDetails(props): JSX.Element {
 
       <View style = {styles.seperator}/>
 
-      {getMainContent()}
+      {/* {getMainContent()} */}
+      {isMembers === 0 &&
+          <LeagueMemberView
+          MemberData={LeagueMembers}
+          setLeagueMembers = {setLeagueMembers}
+          props = {props}
+          onRefresh = {handleRefresh}
+          count = {countMembers}
+          setCount = {setCountMembers}
+        />
+      }
+
+      {isMembers === 1 &&
+          <View style = {LeagueStyles.MembersChallengesContainer}>
+          <View style = {[styles.ChallengesContainer, {marginBottom : "19%"}]}>
+          {countChallenges > 0 ?
+            <ChallengeScroll
+              ChallengeData={LeagueChallenges}
+              isCurrent = {true}
+              onRefresh = {handleRefresh}
+            />
+          :
+          <ZeroItem
+            promptText='There are no challenges at the moment'
+            navigateToText= {role === 'admin' || role === 'owner' ? 'Make one here' : null}
+            SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
+            navigateToPage="AddChallenge"
+            defaultView={true}
+            fromLeague={true}
+            id = {props.route.params.leagueData._id}
+            props = {props}
+          />
+          }
+          </View>
+        </View>
+      }
+
+      {isMembers === 2 &&
+        <View style = {LeagueStyles.MembersChallengesContainer}>
+          {countLeaderboard > 0 ?
+            <LeagueLeaderboard
+              progressInfo = {leaderboardInfo}
+            />
+          :
+          <ZeroItem
+            promptText='No Leaderboard Yet'
+            SecondaryPrompt = 'Tell the members to start completing challenges!'
+          />
+          }
+       </View>
+      }
+
     </View>
   )
 }
