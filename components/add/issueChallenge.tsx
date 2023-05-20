@@ -119,10 +119,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
         }
     }, [value])
 
-  // useEffect(() => {
-  //   if()
-  // },[startDate])
-
     const getFriends = function() {
         var config = {
             method : 'post',
