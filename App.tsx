@@ -99,15 +99,6 @@ function App(): JSX.Element {
     console.log("This use effect is triggered in app.tsx");
   });
 
-  // useEffect(() => {
-  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
-  //     console.log('Received a message')
-  //     Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-  //   });
-  //
-  //   return unsubscribe;
-  // }, []);
-
   return (
       <View style ={{flex:1}}>
         <Navigator/>

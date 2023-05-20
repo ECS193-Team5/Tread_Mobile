@@ -51,29 +51,20 @@ function LoginButton({filled, text, navigation}): JSX.Element {
 	}
 
 	const getFCMToken = async() => {
-		// await messaging().registerDeviceForRemoteMessages();
-		messaging().hasPermission().then(enabled => {
-			console.log("Has permissions")
-			if(enabled) {
-				console.log("Permissions is enabled")
-				messaging().getToken({vapidKey: VAPID_KEY}).then(token => {
-					console.log(token)
-					return token
-				});
-			} else {
-				console.log("Permissions not enabled")
-				PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
-				messaging().requestPermission().then(() => {
-					messaging().getToken({vapidKey: VAPID_KEY}).then(token => {
-						console.log(token)
-						return token
-					});
-				})
-					.catch(error => {
-						console.log('PERMISSION REQUEST :: notification permission rejected');
-					})
-			}
-		})
+		const enabled = await messaging().hasPermission()
+
+		if(enabled) {
+			console.log("Permissions is enabled")
+			const token = await messaging().getToken({vapidKey: VAPID_KEY})
+			return token
+		} else {
+			console.log("Permissions not enabled")
+			await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+			await messaging().requestPermission()
+
+			const token = await messaging().getToken({vapidKey: VAPID_KEY})
+			return token
+		}
 	}
 
 	const storeLogIn = async () => {
@@ -91,8 +82,7 @@ function LoginButton({filled, text, navigation}): JSX.Element {
 	}
 
 	const login = async (email, authToken, photo) => {
-		const deviceToken = await getFCMToken();
-    console.log(deviceToken)
+		const deviceToken = await getFCMToken()
 		axios(loginConfig(authToken, deviceToken))
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
@@ -103,13 +93,15 @@ function LoginButton({filled, text, navigation}): JSX.Element {
 					navigation.navigate('Signup',{
 						email: email,
 						photo: photo,
-						navigation: navigation
+						navigation: navigation,
+						deviceToken: deviceToken
 					})
 				}
 			})
 			.catch(function (error) {
 				console.log(error);
 			});
+
 	}
 
 
