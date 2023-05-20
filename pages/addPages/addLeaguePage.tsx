@@ -27,6 +27,7 @@ import { SharedStyles } from '../../css/shared/Style';
 import LeagueInviteScroll from '../../components/shared/LeagueInviteScroll';
 import ZeroItem from '../../components/shared/ZeroItem';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { useFocusEffect } from '@react-navigation/native';
 
 const options = [
   { label: "Create", value: true },
@@ -291,6 +292,12 @@ function AddLeaguePage(props): JSX.Element {
   const handleRefresh = function(){
     getReccLeagues()
   }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getReccLeagues()
+    }, [])
+  );
 
   const deleteItem = function(lData) {
     console.log(lData._id)

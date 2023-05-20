@@ -81,10 +81,6 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
       )
   }
   
-  useEffect(() =>{
-    getLeagueRole()
-  })
-
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -122,19 +118,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
     updateRequests(route)
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      var route = ''
-      if(currentView === 'pending'){
-        route = 'league/get_pending_request_list'
-      } else if(currentView === 'sent'){
-        route = 'league/get_sent_invite_list'
-      } else if(currentView === 'banned'){
-        route = 'league/get_banned_list'
-      }
-      updateRequests(route)
-    }, [])
-  );
+
 
   function handleRefresh() {
     var route = ''
@@ -199,11 +183,25 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
     )
   }
 
-  const [isAdminOwnerParticipant, setIsAdminOwnerParticipant] = useState("")
+  const [isAdminOwnerParticipant, setIsAdminOwnerParticipant] = useState(getLeagueRole)
   const [currentView, setCurrentView] = useState("all")
   const [countRequests, setCountRequests] = useState(1)
   const [requests, setRequests] = useState(getRequests);
   const [refreshing, setRefreshing] = useState(false)
+
+  useFocusEffect(
+    React.useCallback(() => {
+      var route = ''
+      if(currentView === 'pending'){
+        route = 'league/get_pending_request_list'
+      } else if(currentView === 'sent'){
+        route = 'league/get_sent_invite_list'
+      } else if(currentView === 'banned'){
+        route = 'league/get_banned_list'
+      }
+      updateRequests(route)
+    }, [currentView])
+  );
 
   const Refresh = function() {
     setRefreshing(true);

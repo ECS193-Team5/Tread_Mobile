@@ -113,7 +113,7 @@ function LeaguesPage(props): JSX.Element {
       } else {
         getAdminLeagueData()
       }
-    }, [])
+    }, [currentView])
   );
 
   const handleRefresh = function(){

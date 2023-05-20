@@ -104,7 +104,7 @@ function IncomingChallengesPage(props): JSX.Element {
       } else {
         getSentChallenges()
       }
-    }, [])
+    }, [pageTitle])
   );
 
   const handleDropDown = function(selectedItem){

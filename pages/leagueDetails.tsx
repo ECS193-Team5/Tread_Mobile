@@ -221,7 +221,6 @@ function LeagueDetails(props): JSX.Element {
   const [LeagueMembers, setLeagueMembers] = useState(getLeagueMembers)
   const [LeagueChallenges, setLeagueChallenges] = useState(getChallengeData)
   const [BlockedUsers , setBlockedUsers] = useState([])
-  getBlockedUsers()
   const [Friends , setFriends] = useState(getFriends)
 
   const [role, setRole] = useState('')
@@ -331,12 +330,14 @@ function LeagueDetails(props): JSX.Element {
     React.useCallback(() => {
       if (isMembers === 0){
         getLeagueMembers()
+        getBlockedUsers()
+        getFriends()
       } else if (isMembers === 1){
         getChallengeData()
       } else {
         getLeaderboardInfo()
       }
-    }, [])
+    }, [isMembers])
   );
 
 

@@ -79,7 +79,7 @@ function IncomingLeaguesPage(props): JSX.Element {
       } else {
         getSent()
       }
-    }, [])
+    }, [pageTitle])
   );
 
   const handleRefresh = function(){

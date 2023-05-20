@@ -124,13 +124,15 @@ function LeaguesPage(props): JSX.Element {
     }
   }
 
-  useFocusEffect(() => {
+  useFocusEffect(
+    React.useCallback(() => {
       if (friendType === 'All Friends'){
         getFriends()
       }else {
         getBlocked()
       }
-    });
+    }, [friendType])
+  );
 
   const handleRefresh = function(){
     if (friendType === 'All Friends'){

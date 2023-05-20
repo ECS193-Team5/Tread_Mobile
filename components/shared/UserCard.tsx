@@ -90,7 +90,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         backgroundColor : '#014421',
         color : '#F9A800',
       })
-      UserRole === 'Mutual' ?  handler(UserInfo) : null
+      UserRole === 'Mutual' ?  null :  onRefresh()
     })
     .catch(function (error) {
       console.log(error)
@@ -753,7 +753,14 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
             {UserRole === 'All Friends' ? block() : unblock()}
           </View>
         );
-    } else {
+    } else if (UserRole === 'Mutual'){
+      return (
+        <View style={[SharedStyles.RightSliderContainer]}>
+          {addFriend()}
+        </View>
+      )
+    }
+    else {
       return (
         <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
           {Friends.includes(UserInfo.username) ? unfriend() : addFriend()}

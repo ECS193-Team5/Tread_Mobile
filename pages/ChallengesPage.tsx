@@ -133,16 +133,7 @@ function ChallengesPage(props): JSX.Element {
     }
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (isCurrent === true) {
-        getChallengeData()
-      } else {
-        getGlobalChallengeData()
-      }
-      getIncomingImage()
-    }, [])
-  );
+
 
   const [titleName, setTitleName] = useState('Current')
   const [count, setCount] = useState(0)
@@ -152,6 +143,16 @@ function ChallengesPage(props): JSX.Element {
   const [challengeImage, setChallengeImage] = useState("https://imgur.com/2BHAmsN.png")
   const [IncomingImage, setIncomingImage] = useState(getIncomingImage)
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (isCurrent === true) {
+        getChallengeData()
+      } else {
+        getGlobalChallengeData()
+      }
+      getIncomingImage()
+    }, [isCurrent])
+  );
   return (
     <View style = {styles.container}>
       <StatusBar

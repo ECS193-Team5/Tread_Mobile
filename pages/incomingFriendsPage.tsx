@@ -109,7 +109,7 @@ function IncomingFriendsPage(props): JSX.Element {
       }else {
         getSentRequests()
       }
-    }, [])
+    }, [pageTitle])
   );
 
   const handleRefresh = function(){
