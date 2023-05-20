@@ -361,7 +361,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             minimumDate = {new Date()}
                             onConfirm={(date) => {
                                 setShowStartDatePicker(false)
-                                console.log('start')
                                 console.log(date)
                                 setStartDate(date)
                                 setStartDateSet(true)
@@ -390,8 +389,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             minimumDate={endDate}
                             date={endDate}
                             onConfirm={(date) => {
-                                console.log('end')
-                                console.log(date)
                                 setShowEndDatePicker(false)
                                 setEndDate(date)
                             }}
