@@ -412,6 +412,7 @@ function LeagueDetails(props): JSX.Element {
     } else if (isMembers === 1){
       return (
         <View style = {LeagueStyles.MembersChallengesContainer}>
+          <View style = {[styles.ChallengesContainer, {marginBottom : "19%"}]}>
           {countChallenges > 0 ?
             <ChallengeScroll
               ChallengeData={LeagueChallenges}
@@ -430,6 +431,7 @@ function LeagueDetails(props): JSX.Element {
             props = {props}
           />
           }
+          </View>
         </View>
       )
     } else {

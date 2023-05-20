@@ -8,6 +8,7 @@ const LeagueStyles = StyleSheet.create({
 
   MembersChallengesContainer : {
     flex : 60,
+    // marginBottom : '20%'
   },
 
   LeagueInfoCard : {
