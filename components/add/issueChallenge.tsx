@@ -93,6 +93,17 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
     const [valueLeagues, setValueLeagues] = useState(fromLeague === true ? id : null);
     const [itemsLeagues, setItemsLeagues] = useState([]);
 
+    const [load, setLoad] = useState(false)
+    
+    useEffect(() => {
+      if(!load){
+        setLoad(true)
+        endDate.setDate(new Date().getDate() + 1)
+      }
+
+    }, [load])
+    
+
     useEffect(() => {
         getFriends()
         getLeagues()
@@ -367,24 +378,17 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             date={startDate}
                             minimumDate = {new Date(new Date().setHours(0,0,0))}
                             onConfirm={(date) => {
-                                // console.log(new Date())
-                                // console.log("New date " + new Date())
+                                console.log('start')
+                                console.log(date)
+
                                 setStartDate(date)
                                 setStartDateSet(true)
 
                                 if(date >= endDate) {
-                                  // console.log("Date:")
-                                  // console.log(date)
-                                  // console.log("Shitty Date:")
-                                  // date.setDate(date.getDate() + 1)
-                                  // console.log(date)
                                   endDate.setDate(date.getDate() + 1)
-                                  // setEndDate(new Date(date.getDate() + 1))
                                 }
                                 minEndDate.setDate(date.getDate() + 1)
-                                // setMinEndDate(new Date(date.getDate() + 1))
                                 setShowStartDatePicker(false)
-                                // console.log(date)
                             }}
                             onCancel={() => {
                                 setShowStartDatePicker(false)
@@ -410,7 +414,8 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             minimumDate={minEndDate}
                             date={endDate}
                             onConfirm={(date) => {
-                                // console.log(date)
+                                console.log('start')
+                                console.log(date)
                                 setShowEndDatePicker(false)
                                 setEndDate(date)
                             }}
