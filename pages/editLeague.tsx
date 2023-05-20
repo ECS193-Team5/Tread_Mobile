@@ -6,6 +6,7 @@ import {
   Platform,
   StatusBar,
   Keyboard,
+  TouchableHighlight,
 } from 'react-native';
 
 import { styles } from '../css/add/league/Style';
@@ -265,15 +266,16 @@ function EditLeaguePage(props): JSX.Element {
               </View>
 
           <View style={styles.EnterButtonContainer}>
-            <Pressable
+            <TouchableHighlight
               style={((validLeagueName && (leagueName !== oldleagueName)) || (validLeagueDesc && (leagueDesc !== oldleagueDesc)) || (oldsecurity !== security) || validPicture) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
               disabled={!((validLeagueName && (leagueName !== oldleagueName)) || (validLeagueDesc && (leagueDesc !== oldleagueDesc)) || (oldsecurity !== security)|| validPicture)}
+              underlayColor = '#013319'
               onPress={onSubmit}
             >
               <Text style={styles.ChoosePicText}>
                 Submit
               </Text>
-            </Pressable>
+            </TouchableHighlight>
           </View>
         </View>
     </GestureRecognizer>

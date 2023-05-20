@@ -14,7 +14,7 @@ import {
     Text,
     TextInput,
     Pressable,
-    Keyboard,
+    TouchableHighlight,
 } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 
@@ -223,15 +223,16 @@ function ProgressChallenge(): JSX.Element {
           </View>
 
           <View style = {styles.SubmitContainer}>
-              <Pressable
+              <TouchableHighlight
                   style={validInfo() ? styles.EnterButtonValid : styles.EnterButtonInvalid}
                   onPress={handleIssuePress}
                   disabled={!validInfo()}
+                  underlayColor = '#013319'
               >
                   <Text style={styles.IssueChallengeText}>
                       Submit
                   </Text>
-              </Pressable>
+              </TouchableHighlight>
           </View>
         </View>
     )

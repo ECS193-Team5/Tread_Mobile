@@ -48,6 +48,7 @@ function Login(props): JSX.Element {
               filled={true}
               text={'Log In'}
               navigation={props.navigation}
+              isLogin = {true}
             >
             </LoginButton>
           </View>
@@ -67,6 +68,7 @@ function Login(props): JSX.Element {
               filled={false}
               text={'Sign Up'}
               navigation={props.navigation}
+              isLogin = {false}
             >
             </LoginButton>
           </View>

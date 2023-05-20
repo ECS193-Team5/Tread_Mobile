@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-	Pressable,
-  Image,
-  View,
-  Text,
   FlatList,
-  Platform,
-  UIManager,
-  LayoutAnimation,
   RefreshControl,
 } from 'react-native';
 

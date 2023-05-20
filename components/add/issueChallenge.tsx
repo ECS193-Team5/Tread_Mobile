@@ -229,7 +229,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
             activitySelected = activitySelected && (customActivity.length > 0)
         }
 
-
         let unitSelected = (valueUnits !== null);
         let validDate = endDate >= startDate;
         let validAmount = challengeAmount > 0
@@ -457,15 +456,16 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                 </View>
             }
             <View style = {styles.SubmitContainer}>
-                <Pressable
+                <TouchableHighlight
                     style={validInfo() ? styles.EnterButtonValid : styles.EnterButtonInvalid}
                     onPress={handleIssuePress}
                     disabled={!validInfo()}
+                    underlayColor = '#013319'
                 >
                     <Text style={styles.IssueChallengeText}>
                         Issue
                     </Text>
-                </Pressable>
+                </TouchableHighlight>
             </View>
       </View>
     )

@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
-  Image,
-  Pressable,
-  ScrollView,
-  FlatList,
-  Linking,
   StatusBar
 } from 'react-native';
 import { Text } from 'react-native-elements';

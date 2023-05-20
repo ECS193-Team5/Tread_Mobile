@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  Pressable,
   Platform,
   PermissionsAndroid,
   StatusBar,
   UIManager,
   LayoutAnimation,
   Keyboard,
+  TouchableHighlight,
 } from 'react-native';
 
 import { styles } from '../../css/add/league/Style';
@@ -231,15 +231,16 @@ function AddLeaguePage(props): JSX.Element {
           </View>
 
           <View style={styles.EnterButtonContainer}>
-            <Pressable
+            <TouchableHighlight
               style={(validPicture && validLeagueName && validLeagueDesc) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
               onPress={onSubmit}
+              underlayColor = '#013319'
               disabled={!(validPicture && validLeagueName && validLeagueDesc)}
             >
               <Text style={styles.ChoosePicText}>
                 Submit
               </Text>
-            </Pressable>
+            </TouchableHighlight>
           </View>
         </View>
         <View style={styles.SeparatorContainer} />

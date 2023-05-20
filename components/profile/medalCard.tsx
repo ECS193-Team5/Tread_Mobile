@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import {
-    Pressable,
-    Image,
     View,
     Text,
     StatusBar,
-    StyleSheet,
-    Dimensions
 } from 'react-native';
 
 import {cardStyles} from "../../css/cards/Style"
@@ -21,10 +17,7 @@ function MedalCard({MedalData}): JSX.Element {
     var ProgressPercent = Math.min(100,Math.round(currentAmount / targetAmount * 100))
 
     return (
-        <Pressable
-            style = {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}
-        >
-
+        <View style = {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp]}>
             <StatusBar
                 barStyle="dark-content"
             />
@@ -54,7 +47,7 @@ function MedalCard({MedalData}): JSX.Element {
                     </ProgressCircle>
                 </View>
             </View>
-        </Pressable>
+        </View>
     )
 }
 

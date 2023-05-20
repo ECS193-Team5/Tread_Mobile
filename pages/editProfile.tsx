@@ -2,10 +2,9 @@ import React, { useState, useEffect} from 'react';
 import {
     View,
     Text,
-    Pressable,
     Alert,
     Keyboard,
-    // CheckBox,
+    TouchableHighlight,
 } from 'react-native';
 
 import {BACKEND_URL} from '@env';
@@ -197,23 +196,26 @@ function EditProfile({route, navigation}): JSX.Element {
           </View>
 
           <View style={styles.SubmitContainer}>
-              <Pressable style = {((validDisplayName && (displayName !== oldDisplayName)) || validPicture)? styles.validSignupButton : styles.invalidSignupButton}
+              <TouchableHighlight style = {((validDisplayName && (displayName !== oldDisplayName)) || validPicture)? styles.validSignupButton : styles.invalidSignupButton}
                          disabled = {!(((validDisplayName && (displayName !== oldDisplayName)) || validPicture))}
+                         underlayColor = '#013319'
                          onPress = {handleOnSubmit}>
                   <Text style = {styles.signupText}>
                       Update Profile
                   </Text>
-              </Pressable>
+              </TouchableHighlight>
 
           </View>
 
           <View style={styles.DeleteContainer}>
-              <Pressable style = {styles.deleteButton}
-                         onPress = {handleOnDelete}>
+              <TouchableHighlight style = {styles.deleteButton}
+                         onPress = {handleOnDelete}
+                         underlayColor = '#b32727'
+                         >
                   <Text style = {styles.signupText}>
                       Delete Account
                   </Text>
-              </Pressable>
+              </TouchableHighlight>
 
           </View>
 

@@ -1,8 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState} from 'react';
 import {
   View,
   Text,
-  Pressable, Image, Keyboard,
+  Keyboard, 
+  TouchableHighlight,
 } from 'react-native';
 
 import {BACKEND_URL} from '@env';
@@ -111,13 +112,14 @@ function Signup({route, navigation}): JSX.Element {
 
 			</View>
 			<View style = {styles.signupContainer}>
-				<Pressable style = {validUserName && validDisplayName && toggleCheckBox? styles.validSignupButton : styles.invalidSignupButton}
+				<TouchableHighlight style = {validUserName && validDisplayName && toggleCheckBox? styles.validSignupButton : styles.invalidSignupButton}
 					disabled = {!(validUserName && validDisplayName && toggleCheckBox)}
+          underlayColor = '#013319'
           onPress = {handleOnPress}>
 					<Text style = {styles.signupText}>
 						Sign Up
 					</Text>
-				</Pressable>
+				</TouchableHighlight>
 			</View>
 		</GestureRecognizer>
   )

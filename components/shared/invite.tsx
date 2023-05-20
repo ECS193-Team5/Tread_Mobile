@@ -8,7 +8,8 @@ import {
     Pressable,
     Platform,
     PermissionsAndroid,
-    Image
+    Image,
+    TouchableHighlight
 } from 'react-native';
 
 import {styles} from '../../css/add/friend/Style';
@@ -178,13 +179,14 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
               </View>
 
               <View style = {styles.SubmitContainer}>
-                  <Pressable style = {validID ? styles.ButtonValid : styles.ButtonInvalid}
+                  <TouchableHighlight style = {validID ? styles.ButtonValid : styles.ButtonInvalid}
                               onPress = {onSubmit}
+                              underlayColor = '#013319'
                               disabled = {!validID}>
                       <Text style = {styles.RequestText}>
                           Send Request
                       </Text>
-                  </Pressable>
+                  </TouchableHighlight>
               </View>
             </View>
           </View>

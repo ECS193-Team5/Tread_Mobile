@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Pressable, Text, Image} from "react-native";
+import {View, Text, Image, TouchableHighlight} from "react-native";
 import {ImageUploadStyles} from "../../css/shared/ImageUploadStyle";
 import {launchImageLibrary} from 'react-native-image-picker';
 
@@ -46,16 +46,17 @@ function ImageUpload(props): JSX.Element {
         {image}
       </View>
       <View style={ImageUploadStyles.ChoosePicContainer}>
-        <Pressable
+        <TouchableHighlight
           style={ImageUploadStyles.ChoosePicButton}
           onPress={onChoosePicPress}
+          underlayColor = '#013319'
         >
           <Text
             style = {ImageUploadStyles.ChoosePicText}
           >
             Choose Picture
           </Text>
-        </Pressable>
+        </TouchableHighlight>
       </View>
     </View>
   )
