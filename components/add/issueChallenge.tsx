@@ -8,6 +8,7 @@ import NumericInput from 'react-native-numeric-input'
 import DatePicker from 'react-native-date-picker'
 import SwitchSelector from "react-native-switch-selector";
 import axios from "axios";
+import {showMessage} from 'react-native-flash-message'
 import {BACKEND_URL} from '@env';
 
 import Ionicons                 from 'react-native-vector-icons/Ionicons'
@@ -44,7 +45,6 @@ import {
     TextInput,
     Pressable,
     TouchableHighlight,
-    Keyboard,
 } from 'react-native';
 
 function IssueChallenge({fromLeague, id}): JSX.Element {
@@ -208,7 +208,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                 setValueFriends(null)
                 showMessage({
                   floating : true,
-                  message : 'Challenge created',
+                  message : 'Challenge Created',
                   backgroundColor : '#014421',
                   color : '#F9A800',
                 })
@@ -246,10 +246,10 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
         return activitySelected && unitSelected && validDate && targetSelected && validAmount;
     }
 
-    const [showMessage, setShowMessage] = useState(false)
+    const [showRecommendMessage, setShowRecommendMessage] = useState(false)
     const handleRecommendPress = function(){
       console.log('pressed Recommend')
-      setShowMessage(true)
+      setShowRecommendMessage(true)
     }
 
     return (
@@ -265,7 +265,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                     </Text>
               </TouchableHighlight>
             </View>
-            {showMessage ? 
+            {showRecommendMessage ? 
               <View style = {styles.RecommendTextContainer}>
                 <Text style={styles.RecommendMessageText}>
                     Message Text

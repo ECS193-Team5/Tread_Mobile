@@ -16,6 +16,7 @@ import UserScroll from '../components/shared/UserScroll';
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import ZeroItem from '../components/shared/ZeroItem';
+import { useFocusEffect } from '@react-navigation/native';
 
 const options = [
   { label : "Received" , value : 'Received'},
@@ -100,6 +101,16 @@ function IncomingFriendsPage(props): JSX.Element {
       getSentRequests()
     }
   }
+  
+  useFocusEffect(
+    React.useCallback(() => {
+      if (pageTitle === 'Received'){
+        getReceivedRequests()
+      }else {
+        getSentRequests()
+      }
+    }, [])
+  );
 
   const handleRefresh = function(){
     if (pageTitle === 'Received'){

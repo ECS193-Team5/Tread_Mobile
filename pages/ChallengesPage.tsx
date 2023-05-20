@@ -23,6 +23,7 @@ import {BACKEND_URL} from '@env';
 import ListenerComponentHealthKit from '../components/Sensors/healthKit';
 import ListenerComponentHealthConnect from '../components/Sensors/healthConnect';
 import ZeroItem from '../components/shared/ZeroItem';
+import { useFocusEffect } from '@react-navigation/native';
 
 function ChallengesPage(props): JSX.Element {
   const [update, setUpdate] = useState(true);
@@ -139,6 +140,12 @@ function ChallengesPage(props): JSX.Element {
     }
   }
 
+  useFocusEffect(
+    React.useCallback(() => {
+      handleRefresh(),
+      getIncomingImage()
+    }, [])
+  );
 
   const [titleName, setTitleName] = useState('Current')
   const [count, setCount] = useState(0)

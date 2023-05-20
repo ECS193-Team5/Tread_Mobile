@@ -21,6 +21,7 @@ import IncomingSwap from '../components/shared/IncomingSwap';
 import ChallengeInviteCard from '../components/shared/ChallengeInviteCard';
 import { createProfilePictureURL } from '../components/Helpers/CloudinaryURLHelper';
 import ZeroItem from '../components/shared/ZeroItem';
+import { useFocusEffect } from '@react-navigation/native';
 
 const options = [
   { label : "Received" , value : 'Received'},
@@ -96,6 +97,16 @@ function IncomingChallengesPage(props): JSX.Element {
   const [ChallengeData, setChallengeData] = useState(getReceivedChallenges)
   const [refreshing, setRefreshing] = useState(false)
   
+  useFocusEffect(
+    React.useCallback(() => {
+      if(pageTitle === 'Received'){
+        getReceivedChallenges()
+      } else {
+        getSentChallenges()
+      }
+    }, [])
+  );
+
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
     setPageTitle(selectedItem)

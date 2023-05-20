@@ -14,6 +14,7 @@ import {styles} from "../css/challenges/Style"
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import ZeroItem from '../components/shared/ZeroItem';
+import { useFocusEffect } from '@react-navigation/native';
 
 const options = [
   { label : "All" , value : 'All'},
@@ -105,6 +106,16 @@ function LeaguesPage(props): JSX.Element {
     }
   }
   
+  useFocusEffect(
+    React.useCallback(() => {
+      if(currentView === 'All'){
+        getAllLeagueData()
+      } else {
+        getAdminLeagueData()
+      }
+    }, [])
+  );
+
   const handleRefresh = function(){
     if(currentView === 'All'){
       getAllLeagueData()
