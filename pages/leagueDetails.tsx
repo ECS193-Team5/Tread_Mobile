@@ -455,10 +455,7 @@ function LeagueDetails(props): JSX.Element {
   }
 
   return (
-    <GestureRecognizer
-      onSwipeDown = {() => Keyboard.dismiss()}
-      style = {styles.container}
-    >
+    <View style = {styles.container}>
         <Modal
           isVisible={modalVisibleQR}
           hasBackdrop = {true}
@@ -542,7 +539,7 @@ function LeagueDetails(props): JSX.Element {
       <View style = {styles.seperator}/>
 
       {getMainContent()}
-    </GestureRecognizer>
+    </View>
   )
 }
 
