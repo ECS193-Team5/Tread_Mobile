@@ -20,7 +20,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 function Signup({route, navigation}): JSX.Element {
 
   const handleOnPress = async function() {
-    axios(signupConfig(userName, displayName, picture))
+    axios(signupConfig(userName, displayName, picture, route.params.deviceToken))
     .then(function (response) {
       console.log(JSON.stringify(response.data));
       navigation.navigate("Challenge");

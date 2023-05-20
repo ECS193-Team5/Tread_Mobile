@@ -1,6 +1,6 @@
 import {BACKEND_URL} from '@env';
 
-const signupConfig = function(userName, displayName, picture) {
+const signupConfig = function(userName, displayName, picture, deviceToken) {
   var config = {
     method: 'post',
     url: BACKEND_URL + 'sign_up/sign_up',
@@ -12,7 +12,8 @@ const signupConfig = function(userName, displayName, picture) {
     data: {
       'username' : userName,
       'displayName' : displayName,
-      'picture' : picture
+      'picture' : picture,
+      'deviceToken' : deviceToken
     }
   };
 

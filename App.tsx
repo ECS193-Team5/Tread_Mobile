@@ -5,6 +5,9 @@ import FlashMessage from 'react-native-flash-message'
 import axios from "axios";
 import { BACKEND_URL } from '@env';
 
+import { Alert } from 'react-native';
+import messaging from '@react-native-firebase/messaging';
+
 const sendLeagueRequest = (leagueID) => {
   console.log("send league request");
   var config = {
