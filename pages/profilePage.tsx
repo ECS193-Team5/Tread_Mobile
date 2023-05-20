@@ -128,7 +128,7 @@ function ProfilePage({route, navigation}): JSX.Element {
         axios(config)
             .then(function (response) {
                 // console.log(response.data)
-                setUserName('@' + response.data)
+                setUserName(response.data)
             })
             .catch((error) =>
                 console.log(error)
@@ -234,7 +234,7 @@ function ProfilePage({route, navigation}): JSX.Element {
     const handleEdit = function() {
         setModalVisiblePopUp(false)
         navigation.navigate('EditProfile', {
-            picture: createProfilePictureURL(userName.substring(1,)),
+            picture: createProfilePictureURL(userName),
             displayName: displayName
         })
         // console.log('edit')
@@ -364,7 +364,7 @@ function ProfilePage({route, navigation}): JSX.Element {
                 <View style={ProfileStyles.ProfileTopContainer}>
                     <View style={ProfileStyles.ProfileImageContainer}>
                         <Image
-                            src={createProfilePictureURL(userName.substring(1,))}
+                            src={createProfilePictureURL(userName)}
                             style={ProfileStyles.ProfileImage}
                         >
                         </Image>
@@ -378,7 +378,7 @@ function ProfilePage({route, navigation}): JSX.Element {
                         </View>
                         <View style={ProfileStyles.UsernameContainer}>
                             <Text style={ProfileStyles.UsernameText}>
-                                {userName}
+                                {'@' + userName}
                             </Text>
                         </View>
 
