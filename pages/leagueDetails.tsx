@@ -464,6 +464,7 @@ function LeagueDetails(props): JSX.Element {
     if(!load){
       getLeaderboardInfo(),
       getRole(),
+      setLoad(true)
       getLeagueInfo()
     }
   }, [load])
