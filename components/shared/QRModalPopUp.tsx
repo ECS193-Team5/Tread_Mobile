@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-	Pressable,
-  Image,
   View,
   Text,
-  StatusBar,
-  Modal,
   StyleSheet,
-  FlatList
 } from 'react-native';
-import { ImageStyles } from '../../css/imageCluster/Style';
 import QRCode from 'react-native-qrcode-svg';
 import { modalstyle } from '../../css/shared/modalStyle';
 import DragDownBar from './DragDownBar';

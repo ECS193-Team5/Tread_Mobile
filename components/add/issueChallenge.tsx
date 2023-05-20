@@ -8,6 +8,7 @@ import NumericInput from 'react-native-numeric-input'
 import DatePicker from 'react-native-date-picker'
 import SwitchSelector from "react-native-switch-selector";
 import axios from "axios";
+import {showMessage} from 'react-native-flash-message'
 import {BACKEND_URL} from '@env';
 
 import Ionicons                 from 'react-native-vector-icons/Ionicons'
@@ -45,7 +46,6 @@ import {
     Pressable,
     TouchableHighlight,
 } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
 
 function IssueChallenge({fromLeague, id}): JSX.Element {
 
@@ -226,7 +226,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                 setValueFriends(null)
                 showMessage({
                   floating : true,
-                  message : 'Challenge created',
+                  message : 'Challenge Created',
                   backgroundColor : '#014421',
                   color : '#F9A800',
                 })
@@ -247,10 +247,9 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
             activitySelected = activitySelected && (customActivity.length > 0)
         }
 
-
         let unitSelected = (valueUnits !== null);
         let validDate = endDate >= startDate;
-
+        let validAmount = challengeAmount > 0
         let targetSelected = true;
 
         if(targetType === 'friend') {
@@ -261,17 +260,17 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
             targetSelected = targetSelected && (valueLeagues !== null)
         }
 
-        return activitySelected && unitSelected && validDate && targetSelected;
+        return activitySelected && unitSelected && validDate && targetSelected && validAmount;
     }
 
-    const [showMessage, setShowMessage] = useState(false)
+    const [showRecommendMessage, setShowRecommendMessage] = useState(false)
     const handleRecommendPress = function(){
       console.log('pressed Recommend')
-      setShowMessage(true)
+      setShowRecommendMessage(true)
     }
 
     return (
-        <View style={styles.ChallengeContainer}>
+      <View style = {styles.ChallengeContainer} >
             <View style = {styles.RecommendChallengeContainer}>
               <TouchableHighlight
                     style={styles.RecommendButton}
@@ -283,7 +282,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                     </Text>
               </TouchableHighlight>
             </View>
-            {showMessage ? 
+            {showRecommendMessage ? 
               <View style = {styles.RecommendTextContainer}>
                 <Text style={styles.RecommendMessageText}>
                     Message Text
@@ -441,7 +440,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                   <SwitchSelector
                       options = {switchOptions}
                       initial = {fromLeague === true ? 2 : 0}
-                      selectedColor = 'white'
+                      selectedColor = '#F9A800'
                       textColor = '#014421'
                       buttonColor = '#014421'
                       borderColor = '#014421'
@@ -484,18 +483,18 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                 </View>
             }
             <View style = {styles.SubmitContainer}>
-                <Pressable
+                <TouchableHighlight
                     style={validInfo() ? styles.EnterButtonValid : styles.EnterButtonInvalid}
                     onPress={handleIssuePress}
                     disabled={!validInfo()}
+                    underlayColor = '#013319'
                 >
                     <Text style={styles.IssueChallengeText}>
                         Issue
                     </Text>
-                </Pressable>
+                </TouchableHighlight>
             </View>
-
-        </View>
+      </View>
     )
 }
 

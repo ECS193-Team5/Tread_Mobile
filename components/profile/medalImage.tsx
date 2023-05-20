@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    Pressable,
     Image,
     View
 } from 'react-native';

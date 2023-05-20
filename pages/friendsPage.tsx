@@ -15,6 +15,7 @@ import UserScroll from '../components/shared/UserScroll';
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import ZeroItem from '../components/shared/ZeroItem';
+import { useFocusEffect } from '@react-navigation/native';
 
 const options = [
   { label : "All" , value : 'All Friends'},
@@ -122,6 +123,16 @@ function LeaguesPage(props): JSX.Element {
       getBlocked()
     }
   }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (friendType === 'All Friends'){
+        getFriends()
+      }else {
+        getBlocked()
+      }
+    }, [friendType])
+  );
 
   const handleRefresh = function(){
     if (friendType === 'All Friends'){

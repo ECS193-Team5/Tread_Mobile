@@ -1,9 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState} from 'react';
 import {
   View,
   Text,
-  TextInput,
-  Pressable, Image,
+  Keyboard, 
+  TouchableHighlight,
 } from 'react-native';
 
 import {BACKEND_URL} from '@env';
@@ -15,6 +15,7 @@ import ImageUpload from "../components/shared/ImageUpload";
 import signupConfig from "../routes/signup/signup";
 
 import CheckBox from '@react-native-community/checkbox';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 function Signup({route, navigation}): JSX.Element {
 
@@ -45,7 +46,10 @@ function Signup({route, navigation}): JSX.Element {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   return (
-		<View style = {styles.mainContainer}>
+    <GestureRecognizer
+      onSwipeDown = {() => Keyboard.dismiss()}
+      style={styles.mainContainer}      
+    >
 			<View style = {styles.titleContainer}>
 				<Text style = {styles.title}>
 					Sign Up
@@ -108,15 +112,16 @@ function Signup({route, navigation}): JSX.Element {
 
 			</View>
 			<View style = {styles.signupContainer}>
-				<Pressable style = {validUserName && validDisplayName && toggleCheckBox? styles.validSignupButton : styles.invalidSignupButton}
+				<TouchableHighlight style = {validUserName && validDisplayName && toggleCheckBox? styles.validSignupButton : styles.invalidSignupButton}
 					disabled = {!(validUserName && validDisplayName && toggleCheckBox)}
+          underlayColor = '#013319'
           onPress = {handleOnPress}>
 					<Text style = {styles.signupText}>
 						Sign Up
 					</Text>
-				</Pressable>
+				</TouchableHighlight>
 			</View>
-		</View>
+		</GestureRecognizer>
   )
 }
 

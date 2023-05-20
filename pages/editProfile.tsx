@@ -2,10 +2,9 @@ import React, { useState, useEffect} from 'react';
 import {
     View,
     Text,
-    TextInput,
-    Pressable,
     Alert,
-    // CheckBox,
+    Keyboard,
+    TouchableHighlight,
 } from 'react-native';
 
 import {BACKEND_URL} from '@env';
@@ -17,6 +16,7 @@ import ImageUpload from "../components/shared/ImageUpload";
 import InputForm from "../components/shared/InputForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {GoogleSignin} from "@react-native-google-signin/google-signin";
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 function EditProfile({route, navigation}): JSX.Element {
 
@@ -162,7 +162,10 @@ function EditProfile({route, navigation}): JSX.Element {
     }
 
     return (
-      <View style={styles.MainContainer}>
+      <GestureRecognizer
+        onSwipeDown = {() => Keyboard.dismiss()}
+        style={styles.MainContainer}      
+      >
           <View style={styles.TitleContainer}>
               <Text style={styles.TitleText}>
                   Edit Profile
@@ -193,27 +196,30 @@ function EditProfile({route, navigation}): JSX.Element {
           </View>
 
           <View style={styles.SubmitContainer}>
-              <Pressable style = {((validDisplayName && (displayName !== oldDisplayName)) || validPicture)? styles.validSignupButton : styles.invalidSignupButton}
+              <TouchableHighlight style = {((validDisplayName && (displayName !== oldDisplayName)) || validPicture)? styles.validSignupButton : styles.invalidSignupButton}
                          disabled = {!(((validDisplayName && (displayName !== oldDisplayName)) || validPicture))}
+                         underlayColor = '#013319'
                          onPress = {handleOnSubmit}>
                   <Text style = {styles.signupText}>
                       Update Profile
                   </Text>
-              </Pressable>
+              </TouchableHighlight>
 
           </View>
 
           <View style={styles.DeleteContainer}>
-              <Pressable style = {styles.deleteButton}
-                         onPress = {handleOnDelete}>
+              <TouchableHighlight style = {styles.deleteButton}
+                         onPress = {handleOnDelete}
+                         underlayColor = '#b32727'
+                         >
                   <Text style = {styles.signupText}>
                       Delete Account
                   </Text>
-              </Pressable>
+              </TouchableHighlight>
 
           </View>
 
-      </View>
+      </GestureRecognizer>
     )
 }
 

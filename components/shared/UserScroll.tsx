@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
-	Pressable,
-  Image,
-  View,
-  Text,
   FlatList,
-  Platform,
-  UIManager,
-  LayoutAnimation,
   RefreshControl,
 } from 'react-native';
 
 import UserCard from './UserCard';
 import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
-function UserScroll({UserData, handler, UserRole, props, onRefresh}): JSX.Element {
+function UserScroll({UserData, Blocked, Friends,  handler, UserRole, props, onRefresh}): JSX.Element {
   const [refreshing, setRefreshing] = useState(false)
 
   const Refresh = function() {
@@ -39,6 +32,8 @@ function UserScroll({UserData, handler, UserRole, props, onRefresh}): JSX.Elemen
       props = {props}
       image = {getImage(item)}
       onRefresh = {onRefresh}
+      Blocked = {Blocked}
+      Friends = {Friends}
     />
     )
   }

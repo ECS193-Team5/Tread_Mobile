@@ -2,12 +2,11 @@ import React, { useState, useEffect} from 'react';
 import {
     View,
     Text,
-    Pressable,
+    TouchableHighlight,
 } from 'react-native';
 
 import {styles} from '../../css/add/friend/Style';
-import axios from "axios";
-import {CameraScreen} from 'react-native-camera-kit';
+
 
 function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {
   return (
@@ -19,17 +18,17 @@ function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {
         </View>
         <View style = {[styles.InputContainer, {flex: 90, marginTop : '0%', marginHorizontal : '0%'}]}>
           <View style = {[styles.SubmitContainer,{justifyContent : 'center'}]}>
-            <Pressable style = {styles.ButtonValid}
+            <TouchableHighlight style = {styles.ButtonValid}
               onPress = {onPress}
+              underlayColor = '#013319'
             >
               <Text style = {styles.RequestText}>
                 Scan QR Code
               </Text>
-            </Pressable>
+            </TouchableHighlight>
           </View>
         </View>
         <Text style = {styles.RequestText}>
-            {qrValue}
         </Text>
       </View>
   )
