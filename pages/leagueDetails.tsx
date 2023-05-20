@@ -9,6 +9,7 @@ import {
   LayoutAnimation,
   TouchableHighlight,
   Alert,
+  Keyboard,
 } from 'react-native';
 
 import Modal from "react-native-modal"
@@ -16,7 +17,6 @@ import SwitchSelector from "react-native-switch-selector"
 import {styles} from "../css/challenges/Style"
 import { LeagueStyles} from '../css/leagues/Style';
 import {cardStyles} from "../css/cards/Style"
-import IncomingSwap from '../components/shared/IncomingSwap';
 import { ImageStyles } from '../css/imageCluster/Style';
 import ChallengeScroll from '../components/shared/ChallengeScroll';
 import LeagueMemberView from '../components/Leagues/LeagueMemberView';
@@ -30,6 +30,7 @@ import MenuPopUp from '../components/shared/MenuPopUp';
 import { showMessage } from 'react-native-flash-message';
 import ZeroItem from '../components/shared/ZeroItem';
 import LeagueLeaderboard from '../components/Leagues/LeagueLeaderboard';
+import { useFocusEffect } from '@react-navigation/native';
 
 const options = [
   { label : "Members" , value : 0},
@@ -86,8 +87,54 @@ function LeagueDetails(props): JSX.Element {
       })
   }
 
+  const getBlockedUsers = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/blocked_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log(response.data)
+        var blocked_usernames = []
+        for (let user of response.data){
+          blocked_usernames.push(user.username)
+        }
+        console.log(blocked_usernames)
+        setBlockedUsers(blocked_usernames)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  const getFriends = function (){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/friend_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log(response.data)
+        setFriends(response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
   const getLeagueInfo = function(){
-    // console.log(props.route.params.leagueData._id)
     var config = {
       method: 'post',
       url: BACKEND_URL + 'league/get_league_name_description_type',
@@ -173,6 +220,9 @@ function LeagueDetails(props): JSX.Element {
 
   const [LeagueMembers, setLeagueMembers] = useState(getLeagueMembers)
   const [LeagueChallenges, setLeagueChallenges] = useState(getChallengeData)
+  const [BlockedUsers , setBlockedUsers] = useState([])
+  const [Friends , setFriends] = useState(getFriends)
+
   const [role, setRole] = useState('')
   getRole()
 
@@ -276,9 +326,26 @@ function LeagueDetails(props): JSX.Element {
     ]);
    }
 
+   useFocusEffect(
+    React.useCallback(() => {
+      if (isMembers === 0){
+        getLeagueMembers()
+        getBlockedUsers()
+        getFriends()
+      } else if (isMembers === 1){
+        getChallengeData()
+      } else {
+        getLeaderboardInfo()
+      }
+    }, [isMembers])
+  );
+
+
   const handleRefresh = function() {
     if (isMembers === 0){
       getLeagueMembers()
+      getBlockedUsers()
+      getFriends()
     } else if (isMembers === 1){
       getChallengeData()
     } else {
@@ -396,62 +463,7 @@ function LeagueDetails(props): JSX.Element {
   useEffect(() => 
     getLeaderboardInfo()
   )
-
-  const getMainContent = function(){
-    if (isMembers === 0){
-      return (
-      <LeagueMemberView
-        MemberData={LeagueMembers}
-        setLeagueMembers = {setLeagueMembers}
-        props = {props}
-        onRefresh = {handleRefresh}
-        count = {countMembers}
-        setCount = {setCountMembers}
-      />
-      )
-    } else if (isMembers === 1){
-      return (
-        <View style = {LeagueStyles.MembersChallengesContainer}>
-          <View style = {[styles.ChallengesContainer, {marginBottom : "19%"}]}>
-          {countChallenges > 0 ?
-            <ChallengeScroll
-              ChallengeData={LeagueChallenges}
-              isCurrent = {true}
-              onRefresh = {handleRefresh}
-            />
-          :
-          <ZeroItem
-            promptText='There are no challenges at the moment'
-            navigateToText= {role === 'admin' || role === 'owner' ? 'Make one here' : null}
-            SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
-            navigateToPage="AddChallenge"
-            defaultView={true}
-            fromLeague={true}
-            id = {props.route.params.leagueData._id}
-            props = {props}
-          />
-          }
-          </View>
-        </View>
-      )
-    } else {
-      return(
-      <View style = {LeagueStyles.MembersChallengesContainer}>
-        {countLeaderboard > 0 ?
-          <LeagueLeaderboard
-            progressInfo = {leaderboardInfo}
-          />
-        :
-        <ZeroItem
-          promptText='No Leaderboard Yet'
-          SecondaryPrompt = 'Tell the members to start completing challenges!'
-        />
-        }
-      </View>
-      )
-    }
-  }
-
+  
   return (
     <View style = {styles.container}>
         <Modal
@@ -501,8 +513,8 @@ function LeagueDetails(props): JSX.Element {
               <Text style = {[styles.TitleText, {fontSize : 25}]}>{name}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-2%'}]}>{description}</Text>
               <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{security.charAt(0).toUpperCase() + security.slice(1)}</Text>
-              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{props.route.params.leagueData.activeChallenges + ' Active Challenges'}</Text>
-              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{props.route.params.leagueData.members.length + ' Members'}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{countMembers + ' Members'}</Text>
+              <Text style = {[styles.TitleText, {fontSize : 13, marginBottom: '-7%'}]}>{countChallenges + ' Active Challenges'}</Text>
             </View>
           </View>
 
@@ -536,7 +548,59 @@ function LeagueDetails(props): JSX.Element {
 
       <View style = {styles.seperator}/>
 
-      {getMainContent()}
+      {isMembers === 0 &&
+          <LeagueMemberView
+            MemberData={LeagueMembers}
+            Blocked = {BlockedUsers}
+            Friends = {Friends}
+            setLeagueMembers = {setLeagueMembers}
+            props = {props}
+            onRefresh = {handleRefresh}
+            count = {countMembers}
+            setCount = {setCountMembers}
+        />
+      }
+
+      {isMembers === 1 &&
+          <View style = {LeagueStyles.MembersChallengesContainer}>
+          <View style = {[styles.ChallengesContainer, {marginBottom : "19%"}]}>
+          {countChallenges > 0 ?
+            <ChallengeScroll
+              ChallengeData={LeagueChallenges}
+              isCurrent = {true}
+              onRefresh = {handleRefresh}
+            />
+          :
+          <ZeroItem
+            promptText='There are no challenges at the moment'
+            navigateToText= {role === 'admin' || role === 'owner' ? 'Make one here' : null}
+            SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
+            navigateToPage="AddChallenge"
+            defaultView={true}
+            fromLeague={true}
+            id = {props.route.params.leagueData._id}
+            props = {props}
+          />
+          }
+          </View>
+        </View>
+      }
+
+      {isMembers === 2 &&
+        <View style = {LeagueStyles.MembersChallengesContainer}>
+          {countLeaderboard > 0 ?
+            <LeagueLeaderboard
+              progressInfo = {leaderboardInfo}
+            />
+          :
+          <ZeroItem
+            promptText='No Leaderboard Yet'
+            SecondaryPrompt = 'Tell the members to start completing challenges!'
+          />
+          }
+       </View>
+      }
+
     </View>
   )
 }

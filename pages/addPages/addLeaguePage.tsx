@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  TextInput,
-  Pressable,
   Platform,
   PermissionsAndroid,
   StatusBar,
   UIManager,
   LayoutAnimation,
+  Keyboard,
+  TouchableHighlight,
 } from 'react-native';
 
 import { styles } from '../../css/add/league/Style';
@@ -26,6 +26,8 @@ import createLeague from "../../routes/add/createLeague";
 import { SharedStyles } from '../../css/shared/Style';
 import LeagueInviteScroll from '../../components/shared/LeagueInviteScroll';
 import ZeroItem from '../../components/shared/ZeroItem';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import { useFocusEffect } from '@react-navigation/native';
 
 const options = [
   { label: "Create", value: true },
@@ -230,15 +232,16 @@ function AddLeaguePage(props): JSX.Element {
           </View>
 
           <View style={styles.EnterButtonContainer}>
-            <Pressable
+            <TouchableHighlight
               style={(validPicture && validLeagueName && validLeagueDesc) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
               onPress={onSubmit}
+              underlayColor = '#013319'
               disabled={!(validPicture && validLeagueName && validLeagueDesc)}
             >
               <Text style={styles.ChoosePicText}>
                 Submit
               </Text>
-            </Pressable>
+            </TouchableHighlight>
           </View>
         </View>
         <View style={styles.SeparatorContainer} />
@@ -263,11 +266,6 @@ function AddLeaguePage(props): JSX.Element {
       property: LayoutAnimation.Properties.opacity,
     },
   };
-
-
-  // const getReccLeagues = function(){
-
-  // }
 
   function getReccLeagues() {
     var config = {
@@ -294,6 +292,12 @@ function AddLeaguePage(props): JSX.Element {
   const handleRefresh = function(){
     getReccLeagues()
   }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getReccLeagues()
+    }, [])
+  );
 
   const deleteItem = function(lData) {
     console.log(lData._id)
@@ -350,7 +354,10 @@ function AddLeaguePage(props): JSX.Element {
   }
 
   return (
-    <View style={styles.Background}>
+    <GestureRecognizer
+      onSwipeDown = {() => Keyboard.dismiss()}
+      style={styles.Background}
+    >
       <StatusBar
         barStyle="dark-content"
       />
@@ -374,7 +381,7 @@ function AddLeaguePage(props): JSX.Element {
           {isCreate ? getCreateCode() : getJoinCode() }
         </View>
       }
-    </View>
+    </GestureRecognizer>
   )
 }
 

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  TextInput,
   Pressable,
   Platform,
-  PermissionsAndroid,
   StatusBar,
+  Keyboard,
+  TouchableHighlight,
 } from 'react-native';
 
 import { styles } from '../css/add/league/Style';
@@ -19,8 +19,8 @@ import axios from 'axios';
 import { showMessage } from 'react-native-flash-message';
 import ImageUpload from "../components/shared/ImageUpload";
 import InputForm from "../components/shared/InputForm";
-import createLeague from "../routes/add/createLeague";
 import { createLeaguePictureURL } from '../components/Helpers/CloudinaryURLHelper';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const switchOptions = [
   { label: 'Private', value: 'private' },
@@ -194,7 +194,10 @@ function EditLeaguePage(props): JSX.Element {
   }
 
   return (
-    <View style={[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}>
+    <GestureRecognizer
+    onSwipeDown = {() => Keyboard.dismiss()}
+    style={[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]} 
+    >
       <StatusBar
         barStyle="dark-content"
       />
@@ -263,18 +266,19 @@ function EditLeaguePage(props): JSX.Element {
               </View>
 
           <View style={styles.EnterButtonContainer}>
-            <Pressable
+            <TouchableHighlight
               style={((validLeagueName && (leagueName !== oldleagueName)) || (validLeagueDesc && (leagueDesc !== oldleagueDesc)) || (oldsecurity !== security) || validPicture) ? styles.EnterButtonValid : styles.EnterButtonInvalid}
               disabled={!((validLeagueName && (leagueName !== oldleagueName)) || (validLeagueDesc && (leagueDesc !== oldleagueDesc)) || (oldsecurity !== security)|| validPicture)}
+              underlayColor = '#013319'
               onPress={onSubmit}
             >
               <Text style={styles.ChoosePicText}>
                 Submit
               </Text>
-            </Pressable>
+            </TouchableHighlight>
           </View>
         </View>
-    </View>
+    </GestureRecognizer>
   )
 }
 

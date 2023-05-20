@@ -18,7 +18,7 @@ import {GestureHandlerRootView,Swipeable} from 'react-native-gesture-handler';
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 
-function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh}): JSX.Element {
+function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props, image, onRefresh}): JSX.Element {
   const getUsername = function(){
     var config = {
       method: 'post',
@@ -90,7 +90,7 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
         backgroundColor : '#014421',
         color : '#F9A800',
       })
-      UserRole === 'Mutual' ?  handler(UserInfo) : null
+      UserRole === 'Mutual' ?  null :  onRefresh()
     })
     .catch(function (error) {
       console.log(error)
@@ -126,7 +126,11 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-        handler(UserInfo)
+        if (UserRole === 'All Friends' || UserRole === 'Blocked Users'){
+          handler(UserInfo)
+        } else {
+          onRefresh()
+        }
       })
       .catch(function (error) {
         console.log(error)
@@ -179,6 +183,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
         })
         if (UserRole === 'All Friends' || UserRole === 'Received' || UserRole === 'Sent' || UserRole === 'Mutual'){
           handler(UserInfo)
+        } else {
+          onRefresh()
         }
       })
       .catch(function (error) {
@@ -219,7 +225,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       },
       data : {
         leagueID : props.route.params.leagueData._id,
-        recipient : UserInfo.username
+        recipient : UserInfo.username,
+        leagueName : props.route.params.leagueData.leagueName
       }
     };
   
@@ -272,7 +279,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       },
       data : {
         leagueID : props.route.params.leagueData._id,
-        recipient : UserInfo.username
+        recipient : UserInfo.username,
+        leagueName : props.route.params.leagueData.leagueName
       }
     };
   
@@ -336,7 +344,11 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-        handler(UserInfo)
+        if(UserRole === 'All Friends' || UserRole === 'Blocked Users'){
+          handler(UserInfo)
+        } else {
+          onRefresh()
+        }
       })
       .catch(function (error) {
         console.log(error)
@@ -430,7 +442,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       },
       data : {
         leagueID : props.route.params.leagueData._id,
-        recipient : UserInfo.username
+        recipient : UserInfo.username,
+        leagueName : props.route.params.leagueData.leagueName
       }
     };
   
@@ -482,7 +495,8 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
       },
       data : {
         leagueID : props.route.params.leagueData._id,
-        recipient : UserInfo.username
+        recipient : UserInfo.username,
+        leagueName : props.route.params.leagueData.leagueName
       }
     };
   
@@ -739,11 +753,18 @@ function UserCard({UserInfo, index, handler, UserRole, props, image, onRefresh})
             {UserRole === 'All Friends' ? block() : unblock()}
           </View>
         );
-    } else {
+    } else if (UserRole === 'Mutual'){
+      return (
+        <View style={[SharedStyles.RightSliderContainer]}>
+          {addFriend()}
+        </View>
+      )
+    }
+    else {
       return (
         <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
-          {addFriend()}
-          {block()}
+          {Friends.includes(UserInfo.username) ? unfriend() : addFriend()}
+          {Blocked.includes(UserInfo.username) ? unblock() : block()}
         </View>
       )
     } 

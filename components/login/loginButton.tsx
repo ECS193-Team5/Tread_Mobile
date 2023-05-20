@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {
 	Text,
-	Pressable
+  TouchableHighlight
 } from 'react-native';
 
 import {LoginStyles} from '../../css/login/Style';
@@ -14,7 +14,7 @@ import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
 import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
-function LoginButton({filled, text, navigation}): JSX.Element {
+function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 	useEffect(() => {
 		getStoredLogIn().then((response) => {
 			if(response == 'true' && filled) {
@@ -106,12 +106,13 @@ function LoginButton({filled, text, navigation}): JSX.Element {
 
 
 	return (
-		<Pressable
+		<TouchableHighlight
 			style = {filled ? LoginStyles.loginButton : LoginStyles.signupButton}
 			onPress={onLoginPress}
+      underlayColor = {isLogin ? '#dedfe0' : '#161717'}
 		>
 			<Text style={filled ? LoginStyles.loginButtonText : LoginStyles.signupButtonText}>{text}</Text>
-		</Pressable>
+		</TouchableHighlight>
 	)
 }
 

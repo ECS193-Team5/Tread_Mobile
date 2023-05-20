@@ -1,11 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import {
   View,
-  Text,
-  TextInput,
   Pressable,
-  Platform,
-  PermissionsAndroid,
   StatusBar,
   Image,
 } from 'react-native';
