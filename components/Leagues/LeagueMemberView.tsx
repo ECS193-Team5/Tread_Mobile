@@ -33,7 +33,7 @@ function getRequests() {
   return ([])
 } 
 
-function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh, count, setCount}): JSX.Element {  
+function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props, onRefresh, count, setCount}): JSX.Element {  
   const getLeagueRole = function(){
     var config = {
       method: 'post',
@@ -237,6 +237,8 @@ function LeagueMemberView({MemberData, setLeagueMembers, props, onRefresh, count
             UserRole = {isAdminOwnerParticipant}
             props = {props}
             onRefresh = {onRefresh}
+            Blocked = {Blocked}
+            Friends = {Friends}
           />
           {count === 1 ? 
             <ZeroItem

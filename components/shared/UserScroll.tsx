@@ -14,7 +14,7 @@ import {
 import UserCard from './UserCard';
 import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
-function UserScroll({UserData, handler, UserRole, props, onRefresh}): JSX.Element {
+function UserScroll({UserData, Blocked, Friends,  handler, UserRole, props, onRefresh}): JSX.Element {
   const [refreshing, setRefreshing] = useState(false)
 
   const Refresh = function() {
@@ -39,6 +39,8 @@ function UserScroll({UserData, handler, UserRole, props, onRefresh}): JSX.Elemen
       props = {props}
       image = {getImage(item)}
       onRefresh = {onRefresh}
+      Blocked = {Blocked}
+      Friends = {Friends}
     />
     )
   }

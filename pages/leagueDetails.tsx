@@ -87,6 +87,53 @@ function LeagueDetails(props): JSX.Element {
       })
   }
 
+  const getBlockedUsers = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/blocked_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log(response.data)
+        var blocked_usernames = []
+        for (let user of response.data){
+          blocked_usernames.push(user.username)
+        }
+        console.log(blocked_usernames)
+        setBlockedUsers(blocked_usernames)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  const getFriends = function (){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/friend_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+  
+    axios(config)
+      .then(function (response) {
+        console.log(response.data)
+        setFriends(response.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
   const getLeagueInfo = function(){
     var config = {
       method: 'post',
@@ -173,6 +220,10 @@ function LeagueDetails(props): JSX.Element {
 
   const [LeagueMembers, setLeagueMembers] = useState(getLeagueMembers)
   const [LeagueChallenges, setLeagueChallenges] = useState(getChallengeData)
+  const [BlockedUsers , setBlockedUsers] = useState([])
+  getBlockedUsers()
+  const [Friends , setFriends] = useState(getFriends)
+
   const [role, setRole] = useState('')
   getRole()
 
@@ -292,6 +343,8 @@ function LeagueDetails(props): JSX.Element {
   const handleRefresh = function() {
     if (isMembers === 0){
       getLeagueMembers()
+      getBlockedUsers()
+      getFriends()
     } else if (isMembers === 1){
       getChallengeData()
     } else {
@@ -494,15 +547,16 @@ function LeagueDetails(props): JSX.Element {
 
       <View style = {styles.seperator}/>
 
-      {/* {getMainContent()} */}
       {isMembers === 0 &&
           <LeagueMemberView
-          MemberData={LeagueMembers}
-          setLeagueMembers = {setLeagueMembers}
-          props = {props}
-          onRefresh = {handleRefresh}
-          count = {countMembers}
-          setCount = {setCountMembers}
+            MemberData={LeagueMembers}
+            Blocked = {BlockedUsers}
+            Friends = {Friends}
+            setLeagueMembers = {setLeagueMembers}
+            props = {props}
+            onRefresh = {handleRefresh}
+            count = {countMembers}
+            setCount = {setCountMembers}
         />
       }
 
