@@ -384,7 +384,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                                 setStartDate(date)
                                 setStartDateSet(true)
 
-                                if(date >= endDate) {
+                                if(date.getDate() >= endDate.getDate() && date.getMonth() >= date.getMonth() && date.getFullYear() >= date.getFullYear()) {
                                   endDate.setDate(date.getDate() + 1)
                                 }
                                 minEndDate.setDate(date.getDate() + 1)
