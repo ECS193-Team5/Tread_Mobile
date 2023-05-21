@@ -1,12 +1,12 @@
-const badgeC_increment_counter = (value) => {
+const badgeC_increment = (value) => {
   return {
-    type: "increment",
+    type: "badgeC_increment",
     value
   }
 }
-const badgeC_decrement_counter = () => {
+const badgeC_decrement = () => {
   return {
-    type: "decrement",
+    type: "badgeC_decrement",
   }
 }
-export {badgeC_increment_counter, badgeC_decrement_counter};
+export {badgeC_increment, badgeC_decrement};

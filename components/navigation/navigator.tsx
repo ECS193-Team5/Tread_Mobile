@@ -40,7 +40,7 @@ import ProfileInbox from '../../pages/profileInbox';
 import { showMessage } from 'react-native-flash-message';
 
 import { useSelector, useDispatch } from 'react-redux';
-import {badgeC_increment_counter} from '../../redux/actions/badgeC_actions'
+import {badgeC_increment} from '../../redux/actions/badgeC_actions'
 
 function ChallengesSwipeStack() {
   return (
@@ -213,8 +213,7 @@ function ShowTabs(){
 
     axios(config)
       .then(function (response) {
-        // setBadgeChallenge(response.data.length)
-        dispatch(badgeC_increment_counter(response.data.length))
+        dispatch(badgeC_increment(response.data.length))
       })
       .catch(function (error) {
         console.log(error)
