@@ -4,10 +4,10 @@ const initialState = {
 const badgeL_reducer = (state = initialState, action) => {
   switch(action.type){
     case "badgeL_increment": {
-      return {...state,badgeC:action.value};
+      return {...state,badgeL:action.value};
     }
     case "badgeL_decrement": {
-      return {...state,badgeC:state.badgeC - 1};
+      return {...state,badgeL:state.badgeL - 1};
     }
     default: {
       return state;

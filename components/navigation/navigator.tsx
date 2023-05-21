@@ -41,6 +41,7 @@ import { showMessage } from 'react-native-flash-message';
 
 import { useSelector, useDispatch } from 'react-redux';
 import {badgeC_increment} from '../../redux/actions/badgeC_actions'
+import { badgeL_increment } from '../../redux/actions/badgeL_actions';
 
 function ChallengesSwipeStack() {
   return (
@@ -234,7 +235,7 @@ function ShowTabs(){
 
     axios(config)
       .then(function (response) {
-        setBadgeLeague(response.data.length)
+        dispatch(badgeL_increment(response.data.length))
       })
       .catch(function (error) {
         console.log(error)
@@ -282,13 +283,14 @@ function ShowTabs(){
   }
   
   // const [badgeChallenge, setBadgeChallenge] = useState(0)
-  const [badgeLeague, setBadgeLeague] = useState(0)
+  // const [badgeLeague, setBadgeLeague] = useState(0)
   const [badgeFriends, setBadgeFriends] = useState(0)
   const [badgeProfile, setBadgeProfile] = useState(0)
 
   const dispatch = useDispatch()
 
   const badgeChallenge = useSelector(state=>state.badgeC_reducer.badgeC)
+  const badgeLeague = useSelector(state=>state.badgeL_reducer.badgeL)
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
