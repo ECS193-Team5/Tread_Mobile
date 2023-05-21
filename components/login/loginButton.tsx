@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
 	Text,
   TouchableHighlight
@@ -15,17 +15,27 @@ import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
 function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
+	let autoLogin = true;
 	useEffect(() => {
-		getStoredLogIn().then((response) => {
-			if(response == 'true' && filled) {
-				onLoginPress();
-			}
-		})
-	},[])
+			GoogleSignin.isSignedIn().then((response) => {
+				if(response) {
+					if(filled) {
+						console.log("Already signed in")
+						configureGoogleSignIn();
+						signInGoogle();
+					}
+				} else {
+					console.log("Not signed in yet")
+					autoLogin = false;
+				}
+			})
+	})
 
 	const onLoginPress = function () {
-		configureGoogleSignIn();
-		signInGoogle();
+		if(!autoLogin) {
+			configureGoogleSignIn();
+			signInGoogle();
+		}
 	}
 
 	const configureGoogleSignIn = function() {
@@ -65,20 +75,6 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 		}
 	}
 
-	const storeLogIn = async () => {
-			await AsyncStorage.setItem('loggedIn', 'true');
-	}
-
-	const getStoredLogIn = async () => {
-		try {
-			const item = await AsyncStorage.getItem('loggedIn');
-			return String(item)
-		} catch (err) {
-			console.log(err);
-		}
-
-	}
-
 	const login = async (email, authToken, photo) => {
 		const deviceToken = await getFCMToken()
 		console.log("/nHereISDEVICETOKEN", deviceToken)
@@ -86,9 +82,11 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
-					storeLogIn();
+					// storeLogIn();
+					autoLogin = false;
 					navigation.navigate('Challenge')
 				} else {
+					autoLogin = false;
 					navigation.navigate('Signup',{
 						email: email,
 						photo: photo,

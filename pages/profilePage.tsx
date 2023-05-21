@@ -24,9 +24,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { cardStyles } from '../css/cards/Style';
 import {createProfilePictureURL} from "../components/Helpers/CloudinaryURLHelper";
 import { useFocusEffect } from '@react-navigation/native';
+import IncomingSwap from '../components/shared/IncomingSwap';
+import {styles} from "../css/challenges/Style"
 
-
-function ProfilePage({route, navigation}): JSX.Element {
+function ProfilePage(props): JSX.Element {
 	const signOut = async () => {
 		try {
 			await GoogleSignin.signOut();
@@ -81,9 +82,9 @@ function ProfilePage({route, navigation}): JSX.Element {
     );
 
     useEffect(() => {
-        if(route.params !== undefined && route.params.refresh) {
+        if(props.route.params !== undefined && props.route.params.refresh) {
             getDisplayName()
-            route.params.refresh = false;
+            props.route.params.refresh = false;
         }
     })
     const getProfilePhoto = function() {
@@ -99,7 +100,6 @@ function ProfilePage({route, navigation}): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                // console.log(response.data)
                 setProfilePhotoURL(response.data)
             })
             .catch((error) =>
@@ -141,7 +141,6 @@ function ProfilePage({route, navigation}): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                // console.log(response.data)
                 setUserName(response.data)
             })
             .catch((error) =>
@@ -162,7 +161,6 @@ function ProfilePage({route, navigation}): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                // console.log(response.data.length)
                 setNumFriends(response.data.length)
             })
             .catch((error) =>
@@ -183,7 +181,6 @@ function ProfilePage({route, navigation}): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                // console.log(response.data.length)
                 setNumLeagues(response.data.length)
             })
             .catch((error) =>
@@ -204,7 +201,6 @@ function ProfilePage({route, navigation}): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                // console.log(response.data.length)
                 setNumMedals(response.data.length)
                 setMedalInfoEarned(response.data)
             })
@@ -226,7 +222,6 @@ function ProfilePage({route, navigation}): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                // console.log(response.data)
                 setMedalInfoProgress(response.data)
             })
             .catch((error) =>
@@ -241,17 +236,15 @@ function ProfilePage({route, navigation}): JSX.Element {
     }
 
     const handlePopup = function() {
-        // console.log(modalVisiblePopUp)
         setModalVisiblePopUp(true)
     }
 
     const handleEdit = function() {
         setModalVisiblePopUp(false)
-        navigation.navigate('EditProfile', {
+        props.navigation.navigate('EditProfile', {
             picture: createProfilePictureURL(userName),
             displayName: displayName
         })
-        // console.log('edit')
     }
 
     const EditClickable = function(){
@@ -268,16 +261,12 @@ function ProfilePage({route, navigation}): JSX.Element {
             </TouchableHighlight>
         )
     }
-    const storeLogOut = async () => {
-        await AsyncStorage.setItem('loggedIn', 'false');
-    }
 
     const handleLogout = function() {
-        // console.log('logout')
-        storeLogOut().then((response) => {
-            signOut().then(response => {
-                navigation.navigate('Login')
-            })
+
+
+        signOut().then(response => {
+            navigation.navigate('Login')
         })
     }
 
@@ -324,154 +313,180 @@ function ProfilePage({route, navigation}): JSX.Element {
   
     const switchRef = useRef(null)
 
+    const getIncomingImage = function(){
+      var config = {
+        method: 'post',
+        url: BACKEND_URL + 'notifications/get_notifications',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+        }
+      };
+  
+      axios(config)
+        .then(function (response) {
+          console.log(response.data)
+          if (response.data.length > 0){
+            setIncomingImage('https://imgur.com/gMqz2UZ.png')
+          } else {
+            setIncomingImage('https://imgur.com/ULlEPhH.png')
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+    
+    const [IncomingImage, setIncomingImage] = useState(getIncomingImage)
+
+
     return (
       <View style={ProfileStyles.Background}>
-          <View style={ProfileStyles.TopSeparator}>
-          </View>
-              <Modal
-                  isVisible={modalVisibleQR}
-                  hasBackdrop = {true}
-                  swipeDirection = 'down'
-                  onSwipeComplete={(e) => setModalVisibleQR(false)}
-                  backdropColor = 'black'
-                  onBackdropPress = {() => setModalVisibleQR(false)}
-                  style = {{margin : 2}}
-              >
-                  <QRModalPopUp
-                      Name = {userName}
-                      isLeague = {false}
-                      security = {""}
-                      encodedInfo={userName}
-                  />
-              </Modal>
+            <Modal
+                isVisible={modalVisibleQR}
+                hasBackdrop = {true}
+                swipeDirection = 'down'
+                onSwipeComplete={(e) => setModalVisibleQR(false)}
+                backdropColor = 'black'
+                onBackdropPress = {() => setModalVisibleQR(false)}
+                style = {{margin : 2}}
+            >
+                <QRModalPopUp
+                    Name = {userName}
+                    isLeague = {false}
+                    security = {""}
+                    encodedInfo={userName}
+                />
+            </Modal>
 
-          <Modal
-              isVisible={modalVisiblePopUp}
-              hasBackdrop = {true}
-              backdropColor = 'rgba(0,0,0,0.7)'
-              onBackdropPress = { () => setModalVisiblePopUp(false)}
-              onModalHide = {handleQRModal}
-              style = {{margin : 2}}
-              animationIn = 'fadeIn'
-              animationInTiming={160}
-              animationOut = 'fadeOut'
-              animationOutTiming={100}
-          >
-              <MenuPopUp
-                  options = {[EditClickable, QRClickable, LogoutClickable]}
-              />
-          </Modal>
-
-
-          <View style={[ProfileStyles.ProfileContainer, cardStyles.shadowProp]}>
-              <View style={ProfileStyles.ProfileCard}>
-                <View style = {ProfileStyles.ProfileSettingsContainer}>
-                  <View style={ProfileStyles.OptionsContainer}>
-                    <Pressable
-                        onPress={handlePopup}
-                    >
-                        <Image style ={ImageStyles.Settings} source={{uri: 'https://i.imgur.com/RtnN9Hu.png'}}/>
-                    </Pressable>
-                  </View>
-                </View>
-                
-                <View style={ProfileStyles.ProfileTopContainer}>
-                    <View style={ProfileStyles.ProfileImageContainer}>
-                        <Image
-                            src={createProfilePictureURL(userName)}
-                            style={ProfileStyles.ProfileImage}
-                        >
-                        </Image>
-                    </View>
-
-                    <View style={ProfileStyles.ProfileNameContainer}>
-                        <View style={ProfileStyles.DisplayNameContainer}>
-                            <Text style={ProfileStyles.DisplayNameText}>
-                                {displayName}
-                            </Text>
-                        </View>
-                        <View style={ProfileStyles.UsernameContainer}>
-                            <Text style={ProfileStyles.UsernameText}>
-                                {'@' + userName}
-                            </Text>
-                        </View>
-
-                    </View>
-                </View>
-                <View style={ProfileStyles.ProfileBottomContainer}>
-                    <View style={ProfileStyles.OtherInfoContainer}>
-                      <TouchableHighlight
-                          onPress={() => navigation.navigate('Friends')}
-                          style = {{alignSelf : 'center', borderRadius : 1}}
-                          underlayColor = 'rgba(0,0,0,0.15)'
-                          >
-                          <Text style={ProfileStyles.OtherInfoText}>
-                            {numFriends.toString()}  
-                            <Text style = {ProfileStyles.SecondaryText}>
-                               {(numFriends === 1 ? " Friend" : " Friends")}
-                            </Text>
-                          </Text>
-                      </TouchableHighlight>
-                    </View>
-                    <View style={ProfileStyles.OtherInfoContainer}>
-                      <TouchableHighlight
-                          onPress={() => navigation.navigate('Leagues', {screen : 'Leagues'})}
-                          style = {{alignSelf : 'center',borderRadius : 1}}
-                          underlayColor = 'rgba(0,0,0,0.15)'
-                          >
-                          <Text style={ProfileStyles.OtherInfoText}>
-                            {numLeagues.toString()}  
-                            <Text style = {ProfileStyles.SecondaryText}>
-                               {(numLeagues === 1 ? " League" : " Leagues")}
-                            </Text>
-                          </Text>
-                      </TouchableHighlight>
-                    </View>
-                    <View style={ProfileStyles.OtherInfoContainer}>
-                      <TouchableHighlight
-                          onPress={() => switchRef.current?.toggleItem(1)}
-                          style = {{alignSelf : 'center',borderRadius : 1}}
-                          underlayColor = 'rgba(0,0,0,0.15)'
-                          >
-                          <Text style={ProfileStyles.OtherInfoText}>
-                            {numMedals.toString()}  
-                            <Text style = {ProfileStyles.SecondaryText}>
-                               {(numMedals === 1 ? " Medal" : " Medals")}
-                            </Text>
-                          </Text>
-                      </TouchableHighlight>
-                    </View>
+        <Modal
+            isVisible={modalVisiblePopUp}
+            hasBackdrop = {true}
+            backdropColor = 'rgba(0,0,0,0.7)'
+            onBackdropPress = { () => setModalVisiblePopUp(false)}
+            onModalHide = {handleQRModal}
+            style = {{margin : 2}}
+            animationIn = 'fadeIn'
+            animationInTiming={160}
+            animationOut = 'fadeOut'
+            animationOutTiming={100}
+        >
+            <MenuPopUp
+                options = {[EditClickable, QRClickable, LogoutClickable]}
+            />
+        </Modal>
+        <View style = {[styles.topRightClickContainer, {marginBottom : '2%', }]}>
+          <IncomingSwap
+            props = {props}
+            PageToSwap = {"Profile Inbox"}
+            imageUrl = {IncomingImage}/>
+        </View>
+        <View style={[ProfileStyles.ProfileContainer, cardStyles.shadowProp]}>
+            <View style={ProfileStyles.ProfileCard}>
+              <View style = {ProfileStyles.ProfileSettingsContainer}>
+                <View style={ProfileStyles.OptionsContainer}>
+                  <Pressable
+                      onPress={handlePopup}
+                  >
+                      <Image style ={ImageStyles.Settings} source={{uri: 'https://i.imgur.com/RtnN9Hu.png'}}/>
+                  </Pressable>
                 </View>
               </View>
+              
+              <View style={ProfileStyles.ProfileTopContainer}>
+                  <View style={ProfileStyles.ProfileImageContainer}>
+                      <Image
+                          src={createProfilePictureURL(userName)}
+                          style={ProfileStyles.ProfileImage}
+                      >
+                      </Image>
+                  </View>
+
+                  <View style={ProfileStyles.ProfileNameContainer}>
+                      <View style={ProfileStyles.DisplayNameContainer}>
+                          <Text style={ProfileStyles.DisplayNameText}>
+                              {displayName}
+                          </Text>
+                      </View>
+                      <View style={ProfileStyles.UsernameContainer}>
+                          <Text style={ProfileStyles.UsernameText}>
+                              {'@' + userName}
+                          </Text>
+                      </View>
+
+                  </View>
+              </View>
+              <View style={ProfileStyles.ProfileBottomContainer}>
+                  <View style={ProfileStyles.OtherInfoContainer}>
+                    <TouchableHighlight
+                        onPress={() => props.navigation.navigate('Friends')}
+                        style = {{alignSelf : 'center', borderRadius : 1}}
+                        underlayColor = 'rgba(0,0,0,0.15)'
+                        >
+                        <Text style={ProfileStyles.OtherInfoText}>
+                          {numFriends.toString()}  
+                          <Text style = {ProfileStyles.SecondaryText}>
+                              {(numFriends === 1 ? " Friend" : " Friends")}
+                          </Text>
+                        </Text>
+                    </TouchableHighlight>
+                  </View>
+                  <View style={ProfileStyles.OtherInfoContainer}>
+                    <TouchableHighlight
+                        onPress={() => props.navigation.navigate('Leagues', {screen : 'Leagues'})}
+                        style = {{alignSelf : 'center',borderRadius : 1}}
+                        underlayColor = 'rgba(0,0,0,0.15)'
+                        >
+                        <Text style={ProfileStyles.OtherInfoText}>
+                          {numLeagues.toString()}  
+                          <Text style = {ProfileStyles.SecondaryText}>
+                              {(numLeagues === 1 ? " League" : " Leagues")}
+                          </Text>
+                        </Text>
+                    </TouchableHighlight>
+                  </View>
+                  <View style={ProfileStyles.OtherInfoContainer}>
+                    <TouchableHighlight
+                        onPress={() => switchRef.current?.toggleItem(1)}
+                        style = {{alignSelf : 'center',borderRadius : 1}}
+                        underlayColor = 'rgba(0,0,0,0.15)'
+                        >
+                        <Text style={ProfileStyles.OtherInfoText}>
+                          {numMedals.toString()}  
+                          <Text style = {ProfileStyles.SecondaryText}>
+                              {(numMedals === 1 ? " Medal" : " Medals")}
+                          </Text>
+                        </Text>
+                    </TouchableHighlight>
+                  </View>
+              </View>
+            </View>
+        </View>
+        <View style={ProfileStyles.MedalsContainer}>
+          <View style={ProfileStyles.Separator}>
           </View>
-          <View style={ProfileStyles.MedalsContainer}>
-            <View style={ProfileStyles.Separator}>
-            </View>
 
-            <View style={ProfileStyles.MedalType}>
-              <SwitchSelector
-                  ref = {switchRef}
-                  initial= {0}
-                  onPress = {setMedalType}
-                  textColor = {'#014421'}
-                  selectedColor = {'#F9A800'}
-                  buttonColor = {'#014421'}
-                  hasPadding
-                  options = {options}
-              >
-              </SwitchSelector>
-            </View>
-            <View style={ProfileStyles.MedalScroll}>
-                <MedalScroll
-                    MedalData={medalType === 'progress' ? medalInfoProgress : medalInfoEarned}
-                    onRefresh = {handleRefresh}
-                />
-
-            </View>
-
-
+          <View style={ProfileStyles.MedalType}>
+            <SwitchSelector
+                ref = {switchRef}
+                initial= {0}
+                onPress = {setMedalType}
+                textColor = {'#014421'}
+                selectedColor = {'#F9A800'}
+                buttonColor = {'#014421'}
+                hasPadding
+                options = {options}
+            >
+            </SwitchSelector>
           </View>
-
+          <View style={ProfileStyles.MedalScroll}>
+              <MedalScroll
+                  MedalData={medalType === 'progress' ? medalInfoProgress : medalInfoEarned}
+                  onRefresh = {handleRefresh}
+              />
+          </View>
+        </View>
       </View>
     )
 }

@@ -9,7 +9,7 @@ const ProfileStyles = StyleSheet.create({
     },
 
     TopSeparator: {
-        flex: 3
+        flex: 0
     },
 
     ProfileContainer: {
@@ -144,7 +144,7 @@ const ProfileStyles = StyleSheet.create({
 
     MedalScroll: {
         marginTop: '5%',
-        marginBottom : "37%",
+        marginBottom : "28%",
         width: '100%'
     }
 });
