@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
-  StatusBar, Alert
+  StatusBar, Image
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
@@ -18,6 +18,7 @@ import ListenerComponentHealthConnect from '../components/Sensors/healthConnect'
 import ZeroItem from '../components/shared/ZeroItem';
 import messaging from "@react-native-firebase/messaging";
 import { useFocusEffect } from '@react-navigation/native';
+import { showMessage } from 'react-native-flash-message';
 
 function ChallengesPage(props): JSX.Element {
   const [update, setUpdate] = useState(true);
@@ -31,7 +32,13 @@ function ChallengesPage(props): JSX.Element {
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log('Received a message')
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      showMessage({
+        message : remoteMessage['notification']['body'],
+        duration	: 3000,
+        icon: props => <Image source={{uri: 'https://imgur.com/T3dcr1T.png'}} {...props} />,
+        backgroundColor : '#F9A800',
+        color : '#014421'
+      })
     });
 
     return unsubscribe;
