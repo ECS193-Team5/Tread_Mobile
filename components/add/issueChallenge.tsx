@@ -10,6 +10,7 @@ import SwitchSelector from "react-native-switch-selector";
 import axios from "axios";
 import {showMessage} from 'react-native-flash-message'
 import {BACKEND_URL} from '@env';
+import RecommendChallenge from './recommendChallenge';
 
 import Ionicons                 from 'react-native-vector-icons/Ionicons'
 import AntDesign                from 'react-native-vector-icons/AntDesign'
@@ -215,9 +216,11 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                 console.log(response.data)
                 setValue(null)
                 setValueUnits(null)
-                setChallengeAmount(0)
+                setChallengeAmount(Number(0))
                 setStartDate(new Date())
                 setEndDate(new Date())
+                minEndDate.setDate(startDate.getDate() + 1)
+                setLoad(false)
                 setValueLeagues(null)
                 setValueFriends(null)
                 showMessage({
@@ -259,35 +262,40 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
         return activitySelected && unitSelected && validDate && targetSelected && validAmount;
     }
 
-    const [showRecommendMessage, setShowRecommendMessage] = useState(false)
-    const handleRecommendPress = function(){
-      console.log('pressed Recommend')
-      setShowRecommendMessage(true)
+
+
+    const updateInputs = function(data){
+      if (data === 'NA'){
+        return;
+      }
+      
+      setValue(data.exerciseName)
+      setValueUnits(data.unit)
+      setStartDate(data.issueDate)
+      setEndDate(data.dueDate)
+      setChallengeAmount(data.amount)
     }
 
+    const [showRecommendMessage, setShowRecommendMessage] = useState(false)
+    const [RecMessage, setRecMessage] = useState("")
+  
     return (
       <View style = {styles.ChallengeContainer} >
-            <View style = {styles.RecommendChallengeContainer}>
-              <TouchableHighlight
-                    style={styles.RecommendButton}
-                    onPress={handleRecommendPress}
-                    underlayColor = '#013319'
-                    >
-                    <Text style={styles.IssueChallengeText}>
-                        Recommend Challenge
-                    </Text>
-              </TouchableHighlight>
-            </View>
+            <RecommendChallenge
+              updateInputs={updateInputs}
+              showMessage = {showRecommendMessage}
+              setShowRecommendMessage = {setShowRecommendMessage}
+              setRecMessage = {setRecMessage}
+            />
             {showRecommendMessage ? 
-              <View style = {styles.RecommendTextContainer}>
+              <View style = {[styles.RecommendTextContainer]}>
                 <Text style={styles.RecommendMessageText}>
-                    Message Text
+                    {RecMessage}
                 </Text>
               </View>
               :
               null
             }
-
             <View style={styles.ChallengeDropContainer}>
                 <Text style={styles.ActivityTitle}>
                     Activity
@@ -331,6 +339,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                         <NumericInput
                             onChange={setChallengeAmount}
                             value={challengeAmount}
+                            initValue = {challengeAmount}
                             minValue={0}
                             rounded={true}
                             inputStyle={{borderColor: '#014421'}}
