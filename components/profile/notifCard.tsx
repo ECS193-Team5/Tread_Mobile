@@ -79,7 +79,7 @@ function NotifCard({item, index, handler}): JSX.Element {
         leftThreshold = {30}
         rightThreshold = {30}
         childrenContainerStyle = {styles.FlatListContainer}>
-        <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, {marginBottom : '4%'}]}>
+        <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, {width : '91%' , marginBottom : '3%', borderColor : '#014421', borderWidth : 1}]}>
           <View style = {[cardStyles.ChallengeNameContainer, {marginLeft : '2%'}]}>
             <Text style = {cardStyles.ChallengeNameText}>
               {item.message}

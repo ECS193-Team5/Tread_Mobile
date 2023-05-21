@@ -160,7 +160,7 @@ function ProfileStack(){
         <Stack.Screen name = "Profile" component={ProfileSwipeStack} options={{ headerShown: false }}/>
     }
     <Stack.Screen name = "EditProfile" component={EditProfile} options={{ headerShown: false }}/>
-    <Stack.Screen name = "Profile Inbox" component = {ProfileInbox}/>
+    <Stack.Screen name = "Profile Inbox" component = {ProfileInbox}  options={{ headerShown: false }}/>
   </Stack.Navigator>
   )
 }
