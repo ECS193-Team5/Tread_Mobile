@@ -81,7 +81,6 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 
 	const login = async (email, authToken, photo) => {
 		const deviceToken = await getFCMToken()
-		console.log("/nHereISDEVICETOKEN", deviceToken)
 		axios(loginConfig(authToken, deviceToken))
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
