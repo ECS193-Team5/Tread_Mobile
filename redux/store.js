@@ -1,6 +1,6 @@
 import { createStore} from "redux";
-import badgeC_reducer from "./reducers/badgeC_reducer.js";
+import reducer from "./reducers/index"
 const store = createStore(
-  badgeC_reducer
+  reducer
 );
 export {store};

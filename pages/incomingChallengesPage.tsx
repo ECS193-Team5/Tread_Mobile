@@ -34,7 +34,7 @@ const options = [
 function IncomingChallengesPage(props): JSX.Element {
 
   const dispatch = useDispatch()
-  const badgeChallenge = useSelector(state=>state.badgeC)
+  const badgeChallenge = useSelector(state=>state.badgeC_reducer)
 
   const getReceivedChallenges = function(){
     var config = {

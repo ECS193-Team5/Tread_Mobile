@@ -288,7 +288,7 @@ function ShowTabs(){
 
   const dispatch = useDispatch()
 
-  const badgeChallenge = useSelector(state=>state.badgeC)
+  const badgeChallenge = useSelector(state=>state.badgeC_reducer.badgeC)
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
