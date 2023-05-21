@@ -6,6 +6,7 @@ import {
   Platform,
   LayoutAnimation,
   RefreshControl,
+  Keyboard,
 } from 'react-native';
 
 import SwitchSelector from "react-native-switch-selector"
@@ -20,6 +21,7 @@ import LeagueUserCard from '../shared/LeagueUserCard';
 import Invite from '../shared/invite';
 import ZeroItem from '../shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const options = [
   { label : "Members" , value : 'all'},
@@ -277,7 +279,10 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
       )
     } else {
       return (
-        <View style = {{flex : 1}}>
+        <GestureRecognizer
+        onSwipeDown = {() => Keyboard.dismiss()}
+        style = {{flex : 1}}
+        >
           <View style =  {{flex : 50}}> 
             <Invite
               text = 'Invite to League'
@@ -287,7 +292,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
             />
           </View>
           <View style = {{flex : 30}}/>
-        </View>
+        </GestureRecognizer>
       )
     }
   }

@@ -20,7 +20,7 @@ import ZeroItem from '../components/shared/ZeroItem';
 import LeagueInviteScroll from '../components/shared/LeagueInviteScroll';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {badgeL_decrement} from '../redux/actions/badgeL_actions'
 
 const options = [
