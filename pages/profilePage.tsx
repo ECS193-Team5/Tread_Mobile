@@ -266,7 +266,7 @@ function ProfilePage(props): JSX.Element {
 
 
         signOut().then(response => {
-            navigation.navigate('Login')
+            props.navigation.navigate('Login')
         })
     }
 
