@@ -1,22 +1,11 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  Image,
-  Platform,
-  UIManager,
-  LayoutAnimation,
   FlatList,
   RefreshControl
 } from 'react-native';
 
-import {styles} from "../../css/challenges/Style"
-import IncomingSwap from '../../components/shared/IncomingSwap';
-import SwitchSelector from "react-native-switch-selector"
 import LeagueInviteCard from '../../components/shared/LeagueInviteCard';
-import axios from 'axios';
-import {BACKEND_URL} from '@env';
-import ZeroItem from '../../components/shared/ZeroItem';
+
 
 function LeagueInviteScroll({LeagueData, handler, onRefresh, pageTitle}): JSX.Element {
   const [refreshing, setRefreshing] = useState(false)

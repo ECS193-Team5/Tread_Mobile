@@ -23,6 +23,7 @@ import MedalScroll from "../components/profile/medalScroll";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { cardStyles } from '../css/cards/Style';
 import {createProfilePictureURL} from "../components/Helpers/CloudinaryURLHelper";
+import { useFocusEffect } from '@react-navigation/native';
 
 
 function ProfilePage({route, navigation}): JSX.Element {
@@ -65,6 +66,19 @@ function ProfilePage({route, navigation}): JSX.Element {
         getMedalsEarned()
         getMedalsProgress()
     }, [])
+
+
+    useFocusEffect(
+      React.useCallback(() => {
+        getProfilePhoto()
+        getDisplayName()
+        getUserName()
+        getFriends()
+        getLeagues()
+        getMedalsEarned()
+        getMedalsProgress()
+      }, [])
+    );
 
     useEffect(() => {
         if(route.params !== undefined && route.params.refresh) {

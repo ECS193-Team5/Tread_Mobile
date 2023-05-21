@@ -48,6 +48,7 @@ function Login({route, navigation}): JSX.Element {
               filled={true}
               text={'Log In'}
               navigation={navigation}
+              isLogin = {true}
             >
             </LoginButton>
           </View>
@@ -67,6 +68,7 @@ function Login({route, navigation}): JSX.Element {
               filled={false}
               text={'Sign Up'}
               navigation={navigation}
+              isLogin = {false}
             >
             </LoginButton>
           </View>

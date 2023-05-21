@@ -1,14 +1,11 @@
 import React, { useState, useEffect} from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
   Text,
-  TextInput,
-  Pressable,
   Platform,
   UIManager,
-  LayoutAnimation
+  LayoutAnimation,
+  Keyboard
 } from 'react-native';
 
 import {styles} from '../../css/add/friend/Style';
@@ -19,6 +16,8 @@ import axios from 'axios';
 import getReccFriend from "../../routes/add/recommend_friend";
 import UserScroll from '../../components/shared/UserScroll';
 import ZeroItem from '../../components/shared/ZeroItem';
+import GestureRecognizer from 'react-native-swipe-gestures';
+import { useFocusEffect } from '@react-navigation/native';
 
 function AddFriendPage(props): JSX.Element {
 
@@ -76,6 +75,13 @@ function AddFriendPage(props): JSX.Element {
 	}
 
   const [mutuals, setMutuals] = useState(getMutualFriends);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getMutualFriends()
+    }, [])
+  );
+
 	const [count, setCount] = useState(0);
 
 	var config = {
@@ -92,7 +98,10 @@ function AddFriendPage(props): JSX.Element {
 	};
 
   return (
-  <View style = {[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}>
+  <GestureRecognizer
+    onSwipeDown = {() => Keyboard.dismiss()}
+    style = {[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}  
+  >
     <View style = {{flex : 32}}> 
       <Invite
         text = 'Add Friend'
@@ -124,10 +133,7 @@ function AddFriendPage(props): JSX.Element {
         }
       </View> 
     </View>
-
-  </View>
-
-
+  </GestureRecognizer>
   )
 }
 

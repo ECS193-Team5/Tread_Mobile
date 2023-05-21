@@ -18,6 +18,7 @@ import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import ZeroItem from '../components/shared/ZeroItem';
 import LeagueInviteScroll from '../components/shared/LeagueInviteScroll';
+import { useFocusEffect } from '@react-navigation/native';
 
 const options = [
   { label : "Received" , value : 'Received'},
@@ -70,6 +71,16 @@ function IncomingLeaguesPage(props): JSX.Element {
   const [LeagueData, setLeagueData] = useState(getReceived)
   const [count, setCount] = useState(0)
   const [pageTitle, setPageTitle] = useState('Received')
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if(pageTitle === 'Received'){
+        getReceived()
+      } else {
+        getSent()
+      }
+    }, [pageTitle])
+  );
 
   const handleRefresh = function(){
     if(pageTitle === 'Received'){

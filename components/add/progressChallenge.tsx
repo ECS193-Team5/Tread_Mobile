@@ -14,6 +14,7 @@ import {
     Text,
     TextInput,
     Pressable,
+    TouchableHighlight,
 } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 
@@ -116,125 +117,123 @@ function ProgressChallenge(): JSX.Element {
     }
 
     return (
-        <View style={styles.ChallengeContainer}>
-            <View style={styles.ChallengeDropContainer}>
-                <Text style={styles.ActivityTitle}>
-                    Activity
-                </Text>
-                <DropDownPicker
-                    setValue={setValue}
-                    value={value}
-                    items={items}
-                    open={open}
-                    setOpen={setOpen}
-                    placeholder={'Choose an activity'}
-                >
-                </DropDownPicker>
-            </View>
+      <View style = {styles.ChallengeContainer}>
+          <View style={styles.ChallengeDropContainer}>
+              <Text style={styles.ActivityTitle}>
+                  Activity
+              </Text>
+              <DropDownPicker
+                  setValue={setValue}
+                  value={value}
+                  items={items}
+                  open={open}
+                  setOpen={setOpen}
+                  placeholder={'Choose an activity'}
+              >
+              </DropDownPicker>
+          </View>
 
-            {customTextEditable &&
-                <View style={styles.CustomChalContainer}>
-                    <View style={styles.EnterOwnContainer}>
+          {customTextEditable &&
+              <View style={styles.CustomChalContainer}>
+                  <View style={styles.EnterOwnContainer}>
 
-                        <TextInput
-                            placeholder={"Enter custom activity"}
-                            placeholderTextColor={validCustomActivity ? 'grey' : '#C65656'}
-                            style = {validCustomActivity ? [styles.validInput , {height : '70%'}] : [styles.invalidInput, {height : '70%'}]}
-                            editable={customTextEditable}
-                            value={customActivity}
-                            onChangeText={handleCustomActivityChange}
-                        >
-                        </TextInput>
-                    </View>
+                      <TextInput
+                          placeholder={"Enter custom activity"}
+                          placeholderTextColor={validCustomActivity ? 'grey' : '#C65656'}
+                          style = {validCustomActivity ? [styles.validInput , {height : '70%'}] : [styles.invalidInput, {height : '70%'}]}
+                          editable={customTextEditable}
+                          value={customActivity}
+                          onChangeText={handleCustomActivityChange}
+                      >
+                      </TextInput>
+                  </View>
 
-                </View>
-            }
+              </View>
+          }
 
-            <View style={styles.ChallengeAmountContainer}>
-                <Text style={styles.ActivityTitle}>
-                    Amount
-                </Text>
+          <View style={styles.ChallengeAmountContainer}>
+              <Text style={styles.ActivityTitle}>
+                  Amount
+              </Text>
 
-                <View style={styles.EnterChallengeAmount}>
-                    <View style={styles.NumericInput}>
-                        <NumericInput
-                            onChange={setChallengeAmount}
-                            value={challengeAmount}
-                            minValue={0}
-                            rounded={true}
-                            inputStyle={{borderColor: '#014421'}}
-                            iconStyle={{color: 'white'}}
-                            textColor="black"
-                            rightButtonBackgroundColor="#014421"
-                            leftButtonBackgroundColor="#014421"
-                        />
-                    </View>
+              <View style={styles.EnterChallengeAmount}>
+                  <View style={styles.NumericInput}>
+                      <NumericInput
+                          onChange={setChallengeAmount}
+                          value={challengeAmount}
+                          minValue={0}
+                          rounded={true}
+                          inputStyle={{borderColor: '#014421'}}
+                          iconStyle={{color: 'white'}}
+                          textColor="black"
+                          rightButtonBackgroundColor="#014421"
+                          leftButtonBackgroundColor="#014421"
+                      />
+                  </View>
 
-                    <View style={styles.UnitDropdown}>
-                        <DropDownPicker
-                            setValue={setValueUnits}
-                            value={valueUnits}
-                            items={itemsUnits}
-                            open={openUnits}
-                            setOpen={setOpenUnits}
-                            placeholder={'Units'}
-                        >
-                        </DropDownPicker>
+                  <View style={styles.UnitDropdown}>
+                      <DropDownPicker
+                          setValue={setValueUnits}
+                          value={valueUnits}
+                          items={itemsUnits}
+                          open={openUnits}
+                          setOpen={setOpenUnits}
+                          placeholder={'Units'}
+                      >
+                      </DropDownPicker>
 
-                    </View>
+                  </View>
 
-                </View>
+              </View>
 
-            </View>
-            <View style = {styles.CompletionDataContainer}>
-                <Text style={styles.ActivityTitle}>
-                    Completion Date
-                </Text>
-                <View style = {styles.CalendarButtonContainer}>
-                    <Pressable
-                        style={styles.StartButton}
-                        onPress={() => {setShowStartDatePicker(true)}}
-                    >
-                        <DatePicker
-                            modal = {true}
-                            mode = {'date'}
-                            open={showStartDatePicker}
-                            date={startDate}
-                            maximumDate={new Date()}
-                            onConfirm={(date) => {
-                                setShowStartDatePicker(false)
-                                console.log(date)
-                                setStartDate(date)
-                            }}
-                            onCancel={() => {
-                                setShowStartDatePicker(false)
-                            }}
-                        />
-                        <Text style={styles.DateText}>
-                            {startDate.getMonth() + 1} / {startDate.getDate()} / {startDate.getFullYear()}
-                        </Text>
-                    </Pressable>
-
-
-                </View>
+          </View>
+          <View style = {styles.CompletionDataContainer}>
+              <Text style={styles.ActivityTitle}>
+                  Completion Date
+              </Text>
+              <View style = {styles.CalendarButtonContainer}>
+                  <Pressable
+                      style={styles.StartButton}
+                      onPress={() => {setShowStartDatePicker(true)}}
+                  >
+                      <DatePicker
+                          modal = {true}
+                          mode = {'date'}
+                          open={showStartDatePicker}
+                          date={startDate}
+                          maximumDate={new Date()}
+                          onConfirm={(date) => {
+                              setShowStartDatePicker(false)
+                              console.log(date)
+                              setStartDate(date)
+                          }}
+                          onCancel={() => {
+                              setShowStartDatePicker(false)
+                          }}
+                      />
+                      <Text style={styles.DateText}>
+                          {startDate.getMonth() + 1} / {startDate.getDate()} / {startDate.getFullYear()}
+                      </Text>
+                  </Pressable>
 
 
-            </View>
-
-            <View style = {styles.SubmitContainer}>
-                <Pressable
-                    style={validInfo() ? styles.EnterButtonValid : styles.EnterButtonInvalid}
-                    onPress={handleIssuePress}
-                    disabled={!validInfo()}
-                >
-                    <Text style={styles.IssueChallengeText}>
-                        Submit
-                    </Text>
-                </Pressable>
-
-            </View>
+              </View>
 
 
+          </View>
+
+          <View style = {styles.SubmitContainer}>
+              <TouchableHighlight
+                  style={validInfo() ? styles.EnterButtonValid : styles.EnterButtonInvalid}
+                  onPress={handleIssuePress}
+                  disabled={!validInfo()}
+                  underlayColor = '#013319'
+              >
+                  <Text style={styles.IssueChallengeText}>
+                      Submit
+                  </Text>
+              </TouchableHighlight>
+          </View>
         </View>
     )
 }

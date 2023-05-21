@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
 	Text,
-	Pressable
+  TouchableHighlight
 } from 'react-native';
 
 import {LoginStyles} from '../../css/login/Style';
@@ -14,9 +14,8 @@ import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
 import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
-function LoginButton({filled, text, navigation}): JSX.Element {
+function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 	let autoLogin = true;
-
 	useEffect(() => {
 			GoogleSignin.isSignedIn().then((response) => {
 				if(response) {
@@ -105,12 +104,13 @@ function LoginButton({filled, text, navigation}): JSX.Element {
 
 
 	return (
-		<Pressable
+		<TouchableHighlight
 			style = {filled ? LoginStyles.loginButton : LoginStyles.signupButton}
 			onPress={onLoginPress}
+      underlayColor = {isLogin ? '#dedfe0' : '#161717'}
 		>
 			<Text style={filled ? LoginStyles.loginButtonText : LoginStyles.signupButtonText}>{text}</Text>
-		</Pressable>
+		</TouchableHighlight>
 	)
 }
 

@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
-  Image,
-  Pressable,
-  ScrollView,
-  FlatList,
-  Linking,
   StatusBar, Alert
 } from 'react-native';
 import { Text } from 'react-native-elements';
@@ -24,6 +17,7 @@ import ListenerComponentHealthKit from '../components/Sensors/healthKit';
 import ListenerComponentHealthConnect from '../components/Sensors/healthConnect';
 import ZeroItem from '../components/shared/ZeroItem';
 import messaging from "@react-native-firebase/messaging";
+import { useFocusEffect } from '@react-navigation/native';
 
 function ChallengesPage(props): JSX.Element {
   const [update, setUpdate] = useState(true);
@@ -150,6 +144,7 @@ function ChallengesPage(props): JSX.Element {
   }
 
 
+
   const [titleName, setTitleName] = useState('Current')
   const [count, setCount] = useState(0)
   const [ChallengeData, setChallengeData] = useState(getChallengeData)
@@ -158,6 +153,16 @@ function ChallengesPage(props): JSX.Element {
   const [challengeImage, setChallengeImage] = useState("https://imgur.com/2BHAmsN.png")
   const [IncomingImage, setIncomingImage] = useState(getIncomingImage)
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (isCurrent === true) {
+        getChallengeData()
+      } else {
+        getGlobalChallengeData()
+      }
+      getIncomingImage()
+    }, [isCurrent])
+  );
   return (
     <View style = {styles.container}>
       <StatusBar
