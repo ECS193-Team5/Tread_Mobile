@@ -71,7 +71,29 @@ const styles = StyleSheet.create({
 
   FilterText: {
     color: "#014421"
+  },
+
+  NotificationCountText : {
+    fontWeight : "700",
+    fontSize : 20,
+    lineHeight : 34,
+    color : "#d93030",
+    borderColor : '#014421',
+    borderWidth : 2,
+    borderRadius : 16,
+    alignSelf : 'center'
+  },
+
+  NotificationTitleContainer : {
+    position : 'relative',
+    height : '10%',
+    width : "90%",
+    flexDirection : 'row',
+    marginLeft : '5%',
+    alignItems: 'center',
   }
+
+
 });
 
 export { styles}

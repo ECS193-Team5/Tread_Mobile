@@ -7,7 +7,9 @@ import {
   UIManager,
   LayoutAnimation,
   FlatList,
-  RefreshControl
+  RefreshControl,
+  Pressable,
+  TouchableHighlight
 } from 'react-native';
 
 import {styles} from "../css/challenges/Style"
@@ -112,9 +114,18 @@ function ProfileInbox(props): JSX.Element {
           PageToSwap = {"Profile"}
           imageUrl = {imageUrl}/>
       </View>
-      <View style = {styles.titleContainer}>
-        <Text style = {styles.TitleText}>Notifications</Text>
+      <View style = {styles.NotificationTitleContainer}>
+        <Text style = {styles.TitleText }>Notifications</Text>
+        <Text style = {[styles.NotificationCountText, {marginLeft : '2%', marginRight : '7%'}]}>{count} </Text> 
+        <TouchableHighlight
+          onPress={() => console.log('Pressed Clear All')}
+          underlayColor = '#013319'
+          style = {[styles.NotificationCountText, {marginHorizontal : '5%', backgroundColor : '#014421'}]}
+        >
+        <Text style = {[styles.NotificationCountText, {marginHorizontal : '2%', borderWidth : 0, color : 'white'}]}>Clear All </Text> 
+        </TouchableHighlight>
       </View>
+
       <View style = {styles.ChallengesContainer}>
         {count > 0 ?
           <FlatList
