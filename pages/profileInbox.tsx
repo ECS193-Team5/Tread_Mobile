@@ -20,7 +20,40 @@ import ZeroItem from '../components/shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
 import NotifCard from '../components/profile/notifCard';
 
+import {useSelector, useDispatch } from 'react-redux';
+import {badgeP_decrement, badgeP_increment} from '../redux/actions/badgeP_actions'
+import { showMessage } from 'react-native-flash-message';
+
 function ProfileInbox(props): JSX.Element {
+  const dispatch = useDispatch()
+  const count = useSelector(state=>state.badgeP_reducer.badgeP)
+
+  const clearAll = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'notifications/delete_all_notifications',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        setNotifs([])
+        dispatch(badgeP_increment(0))
+        showMessage({
+          floating : true,
+          message : 'Cleared all Notifications',
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
 
   const getNotifs = function(){
     var config = {
@@ -36,7 +69,6 @@ function ProfileInbox(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setNotifs(response.data)
-        setCount(response.data.length)
       })
       .catch(function (error) {
         console.log(error)
@@ -44,7 +76,6 @@ function ProfileInbox(props): JSX.Element {
   }
   
   const [notifs, setNotifs] = useState(getNotifs)
-  const [count, setCount] = useState(0)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -82,7 +113,7 @@ function ProfileInbox(props): JSX.Element {
     console.log("deleted")
     const filteredData = notifs.filter(item => item._id !== nData._id);
     setNotifs(filteredData)
-    filteredData.length === 0 ? setCount(0) : null
+    dispatch(badgeP_decrement())
     LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
@@ -116,13 +147,16 @@ function ProfileInbox(props): JSX.Element {
       </View>
       <View style = {styles.NotificationTitleContainer}>
         <Text style = {styles.TitleText }>Notifications</Text>
-        <Text style = {[styles.NotificationCountText, {marginLeft : '2%', marginRight : '7%'}]}>{count} </Text> 
+        <View style ={styles.NotificationCountContainer}>
+          <Text style = {styles.NotificationCountText}> {count > 99 ? '99+' : count}</Text>
+        </View>
         <TouchableHighlight
-          onPress={() => console.log('Pressed Clear All')}
+          onPress={clearAll}
           underlayColor = '#013319'
-          style = {[styles.NotificationCountText, {marginHorizontal : '5%', backgroundColor : '#014421'}]}
+          style = {[(count > 0 ? styles.ClearAllValidContainer : styles.ClearAllInvalidContainer), {marginHorizontal : '9%'}]}
+          disabled = {!count}
         >
-        <Text style = {[styles.NotificationCountText, {marginHorizontal : '2%', borderWidth : 0, color : 'white'}]}>Clear All </Text> 
+          <Text style = {styles.ClearAllText}>Clear All </Text> 
         </TouchableHighlight>
       </View>
 

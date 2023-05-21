@@ -75,13 +75,37 @@ const styles = StyleSheet.create({
 
   NotificationCountText : {
     fontWeight : "700",
-    fontSize : 20,
+    fontSize : 15,
     lineHeight : 34,
-    color : "#d93030",
+    color : "white",
+  },
+
+  ClearAllValidContainer : {
+    backgroundColor : '#014421',
     borderColor : '#014421',
     borderWidth : 2,
     borderRadius : 16,
+    alignSelf : 'center',
+    justifyContent : 'center'
+  },
+
+  ClearAllText : {
+    fontWeight : "700",
+    fontSize : 15,
+    lineHeight : 34,
+    color : "white",
+    marginHorizontal : '5%',
     alignSelf : 'center'
+    // marginLeft : '2%'
+  },
+
+  ClearAllInvalidContainer : {
+    backgroundColor : '#9B9595',
+    borderColor : '#9B9595',
+    borderWidth : 2,
+    borderRadius : 16,
+    alignSelf : 'center',
+    justifyContent : 'center'
   },
 
   NotificationTitleContainer : {
@@ -89,10 +113,20 @@ const styles = StyleSheet.create({
     height : '10%',
     width : "90%",
     flexDirection : 'row',
-    marginLeft : '5%',
     alignItems: 'center',
-  }
+    alignSelf : 'center',
+  },
 
+  NotificationCountContainer : {
+    justifyContent: 'center',
+    alignItems : 'center',
+    width :32, 
+    height : 32 , 
+    borderRadius : 16, 
+    backgroundColor : '#014421',
+    marginLeft : '2%', 
+    marginRight : '7%',
+  },
 
 });
 

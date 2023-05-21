@@ -43,6 +43,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { badgeC_increment } from '../../redux/actions/badgeC_actions'
 import { badgeL_increment } from '../../redux/actions/badgeL_actions';
 import { badgeF_increment } from '../../redux/actions/badgeF_actions';
+import { badgeP_increment } from '../../redux/actions/badgeP_actions';
 
 function ChallengesSwipeStack() {
   return (
@@ -276,26 +277,24 @@ function ShowTabs(){
 
     axios(config)
       .then(function (response) {
-        setBadgeProfile(response.data.length)
+        dispatch(badgeP_increment(response.data.length))
       })
       .catch(function (error) {
         console.log(error)
       })
   }
   
-  const [badgeProfile, setBadgeProfile] = useState(0)
-
   const dispatch = useDispatch()
 
   const badgeChallenge = useSelector(state=>state.badgeC_reducer.badgeC)
   const badgeLeague = useSelector(state=>state.badgeL_reducer.badgeL)
   const badgeFriends = useSelector(state=>state.badgeF_reducer.badgeF)
+  const badgeProfile = useSelector(state=>state.badgeP_reducer.badgeP)
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log('Received a message')
       console.log('in use effect on notif receive to get badges')
-      console.log(remoteMessage)
       getBadgeChallenge()
       getBadgeLeague()
       getBadgeFriend()
@@ -312,18 +311,14 @@ function ShowTabs(){
     return unsubscribe;
   }, []);
 
-  const [loadBadge, setLoadBadge] = useState(false)
-
   useEffect(() => {
-    if(!loadBadge){
-      setLoadBadge(true)
       console.log('in use effect to get badges')
       getBadgeChallenge()
       getBadgeLeague()
       getBadgeFriend()
       getBadgeProfile()
     }
-  }, [loadBadge])
+  )
 
   return (
   <Tab.Navigator
