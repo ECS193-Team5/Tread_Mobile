@@ -118,12 +118,15 @@ function IncomingChallengesPage(props): JSX.Element {
     }
   }
   
-  const deleteItem = function(cData) {    
+  const deleteItem = function(cData, isReceived) {    
     console.log(cData._id)
     console.log("deleted")
     const filteredData = ChallengeData.filter(item => item._id !== cData._id);
     setChallengeData(filteredData)
     filteredData.length === 0 ? setCount(0) : null
+    if(isReceived){
+      // props.navigation.setOptions({tabBarBadge : })
+    }
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
 

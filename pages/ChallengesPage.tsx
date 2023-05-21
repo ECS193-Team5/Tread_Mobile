@@ -16,9 +16,7 @@ import {BACKEND_URL} from '@env';
 import ListenerComponentHealthKit from '../components/Sensors/healthKit';
 import ListenerComponentHealthConnect from '../components/Sensors/healthConnect';
 import ZeroItem from '../components/shared/ZeroItem';
-import messaging from "@react-native-firebase/messaging";
 import { useFocusEffect } from '@react-navigation/native';
-import { showMessage } from 'react-native-flash-message';
 
 function ChallengesPage(props): JSX.Element {
   const [update, setUpdate] = useState(true);
@@ -28,21 +26,6 @@ function ChallengesPage(props): JSX.Element {
       setUpdate(true);
     });
   }, [props.navigation]);
-
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.log('Received a message')
-      showMessage({
-        message : remoteMessage['notification']['body'],
-        duration	: 3000,
-        icon: props => <Image source={{uri: 'https://imgur.com/T3dcr1T.png'}} {...props} />,
-        backgroundColor : '#F9A800',
-        color : '#014421'
-      })
-    });
-
-    return unsubscribe;
-  }, []);
 
   const getChallengeData = function(){
     var config = {

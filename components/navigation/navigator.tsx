@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {Image, Platform} from 'react-native'
 
+import messaging from "@react-native-firebase/messaging";
 import Login from '../../pages/loginPage';
 import Signup from '../../pages/signupPage';
 import Challenge from '../../pages/ChallengesPage';
@@ -36,6 +37,7 @@ const TopTab = createMaterialTopTabNavigator();
 import {styles} from '../../css/navigation/Style';
 import { useEffect, useState } from 'react';
 import ProfileInbox from '../../pages/profileInbox';
+import { showMessage } from 'react-native-flash-message';
 
 
 function ChallengesSwipeStack() {
@@ -195,8 +197,124 @@ function ShowTabs(){
     }
 
   }, [load])
+
+  const getBadgeChallenge = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'challenges/received_challenges',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        setBadgeChallenge(response.data.length)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+
+  const getBadgeLeague = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/get_invited_leagues',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        setBadgeLeague(response.data.length)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  const getBadgeFriend = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/received_request_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        setBadgeFriends(response.data.length)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  const getBadgeProfile = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'notifications/get_notifications',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        setBadgeProfile(response.data.length)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
   
-  
+  const [badgeChallenge, setBadgeChallenge] = useState(0)
+  const [badgeLeague, setBadgeLeague] = useState(0)
+  const [badgeFriends, setBadgeFriends] = useState(0)
+  const [badgeProfile, setBadgeProfile] = useState(0)
+
+  const getBadges = function(){
+    console.log('getting badges')
+    getBadgeChallenge()
+    getBadgeLeague()
+    getBadgeFriend()
+    getBadgeProfile()
+  }
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log('Received a message')
+      console.log('in use effect on notif receive to get badges')
+      console.log(remoteMessage)
+      getBadges()
+      showMessage({
+        message : remoteMessage['notification']['body'],
+        duration	: 3000,
+        icon: props => <Image source={{uri: 'https://imgur.com/T3dcr1T.png'}} {...props} />,
+        backgroundColor : '#F9A800',
+        color : '#014421'
+      })
+    });
+
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    console.log('in use effect to get badges')
+    getBadges()
+  })
+
   return (
   <Tab.Navigator
     screenOptions={({route}) => ({
@@ -241,11 +359,11 @@ function ShowTabs(){
     })
   }
   >
-    <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false}}/>
-    <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false }}/>
+    <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false, tabBarBadge : badgeChallenge > 0 ? (badgeChallenge < 99 ? badgeChallenge : '99+') : undefined, tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
+    <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false, tabBarBadge : badgeLeague > 0 ? (badgeLeague < 99 ? badgeLeague : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
     <Tab.Screen name="Add" component={AddStack} options={{headerShown: false}}/>
-    <Tab.Screen name="Friends" component={SearchStack} options={{ headerShown: false }}/>
-    <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false }}/>
+    <Tab.Screen name="Friends" component={SearchStack} options={{ headerShown: false, tabBarBadge : badgeFriends > 0 ? (badgeFriends < 99 ? badgeFriends : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
+    <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false, tabBarBadge : badgeProfile > 0 ? (badgeProfile < 99 ? badgeProfile : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
   </Tab.Navigator>
   )
 }
