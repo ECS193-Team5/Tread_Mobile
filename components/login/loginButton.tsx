@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {
 	Text,
-  TouchableHighlight
+  TouchableHighlight,
+	Platform
 } from 'react-native';
 
 import {LoginStyles} from '../../css/login/Style';
@@ -15,8 +16,10 @@ import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
 function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
-	let autoLogin = true;
+	let autoLogin = Platform.OS === 'android';
+
 	useEffect(() => {
+		if(Platform.OS === 'android') {
 			GoogleSignin.isSignedIn().then((response) => {
 				if(response) {
 					if(filled) {
@@ -29,6 +32,7 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 					autoLogin = false;
 				}
 			})
+		}
 	})
 
 	const onLoginPress = function () {
@@ -77,7 +81,6 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 
 	const login = async (email, authToken, photo) => {
 		const deviceToken = await getFCMToken()
-		console.log("/nHereISDEVICETOKEN", deviceToken)
 		axios(loginConfig(authToken, deviceToken))
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
