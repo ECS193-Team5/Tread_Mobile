@@ -58,7 +58,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Customize profile and league photos</string>
+	<string>Tread would like to access your photos to let you pick pictures for leagues and your profile</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

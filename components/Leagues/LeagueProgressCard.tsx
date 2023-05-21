@@ -11,17 +11,6 @@ import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 import { cardStyles } from '../../css/cards/Style';
 
 function LeagueProgressCard({ProgressObj, Username}){
-  var ProgressPercent = Math.min(ProgressObj.complete, 100)
-  var left = ''
-  var color = '#F9A800'
-  if (ProgressPercent < 30) {
-    left = ProgressPercent + '%'
-    color = '#014421'
-  } else if (ProgressPercent > 20 && ProgressPercent <= 80){
-    left = ProgressPercent - 20 + '%'
-    color = '#F9A800'
-  }
-
   return (
     <View style ={[progressCardStyle.LeagueCardContainer, cardStyles.shadowProp, Username === ProgressObj[0] ? {borderColor : '#014421', borderWidth : 2} : null]}>
       <View style = {progressCardStyle.ImageSwapSection}>

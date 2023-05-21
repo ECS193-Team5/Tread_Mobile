@@ -11,7 +11,7 @@ const progressCardStyle = StyleSheet.create({
   }, 
 
   LeagueCardContainer : {
-    width : "89%",
+    width : "90%",
     borderRadius : 20,
     flexDirection : 'row',
     marginBottom: ".6%",

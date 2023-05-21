@@ -162,6 +162,7 @@ function ProgressChallenge(): JSX.Element {
                           onChange={setChallengeAmount}
                           value={challengeAmount}
                           minValue={0}
+                          initValue = {challengeAmount}
                           rounded={true}
                           inputStyle={{borderColor: '#014421'}}
                           iconStyle={{color: 'white'}}

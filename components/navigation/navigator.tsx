@@ -34,7 +34,8 @@ const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
 import {styles} from '../../css/navigation/Style';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import ProfileInbox from '../../pages/profileInbox';
 
 
 function ChallengesSwipeStack() {
@@ -66,6 +67,17 @@ function SearchSwipeStack() {
     >
       <TopTab.Screen name = "Search" component= {FriendPage}/>
       <TopTab.Screen name = "Incoming Friends" component = {IncomingFriendsPage}/>
+    </TopTab.Navigator>
+  )
+}
+
+function ProfileSwipeStack() {
+  return (
+    <TopTab.Navigator
+      tabBarPosition='bottom'
+    >
+      <TopTab.Screen name = "Profile" component= {ProfilePage}/>
+      <TopTab.Screen name = "Profile Inbox" component = {ProfileInbox}/>
     </TopTab.Navigator>
   )
 }
@@ -139,8 +151,16 @@ function SearchStack(){
 function ProfileStack(){
   return (
   <Stack.Navigator>
-    <Stack.Screen name = "Profile" component={ProfilePage} options={{ headerShown: false }}/>
+
+    {Platform.OS === 'android' &&
+        <Stack.Screen name = "Profile" component={ProfilePage} options={{ headerShown: false }}/>
+    }
+
+    {Platform.OS === 'ios' &&
+        <Stack.Screen name = "Profile" component={ProfileSwipeStack} options={{ headerShown: false }}/>
+    }
     <Stack.Screen name = "EditProfile" component={EditProfile} options={{ headerShown: false }}/>
+    <Stack.Screen name = "Profile Inbox" component = {ProfileInbox}  options={{ headerShown: false }}/>
   </Stack.Navigator>
   )
 }
@@ -167,7 +187,15 @@ function ShowTabs(){
   }
 
   const [picture, setPicture] = useState('')
-  getUserName()
+  const [load, setLoad] = useState(false)
+  useEffect(() => {
+    if(!load){
+      setLoad(true)
+      getUserName()
+    }
+
+  }, [load])
+  
   
   return (
   <Tab.Navigator

@@ -214,7 +214,6 @@ function LeagueDetails(props): JSX.Element {
   const [name, setName] = useState('')
 
   const [security, setSecurity] = useState('')
-  getLeagueInfo()
   const [countMembers, setCountMembers] = useState(0)
   const [countChallenges, setCountChallenges] = useState(0)
 
@@ -224,7 +223,7 @@ function LeagueDetails(props): JSX.Element {
   const [Friends , setFriends] = useState(getFriends)
 
   const [role, setRole] = useState('')
-  getRole()
+
 
   const handlePopup = function() {
     setModalVisiblePopUp(true)
@@ -459,10 +458,16 @@ function LeagueDetails(props): JSX.Element {
 
   const [leaderboardInfo, setLeaderboardInfo] = useState([])
   const [countLeaderboard, setCountLeaderboard] = useState(0)
+  const [load, setLoad] = useState(false)
 
-  useEffect(() => 
-    getLeaderboardInfo()
-  )
+  useEffect(() => {
+    if(!load){
+      getLeaderboardInfo(),
+      getRole(),
+      setLoad(true)
+      getLeagueInfo()
+    }
+  }, [load])
   
   return (
     <View style = {styles.container}>

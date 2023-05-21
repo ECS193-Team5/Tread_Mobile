@@ -35,7 +35,7 @@ const ListenerComponentHealthConnect = (props) => {
             let exerciseList = dataResults.map(convertWorkoutTime);
             let uniqueExerciseList = reduceExercisesToUnique(exerciseList);
 
-            sendExerciseList(exerciseList, uniqueExerciseList, "healtConnect");
+            sendExerciseList(exerciseList, uniqueExerciseList, "healthConnect");
         }
     }, [dataResults]);
 
@@ -73,7 +73,7 @@ const ListenerComponentHealthConnect = (props) => {
         }
         catch(error){
             console.log("Error - Either HealthConnect failed or this is an Apple Device");
-        }      
+        }
     }
 
     const getLastReadDate = async () => {
@@ -92,17 +92,16 @@ const ListenerComponentHealthConnect = (props) => {
 
           axios(config)
             .then(async (response) => {
-                let timeString = new Date(0).toISOString();
+                let timeString = new Date().toISOString();
                 if (response.data.healthConnectLastPostedDate){
                     timeString = response.data.healthConnectLastPostedDate;
                 }
-                console.log(timeString);
-
+                let endString = new Date().toISOString();
                 const result = await readRecords('ExerciseSession', {
                     timeRangeFilter: {
                         operator: 'between',
                         startTime: timeString,
-                        endTime: '2023-08-09T23:53:15.405Z',
+                        endTime: endString,
                     },
                 });
                 setDataResults(result);
@@ -111,7 +110,7 @@ const ListenerComponentHealthConnect = (props) => {
 
             })
             .catch(function (error) {
-                console.log("Error - Either HealthConnect failed or this is an Apple Device");
+                console.log("Error - Either HealthConnect failed or this is an Apple Device", error);
                 return;
             });
     }

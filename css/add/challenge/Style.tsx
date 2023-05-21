@@ -13,8 +13,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        // marginLeft: '10%',
-        // marginRight: '10%'
         marginHorizontal : '5%'
     },
 
@@ -37,7 +35,6 @@ const styles = StyleSheet.create({
 
     ChallengeDropContainer: {
         flex: 17,
-        // backgroundColor: 'blue',
         marginLeft: '5%',
         marginRight: '5%',
         marginBottom : '2%'
@@ -45,19 +42,18 @@ const styles = StyleSheet.create({
     },
 
     RecommendChallengeContainer: {
-      // flex: 6,
       height : '9%',
       justifyContent : 'center',
       marginTop : '2%',
-      marginHorizontal : '22%'
+      marginHorizontal : '2%'
     },
 
     RecommendTextContainer: {
-      // flex: 3,
-      height : '3%',
+      flex: 0,
       justifyContent : 'center',
+      alignItems : 'center',
       marginTop : '2%',
-      marginHorizontal : '22%'
+      marginHorizontal : '2%',
     },
 
     CustomChalContainer: {
@@ -68,7 +64,6 @@ const styles = StyleSheet.create({
 
     EnterOwnContainer : {
         flex: 1,
-        // backgroundColor: 'blue',
         marginTop: '1%'
     },
 
@@ -77,7 +72,6 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         borderWidth: 2,
         paddingLeft: 25,
-//   	color: '#9B9595',
         fontSize : 16,
         color: 'grey'
     },
@@ -87,7 +81,6 @@ const styles = StyleSheet.create({
         borderColor: '#C65656',
         borderWidth: 2,
         paddingLeft: 25,
-//   	color: '#9B9595',
         fontSize : 16,
         color: '#C65656'
     },
@@ -98,13 +91,11 @@ const styles = StyleSheet.create({
         color: '#014421',
         marginTop: '5%',
         marginBottom: '5%',
-        // backgroundColor: 'green'
     },
 
     ChallengeAmountContainer : {
         flex: 20,
         flexDirection: 'column',
-        // backgroundColor: 'black',
         marginLeft: '5%',
         marginRight: '5%'
     },
@@ -116,7 +107,6 @@ const styles = StyleSheet.create({
 
     NumericInput: {
         flex: 60,
-        // backgroundColor: 'blue'
         flexDirection: 'row',
         justifyContent: 'center'
     },
@@ -129,14 +119,11 @@ const styles = StyleSheet.create({
     CompletionDataContainer: {
         flex: 15,
         flexDirection: 'column',
-        // backgroundColor: 'yellow',
-        // marginLeft: '5%',
-        // marginRight: '5%'
+
         marginHorizontal: '5%'
     },
 
     CalendarButtonContainer: {
-        // backgroundColor: 'yellow',
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
@@ -145,7 +132,6 @@ const styles = StyleSheet.create({
 
     StartButton: {
         flex: 40,
-        // backgroundColor: 'yellow',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
@@ -153,10 +139,7 @@ const styles = StyleSheet.create({
 
     ToTextContainer: {
         flex: 20,
-        // backgroundColor: 'red',
-        // color: '#014421',
-        // fontSize: 16,
-        // fontWeight: '400',
+
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
@@ -179,7 +162,6 @@ const styles = StyleSheet.create({
 
     EndButton: {
         flex: 40,
-        // backgroundColor: 'blue',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
@@ -203,17 +185,12 @@ const styles = StyleSheet.create({
     IssueToContainer: {
         flex: 15,
         flexDirection: 'column',
-        // backgroundColor: 'red',
         marginLeft: '5%',
         marginRight: '5%'
     },
 
     DropDownContainer: {
       flex: 10,
-      // flexDirection: 'column',
-      // justifyContent : 'center',
-      // alignItems : 'center',
-      // backgroundColor: 'green',
       marginLeft: '5%',
       marginRight: '5%',
       paddingTop : '5%'
@@ -221,20 +198,15 @@ const styles = StyleSheet.create({
 
     PickIssueTarget: {
         flex: 1,
-        // backgroundColor: 'blue'
     },
 
     SelectTarget: {
         flex: 1,
-        // backgroundColor: 'red'
     },
 
     SubmitContainer: {
         flex: 10,
         flexDirection: 'column',
-        // backgroundColor: 'purple',
-        // marginLeft: '5%',
-        // marginRight: '5%'
         marginHorizontal: '30%',
         justifyContent: 'center'
     },
@@ -264,7 +236,7 @@ const styles = StyleSheet.create({
     },
 
     RecommendButton : {
-      width: '100%',
+      width: '60%',
       height: '60%',
       borderRadius: 50,
       borderWidth: 1,
@@ -273,6 +245,7 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
+      alignSelf : 'center',
   },
 
     IssueChallengeText : {
@@ -285,12 +258,9 @@ const styles = StyleSheet.create({
       color: '#014421',
       fontWeight: 700,
       fontSize: 14,
-      alignSelf : 'center'
+      alignSelf : 'center',
+      justifyContent : 'center'
   },
-
-
-
-
 });
 
 export {styles}
