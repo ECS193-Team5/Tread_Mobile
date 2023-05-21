@@ -39,6 +39,8 @@ import { useEffect, useState } from 'react';
 import ProfileInbox from '../../pages/profileInbox';
 import { showMessage } from 'react-native-flash-message';
 
+import { useSelector, useDispatch } from 'react-redux';
+import {badgeC_increment_counter} from '../../redux/actions/badgeC_actions'
 
 function ChallengesSwipeStack() {
   return (
@@ -211,7 +213,8 @@ function ShowTabs(){
 
     axios(config)
       .then(function (response) {
-        setBadgeChallenge(response.data.length)
+        // setBadgeChallenge(response.data.length)
+        dispatch(badgeC_increment_counter(response.data.length))
       })
       .catch(function (error) {
         console.log(error)
@@ -279,25 +282,24 @@ function ShowTabs(){
       })
   }
   
-  const [badgeChallenge, setBadgeChallenge] = useState(0)
+  // const [badgeChallenge, setBadgeChallenge] = useState(0)
   const [badgeLeague, setBadgeLeague] = useState(0)
   const [badgeFriends, setBadgeFriends] = useState(0)
   const [badgeProfile, setBadgeProfile] = useState(0)
 
-  const getBadges = function(){
-    console.log('getting badges')
-    getBadgeChallenge()
-    getBadgeLeague()
-    getBadgeFriend()
-    getBadgeProfile()
-  }
+  const dispatch = useDispatch()
+
+  const badgeChallenge = useSelector(state=>state.badgeC)
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log('Received a message')
       console.log('in use effect on notif receive to get badges')
       console.log(remoteMessage)
-      getBadges()
+      getBadgeChallenge()
+      getBadgeLeague()
+      getBadgeFriend()
+      getBadgeProfile()
       showMessage({
         message : remoteMessage['notification']['body'],
         duration	: 3000,
@@ -310,10 +312,18 @@ function ShowTabs(){
     return unsubscribe;
   }, []);
 
+  const [loadBadge, setLoadBadge] = useState(false)
+
   useEffect(() => {
-    console.log('in use effect to get badges')
-    getBadges()
-  })
+    if(!loadBadge){
+      setLoadBadge(true)
+      console.log('in use effect to get badges')
+      getBadgeChallenge()
+      getBadgeLeague()
+      getBadgeFriend()
+      getBadgeProfile()
+    }
+  }, [loadBadge])
 
   return (
   <Tab.Navigator

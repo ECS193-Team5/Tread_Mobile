@@ -5,8 +5,8 @@ import FlashMessage from 'react-native-flash-message'
 import axios from "axios";
 import { BACKEND_URL } from '@env';
 
-import { Alert } from 'react-native';
-import messaging from '@react-native-firebase/messaging';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const sendLeagueRequest = (leagueID) => {
   console.log("send league request");
@@ -100,10 +100,12 @@ function App(): JSX.Element {
   });
 
   return (
+    <Provider store = {store}>
       <View style ={{flex:1}}>
         <Navigator/>
         <FlashMessage position = 'top'/>
       </View>
+    </Provider>
   );
 }
 

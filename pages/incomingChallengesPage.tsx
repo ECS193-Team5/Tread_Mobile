@@ -23,12 +23,19 @@ import { createProfilePictureURL } from '../components/Helpers/CloudinaryURLHelp
 import ZeroItem from '../components/shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { useSelector, useDispatch } from 'react-redux';
+import {badgeC_decrement_counter} from '../redux/actions/badgeC_actions'
+
 const options = [
   { label : "Received" , value : 'Received'},
   { label : "Sent", value : 'Sent'},
 ]
 
 function IncomingChallengesPage(props): JSX.Element {
+
+  const dispatch = useDispatch()
+  const badgeChallenge = useSelector(state=>state.badgeC)
+
   const getReceivedChallenges = function(){
     var config = {
       method: 'post',
@@ -125,7 +132,7 @@ function IncomingChallengesPage(props): JSX.Element {
     setChallengeData(filteredData)
     filteredData.length === 0 ? setCount(0) : null
     if(isReceived){
-      // props.navigation.setOptions({tabBarBadge : })
+      dispatch(badgeC_decrement_counter())
     }
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
