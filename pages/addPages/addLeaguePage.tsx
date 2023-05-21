@@ -169,7 +169,10 @@ function AddLeaguePage(props): JSX.Element {
 
   const getCreateCode = function(){
     return (
-      <View style ={{flex : 1}}>
+      <GestureRecognizer
+      onSwipeDown = {() => Keyboard.dismiss()}
+      style ={{flex : 1}}
+      >
         <View style={styles.InputContainer}>
           <View style={styles.ChoosePicContainer}>
             <ImageUpload
@@ -245,7 +248,7 @@ function AddLeaguePage(props): JSX.Element {
           </View>
         </View>
         <View style={styles.SeparatorContainer} />
-      </View>
+      </GestureRecognizer>
     )
   }
 
@@ -354,10 +357,7 @@ function AddLeaguePage(props): JSX.Element {
   }
 
   return (
-    <GestureRecognizer
-      onSwipeDown = {() => Keyboard.dismiss()}
-      style={styles.Background}
-    >
+    <View style={styles.Background}>
       <StatusBar
         barStyle="dark-content"
       />
@@ -381,7 +381,7 @@ function AddLeaguePage(props): JSX.Element {
           {isCreate ? getCreateCode() : getJoinCode() }
         </View>
       }
-    </GestureRecognizer>
+    </View>
   )
 }
 
