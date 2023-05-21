@@ -51,9 +51,8 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 	}
 
 	const getFCMToken = async() => {
-		const enabled = await messaging().hasPermission()
-
-		if(enabled) {
+		const authorizationStatus = await messaging().hasPermission()
+		if(authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
 			console.log("Permissions is enabled")
 			const token = await messaging().getToken({vapidKey: VAPID_KEY})
 			return token
@@ -61,7 +60,6 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 			console.log("Permissions not enabled")
 			await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
 			await messaging().requestPermission()
-
 			const token = await messaging().getToken({vapidKey: VAPID_KEY})
 			return token
 		}
@@ -83,6 +81,7 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 
 	const login = async (email, authToken, photo) => {
 		const deviceToken = await getFCMToken()
+		console.log("/nHereISDEVICETOKEN", deviceToken)
 		axios(loginConfig(authToken, deviceToken))
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
