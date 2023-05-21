@@ -261,15 +261,12 @@ function ProfilePage(props): JSX.Element {
             </TouchableHighlight>
         )
     }
-    const storeLogOut = async () => {
-        await AsyncStorage.setItem('loggedIn', 'false');
-    }
 
     const handleLogout = function() {
-        storeLogOut().then((response) => {
-            signOut().then(response => {
-                props.navigation.navigate('Login')
-            })
+
+
+        signOut().then(response => {
+            navigation.navigate('Login')
         })
     }
 

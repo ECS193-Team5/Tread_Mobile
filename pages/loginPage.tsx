@@ -9,7 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import LoginButton from '../components/login/loginButton';
 import {LoginStyles} from '../css/login/Style';
 
-function Login(props): JSX.Element {
+function Login({route, navigation}): JSX.Element {
 
   useEffect(() => {
     // Get the deep link used to open the app
@@ -47,7 +47,7 @@ function Login(props): JSX.Element {
             <LoginButton
               filled={true}
               text={'Log In'}
-              navigation={props.navigation}
+              navigation={navigation}
               isLogin = {true}
             >
             </LoginButton>
@@ -67,7 +67,7 @@ function Login(props): JSX.Element {
             <LoginButton
               filled={false}
               text={'Sign Up'}
-              navigation={props.navigation}
+              navigation={navigation}
               isLogin = {false}
             >
             </LoginButton>
