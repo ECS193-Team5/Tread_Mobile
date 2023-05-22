@@ -80,7 +80,13 @@
     "typescript": "4.8.4"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@react-native|react-native|my-project|react-native-button|@react-native-google-signin/google-signin)/)"
+    ],
+    "setupFiles": [
+      "./node_modules/@react-native-google-signin/google-signin/jest/build/setup.js"
+    ]
   },
   "overrides": {
     "react-native-health": {
