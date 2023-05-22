@@ -244,8 +244,6 @@ function ProfilePage(props): JSX.Element {
     }
 
     const handleLogout = function() {
-
-
         signOut().then(response => {
             props.navigation.navigate('Login')
         })

@@ -72,7 +72,6 @@ function Login({route, navigation}): JSX.Element {
             >
             </LoginButton>
           </View>
-
         </View>
 
       </LinearGradient>

@@ -16,8 +16,19 @@ import signupConfig from "../routes/signup/signup";
 
 import CheckBox from '@react-native-community/checkbox';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import {GoogleSignin} from "@react-native-google-signin/google-signin";
 
 function Signup({route, navigation}): JSX.Element {
+
+  const [displayName, setDisplayName] = useState("");
+  const [userName, setUserName] = useState("");
+
+  const [validDisplayName, setValidDisplayName] = useState(false);
+  const [validUserName, setValidUserName] = useState(false);
+
+  const [picture, setPicture] = useState(route.params.photo);
+  const [validPicture, setValidPicture] = useState(true);
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const handleOnPress = async function() {
     axios(signupConfig(userName, displayName, picture, route.params.deviceToken))
@@ -30,20 +41,20 @@ function Signup({route, navigation}): JSX.Element {
     });
   }
 
-  const checkValidName = function(name) {
-		console.log(name)
-    return name.length > 0
+  const signOut = async () => {
+    try {
+      await GoogleSignin.signOut();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSwitchAccount = async function() {
+    signOut().then(response => {
+      navigation.navigate('Login')
+    })
   }
 
-  const [displayName, setDisplayName] = useState("");
-  const [userName, setUserName] = useState("");
-
-  const [validDisplayName, setValidDisplayName] = useState(false);
-  const [validUserName, setValidUserName] = useState(false);
-
-  const [picture, setPicture] = useState(route.params.photo);
-  const [validPicture, setValidPicture] = useState(true);
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   return (
     <GestureRecognizer
@@ -121,6 +132,17 @@ function Signup({route, navigation}): JSX.Element {
 					</Text>
 				</TouchableHighlight>
 			</View>
+
+      <View style={styles.accountContainer}>
+        <Text style={styles.accountText}>
+          Signed in with: {route.params.email}
+        </Text>
+        <TouchableHighlight onPress={handleSwitchAccount}>
+          <Text style={styles.switchText}>
+            Switch Accounts
+          </Text>
+        </TouchableHighlight>
+      </View>
 		</GestureRecognizer>
   )
 }

@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -10,44 +10,44 @@ const styles = StyleSheet.create({
   titleContainer: {
   	flex: 15,
   	justifyContent: 'flex-end',
-    // backgroundColor: 'yellow'
   },
   formContainer: {
     flex: 53,
   	justifyContent: 'space-around',
-    // backgroundColor: 'blue'
   },
 
   displayNameContainer: {
     flex: 13,
-    // backgroundColor: 'black',
     marginBottom: '10%'
   },
 
   userNameContainer: {
     flex: 13,
     marginBottom: '10%',
-    // backgroundColor: 'green'
   },
 
   choosePicContainer: {
     flex: 60,
-    // backgroundColor: 'purple',
     marginTop: '10%'
   },
 
   signupContainer: {
-    // backgroundColor: 'red',
-  	flex: 19,
+  	flex: 10,
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+  },
+
+  accountContainer: {
+    flex: 9,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   checkBoxContainer: {
     flex: 20,
-    // backgroundColor: 'purple',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   checkboxinput: {
@@ -66,22 +66,35 @@ const styles = StyleSheet.create({
   },
   validSignupButton: {
   	backgroundColor: '#014421',
-  	height: '25%',
+  	height: '50%',
   	borderRadius: 50,
   	justifyContent: 'center'
   },
   invalidSignupButton: {
   	backgroundColor: '#9B9595',
-  	height: '25%',
+  	height: '50%',
   	borderRadius: 50,
   	justifyContent: 'center'
   },
+
   signupText: {
   	color: 'white',
 		alignSelf: 'center',
 		fontSize: 16,
 		fontWeight: 700
   },
+
+  accountText: {
+    color: '#9B9595',
+    fontSize: 14,
+    fontWeight: '500'
+  },
+
+  switchText: {
+    color: '#014421',
+    fontSize: 14,
+    fontWeight: '700'
+  }
 
 
 });
