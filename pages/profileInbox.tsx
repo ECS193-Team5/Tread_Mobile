@@ -90,7 +90,7 @@ function ProfileInbox(props): JSX.Element {
       getNotifs()
       setTimeout(() => {
         dispatch(badgeP_increment(0))
-        }, 5000);
+        }, 4000);
     }, [])
   );
 
@@ -171,21 +171,23 @@ function ProfileInbox(props): JSX.Element {
           imageUrl = {imageUrl}/>
       </View>
       <View style = {styles.NotificationTitleContainer}>
-        <Text style = {styles.TitleText }>Notifications </Text>
-        {count > 0 ?
-          <View style = {styles.CountandClearContainer}>
-            <View style ={styles.NotificationCountContainer}>
+        <View style = {styles.NotificationNameContainer}>
+          <Text style = {styles.TitleText }>Notifications </Text>
+        </View>
+        <View style = {styles.NotificationCountContainer}>
+          {count > 0 ?
+            <View style = {styles.NotificationCountCircle}>
               <Text style = {styles.NotificationCountText}> {count > 99 ? '99+' : count}</Text>
             </View>
-          </View>
-          :
-          null
-        }
-        <TouchableHighlight
-        onPress={clearAll}
-        underlayColor = '#013319'
-        style = {[(countNotifs > 0 ? styles.ClearAllValidContainer : styles.ClearAllInvalidContainer), {marginHorizontal : '9%'}]}
-        disabled = {!countNotifs}
+            :
+            null
+          }
+        </View>
+        <TouchableHighlight 
+          onPress={clearAll}
+          style = {countNotifs > 0 ? styles.ClearContainerValid : styles.ClearContainerInvalid}
+          disabled = {!countNotifs}
+          underlayColor = '#013319'
         >
           <Text style = {styles.ClearAllText}>Clear All </Text> 
         </TouchableHighlight>

@@ -80,27 +80,7 @@ const styles = StyleSheet.create({
     color : "white",
   },
 
-  ClearAllValidContainer : {
-    backgroundColor : '#014421',
-    borderColor : '#014421',
-    borderWidth : 2,
-    borderRadius : 16,
-    alignSelf : 'center',
-    justifyContent : 'center',
-    position : 'relative',
-    right : '-70%',
-  },
 
-  ClearAllInvalidContainer : {
-    backgroundColor : '#9B9595',
-    borderColor : '#9B9595',
-    borderWidth : 2,
-    borderRadius : 16,
-    alignSelf : 'center',
-    justifyContent : 'center',
-    position : 'relative',
-    right : '-70%',
-  },
 
   ClearAllText : {
     fontWeight : "700",
@@ -117,29 +97,51 @@ const styles = StyleSheet.create({
     width : "90%",
     flexDirection : 'row',
     alignItems: 'center',
-    alignSelf : 'center',
+    alignSelf : 'center'
   },
 
-  CountandClearContainer : {
-    // position : 'relative',
-    // height : '10%',
-    width : "0%",
+  NotificationNameContainer : {
     flexDirection : 'row',
-    // alignItems: 'center',
-    // alignSelf : 'center',
+    alignItems: 'center',
+    alignSelf : 'center',
+    flex : 33
   },
 
   NotificationCountContainer : {
+    flexDirection : 'row',
+    alignItems: 'center',
+    alignSelf : 'center',
+    flex : 15
+  },
+
+  ClearContainerInvalid : {
+    alignItems: 'center',
+    alignSelf : 'center',
+    backgroundColor : '#9B9595',
+    borderColor : '#9B9595',
+    borderWidth : 2,
+    borderRadius : 16,
+    flex : 15
+  },
+
+  ClearContainerValid : {
+    alignItems: 'center',
+    alignSelf : 'center',
+    backgroundColor : '#014421',
+    borderColor : '#014421',
+    borderWidth : 2,
+    borderRadius : 16,
+    flex : 15
+  },
+
+  NotificationCountCircle : {
     justifyContent: 'center',
     alignItems : 'center',
     width :32, 
     height : 32 , 
     borderRadius : 16, 
     backgroundColor : '#014421',
-    // marginLeft : '%', 
-    marginRight : '7%',
   },
-
 });
 
 export { styles}
