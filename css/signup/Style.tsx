@@ -93,9 +93,16 @@ const styles = StyleSheet.create({
   },
 
   accountText: {
-    color: '#9B9595'
-  }
+    color: '#9B9595',
+    fontSize: 14,
+    fontWeight: '500'
+  },
 
+  switchText: {
+    color: '#014421',
+    fontSize: 14,
+    fontWeight: '700'
+  }
 
 
 });

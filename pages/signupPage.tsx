@@ -30,10 +30,6 @@ function Signup({route, navigation}): JSX.Element {
     });
   }
 
-  const checkValidName = function(name) {
-		console.log(name)
-    return name.length > 0
-  }
 
   const [displayName, setDisplayName] = useState("");
   const [userName, setUserName] = useState("");
@@ -123,12 +119,14 @@ function Signup({route, navigation}): JSX.Element {
 			</View>
 
       <View style={styles.accountContainer}>
-        <Text>
+        <Text style={styles.accountText}>
           Signed in with: {route.params.email}
         </Text>
-        <Text>
-          Switch Accounts
-        </Text>
+        <TouchableHighlight>
+          <Text style={styles.switchText}>
+            Switch Accounts
+          </Text>
+        </TouchableHighlight>
       </View>
 		</GestureRecognizer>
   )
