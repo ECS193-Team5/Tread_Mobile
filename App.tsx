@@ -38,8 +38,6 @@ const sendLeagueRequest = (leagueID) => {
       console.log(error);
     }
     )
-
-
 }
 
 const sendFriendRequest = function(username){
