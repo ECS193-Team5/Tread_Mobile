@@ -38,9 +38,17 @@ const styles = StyleSheet.create({
 
   signupContainer: {
     // backgroundColor: 'red',
-  	flex: 19,
+  	flex: 10,
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+  },
+
+  accountContainer: {
+    // backgroundColor: 'blue',
+    flex: 9,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   checkBoxContainer: {
@@ -66,22 +74,28 @@ const styles = StyleSheet.create({
   },
   validSignupButton: {
   	backgroundColor: '#014421',
-  	height: '25%',
+  	height: '50%',
   	borderRadius: 50,
   	justifyContent: 'center'
   },
   invalidSignupButton: {
   	backgroundColor: '#9B9595',
-  	height: '25%',
+  	height: '50%',
   	borderRadius: 50,
   	justifyContent: 'center'
   },
+
   signupText: {
   	color: 'white',
 		alignSelf: 'center',
 		fontSize: 16,
 		fontWeight: 700
   },
+
+  accountText: {
+    color: '#9B9595'
+  }
+
 
 
 });

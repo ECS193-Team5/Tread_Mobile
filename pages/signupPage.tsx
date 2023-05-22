@@ -121,6 +121,15 @@ function Signup({route, navigation}): JSX.Element {
 					</Text>
 				</TouchableHighlight>
 			</View>
+
+      <View style={styles.accountContainer}>
+        <Text>
+          Signed in with: {route.params.email}
+        </Text>
+        <Text>
+          Switch Accounts
+        </Text>
+      </View>
 		</GestureRecognizer>
   )
 }
