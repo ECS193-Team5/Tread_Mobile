@@ -289,10 +289,8 @@ function ShowTabs(){
         console.log('From async storage ' + notifLastTimeString)
         console.log('Current amount ' + response.data.length)
         var notifLastTime = parseInt(notifLastTimeString, 10)
-        if (response.data.length < notifLastTime){
+        if (response.data.length <= notifLastTime){
           dispatch(badgeP_increment(0))
-        } else if (response.data.length === notifLastTime){
-          dispatch(badgeP_increment(response.data.length))
         }
         else {
           dispatch(badgeP_increment(response.data.length - notifLastTime))

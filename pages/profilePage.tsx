@@ -59,7 +59,7 @@ function ProfilePage(props): JSX.Element {
     const [medalInfoEarned, setMedalInfoEarned] = useState([])
 
     useEffect(() => {
-        getProfilePhoto()
+        getIncomingImage()
         getDisplayName()
         getUserName()
         getFriends()
@@ -71,7 +71,7 @@ function ProfilePage(props): JSX.Element {
 
     useFocusEffect(
       React.useCallback(() => {
-        getProfilePhoto()
+        getIncomingImage()
         getDisplayName()
         getUserName()
         getFriends()
@@ -87,25 +87,6 @@ function ProfilePage(props): JSX.Element {
             props.route.params.refresh = false;
         }
     })
-    const getProfilePhoto = function() {
-        var config = {
-            method: 'post',
-            url: BACKEND_URL + 'sign_up/get_profile_photo',
-            withCredentials: true,
-            credentials: 'include',
-            headers: {
-                Accept: 'application/json',
-            }
-        };
-
-        axios(config)
-            .then(function (response) {
-                setProfilePhotoURL(response.data)
-            })
-            .catch((error) =>
-                console.log(error)
-            )
-    }
 
     const getDisplayName = function() {
         var config = {

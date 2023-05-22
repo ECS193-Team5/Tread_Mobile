@@ -102,13 +102,13 @@ function NotifCard({item, index, handler, newCSS}): JSX.Element {
         rightThreshold = {30}
         childrenContainerStyle = {styles.FlatListContainer}>
         <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, cardStyles.NotifContainer, newCSS ? {shadowColor : '#F9A800', borderColor : '#F9A800'} : null]}>
-          <View style = {[cardStyles.ChallengeNameContainer, {marginLeft : '2%'}]}>
+          <View style = {[cardStyles.ChallengeNameContainer, {marginLeft : '1%'}]}>
             <Text style = {cardStyles.ChallengeNameText}>
               {item.message}
             </Text>
   
           </View>
-          <View style = {[cardStyles.ChallengeNameContainer, {flex : 8, justifyContent : 'center'}]}>
+          <View style = {[cardStyles.ChallengeNameContainer, {flex : 9.5, justifyContent : 'center'}]}>
             <Text style = {[cardStyles.ChallengeNameText, {color : 'grey'}]}>
               {getDate()}
             </Text>
