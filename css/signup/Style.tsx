@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -10,41 +10,34 @@ const styles = StyleSheet.create({
   titleContainer: {
   	flex: 15,
   	justifyContent: 'flex-end',
-    // backgroundColor: 'yellow'
   },
   formContainer: {
     flex: 53,
   	justifyContent: 'space-around',
-    // backgroundColor: 'blue'
   },
 
   displayNameContainer: {
     flex: 13,
-    // backgroundColor: 'black',
     marginBottom: '10%'
   },
 
   userNameContainer: {
     flex: 13,
     marginBottom: '10%',
-    // backgroundColor: 'green'
   },
 
   choosePicContainer: {
     flex: 60,
-    // backgroundColor: 'purple',
     marginTop: '10%'
   },
 
   signupContainer: {
-    // backgroundColor: 'red',
   	flex: 10,
     flexDirection: 'column',
     justifyContent: 'center',
   },
 
   accountContainer: {
-    // backgroundColor: 'blue',
     flex: 9,
     flexDirection: 'column',
     justifyContent: 'center',
@@ -53,9 +46,8 @@ const styles = StyleSheet.create({
 
   checkBoxContainer: {
     flex: 20,
-    // backgroundColor: 'purple',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   checkboxinput: {
