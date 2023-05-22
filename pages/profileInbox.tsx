@@ -139,13 +139,27 @@ function ProfileInbox(props): JSX.Element {
   }
 
   const renderNotif = ({item, index}) => {
-    return (
-      <NotifCard
-        item={item}
-        index = {index}
-        handler = {deleteItem}
-      />
-    )
+    if (index < count){
+      return (
+        <NotifCard
+          item={item}
+          index = {index}
+          newCSS = {true}
+          handler = {deleteItem}
+        />
+      )
+    } else {
+      return (
+        <NotifCard
+          item={item}
+          index = {index}
+          newCSS = {false}
+          handler = {deleteItem}
+        />
+      )
+    }
+    
+
   }
 
   return (

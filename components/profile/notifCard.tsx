@@ -17,7 +17,7 @@ import {GestureHandlerRootView, Swipeable, TouchableOpacity} from 'react-native-
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 
-function NotifCard({item, index, handler}): JSX.Element {
+function NotifCard({item, index, handler, newCSS}): JSX.Element {
 
   let row: Array<any> = [];
   let prevOpenedRow;
@@ -101,7 +101,7 @@ function NotifCard({item, index, handler}): JSX.Element {
         leftThreshold = {30}
         rightThreshold = {30}
         childrenContainerStyle = {styles.FlatListContainer}>
-        <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, {flexDirection : 'row', width : '91%' , marginBottom : '3%', borderColor : '#014421', borderWidth : 1}]}>
+        <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, cardStyles.NotifContainer, newCSS ? {shadowColor : '#F9A800', borderColor : '#F9A800'} : null]}>
           <View style = {[cardStyles.ChallengeNameContainer, {marginLeft : '2%'}]}>
             <Text style = {cardStyles.ChallengeNameText}>
               {item.message}
