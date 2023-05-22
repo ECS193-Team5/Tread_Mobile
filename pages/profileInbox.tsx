@@ -90,7 +90,7 @@ function ProfileInbox(props): JSX.Element {
       getNotifs()
       setTimeout(() => {
         dispatch(badgeP_increment(0))
-        }, 3000);
+        }, 5000);
     }, [])
   );
 
