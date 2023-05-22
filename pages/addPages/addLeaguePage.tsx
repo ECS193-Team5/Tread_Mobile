@@ -98,11 +98,17 @@ function AddLeaguePage(props): JSX.Element {
     if(qrvalue.startsWith("https://tread.run/requestLeague?")){
       qrvalue = qrvalue.split("?")[1];
       sendLeagueRequest(qrvalue);
+    } else {
+      showMessage({
+        floating : true,
+        message : 'Error sending invite',
+        type : 'danger',
+      })
     }
+
     setQrValue(qrvalue)
     setOpenScanner(false)
     props.navigation.navigate("AddLeague", {defaultView : false})
-
   }
 
   const handleBack = function (qrValue) {
@@ -363,7 +369,8 @@ function AddLeaguePage(props): JSX.Element {
       />
 
       {openScanner ?
-        props.navigation.navigate("CameraView", { qrValue: qrValue, setQrValue: setQrValue, openScanner: openScanner, setOpenScanner, onBarcodeScan: onBarcodeScan, handleBack: handleBack })
+        props.navigation.navigate("CameraView", { qrValue: qrValue, setQrValue: setQrValue, openScanner: openScanner, 
+          setOpenScanner, onBarcodeScan: onBarcodeScan, handleBack: handleBack })
         :
         <View style={{ flex: 1 }}>
           <View style={styles.TitleContainer}>

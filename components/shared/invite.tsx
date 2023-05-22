@@ -29,6 +29,11 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
   const onBarcodeScan = function(qrvalue) {
     if(!qrvalue.startsWith("https://tread.run/requestFriend?")){
       qrvalue = "";
+      showMessage({
+        floating : true,
+        message : 'Error Getting User Information',
+        type : 'danger',
+      })
     }
     else{
       qrvalue = qrvalue.split("?")[1];
