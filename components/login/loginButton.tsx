@@ -14,7 +14,9 @@ import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
 function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
-	let autoLogin = true;
+	// let autoLogin = true;
+	const [autoLogin, setAutoLogin] = useState(true);
+
 	useEffect(() => {
 			GoogleSignin.isSignedIn().then((response) => {
 				if(response) {
@@ -25,7 +27,7 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 					}
 				} else {
 					console.log("Not signed in yet")
-					autoLogin = false;
+					setAutoLogin(false)
 				}
 			})
 	})
@@ -94,10 +96,10 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
-					autoLogin = false;
+					setAutoLogin(false);
 					navigation.navigate('Challenge')
 				} else {
-					autoLogin = false;
+					setAutoLogin(false);
 					navigation.navigate('Signup',{
 						email: email,
 						photo: photo,
