@@ -402,7 +402,7 @@ function Navigator(){
       <Stack.Navigator>
         <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false }}/>
         <Stack.Screen name = "Signup" component={Signup} options={{ headerShown: false }}/>
-        <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false}}/>
+        <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false, gestureEnabled : false}}/>
         <Stack.Screen name = "CameraView" component={CameraView} options={{ headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>

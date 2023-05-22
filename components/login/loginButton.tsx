@@ -14,29 +14,10 @@ import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
 function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
-	// let autoLogin = true;
-	const [autoLogin, setAutoLogin] = useState(true);
-
-	useEffect(() => {
-			GoogleSignin.isSignedIn().then((response) => {
-				if(response) {
-					if(filled) {
-						console.log("Already signed in")
-						configureGoogleSignIn();
-						signInGoogleSilently();
-					}
-				} else {
-					console.log("Not signed in yet")
-					setAutoLogin(false)
-				}
-			})
-	})
 
 	const onLoginPress = function () {
-		if(!autoLogin) {
-			configureGoogleSignIn();
-			signInGoogle();
-		}
+    configureGoogleSignIn();
+    signInGoogle();
 	}
 
 	const configureGoogleSignIn = function() {
@@ -51,20 +32,6 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 		GoogleSignin.hasPlayServices().then((hasPlayService) => {
 			if (hasPlayService) {
 				GoogleSignin.signIn().then((userInfo) => {
-						login(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo']);
-				}).catch((e) => {
-					console.log("ERROR IS A: " + JSON.stringify(e));
-				})
-			}
-		}).catch((e) => {
-			console.log("ERROR IS B: " + JSON.stringify(e));
-		})
-	}
-
-  const signInGoogleSilently = function () {
-		GoogleSignin.hasPlayServices().then((hasPlayService) => {
-			if (hasPlayService) {
-				GoogleSignin.signInSilently().then((userInfo) => {
 						login(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo']);
 				}).catch((e) => {
 					console.log("ERROR IS A: " + JSON.stringify(e));
@@ -96,10 +63,8 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
-					setAutoLogin(false);
 					navigation.navigate('Challenge')
 				} else {
-					setAutoLogin(false);
 					navigation.navigate('Signup',{
 						email: email,
 						photo: photo,
@@ -111,9 +76,7 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 			.catch(function (error) {
 				console.log(error);
 			});
-
 	}
-
 
 	return (
 		<TouchableHighlight
