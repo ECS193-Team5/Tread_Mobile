@@ -13,7 +13,7 @@ import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
 import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
-function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
+function LoginButton({filled, text, navigation}): JSX.Element {
 	// let autoLogin = true;
 	const [autoLogin, setAutoLogin] = useState(true);
 
@@ -119,7 +119,7 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 		<TouchableHighlight
 			style = {filled ? LoginStyles.loginButton : LoginStyles.signupButton}
 			onPress={onLoginPress}
-      underlayColor = {isLogin ? '#dedfe0' : '#161717'}
+      underlayColor = {filled ? '#dedfe0' : '#161717'}
 		>
 			<Text style={filled ? LoginStyles.loginButtonText : LoginStyles.signupButtonText}>{text}</Text>
 		</TouchableHighlight>
