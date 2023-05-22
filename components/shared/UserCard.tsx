@@ -127,7 +127,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           color : '#F9A800',
         })
         if (UserRole === 'All Friends' || UserRole === 'Blocked Users'){
-          handler(UserInfo)
+          handler(UserInfo, false)
         } else {
           onRefresh()
         }
@@ -182,7 +182,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           color : '#F9A800',
         })
         if (UserRole === 'All Friends' || UserRole === 'Received' || UserRole === 'Sent' || UserRole === 'Mutual'){
-          handler(UserInfo)
+          handler(UserInfo, UserRole === 'Received')
         } else {
           onRefresh()
         }
@@ -239,7 +239,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-        handler(UserInfo)
+        handler(UserInfo,false)
       })
       .catch(function (error) {
         console.log(error)
@@ -293,7 +293,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-        handler(UserInfo)
+        handler(UserInfo, false)
       })
       .catch(function (error) {
         console.log(error)
@@ -345,7 +345,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           color : '#F9A800',
         })
         if(UserRole === 'All Friends' || UserRole === 'Blocked Users'){
-          handler(UserInfo)
+          handler(UserInfo, false)
         } else {
           onRefresh()
         }
@@ -383,7 +383,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-        handler(UserInfo)
+        handler(UserInfo, UserRole === 'Received')
       })
       .catch(function (error) {
         console.log(error)
@@ -419,7 +419,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-        handler(UserInfo)
+        handler(UserInfo, true)
       })
       .catch(function (error) {
         console.log(error)

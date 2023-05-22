@@ -152,6 +152,14 @@ const cardStyles = StyleSheet.create({
     flexDirection : 'column'
   },
 
+  NotifContainer : {
+    flexDirection : 'row',
+    width : '91%' , 
+    marginBottom : '3%',
+    borderColor : '#014421', 
+    borderWidth : 1
+  }
+
 });
 
 export {cardStyles}

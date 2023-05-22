@@ -20,12 +20,17 @@ import ZeroItem from '../components/shared/ZeroItem';
 import LeagueInviteScroll from '../components/shared/LeagueInviteScroll';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
+import {badgeL_increment,badgeL_decrement} from '../redux/actions/badgeL_actions'
+
 const options = [
   { label : "Received" , value : 'Received'},
   { label : "Sent", value : 'Sent'},
 ]
 
 function IncomingLeaguesPage(props): JSX.Element {
+  const dispatch = useDispatch()
+
   function getReceived() {
     var config = {
       method: 'post',
@@ -40,6 +45,7 @@ function IncomingLeaguesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
+        dispatch(badgeL_increment(response.data.length))
         setCount(response.data.length)
       })
       .catch((error) =>
@@ -121,12 +127,16 @@ function IncomingLeaguesPage(props): JSX.Element {
     }
   }
 
-  const deleteItem = function(lData) {
+  const deleteItem = function(lData, isReceived) {
     console.log(lData._id)
     console.log("deleted")
     const filteredData = LeagueData.filter(item => item._id !== lData._id);
     setLeagueData(filteredData)
     filteredData.length === 0 ? setCount(0) : null
+    console.log(isReceived)
+    if(isReceived){
+      dispatch(badgeL_decrement())
+    }
     LayoutAnimation.configureNext(layoutAnimConfig)
   }
 

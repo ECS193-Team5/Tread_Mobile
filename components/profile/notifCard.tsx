@@ -17,7 +17,7 @@ import {GestureHandlerRootView, Swipeable, TouchableOpacity} from 'react-native-
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 
-function NotifCard({item, index, handler}): JSX.Element {
+function NotifCard({item, index, handler, newCSS}): JSX.Element {
 
   let row: Array<any> = [];
   let prevOpenedRow;
@@ -66,6 +66,28 @@ function NotifCard({item, index, handler}): JSX.Element {
     );
   };
 
+  const getDate = function(){
+    var today = new Date()
+    var notifDate = new Date(item.date)
+    var timePeriod = today-notifDate
+
+    timePeriod = timePeriod / 1000
+    
+    var d = Math.floor(timePeriod / (3600*24))
+    var h = Math.floor(timePeriod % (3600*24) / 3600)
+    var m = Math.floor(timePeriod % 3600 / 60)
+    var s = Math.floor(timePeriod % 60)
+
+    if (d > 0) {
+      return d + 'd'
+    } else if (h > 0){
+      return h + 'h'
+    } else if (m > 0) {
+      return m + 'm'
+    } else {
+      return s +'s'
+    }
+  }
   return(
     <GestureHandlerRootView>
       <Swipeable
@@ -79,10 +101,16 @@ function NotifCard({item, index, handler}): JSX.Element {
         leftThreshold = {30}
         rightThreshold = {30}
         childrenContainerStyle = {styles.FlatListContainer}>
-        <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, {width : '91%' , marginBottom : '3%', borderColor : '#014421', borderWidth : 1}]}>
+        <View style= {[cardStyles.ChallengeCardContainer, cardStyles.shadowProp, cardStyles.NotifContainer, newCSS ? {shadowColor : '#F9A800', borderColor : '#F9A800'} : null]}>
           <View style = {[cardStyles.ChallengeNameContainer, {marginLeft : '2%'}]}>
             <Text style = {cardStyles.ChallengeNameText}>
               {item.message}
+            </Text>
+  
+          </View>
+          <View style = {[cardStyles.ChallengeNameContainer, {flex : 8, justifyContent : 'center'}]}>
+            <Text style = {[cardStyles.ChallengeNameText, {color : 'grey'}]}>
+              {getDate()}
             </Text>
           </View>
         </View>

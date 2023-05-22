@@ -18,6 +18,8 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 import {BACKEND_URL} from '@env';
 import {showMessage} from 'react-native-flash-message'
 
+import { useDispatch } from 'react-redux';
+import {badgeF_decrement} from '../../redux/actions/badgeF_actions'
 
 function Invite({text, config, props, pagetoNav}): JSX.Element {
 
@@ -94,6 +96,9 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
     const checkValidID = function(id) {
         return id.length > 0
     }
+
+    const dispatch = useDispatch()
+
     const onSubmit = async function() {
       var message = ''
 
@@ -125,6 +130,15 @@ function Invite({text, config, props, pagetoNav}): JSX.Element {
                 message : message,
                 type : 'warning',
               })
+            } else if(response.data === 'Accepted a received friend request.'){
+                message = "Pending invite from " + friendID + ' was accepted'
+                showMessage({
+                  floating : true,
+                  message : message,
+                  backgroundColor : '#014421',
+                  color : '#F9A800',
+                })
+                dispatch(badgeF_decrement())
             } else {
               message = pagetoNav === 'League Details' ? 'Sent league invite to ' + friendID :  'Sent friend request to ' + friendID
               showMessage({

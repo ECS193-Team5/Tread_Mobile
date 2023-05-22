@@ -326,7 +326,6 @@ function ProfilePage(props): JSX.Element {
   
       axios(config)
         .then(function (response) {
-          console.log(response.data)
           if (response.data.length > 0){
             setIncomingImage('https://imgur.com/gMqz2UZ.png')
           } else {

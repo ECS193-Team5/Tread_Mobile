@@ -99,7 +99,6 @@ function AddFriendPage(props): JSX.Element {
 
   return (
   <View
-    // onSwipeDown = {() => Keyboard.dismiss()}
     style = {[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}  
   >
     <GestureRecognizer

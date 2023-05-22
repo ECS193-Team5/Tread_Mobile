@@ -15,7 +15,7 @@ import { ImageStyles } from '../../css/imageCluster/Style';
 
 import { SharedStyles } from '../../css/shared/Style';
 
-import {GestureHandlerRootView, Swipeable, TouchableOpacity} from 'react-native-gesture-handler';
+import {GestureHandlerRootView, Swipeable} from 'react-native-gesture-handler';
 import { createLeaguePictureURL } from '../Helpers/CloudinaryURLHelper';
 import { showMessage } from 'react-native-flash-message';
 
@@ -68,7 +68,7 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
             backgroundColor : '#014421',
             color : '#F9A800',
           })
-          handler(LeagueData)
+          handler(LeagueData, false)
         })
         .catch(function (error) {
           console.log(error)
@@ -102,7 +102,7 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
             backgroundColor : '#014421',
             color : '#F9A800',
           })
-          handler(LeagueData)
+          handler(LeagueData, true)
         })
         .catch(function (error) {
           console.log(error)
@@ -140,7 +140,7 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-        handler(LeagueData)
+        handler(LeagueData, true)
       })
       .catch(function (error) {
         console.log(error)
@@ -171,7 +171,7 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
   
       axios(config)
         .then(function (response) {
-          handler(LeagueData)
+          handler(LeagueData, false)
           showMessage({
             floating : true,
             message : 'Joined League',

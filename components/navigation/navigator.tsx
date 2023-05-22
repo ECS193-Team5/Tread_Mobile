@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {Image, Platform} from 'react-native'
 
+import messaging from "@react-native-firebase/messaging";
 import Login from '../../pages/loginPage';
 import Signup from '../../pages/signupPage';
 import Challenge from '../../pages/ChallengesPage';
@@ -23,6 +24,8 @@ import CameraView from '../../pages/CameraView';
 import EditProfile from "../../pages/editProfile";
 import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 
@@ -36,7 +39,13 @@ const TopTab = createMaterialTopTabNavigator();
 import {styles} from '../../css/navigation/Style';
 import { useEffect, useState } from 'react';
 import ProfileInbox from '../../pages/profileInbox';
+import { showMessage } from 'react-native-flash-message';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { badgeC_increment } from '../../redux/actions/badgeC_actions'
+import { badgeL_increment } from '../../redux/actions/badgeL_actions';
+import { badgeF_increment } from '../../redux/actions/badgeF_actions';
+import { badgeP_increment } from '../../redux/actions/badgeP_actions';
 
 function ChallengesSwipeStack() {
   return (
@@ -195,8 +204,147 @@ function ShowTabs(){
     }
 
   }, [load])
+
+  const getBadgeChallenge = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'challenges/received_challenges',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        dispatch(badgeC_increment(response.data.length))
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+
+  const getBadgeLeague = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'league/get_invited_leagues',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        dispatch(badgeL_increment(response.data.length))
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  const getBadgeFriend = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'friend_list/received_request_list',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        dispatch(badgeF_increment(response.data.length))
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  const getBadgeProfile = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'notifications/get_notifications',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+    .then(async function(response) {
+      var notifLastTimeString = await AsyncStorage.getItem('Notifs')
+
+      if (notifLastTimeString === null){
+        console.log('not found setting for the first time')
+        await AsyncStorage.setItem('Notifs', JSON.stringify(0))
+        dispatch(badgeP_increment(response.data.length))
+      } else {
+        console.log('From async storage ' + notifLastTimeString)
+        console.log('Current amount ' + response.data.length)
+        var notifLastTime = parseInt(notifLastTimeString, 10)
+        if (response.data.length < notifLastTime){
+          dispatch(badgeP_increment(0))
+        } else if (response.data.length === notifLastTime){
+          dispatch(badgeP_increment(response.data.length))
+        }
+        else {
+          dispatch(badgeP_increment(response.data.length - notifLastTime))
+        }
+      }
+    })
+    .catch(function(error){
+      console.log(error)
+    });
+  }
   
-  
+  const dispatch = useDispatch()
+
+  const badgeChallenge = useSelector(state=>state.badgeC_reducer.badgeC)
+  const badgeLeague = useSelector(state=>state.badgeL_reducer.badgeL)
+  const badgeFriends = useSelector(state=>state.badgeF_reducer.badgeF)
+  const badgeProfile = useSelector(state=>state.badgeP_reducer.badgeP)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log('Received a message')
+      console.log('in use effect on notif receive to get badges')
+      getBadgeChallenge()
+      getBadgeLeague()
+      getBadgeFriend()
+      getBadgeProfile()
+      showMessage({
+        message : remoteMessage['notification']['body'],
+        duration	: 3000,
+        icon: props => <Image source={{uri: 'https://imgur.com/T3dcr1T.png'}} {...props} />,
+        backgroundColor : '#F9A800',
+        color : '#014421'
+      })
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const [loadBadge, setLoadBadge] = useState(false)
+
+  useEffect(() => {
+    if (!loadBadge) {
+        setLoadBadge(true);
+        console.log('in use effect to get badges')
+        getBadgeChallenge()
+        getBadgeLeague()
+        getBadgeFriend()
+        getBadgeProfile()        
+      }
+    }, [loadBadge]
+  );
+
   return (
   <Tab.Navigator
     screenOptions={({route}) => ({
@@ -241,11 +389,11 @@ function ShowTabs(){
     })
   }
   >
-    <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false}}/>
-    <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false }}/>
+    <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false, tabBarBadge : badgeChallenge > 0 ? (badgeChallenge < 99 ? badgeChallenge : '99+') : undefined, tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
+    <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false, tabBarBadge : badgeLeague > 0 ? (badgeLeague < 99 ? badgeLeague : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
     <Tab.Screen name="Add" component={AddStack} options={{headerShown: false}}/>
-    <Tab.Screen name="Friends" component={SearchStack} options={{ headerShown: false }}/>
-    <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false }}/>
+    <Tab.Screen name="Friends" component={SearchStack} options={{ headerShown: false, tabBarBadge : badgeFriends > 0 ? (badgeFriends < 99 ? badgeFriends : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
+    <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false, tabBarBadge : badgeProfile > 0 ? (badgeProfile < 99 ? badgeProfile : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
   </Tab.Navigator>
   )
 }

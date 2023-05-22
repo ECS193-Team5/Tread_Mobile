@@ -66,7 +66,7 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle, image}):
             backgroundColor : '#014421',
             color : '#F9A800',
           })
-          handler(ChallengeData)
+          handler(ChallengeData, false)
         })
         .catch(function (error) {
           console.log(error)
@@ -87,7 +87,7 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle, image}):
             backgroundColor : '#014421',
             color : '#F9A800',
           })
-          handler(ChallengeData)
+          handler(ChallengeData, true)
         })
         .catch(function (error) {
           console.log(error)
@@ -123,7 +123,7 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle, image}):
         backgroundColor : '#014421',
         color : '#F9A800',
       })
-      handler(ChallengeData)
+      handler(ChallengeData, true)
     })
     .catch(function (error) {
       console.log(error)
