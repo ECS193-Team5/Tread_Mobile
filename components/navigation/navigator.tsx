@@ -24,6 +24,8 @@ import CameraView from '../../pages/CameraView';
 import EditProfile from "../../pages/editProfile";
 import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 
@@ -276,12 +278,30 @@ function ShowTabs(){
     };
 
     axios(config)
-      .then(function (response) {
+    .then(async function(response) {
+      var notifLastTimeString = await AsyncStorage.getItem('Notifs')
+
+      if (notifLastTimeString === null){
+        console.log('not found setting for the first time')
+        await AsyncStorage.setItem('Notifs', JSON.stringify(0))
         dispatch(badgeP_increment(response.data.length))
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+      } else {
+        console.log('From async storage ' + notifLastTimeString)
+        console.log('Current amount ' + response.data.length)
+        var notifLastTime = parseInt(notifLastTimeString, 10)
+        if (response.data.length < notifLastTime){
+          dispatch(badgeP_increment(0))
+        } else if (response.data.length === notifLastTime){
+          dispatch(badgeP_increment(response.data.length))
+        }
+        else {
+          dispatch(badgeP_increment(response.data.length - notifLastTime))
+        }
+      }
+    })
+    .catch(function(error){
+      console.log(error)
+    });
   }
   
   const dispatch = useDispatch()
@@ -311,14 +331,19 @@ function ShowTabs(){
     return unsubscribe;
   }, []);
 
+  const [loadBadge, setLoadBadge] = useState(false)
+
   useEffect(() => {
-      console.log('in use effect to get badges')
-      getBadgeChallenge()
-      getBadgeLeague()
-      getBadgeFriend()
-      getBadgeProfile()
-    }
-  )
+    if (!loadBadge) {
+        setLoadBadge(true);
+        console.log('in use effect to get badges')
+        getBadgeChallenge()
+        getBadgeLeague()
+        getBadgeFriend()
+        getBadgeProfile()        
+      }
+    }, [loadBadge]
+  );
 
   return (
   <Tab.Navigator

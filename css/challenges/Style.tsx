@@ -86,7 +86,20 @@ const styles = StyleSheet.create({
     borderWidth : 2,
     borderRadius : 16,
     alignSelf : 'center',
-    justifyContent : 'center'
+    justifyContent : 'center',
+    position : 'relative',
+    right : '-70%',
+  },
+
+  ClearAllInvalidContainer : {
+    backgroundColor : '#9B9595',
+    borderColor : '#9B9595',
+    borderWidth : 2,
+    borderRadius : 16,
+    alignSelf : 'center',
+    justifyContent : 'center',
+    position : 'relative',
+    right : '-70%',
   },
 
   ClearAllText : {
@@ -96,16 +109,6 @@ const styles = StyleSheet.create({
     color : "white",
     marginHorizontal : '5%',
     alignSelf : 'center'
-    // marginLeft : '2%'
-  },
-
-  ClearAllInvalidContainer : {
-    backgroundColor : '#9B9595',
-    borderColor : '#9B9595',
-    borderWidth : 2,
-    borderRadius : 16,
-    alignSelf : 'center',
-    justifyContent : 'center'
   },
 
   NotificationTitleContainer : {
@@ -117,6 +120,15 @@ const styles = StyleSheet.create({
     alignSelf : 'center',
   },
 
+  CountandClearContainer : {
+    // position : 'relative',
+    // height : '10%',
+    width : "0%",
+    flexDirection : 'row',
+    // alignItems: 'center',
+    // alignSelf : 'center',
+  },
+
   NotificationCountContainer : {
     justifyContent: 'center',
     alignItems : 'center',
@@ -124,7 +136,7 @@ const styles = StyleSheet.create({
     height : 32 , 
     borderRadius : 16, 
     backgroundColor : '#014421',
-    marginLeft : '2%', 
+    // marginLeft : '%', 
     marginRight : '7%',
   },
 
