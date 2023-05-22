@@ -7,7 +7,9 @@ import {
   UIManager,
   LayoutAnimation,
   FlatList,
-  RefreshControl
+  RefreshControl,
+  Pressable,
+  TouchableHighlight
 } from 'react-native';
 
 import {styles} from "../css/challenges/Style"
@@ -18,7 +20,44 @@ import ZeroItem from '../components/shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
 import NotifCard from '../components/profile/notifCard';
 
+import {useSelector, useDispatch } from 'react-redux';
+import {badgeP_decrement, badgeP_increment} from '../redux/actions/badgeP_actions'
+import { showMessage } from 'react-native-flash-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 function ProfileInbox(props): JSX.Element {
+  const dispatch = useDispatch()
+  const count = useSelector(state=>state.badgeP_reducer.badgeP)
+
+  const clearAll = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'notifications/delete_all_notifications',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(async function (response) {
+        setNotifs([])
+        setNotifsCount(0)
+        dispatch(badgeP_increment(0))
+        console.log('Setting async storage to ' + 0)
+        await AsyncStorage.setItem('Notifs', JSON.stringify(0))
+        showMessage({
+          floating : true,
+          message : 'Cleared all Notifications',
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
 
   const getNotifs = function(){
     var config = {
@@ -32,9 +71,11 @@ function ProfileInbox(props): JSX.Element {
     };
 
     axios(config)
-      .then(function (response) {
+      .then(async function (response) {
         setNotifs(response.data)
-        setCount(response.data.length)
+        setNotifsCount(response.data.length)
+        console.log('Setting async storage to ' + response.data.length)
+        await AsyncStorage.setItem('Notifs', JSON.stringify(response.data.length))
       })
       .catch(function (error) {
         console.log(error)
@@ -42,11 +83,14 @@ function ProfileInbox(props): JSX.Element {
   }
   
   const [notifs, setNotifs] = useState(getNotifs)
-  const [count, setCount] = useState(0)
+  const [countNotifs, setNotifsCount] = useState(0)
 
   useFocusEffect(
     React.useCallback(() => {
       getNotifs()
+      setTimeout(() => {
+        dispatch(badgeP_increment(0))
+        }, 5000);
     }, [])
   );
 
@@ -80,7 +124,7 @@ function ProfileInbox(props): JSX.Element {
     console.log("deleted")
     const filteredData = notifs.filter(item => item._id !== nData._id);
     setNotifs(filteredData)
-    filteredData.length === 0 ? setCount(0) : null
+    dispatch(badgeP_decrement())
     LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
@@ -95,13 +139,27 @@ function ProfileInbox(props): JSX.Element {
   }
 
   const renderNotif = ({item, index}) => {
-    return (
-      <NotifCard
-        item={item}
-        index = {index}
-        handler = {deleteItem}
-      />
-    )
+    if (index < count){
+      return (
+        <NotifCard
+          item={item}
+          index = {index}
+          newCSS = {true}
+          handler = {deleteItem}
+        />
+      )
+    } else {
+      return (
+        <NotifCard
+          item={item}
+          index = {index}
+          newCSS = {false}
+          handler = {deleteItem}
+        />
+      )
+    }
+    
+
   }
 
   return (
@@ -112,11 +170,29 @@ function ProfileInbox(props): JSX.Element {
           PageToSwap = {"Profile"}
           imageUrl = {imageUrl}/>
       </View>
-      <View style = {styles.titleContainer}>
-        <Text style = {styles.TitleText}>Notifications</Text>
-      </View>
-      <View style = {styles.ChallengesContainer}>
+      <View style = {styles.NotificationTitleContainer}>
+        <Text style = {styles.TitleText }>Notifications </Text>
         {count > 0 ?
+          <View style = {styles.CountandClearContainer}>
+            <View style ={styles.NotificationCountContainer}>
+              <Text style = {styles.NotificationCountText}> {count > 99 ? '99+' : count}</Text>
+            </View>
+          </View>
+          :
+          null
+        }
+        <TouchableHighlight
+        onPress={clearAll}
+        underlayColor = '#013319'
+        style = {[(countNotifs > 0 ? styles.ClearAllValidContainer : styles.ClearAllInvalidContainer), {marginHorizontal : '9%'}]}
+        disabled = {!countNotifs}
+        >
+          <Text style = {styles.ClearAllText}>Clear All </Text> 
+        </TouchableHighlight>
+      </View>
+
+      <View style = {styles.ChallengesContainer}>
+        {countNotifs > 0 ?
           <FlatList
             data = {notifs}
             renderItem = {renderNotif}

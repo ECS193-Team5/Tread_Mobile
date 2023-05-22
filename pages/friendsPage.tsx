@@ -131,6 +131,7 @@ function LeaguesPage(props): JSX.Element {
       }else {
         getBlocked()
       }
+      getIncomingImage()
     }, [friendType])
   );
 

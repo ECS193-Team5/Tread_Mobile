@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {
 	Text,
-  TouchableHighlight,
-	Platform
+  TouchableHighlight
 } from 'react-native';
 
 import {LoginStyles} from '../../css/login/Style';
 import {GoogleSignin} from "@react-native-google-signin/google-signin";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import loginConfig from "../../routes/login/login";
 
 import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
@@ -16,23 +14,20 @@ import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
 function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
-	let autoLogin = Platform.OS === 'android';
-
+	let autoLogin = true;
 	useEffect(() => {
-		if(Platform.OS === 'android') {
 			GoogleSignin.isSignedIn().then((response) => {
 				if(response) {
 					if(filled) {
 						console.log("Already signed in")
 						configureGoogleSignIn();
-						signInGoogle();
+						signInGoogleSilently();
 					}
 				} else {
 					console.log("Not signed in yet")
 					autoLogin = false;
 				}
 			})
-		}
 	})
 
 	const onLoginPress = function () {
@@ -64,10 +59,23 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 		})
 	}
 
-	const getFCMToken = async() => {
-		const enabled = await messaging().hasPermission()
+  const signInGoogleSilently = function () {
+		GoogleSignin.hasPlayServices().then((hasPlayService) => {
+			if (hasPlayService) {
+				GoogleSignin.signInSilently().then((userInfo) => {
+						login(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo']);
+				}).catch((e) => {
+					console.log("ERROR IS A: " + JSON.stringify(e));
+				})
+			}
+		}).catch((e) => {
+			console.log("ERROR IS B: " + JSON.stringify(e));
+		})
+	}
 
-		if(enabled) {
+	const getFCMToken = async() => {
+		const authorizationStatus = await messaging().hasPermission()
+		if(authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
 			console.log("Permissions is enabled")
 			const token = await messaging().getToken({vapidKey: VAPID_KEY})
 			return token
@@ -75,7 +83,6 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 			console.log("Permissions not enabled")
 			await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
 			await messaging().requestPermission()
-
 			const token = await messaging().getToken({vapidKey: VAPID_KEY})
 			return token
 		}
@@ -87,7 +94,6 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
-					// storeLogIn();
 					autoLogin = false;
 					navigation.navigate('Challenge')
 				} else {

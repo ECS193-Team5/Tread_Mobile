@@ -23,7 +23,12 @@ const options = [
   { label : "Sent", value : 'Sent'},
 ]
 
+import { useDispatch } from 'react-redux';
+import {badgeF_increment, badgeF_decrement} from '../redux/actions/badgeF_actions'
+
 function IncomingFriendsPage(props): JSX.Element {
+  const dispatch = useDispatch()
+
   const getReceivedRequests = function() {
     var config = {
       method: 'post',
@@ -38,6 +43,7 @@ function IncomingFriendsPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setRequests(response.data)
+        dispatch(badgeF_increment(response.data.length))
         setCount(response.data.length)
       })
       .catch(function (error) {
@@ -120,12 +126,15 @@ function IncomingFriendsPage(props): JSX.Element {
     }
   }
   
-  const deleteItem = function(rData) {    
+  const deleteItem = function(rData, isReceived) {    
     console.log(rData.username)
     console.log("deleted request")
     const filteredData = RequestData.filter(item => item.username !== rData.username);
     setRequests(filteredData)
     filteredData.length === 0 ? setCount(0) : null
+    if(isReceived){
+      dispatch(badgeF_decrement())
+    }
     LayoutAnimation.configureNext(layoutAnimConfig) 
   }
 

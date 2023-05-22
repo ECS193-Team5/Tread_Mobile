@@ -253,7 +253,7 @@ function LeagueDetails(props): JSX.Element {
           color : '#F9A800',
         })
         props.route.params.refresh()
-        props.navigation.navigate("Leagues")
+        props.navigation.navigate("LeaguesMain")
       })
       .catch(function (error) {
         console.log(error)
@@ -295,7 +295,7 @@ function LeagueDetails(props): JSX.Element {
           color : '#F9A800',
         })
         props.route.params.refresh()
-        props.navigation.navigate("Leagues")
+        props.navigation.navigate("LeaguesMain")
       })
       .catch(function (error) {
         console.log(error)
