@@ -24,7 +24,7 @@ import ZeroItem from '../components/shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
 
 import {useDispatch } from 'react-redux';
-import {badgeC_decrement} from '../redux/actions/badgeC_actions'
+import {badgeC_increment, badgeC_decrement} from '../redux/actions/badgeC_actions'
 
 const options = [
   { label : "Received" , value : 'Received'},
@@ -49,6 +49,7 @@ function IncomingChallengesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setChallengeData(response.data)
+        dispatch(badgeC_increment(response.data.length))
         setCount(response.data.length)
       })
       .catch(function (error) {

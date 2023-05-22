@@ -21,7 +21,7 @@ import LeagueInviteScroll from '../components/shared/LeagueInviteScroll';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { useDispatch } from 'react-redux';
-import {badgeL_decrement} from '../redux/actions/badgeL_actions'
+import {badgeL_increment,badgeL_decrement} from '../redux/actions/badgeL_actions'
 
 const options = [
   { label : "Received" , value : 'Received'},
@@ -45,6 +45,7 @@ function IncomingLeaguesPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
+        dispatch(badgeL_increment(response.data.length))
         setCount(response.data.length)
       })
       .catch((error) =>

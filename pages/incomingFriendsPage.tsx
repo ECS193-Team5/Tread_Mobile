@@ -24,7 +24,7 @@ const options = [
 ]
 
 import { useDispatch } from 'react-redux';
-import {badgeF_decrement} from '../redux/actions/badgeF_actions'
+import {badgeF_increment, badgeF_decrement} from '../redux/actions/badgeF_actions'
 
 function IncomingFriendsPage(props): JSX.Element {
   const dispatch = useDispatch()
@@ -43,6 +43,7 @@ function IncomingFriendsPage(props): JSX.Element {
     axios(config)
       .then(function (response) {
         setRequests(response.data)
+        dispatch(badgeF_increment(response.data.length))
         setCount(response.data.length)
       })
       .catch(function (error) {
