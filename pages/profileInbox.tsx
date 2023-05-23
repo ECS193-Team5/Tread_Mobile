@@ -103,6 +103,9 @@ function ProfileInbox(props): JSX.Element {
 
   const handleRefresh = function(){
     getNotifs()
+    setTimeout(() => {
+      dispatch(badgeP_increment(0))
+      }, 4000);
   }
 
   var imageUrl = "https://imgur.com/nFRNXOB.png"
