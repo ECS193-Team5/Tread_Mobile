@@ -25,7 +25,6 @@ import NotificationPageMap from "../components/Helpers/NotificationPageMap.json"
 function Login({route, navigation}): JSX.Element {
 
   const [isSignedIn, setIsSignedIn] = useState(true)
-  const [initialRoute, setInitialRoute] = useState('Challenges')
 
   var paramsForNavigate
 
@@ -104,10 +103,7 @@ function Login({route, navigation}): JSX.Element {
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
-          initialRoute === 'Challenge' ? 
-					  navigation.navigate('Challenge')
-          :
-            navigation.navigate('Challenge', paramsForNavigate)
+          navigation.navigate('Challenge', paramsForNavigate)
 				}else {
           setIsSignedIn(false)
         }
