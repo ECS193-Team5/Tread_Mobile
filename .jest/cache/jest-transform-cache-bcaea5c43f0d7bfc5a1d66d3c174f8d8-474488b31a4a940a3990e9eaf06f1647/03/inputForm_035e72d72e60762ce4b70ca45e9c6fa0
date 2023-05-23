@@ -1,0 +1,39 @@
+15f8e61f5400d1eba93789a8460a1e28
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importStar(require("react"));
+const react_test_renderer_1 = require("react-test-renderer");
+const InputForm_1 = __importDefault(require("../components/shared/InputForm"));
+test('login button renders correctly', () => {
+    const [validUserName, setValidUserName] = (0, react_1.useState)(false);
+    const [userName, setUserName] = (0, react_1.useState)("");
+    const tree = (0, react_test_renderer_1.create)(<InputForm_1.default placeholder={'Enter Display Name'} value={userName} setValue={setUserName} valid={validUserName} setValid={setValidUserName} editable={true} allowSpecial={null}/>).toJSON();
+    expect(tree).toMatchSnapshot();
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiQzpcXFVzZXJzXFxwZGthaW50aFxcRG9jdW1lbnRzXFxDb2xsZWdlX3dvcmtcXEVDUzE5M0FcXFRyZWFkX01vYmlsZVxcX190ZXN0c19fXFxpbnB1dEZvcm0udHN4IiwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSwrQ0FBc0M7QUFDdEMsNkRBQTJDO0FBQzNDLCtFQUF1RDtBQUV2RCxJQUFJLENBQUMsZ0NBQWdDLEVBQUUsR0FBRyxFQUFFO0lBQzFDLE1BQU0sQ0FBQyxhQUFhLEVBQUUsZ0JBQWdCLENBQUMsR0FBRyxJQUFBLGdCQUFRLEVBQUMsS0FBSyxDQUFDLENBQUM7SUFDMUQsTUFBTSxDQUFDLFFBQVEsRUFBRSxXQUFXLENBQUMsR0FBRyxJQUFBLGdCQUFRLEVBQUMsRUFBRSxDQUFDLENBQUM7SUFFN0MsTUFBTSxJQUFJLEdBQUksSUFBQSw0QkFBTSxFQUNsQixDQUFDLG1CQUFTLENBQ1IsV0FBVyxDQUFDLENBQUMsb0JBQW9CLENBQUMsQ0FDbEMsS0FBSyxDQUFDLENBQUMsUUFBUSxDQUFDLENBQ2hCLFFBQVEsQ0FBQyxDQUFDLFdBQVcsQ0FBQyxDQUN0QixLQUFLLENBQUMsQ0FBQyxhQUFhLENBQUMsQ0FDckIsUUFBUSxDQUFDLENBQUMsZ0JBQWdCLENBQUMsQ0FDM0IsUUFBUSxDQUFDLENBQUMsSUFBSSxDQUFDLENBQ2YsWUFBWSxDQUFDLENBQUMsSUFBSSxDQUFDLEVBQ25CLENBQ0gsQ0FBQyxNQUFNLEVBQUUsQ0FBQztJQUNYLE1BQU0sQ0FBQyxJQUFJLENBQUMsQ0FBQyxlQUFlLEVBQUUsQ0FBQztBQUNqQyxDQUFDLENBQUMsQ0FBQSIsIm5hbWVzIjpbXSwic291cmNlcyI6WyJDOlxcVXNlcnNcXHBka2FpbnRoXFxEb2N1bWVudHNcXENvbGxlZ2Vfd29ya1xcRUNTMTkzQVxcVHJlYWRfTW9iaWxlXFxfX3Rlc3RzX19cXGlucHV0Rm9ybS50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0LCB7dXNlU3RhdGV9IGZyb20gXCJyZWFjdFwiO1xyXG5pbXBvcnQge2NyZWF0ZX0gZnJvbSBcInJlYWN0LXRlc3QtcmVuZGVyZXJcIjtcclxuaW1wb3J0IElucHV0Rm9ybSBmcm9tIFwiLi4vY29tcG9uZW50cy9zaGFyZWQvSW5wdXRGb3JtXCI7XHJcblxyXG50ZXN0KCdsb2dpbiBidXR0b24gcmVuZGVycyBjb3JyZWN0bHknLCAoKSA9PiB7XHJcbiAgY29uc3QgW3ZhbGlkVXNlck5hbWUsIHNldFZhbGlkVXNlck5hbWVdID0gdXNlU3RhdGUoZmFsc2UpO1xyXG4gIGNvbnN0IFt1c2VyTmFtZSwgc2V0VXNlck5hbWVdID0gdXNlU3RhdGUoXCJcIik7XHJcblxyXG4gIGNvbnN0IHRyZWUgID0gY3JlYXRlKFxyXG4gICAgPElucHV0Rm9ybVxyXG4gICAgICBwbGFjZWhvbGRlcj17J0VudGVyIERpc3BsYXkgTmFtZSd9XHJcbiAgICAgIHZhbHVlPXt1c2VyTmFtZX1cclxuICAgICAgc2V0VmFsdWU9e3NldFVzZXJOYW1lfVxyXG4gICAgICB2YWxpZD17dmFsaWRVc2VyTmFtZX1cclxuICAgICAgc2V0VmFsaWQ9e3NldFZhbGlkVXNlck5hbWV9XHJcbiAgICAgIGVkaXRhYmxlPXt0cnVlfVxyXG4gICAgICBhbGxvd1NwZWNpYWw9e251bGx9XHJcbiAgICAvPlxyXG4gICkudG9KU09OKCk7XHJcbiAgZXhwZWN0KHRyZWUpLnRvTWF0Y2hTbmFwc2hvdCgpO1xyXG59KSJdLCJ2ZXJzaW9uIjozfQ==
