@@ -329,7 +329,7 @@ function ShowTabs(){
 
   useEffect(() => {
     messaging().onNotificationOpenedApp(async remoteMessage => {
-      console.log('Opened this when app was in background')
+      console.log('Opened this when app was in background to get badges')
       getBadgeChallenge()
       getBadgeLeague()
       getBadgeFriend()

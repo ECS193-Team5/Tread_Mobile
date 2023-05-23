@@ -41,6 +41,20 @@ function Login({route, navigation}): JSX.Element {
       }
     })
   })
+
+  useEffect(() => {
+    messaging().onNotificationOpenedApp(async remoteMessage => {
+      if(remoteMessage){
+        console.log('Opened this when app was in background to navigate')
+        var message = remoteMessage['notification']['body']
+        var paramsForNavigate
+        console.log(message)
+        paramsForNavigate = getPageToNavigateOnNotif(message)
+        console.log(paramsForNavigate)
+        navigation.navigate('Challenge', paramsForNavigate)
+     }
+    }) 
+  })
   
   const GoogleLogIn = function(){
     GoogleSignin.isSignedIn().then((response) => {
