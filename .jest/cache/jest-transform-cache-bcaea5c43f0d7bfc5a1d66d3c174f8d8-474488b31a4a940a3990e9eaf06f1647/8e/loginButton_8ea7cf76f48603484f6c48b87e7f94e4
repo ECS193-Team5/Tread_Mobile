@@ -1,0 +1,15 @@
+732ccbd6ddd46058a721fc1a8820d5ad
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const react_test_renderer_1 = __importDefault(require("react-test-renderer"));
+const loginButton_1 = __importDefault(require("../components/login/loginButton"));
+test('login button renders correctly', () => {
+    // jest.mock('@react-native-google-signin/google-signin', () => {});
+    const tree = react_test_renderer_1.default.create(<loginButton_1.default filled={true} text={'Testing'} navigation={null}></loginButton_1.default>).toJSON();
+    expect(tree).toMatchSnapshot();
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiQzpcXFVzZXJzXFxwZGthaW50aFxcRG9jdW1lbnRzXFxDb2xsZWdlX3dvcmtcXEVDUzE5M0FcXFRyZWFkX01vYmlsZVxcX190ZXN0c19fXFxsb2dpbkJ1dHRvbi50c3giLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxrREFBMEI7QUFDMUIsOEVBQTJDO0FBQzNDLGtGQUEwRDtBQUMxRCxJQUFJLENBQUMsZ0NBQWdDLEVBQUUsR0FBRyxFQUFFO0lBQzFDLG9FQUFvRTtJQUNwRSxNQUFNLElBQUksR0FBSSw2QkFBUSxDQUFDLE1BQU0sQ0FBQyxDQUFDLHFCQUFXLENBQUMsTUFBTSxDQUFHLENBQUMsSUFBSSxDQUFDLENBQUMsSUFBSSxDQUFHLENBQUMsU0FBUyxDQUFDLENBQUMsVUFBVSxDQUFDLENBQUMsSUFBSSxDQUFDLENBQUMsRUFBRSxxQkFBVyxDQUFDLENBQUMsQ0FBQyxNQUFNLEVBQUUsQ0FBQztJQUN6SCxNQUFNLENBQUMsSUFBSSxDQUFDLENBQUMsZUFBZSxFQUFFLENBQUM7QUFDakMsQ0FBQyxDQUFDLENBQUMiLCJuYW1lcyI6W10sInNvdXJjZXMiOlsiQzpcXFVzZXJzXFxwZGthaW50aFxcRG9jdW1lbnRzXFxDb2xsZWdlX3dvcmtcXEVDUzE5M0FcXFRyZWFkX01vYmlsZVxcX190ZXN0c19fXFxsb2dpbkJ1dHRvbi50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gXCJyZWFjdFwiO1xyXG5pbXBvcnQgcmVuZGVyZXIgZnJvbSBcInJlYWN0LXRlc3QtcmVuZGVyZXJcIjtcclxuaW1wb3J0IExvZ2luQnV0dG9uIGZyb20gXCIuLi9jb21wb25lbnRzL2xvZ2luL2xvZ2luQnV0dG9uXCI7XHJcbnRlc3QoJ2xvZ2luIGJ1dHRvbiByZW5kZXJzIGNvcnJlY3RseScsICgpID0+IHtcclxuICAvLyBqZXN0Lm1vY2soJ0ByZWFjdC1uYXRpdmUtZ29vZ2xlLXNpZ25pbi9nb29nbGUtc2lnbmluJywgKCkgPT4ge30pO1xyXG4gIGNvbnN0IHRyZWUgID0gcmVuZGVyZXIuY3JlYXRlKDxMb2dpbkJ1dHRvbiBmaWxsZWQgPSB7dHJ1ZX0gdGV4dCA9IHsnVGVzdGluZyd9IG5hdmlnYXRpb249e251bGx9PjwvTG9naW5CdXR0b24+KS50b0pTT04oKTtcclxuICBleHBlY3QodHJlZSkudG9NYXRjaFNuYXBzaG90KCk7XHJcbn0pOyJdLCJ2ZXJzaW9uIjozfQ==

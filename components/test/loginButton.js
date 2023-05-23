@@ -98,9 +98,11 @@ function LoginButton({filled, text, navigation, isLogin}) {
             .then((response) => {
                 const hasUsername = response.data['hasUsername'];
                 if(hasUsername) {
+                    // console.log("has")
                     setAutoLogin(false);
                     navigation.navigate('Challenge')
                 } else {
+                    // console.log("doesnt have")
                     setAutoLogin(false);
                     navigation.navigate('Signup',{
                         email: email,
@@ -122,6 +124,7 @@ function LoginButton({filled, text, navigation, isLogin}) {
             style = {filled ? LoginStyles.loginButton : LoginStyles.signupButton}
             onPress={onLoginPress}
             underlayColor = {isLogin ? '#dedfe0' : '#161717'}
+            testID="button"
         >
             <Text style={filled ? LoginStyles.loginButtonText : LoginStyles.signupButtonText}>{text}</Text>
         </TouchableHighlight>

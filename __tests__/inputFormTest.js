@@ -58,6 +58,54 @@ it('Test init style', () => {
     })
 });
 
+it('Test valid style', () => {
+    render(
+        <InputForm
+            placeholder={"Test Placeholder"}
+            value={"Testing"}
+            valid={true}
+            multiline={false}
+        />
+    );
+
+    const element = screen.getByTestId('input')
+
+    expect(element).toHaveStyle({
+        borderRadius: 32,
+        borderColor: '#014421',
+        borderWidth: 2,
+        paddingLeft: 25,
+        color: '#014421',
+        height : '100%',
+        width: '100%',
+        fontSize : 16,
+    })
+});
+
+it('Test invalid style', () => {
+    render(
+        <InputForm
+            placeholder={"Test Placeholder"}
+            value={"Testing/-="}
+            valid={false}
+            multiline={false}
+        />
+    );
+
+    const element = screen.getByTestId('input')
+
+    expect(element).toHaveStyle({
+        borderRadius: 32,
+        borderColor: '#C65656',
+        borderWidth: 2,
+        paddingLeft: 25,
+        color: '#C65656',
+        height : '100%',
+        width: '100%',
+        fontSize : 16,
+    })
+});
+
 it('Test set value', () => {
     const onValueChangeMock = jest.fn()
     const onValidChangeMock = jest.fn()
