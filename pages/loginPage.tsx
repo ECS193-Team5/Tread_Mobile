@@ -20,7 +20,7 @@ import {PermissionsAndroid} from 'react-native';
 import Logo from '../assets/Splash_Screen.png'
 import { useFocusEffect } from '@react-navigation/native';
 
-import NotificationPageMap from "../components/Helpers/NotificationPageMap.json"
+import { getPageToNavigateOnNotif } from '../components/Helpers/getPageToNavigateOnNotif';
 
 function Login({route, navigation}): JSX.Element {
 
@@ -35,16 +35,7 @@ function Login({route, navigation}): JSX.Element {
         console.log('Opened this when app was opened')
         var message = remoteMessage['notification']['body']
 
-        console.log(message.substring(0, message?.lastIndexOf(' ')))
-        console.log(NotificationPageMap[message.substring(0, message?.lastIndexOf(' '))])
-
-        if (message.substring(0, message.indexOf(' ')).length === 3){
-          paramsForNavigate = (NotificationPageMap[message.substring(0, message.lastIndexOf(' ')).trim()])
-        } else {
-          paramsForNavigate = (NotificationPageMap[message.substring(message.indexOf(' ') + 1).trim()])
-        }
-
-        console.log(paramsForNavigate)
+        paramsForNavigate = getPageToNavigateOnNotif(message)
 
         GoogleLogIn()
       }
