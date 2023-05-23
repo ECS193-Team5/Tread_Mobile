@@ -22,6 +22,7 @@ import IncomingSwap from '../components/shared/IncomingSwap';
 import ChallengeInviteCard from '../components/shared/ChallengeInviteCard';
 import { createProfilePictureURL } from '../components/Helpers/CloudinaryURLHelper';
 import ZeroItem from '../components/shared/ZeroItem';
+import messaging from "@react-native-firebase/messaging";
 import { useFocusEffect } from '@react-navigation/native';
 
 import {useDispatch } from 'react-redux';
@@ -114,6 +115,18 @@ function IncomingChallengesPage(props): JSX.Element {
       }
     }, [pageTitle])
   );
+
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+    
+    return unsubscribe;
+  }, []);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', handleRefresh)
@@ -209,6 +222,7 @@ function IncomingChallengesPage(props): JSX.Element {
           <FlatList
             data = {ChallengeData}
             renderItem = {renderInvite}
+            extraData = {reRender}
             refreshControl ={
               <RefreshControl 
                 refreshing = {refreshing} 

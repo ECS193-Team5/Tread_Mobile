@@ -15,6 +15,8 @@ import {
 
 import {styles} from "../css/challenges/Style"
 import IncomingSwap from '../components/shared/IncomingSwap';
+import messaging from "@react-native-firebase/messaging";
+
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import ZeroItem from '../components/shared/ZeroItem';
@@ -29,6 +31,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function ProfileInbox(props): JSX.Element {
   const dispatch = useDispatch()
   const count = useSelector(state=>state.badgeP_reducer.badgeP)
+
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+    
+    return unsubscribe;
+  }, []);
 
   const clearAll = function(){
     var config = {
@@ -209,6 +223,7 @@ function ProfileInbox(props): JSX.Element {
           <FlatList
             data = {notifs}
             renderItem = {renderNotif}
+            extraData = {reRender}
             refreshControl ={
              <RefreshControl 
                refreshing = {refreshing} 

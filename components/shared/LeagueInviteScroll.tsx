@@ -7,7 +7,7 @@ import {
 import LeagueInviteCard from '../../components/shared/LeagueInviteCard';
 
 
-function LeagueInviteScroll({LeagueData, handler, onRefresh, pageTitle}): JSX.Element {
+function LeagueInviteScroll({LeagueData, handler, onRefresh, pageTitle, reRender}): JSX.Element {
   const [refreshing, setRefreshing] = useState(false)
 
   const Refresh = function() {
@@ -33,6 +33,7 @@ function LeagueInviteScroll({LeagueData, handler, onRefresh, pageTitle}): JSX.El
     <FlatList
       data = {LeagueData}
       renderItem = {renderInvite}
+      extraData = {reRender}
       refreshControl ={
         <RefreshControl
           refreshing = {refreshing}

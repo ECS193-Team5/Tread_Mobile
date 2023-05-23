@@ -14,7 +14,7 @@ import {
 import {styles} from "../css/challenges/Style"
 import IncomingSwap from '../components/shared/IncomingSwap';
 import SwitchSelector from "react-native-switch-selector"
-import LeagueInviteCard from '../components/shared/LeagueInviteCard';
+import messaging from "@react-native-firebase/messaging";
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import ZeroItem from '../components/shared/ZeroItem';
@@ -30,6 +30,18 @@ const options = [
 ]
 
 function IncomingLeaguesPage(props): JSX.Element {
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+    
+    return unsubscribe;
+  }, []);
+
   const dispatch = useDispatch()
 
   function getReceived() {
@@ -177,7 +189,8 @@ function IncomingLeaguesPage(props): JSX.Element {
           LeagueData={LeagueData} 
           handler={deleteItem} 
           onRefresh={handleRefresh} 
-          pageTitle={pageTitle}          
+          pageTitle={pageTitle}    
+          reRender = {reRender}      
         />
         :
           <ZeroItem

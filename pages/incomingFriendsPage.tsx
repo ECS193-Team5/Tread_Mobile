@@ -26,8 +26,23 @@ const options = [
 
 import { useDispatch } from 'react-redux';
 import {badgeF_increment, badgeF_decrement} from '../redux/actions/badgeF_actions'
+import messaging from "@react-native-firebase/messaging";
+
 
 function IncomingFriendsPage(props): JSX.Element {
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+    
+    return unsubscribe;
+  }, []);
+
+
   const dispatch = useDispatch()
 
   const getReceivedRequests = function() {
@@ -175,6 +190,7 @@ function IncomingFriendsPage(props): JSX.Element {
             handler = {deleteItem}
             UserRole = {pageTitle}
             onRefresh = {handleRefresh}
+            reRender = {reRender}
           />
         :
           <ZeroItem

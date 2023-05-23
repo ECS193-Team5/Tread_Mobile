@@ -21,6 +21,7 @@ import Logo from '../assets/Splash_Screen.png'
 import { useFocusEffect } from '@react-navigation/native';
 
 import { getPageToNavigateOnNotif } from '../components/Helpers/getPageToNavigateOnNotif';
+import { showMessage } from 'react-native-flash-message';
 
 function Login({route, navigation}): JSX.Element {
 
@@ -55,6 +56,22 @@ function Login({route, navigation}): JSX.Element {
      }
     }) 
   })
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      var message = remoteMessage['notification']['body']
+      showMessage({
+        message : remoteMessage['notification']['body'],
+        duration	: 3000,
+        icon: props => <Image source={{uri: 'https://imgur.com/T3dcr1T.png'}} {...props} />,
+        backgroundColor : '#F9A800',
+        color : '#014421',
+        onPress : () => {navigation.navigate('Challenge', getPageToNavigateOnNotif(message))}
+      })
+    });
+    
+    return unsubscribe;
+  }, []);
   
   const GoogleLogIn = function(){
     GoogleSignin.isSignedIn().then((response) => {
