@@ -391,8 +391,7 @@ function ShowTabs(){
           ? "https://imgur.com/6mdmwb6.png"
           : "https://imgur.com/OdvBddd.png"
         } else if (route.name === 'Profile') {
-          // iconName = picture
-          iconName = "https://imgur.com/6mdmwb6.png"
+          iconName = picture
           borderColor = focused
           ? "#F9A800"
           : "#014421"
