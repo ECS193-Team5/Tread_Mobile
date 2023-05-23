@@ -36,7 +36,6 @@ it('Placeholder Set', () => {
 });
 
 it('Test init style', () => {
-
     render(
         <InputForm
             placeholder={"Test Placeholder"}
@@ -59,3 +58,40 @@ it('Test init style', () => {
     })
 });
 
+it('Test set value', () => {
+    const onValueChangeMock = jest.fn()
+    const onValidChangeMock = jest.fn()
+
+    render(
+        <InputForm
+            placeholder={"Test Placeholder"}
+            value={""}
+            multiline={false}
+            setValue={onValueChangeMock}
+            setValid={onValidChangeMock}
+        />
+    );
+
+    const element = screen.getByTestId('input')
+    fireEvent(element, 'onChangeText', "Testing");
+    expect(onValueChangeMock).toBeCalledWith('Testing')
+});
+
+it('Test valid change', () => {
+    const onValueChangeMock = jest.fn()
+    const onValidChangeMock = jest.fn()
+
+    render(
+        <InputForm
+            placeholder={"Test Placeholder"}
+            value={""}
+            multiline={false}
+            setValue={onValueChangeMock}
+            setValid={onValidChangeMock}
+        />
+    );
+
+    const element = screen.getByTestId('input')
+    fireEvent(element, 'onChangeText', "Testing");
+    expect(onValueChangeMock).toBeCalled()
+});
