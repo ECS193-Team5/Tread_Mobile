@@ -10,7 +10,8 @@ import axios from "axios";
 import loginConfig from "../../routes/login/login";
 
 import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
-import messaging from "@react-native-firebase/messaging";
+// const messaging = require("@react-native-firebase/messaging")
+// import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
 function LoginButton({filled, text, navigation, isLogin}) {
@@ -76,18 +77,19 @@ function LoginButton({filled, text, navigation, isLogin}) {
     }
 
     const getFCMToken = async() => {
-        const authorizationStatus = await messaging().hasPermission()
-        if(authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
-            console.log("Permissions is enabled")
-            const token = await messaging().getToken({vapidKey: VAPID_KEY})
-            return token
-        } else {
-            console.log("Permissions not enabled")
-            await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
-            await messaging().requestPermission()
-            const token = await messaging().getToken({vapidKey: VAPID_KEY})
-            return token
-        }
+        // const authorizationStatus = await messaging().hasPermission()
+        // if(authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+        //     console.log("Permissions is enabled")
+        //     const token = await messaging().getToken({vapidKey: VAPID_KEY})
+        //     return token
+        // } else {
+        //     console.log("Permissions not enabled")
+        //     await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+        //     await messaging().requestPermission()
+        //     const token = await messaging().getToken({vapidKey: VAPID_KEY})
+        //     return token
+        // }
+        return ""
     }
 
     const login = async (email, authToken, photo) => {
