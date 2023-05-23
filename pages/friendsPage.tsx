@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   Platform,
   UIManager,
-  LayoutAnimation
+  LayoutAnimation,
+  AppState
 } from 'react-native';
 
 import SwitchSelector from "react-native-switch-selector"
@@ -134,6 +135,13 @@ function LeaguesPage(props): JSX.Element {
       getIncomingImage()
     }, [friendType])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const handleRefresh = function(){
     if (friendType === 'All Friends'){
