@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   View,
-  Text, Image
+  Text, Image, ActivityIndicator
 } from 'react-native';
 
 import "../components/Sensors/healthKit";
@@ -22,10 +22,13 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { getPageToNavigateOnNotif } from '../components/Helpers/getPageToNavigateOnNotif';
 import { showMessage } from 'react-native-flash-message';
+import CheckBox from '@react-native-community/checkbox';
 
 function Login({route, navigation}): JSX.Element {
 
   const [isSignedIn, setIsSignedIn] = useState(true)
+  const [animate, setAnimate] = useState(true)
+  const [CheckOn, setCheckOn] = useState(false)
 
   var paramsForNavigate
 
@@ -125,7 +128,13 @@ function Login({route, navigation}): JSX.Element {
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
-          navigation.navigate('Challenge', paramsForNavigate)
+          setAnimate(false)
+          setTimeout(() => {
+            setCheckOn(true);
+          }, 20);
+          setTimeout(() => {
+            navigation.navigate('Challenge', paramsForNavigate);
+          }, 500);
 				}else {
           setIsSignedIn(false)
         }
@@ -157,6 +166,21 @@ function Login({route, navigation}): JSX.Element {
             src={default_image}
             style={LoginStyles.logo}
           />
+          {animate ? 
+            <ActivityIndicator size = 'large' color = "#F9A800" animating = {animate}/>
+            :
+            <CheckBox
+              disabled={false}
+              value={CheckOn}
+              boxType = {'circle'}
+              onFillColor = '#F9A800'
+              onCheckColor= '#ffffff'
+              animationDuration={0.5}
+              lineWidth = {2}
+              style = {{alignSelf : 'center'}}
+            />
+          }
+    
         </LinearGradient>
 
       :
