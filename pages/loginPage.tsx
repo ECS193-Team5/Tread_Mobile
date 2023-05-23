@@ -17,7 +17,7 @@ import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
 import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
-import Logo from '../assets/Splash_Screen.png'
+import Logo from '../assets/logorenderflipped.png'
 import { useFocusEffect } from '@react-navigation/native';
 
 import { getPageToNavigateOnNotif } from '../components/Helpers/getPageToNavigateOnNotif';
@@ -148,10 +148,17 @@ function Login({route, navigation}): JSX.Element {
   return (
     <View >
       {isSignedIn ? 
+        <LinearGradient
+          colors = {['#014421', '#000000']}
+          style = {LoginStyles.linearGradientAuto}
+          start = {{x:1, y: 0}}
+        >
           <Image
-            source = {{uri : default_image}}
+            src={default_image}
             style={LoginStyles.logo}
-          />        
+          />
+        </LinearGradient>
+
       :
       <LinearGradient
         colors = {['#014421', '#000000']}

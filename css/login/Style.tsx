@@ -10,6 +10,12 @@ const LoginStyles = StyleSheet.create({
     width : '100%',
   },
 
+  linearGradientAuto : {
+    height : '100%',
+    width : '100%',
+    justifyContent : 'center'
+  },
+
   mainContainer : {
 		flexDirection: 'column',
 		flex: 1,
@@ -126,9 +132,10 @@ const LoginStyles = StyleSheet.create({
 	},
 
   logo : {
-    height: '100%',
-		width: '100%',
+    height: '50%',
+		width: '50%',
     resizeMode: 'contain',
+    alignSelf : 'center'
   }
 });
 
