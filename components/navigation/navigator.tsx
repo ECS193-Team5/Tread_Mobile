@@ -51,6 +51,9 @@ function ChallengesSwipeStack() {
   return (
     <TopTab.Navigator
       tabBarPosition='bottom'
+      screenOptions={{
+        swipeEnabled: Platform.OS === 'android' ? false : true
+      }}
     >
       <TopTab.Screen name = "Challenges" component= {Challenge}/>
       <TopTab.Screen name = "Incoming Challenges" component = {IncomingChallengesPage}/>
@@ -62,6 +65,9 @@ function LeaguesSwipeStack() {
   return (
     <TopTab.Navigator
       tabBarPosition='bottom'
+      screenOptions={{
+        swipeEnabled: Platform.OS === 'android' ? false : true
+      }}
     >
       <TopTab.Screen name = "Leagues" component= {LeaguesPage}/>
       <TopTab.Screen name = "Incoming Leagues" component = {IncomingLeaguesPage}/>
@@ -73,6 +79,9 @@ function SearchSwipeStack() {
   return (
     <TopTab.Navigator
       tabBarPosition='bottom'
+      screenOptions={{
+        swipeEnabled: Platform.OS === 'android' ? false : true
+      }}
     >
       <TopTab.Screen name = "Search" component= {FriendPage}/>
       <TopTab.Screen name = "Incoming Friends" component = {IncomingFriendsPage}/>
@@ -84,6 +93,9 @@ function ProfileSwipeStack() {
   return (
     <TopTab.Navigator
       tabBarPosition='bottom'
+      screenOptions={{
+        swipeEnabled: Platform.OS === 'android' ? false : true
+      }}
     >
       <TopTab.Screen name = "Profile" component= {ProfilePage}/>
       <TopTab.Screen name = "Profile Inbox" component = {ProfileInbox}/>
@@ -94,14 +106,7 @@ function ProfileSwipeStack() {
 function ChallengesStack(){
   return (
   <Stack.Navigator>
-    {Platform.OS === 'android' &&
-        <Stack.Screen name = "Challenges" component={Challenge} options={{ headerShown: false }}/>
-    }
-
-    {Platform.OS === 'ios' &&
-        <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
-    }
-
+    <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
     <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false}}/>
   </Stack.Navigator>
   )
@@ -110,14 +115,7 @@ function ChallengesStack(){
 function LeaguesStack(){
   return (
   <Stack.Navigator>
-    {Platform.OS === 'android' &&
-        <Stack.Screen name = "Leagues" component={LeaguesPage} options={{ headerShown: false}}/>
-    }
-
-    {Platform.OS === 'ios' &&
-        <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
-    }
-
+    <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
     <Stack.Screen name = "Incoming Leagues" component={IncomingLeaguesPage} options={{ headerShown: false }}/>
     <Stack.Screen name = "EditLeague" component={EditLeaguePage} options={{ headerShown: false }}/>
     <Stack.Screen name = "League Details" component={LeagueDetails} options={{headerShown: false ,
@@ -143,15 +141,7 @@ function AddStack(){
 function SearchStack(){
   return (
   <Stack.Navigator>
-
-    {Platform.OS === 'android' &&
-        <Stack.Screen name = "Search" component={FriendPage} options={{ headerShown: false }}/>
-    }
-
-    {Platform.OS === 'ios' &&
-        <Stack.Screen name = "Search" component={SearchSwipeStack} options={{ headerShown: false }}/>
-    }
-
+    <Stack.Screen name = "Search" component={SearchSwipeStack} options={{ headerShown: false }}/>
     <Stack.Screen name = "Incoming Friends" component={IncomingFriendsPage} options={{ headerShown: false}}/>
   </Stack.Navigator>
   )
@@ -160,14 +150,7 @@ function SearchStack(){
 function ProfileStack(){
   return (
   <Stack.Navigator>
-
-    {Platform.OS === 'android' &&
-        <Stack.Screen name = "Profile" component={ProfilePage} options={{ headerShown: false }}/>
-    }
-
-    {Platform.OS === 'ios' &&
-        <Stack.Screen name = "Profile" component={ProfileSwipeStack} options={{ headerShown: false }}/>
-    }
+    <Stack.Screen name = "Profile" component={ProfileSwipeStack} options={{ headerShown: false }}/>
     <Stack.Screen name = "EditProfile" component={EditProfile} options={{ headerShown: false }}/>
     <Stack.Screen name = "Profile Inbox" component = {ProfileInbox}  options={{ headerShown: false }}/>
   </Stack.Navigator>
