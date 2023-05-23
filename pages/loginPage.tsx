@@ -20,18 +20,34 @@ import {PermissionsAndroid} from 'react-native';
 import Logo from '../assets/Splash_Screen.png'
 import { useFocusEffect } from '@react-navigation/native';
 
+import NotificationPageMap from "../components/Helpers/NotificationPageMap.json"
+
 function Login({route, navigation}): JSX.Element {
 
   const [isSignedIn, setIsSignedIn] = useState(true)
-  const [initialRoute, setInitialRoute] = useState('Challenge')
+  const [initialRoute, setInitialRoute] = useState('Challenges')
+
+  var paramsForNavigate
 
   useEffect(() => {
     messaging().getInitialNotification().then(async remoteMessage => {
       if(remoteMessage){
         console.log(remoteMessage)
         console.log('Opened this when app was opened')
-        setInitialRoute('Friends')
-        await GoogleLogIn()
+        var message = remoteMessage['notification']['body']
+
+        console.log(message.substring(0, message?.lastIndexOf(' ')))
+        console.log(NotificationPageMap[message.substring(0, message?.lastIndexOf(' '))])
+
+        if (message.substring(0, message.indexOf(' ')).length === 3){
+          paramsForNavigate = (NotificationPageMap[message.substring(0, message.lastIndexOf(' ')).trim()])
+        } else {
+          paramsForNavigate = (NotificationPageMap[message.substring(message.indexOf(' ') + 1).trim()])
+        }
+
+        console.log(paramsForNavigate)
+
+        GoogleLogIn()
       }
     })
   })
@@ -91,7 +107,7 @@ function Login({route, navigation}): JSX.Element {
           initialRoute === 'Challenge' ? 
 					  navigation.navigate('Challenge')
           :
-            navigation.navigate('Challenge', {screen : initialRoute})
+            navigation.navigate('Challenge', paramsForNavigate)
 				}else {
           setIsSignedIn(false)
         }

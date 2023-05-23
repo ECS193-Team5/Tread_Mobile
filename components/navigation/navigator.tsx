@@ -95,11 +95,11 @@ function ChallengesStack(){
   return (
   <Stack.Navigator>
     {Platform.OS === 'android' &&
-        <Stack.Screen name = "ChallengesMain" component={Challenge} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Challenges" component={Challenge} options={{ headerShown: false }}/>
     }
 
     {Platform.OS === 'ios' &&
-        <Stack.Screen name = "ChallengesMain" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
     }
 
     <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false}}/>
@@ -111,11 +111,11 @@ function LeaguesStack(){
   return (
   <Stack.Navigator>
     {Platform.OS === 'android' &&
-        <Stack.Screen name = "LeaguesMain" component={LeaguesPage} options={{ headerShown: false}}/>
+        <Stack.Screen name = "Leagues" component={LeaguesPage} options={{ headerShown: false}}/>
     }
 
     {Platform.OS === 'ios' &&
-        <Stack.Screen name = "LeaguesMain" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
+        <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
     }
 
     <Stack.Screen name = "Incoming Leagues" component={IncomingLeaguesPage} options={{ headerShown: false }}/>
@@ -145,11 +145,11 @@ function SearchStack(){
   <Stack.Navigator>
 
     {Platform.OS === 'android' &&
-        <Stack.Screen name = "SearchMain" component={FriendPage} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Search" component={FriendPage} options={{ headerShown: false }}/>
     }
 
     {Platform.OS === 'ios' &&
-        <Stack.Screen name = "SearchMain" component={SearchSwipeStack} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Search" component={SearchSwipeStack} options={{ headerShown: false }}/>
     }
 
     <Stack.Screen name = "Incoming Friends" component={IncomingFriendsPage} options={{ headerShown: false}}/>

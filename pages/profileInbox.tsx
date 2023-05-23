@@ -135,6 +135,7 @@ function ProfileInbox(props): JSX.Element {
     const filteredData = notifs.filter(item => item._id !== nData._id);
     setNotifs(filteredData)
     dispatch(badgeP_decrement())
+    filteredData.length === 0 ? setNotifsCount(0) : null
     LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
