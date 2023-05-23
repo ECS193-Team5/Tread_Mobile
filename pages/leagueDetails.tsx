@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   Alert,
   Keyboard,
+  AppState,
 } from 'react-native';
 
 import Modal from "react-native-modal"
@@ -339,6 +340,12 @@ function LeagueDetails(props): JSX.Element {
     }, [isMembers])
   );
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const handleRefresh = function() {
     if (isMembers === 0){

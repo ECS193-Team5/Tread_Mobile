@@ -3,7 +3,8 @@ import {
   View,
   Text,
   FlatList,
-  RefreshControl
+  RefreshControl,
+  AppState
 } from 'react-native';
 
 import LeagueCard from '../components/Leagues/LeagueCard';
@@ -116,6 +117,13 @@ function LeaguesPage(props): JSX.Element {
       getReceived()
     }, [currentView])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const handleRefresh = function(){
     if(currentView === 'All'){

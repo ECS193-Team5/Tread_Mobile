@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   LayoutAnimation,
   Platform,
-  UIManager
+  UIManager,
+  AppState
 } from 'react-native';
 
 import {styles} from "../css/challenges/Style"
@@ -117,6 +118,13 @@ function IncomingFriendsPage(props): JSX.Element {
       }
     }, [pageTitle])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const handleRefresh = function(){
     if (pageTitle === 'Received'){

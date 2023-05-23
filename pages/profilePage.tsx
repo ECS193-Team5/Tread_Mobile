@@ -4,7 +4,7 @@ import {
     Button,
     StyleSheet,
     Image,
-    Text, Pressable, TouchableHighlight
+    Text, Pressable, TouchableHighlight, AppState
 } from 'react-native';
 
 import {ProfileStyles} from "../css/profile/Style";
@@ -58,6 +58,16 @@ function ProfilePage(props): JSX.Element {
     const [medalInfoProgress, setMedalInfoProgress] = useState([])
     const [medalInfoEarned, setMedalInfoEarned] = useState([])
 
+    const handleAppRefresh = function(){
+      getIncomingImage()
+      getDisplayName()
+      getUserName()
+      getFriends()
+      getLeagues()
+      getMedalsEarned()
+      getMedalsProgress()
+    }
+
     useEffect(() => {
         getIncomingImage()
         getDisplayName()
@@ -80,6 +90,13 @@ function ProfilePage(props): JSX.Element {
         getMedalsProgress()
       }, [])
     );
+
+    useEffect(() => {
+      const subscription = AppState.addEventListener('change', handleAppRefresh)
+      return () => {
+        subscription.remove()
+      }
+    }, [])
 
     useEffect(() => {
         if(props.route.params !== undefined && props.route.params.refresh) {

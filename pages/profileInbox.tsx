@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,8 @@ import {
   FlatList,
   RefreshControl,
   Pressable,
-  TouchableHighlight
+  TouchableHighlight,
+  AppState
 } from 'react-native';
 
 import {styles} from "../css/challenges/Style"
@@ -74,7 +75,6 @@ function ProfileInbox(props): JSX.Element {
       .then(async function (response) {
         setNotifs(response.data)
         setNotifsCount(response.data.length)
-        console.log('Setting async storage to ' + response.data.length)
         await AsyncStorage.setItem('Notifs', JSON.stringify(response.data.length))
       })
       .catch(function (error) {
@@ -93,6 +93,13 @@ function ProfileInbox(props): JSX.Element {
         }, 4000);
     }, [])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const handleRefresh = function(){
     getNotifs()

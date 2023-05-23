@@ -7,6 +7,7 @@ import {
   LayoutAnimation,
   RefreshControl,
   Keyboard,
+  AppState,
 } from 'react-native';
 
 import SwitchSelector from "react-native-switch-selector"
@@ -120,20 +121,6 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
     updateRequests(route)
   }
 
-
-
-  function handleRefresh() {
-    var route = ''
-    if(currentView === 'pending'){
-      route = 'league/get_pending_request_list'
-    } else if(currentView === 'sent'){
-      route = 'league/get_sent_invite_list'
-    } else if(currentView === 'banned'){
-      route = 'league/get_banned_list'
-    }
-    updateRequests(route)
-  }
-  
   
   const typeOfUser = function(userType) {
     if(userType === 'owner' || userType === 'admin') {
@@ -204,6 +191,25 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
       updateRequests(route)
     }, [currentView])
   );
+
+  function handleRefresh() {
+    var route = ''
+    if(currentView === 'pending'){
+      route = 'league/get_pending_request_list'
+    } else if(currentView === 'sent'){
+      route = 'league/get_sent_invite_list'
+    } else if(currentView === 'banned'){
+      route = 'league/get_banned_list'
+    }
+    updateRequests(route)
+  }
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const Refresh = function() {
     setRefreshing(true);

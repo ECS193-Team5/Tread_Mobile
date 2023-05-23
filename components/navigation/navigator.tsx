@@ -2,7 +2,7 @@ import { NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
-import {Image, Platform} from 'react-native'
+import {AppState, Image, Platform} from 'react-native'
 
 import messaging from "@react-native-firebase/messaging";
 import Login from '../../pages/loginPage';
@@ -286,8 +286,6 @@ function ShowTabs(){
         await AsyncStorage.setItem('Notifs', JSON.stringify(0))
         dispatch(badgeP_increment(response.data.length))
       } else {
-        console.log('From async storage ' + notifLastTimeString)
-        console.log('Current amount ' + response.data.length)
         var notifLastTime = parseInt(notifLastTimeString, 10)
         if (response.data.length <= notifLastTime){
           dispatch(badgeP_increment(0))
@@ -325,9 +323,33 @@ function ShowTabs(){
         color : '#014421'
       })
     });
-
+    
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    messaging().onNotificationOpenedApp(async remoteMessage => {
+      console.log('Opened this when app was in background')
+      getBadgeChallenge()
+      getBadgeLeague()
+      getBadgeFriend()
+      getBadgeProfile()
+    })
+  })
+
+  const handleAppRefresh = function(){
+    getBadgeChallenge()
+    getBadgeLeague()
+    getBadgeFriend()
+    getBadgeProfile()
+  }
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleAppRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const [loadBadge, setLoadBadge] = useState(false)
 
@@ -369,7 +391,8 @@ function ShowTabs(){
           ? "https://imgur.com/6mdmwb6.png"
           : "https://imgur.com/OdvBddd.png"
         } else if (route.name === 'Profile') {
-          iconName = picture
+          // iconName = picture
+          iconName = "https://imgur.com/6mdmwb6.png"
           borderColor = focused
           ? "#F9A800"
           : "#014421"

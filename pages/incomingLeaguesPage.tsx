@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,8 @@ import {
   UIManager,
   LayoutAnimation,
   FlatList,
-  RefreshControl
+  RefreshControl,
+  AppState
 } from 'react-native';
 
 import {styles} from "../css/challenges/Style"
@@ -87,6 +88,13 @@ function IncomingLeaguesPage(props): JSX.Element {
       }
     }, [pageTitle])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const handleRefresh = function(){
     if(pageTitle === 'Received'){

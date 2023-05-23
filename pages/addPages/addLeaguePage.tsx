@@ -9,6 +9,7 @@ import {
   LayoutAnimation,
   Keyboard,
   TouchableHighlight,
+  AppState,
 } from 'react-native';
 
 import { styles } from '../../css/add/league/Style';
@@ -307,6 +308,13 @@ function AddLeaguePage(props): JSX.Element {
       getReccLeagues()
     }, [])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const deleteItem = function(lData) {
     console.log(lData._id)

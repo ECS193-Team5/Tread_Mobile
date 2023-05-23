@@ -495,7 +495,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                     underlayColor = '#013319'
                 >
                     <Text style={styles.IssueChallengeText}>
-                        Issue
+                        Send
                     </Text>
                 </TouchableHighlight>
             </View>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
-  StatusBar, Image
+  StatusBar, Image, AppState
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
@@ -131,9 +131,8 @@ function ChallengesPage(props): JSX.Element {
     } else {
       getGlobalChallengeData()
     }
+    getIncomingImage()
   }
-
-
 
   const [titleName, setTitleName] = useState('Current')
   const [count, setCount] = useState(0)
@@ -153,6 +152,13 @@ function ChallengesPage(props): JSX.Element {
       getIncomingImage()
     }, [isCurrent])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
   return (
     <View style = {styles.container}>
       <StatusBar

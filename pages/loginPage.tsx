@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text, Image
@@ -23,8 +23,20 @@ import { useFocusEffect } from '@react-navigation/native';
 function Login({route, navigation}): JSX.Element {
 
   const [isSignedIn, setIsSignedIn] = useState(true)
+  const [initialRoute, setInitialRoute] = useState('Challenge')
 
-	useFocusEffect(() => {
+  useEffect(() => {
+    messaging().getInitialNotification().then(async remoteMessage => {
+      if(remoteMessage){
+        console.log(remoteMessage)
+        console.log('Opened this when app was opened')
+        setInitialRoute('Friends')
+        await GoogleLogIn()
+      }
+    })
+  })
+  
+  const GoogleLogIn = function(){
     GoogleSignin.isSignedIn().then((response) => {
       if(response) {
           console.log("Already signed in")
@@ -35,6 +47,10 @@ function Login({route, navigation}): JSX.Element {
         setIsSignedIn(false)
       }
     })
+  }
+
+	useFocusEffect(() => {
+    GoogleLogIn()
   })
 
   const getFCMToken = async() => {
@@ -72,7 +88,10 @@ function Login({route, navigation}): JSX.Element {
 			.then((response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
-					navigation.navigate('Challenge')
+          initialRoute === 'Challenge' ? 
+					  navigation.navigate('Challenge')
+          :
+            navigation.navigate('Challenge', {screen : initialRoute})
 				}else {
           setIsSignedIn(false)
         }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,8 @@ import {
   LayoutAnimation,
   Platform,
   UIManager,
-  RefreshControl
+  RefreshControl,
+  AppState
 } from 'react-native';
 
 import axios from 'axios';
@@ -113,6 +114,13 @@ function IncomingChallengesPage(props): JSX.Element {
       }
     }, [pageTitle])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
