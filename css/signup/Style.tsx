@@ -93,7 +93,9 @@ const styles = StyleSheet.create({
   switchText: {
     color: '#014421',
     fontSize: 14,
-    fontWeight: '700'
+    fontWeight: '700',
+    borderRadius : 20,
+    textDecorationLine : 'underline'
   }
 
 

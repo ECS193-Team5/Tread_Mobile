@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,14 @@ import {
   FlatList,
   RefreshControl,
   Pressable,
-  TouchableHighlight
+  TouchableHighlight,
+  AppState
 } from 'react-native';
 
 import {styles} from "../css/challenges/Style"
 import IncomingSwap from '../components/shared/IncomingSwap';
+import messaging from "@react-native-firebase/messaging";
+
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import ZeroItem from '../components/shared/ZeroItem';
@@ -28,6 +31,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function ProfileInbox(props): JSX.Element {
   const dispatch = useDispatch()
   const count = useSelector(state=>state.badgeP_reducer.badgeP)
+
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+    
+    return unsubscribe;
+  }, []);
 
   const clearAll = function(){
     var config = {
@@ -74,7 +89,6 @@ function ProfileInbox(props): JSX.Element {
       .then(async function (response) {
         setNotifs(response.data)
         setNotifsCount(response.data.length)
-        console.log('Setting async storage to ' + response.data.length)
         await AsyncStorage.setItem('Notifs', JSON.stringify(response.data.length))
       })
       .catch(function (error) {
@@ -90,12 +104,22 @@ function ProfileInbox(props): JSX.Element {
       getNotifs()
       setTimeout(() => {
         dispatch(badgeP_increment(0))
-        }, 5000);
+        }, 4000);
     }, [])
   );
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
+
   const handleRefresh = function(){
     getNotifs()
+    setTimeout(() => {
+      dispatch(badgeP_increment(0))
+      }, 4000);
   }
 
   var imageUrl = "https://imgur.com/nFRNXOB.png"
@@ -125,6 +149,7 @@ function ProfileInbox(props): JSX.Element {
     const filteredData = notifs.filter(item => item._id !== nData._id);
     setNotifs(filteredData)
     dispatch(badgeP_decrement())
+    filteredData.length === 0 ? setNotifsCount(0) : null
     LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
@@ -171,21 +196,23 @@ function ProfileInbox(props): JSX.Element {
           imageUrl = {imageUrl}/>
       </View>
       <View style = {styles.NotificationTitleContainer}>
-        <Text style = {styles.TitleText }>Notifications </Text>
-        {count > 0 ?
-          <View style = {styles.CountandClearContainer}>
-            <View style ={styles.NotificationCountContainer}>
+        <View style = {styles.NotificationNameContainer}>
+          <Text style = {styles.TitleText }>Notifications </Text>
+        </View>
+        <View style = {styles.NotificationCountContainer}>
+          {count > 0 ?
+            <View style = {styles.NotificationCountCircle}>
               <Text style = {styles.NotificationCountText}> {count > 99 ? '99+' : count}</Text>
             </View>
-          </View>
-          :
-          null
-        }
-        <TouchableHighlight
-        onPress={clearAll}
-        underlayColor = '#013319'
-        style = {[(countNotifs > 0 ? styles.ClearAllValidContainer : styles.ClearAllInvalidContainer), {marginHorizontal : '9%'}]}
-        disabled = {!countNotifs}
+            :
+            null
+          }
+        </View>
+        <TouchableHighlight 
+          onPress={clearAll}
+          style = {countNotifs > 0 ? styles.ClearContainerValid : styles.ClearContainerInvalid}
+          disabled = {!countNotifs}
+          underlayColor = '#013319'
         >
           <Text style = {styles.ClearAllText}>Clear All </Text> 
         </TouchableHighlight>
@@ -196,6 +223,7 @@ function ProfileInbox(props): JSX.Element {
           <FlatList
             data = {notifs}
             renderItem = {renderNotif}
+            extraData = {reRender}
             refreshControl ={
              <RefreshControl 
                refreshing = {refreshing} 

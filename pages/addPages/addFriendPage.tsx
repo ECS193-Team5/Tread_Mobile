@@ -5,7 +5,8 @@ import {
   Platform,
   UIManager,
   LayoutAnimation,
-  Keyboard
+  Keyboard,
+  AppState
 } from 'react-native';
 
 import {styles} from '../../css/add/friend/Style';
@@ -81,6 +82,13 @@ function AddFriendPage(props): JSX.Element {
       getMutualFriends()
     }, [])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
 	const [count, setCount] = useState(0);
 

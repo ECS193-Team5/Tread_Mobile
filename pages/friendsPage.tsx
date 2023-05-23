@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   Platform,
   UIManager,
-  LayoutAnimation
+  LayoutAnimation,
+  AppState
 } from 'react-native';
 
 import SwitchSelector from "react-native-switch-selector"
 import IncomingSwap from '../components/shared/IncomingSwap';
 import {styles} from "../css/challenges/Style"
 import UserScroll from '../components/shared/UserScroll';
+import messaging from "@react-native-firebase/messaging";
 
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
@@ -23,6 +25,17 @@ const options = [
 ]
 
 function LeaguesPage(props): JSX.Element {
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+    
+    return unsubscribe;
+  }, []);
   const getIncomingImage = function(){
     var config = {
       method: 'post',
@@ -135,6 +148,13 @@ function LeaguesPage(props): JSX.Element {
     }, [friendType])
   );
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
+
   const handleRefresh = function(){
     if (friendType === 'All Friends'){
       getFriends()
@@ -183,6 +203,7 @@ function LeaguesPage(props): JSX.Element {
             handler = {deleteMember}
             UserRole = {friendType}
             onRefresh = {handleRefresh}
+            reRender = {reRender}
           />
           :
           <ZeroItem

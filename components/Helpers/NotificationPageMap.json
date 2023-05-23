@@ -1,0 +1,51 @@
+{
+  "sent you a challenge.": {
+    "screen": "Challenges",
+    "params": {
+      "screen": "Challenges",    
+      "params": {
+        "screen": "Incoming Challenges"
+      }
+    }
+  },
+  "accepted your challenge.": {
+    "screen": "Challenges"
+  },
+  "sent you a friend request.": {
+    "screen": "Friends",
+    "params": {
+      "screen": "Search",    
+      "params": {
+        "screen": "Incoming Friends"
+      }
+    }
+  },
+  "accepted your friend request.": {
+    "screen": "Friends"
+  },
+  "accepted your league join request.": {
+    "screen": "Leagues"
+  },
+  "invited you to a league.": {
+    "screen": "Leagues",
+    "params": {
+      "screen": "Leagues",    
+      "params": {
+        "screen": "Incoming Leagues"
+      }
+    }
+  },  
+  "You have been elevated to the admin team in": {
+    "screen": "Leagues"
+  },
+  "You have been removed from the admin team in": {
+    "screen": "Leagues"
+  },
+  "You have been kicked out of": {
+    "screen": "Leagues"
+  },
+  "You have been banned from": {
+    "screen": "Leagues"
+
+  }
+}

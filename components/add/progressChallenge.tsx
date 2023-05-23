@@ -231,7 +231,7 @@ function ProgressChallenge(): JSX.Element {
                   underlayColor = '#013319'
               >
                   <Text style={styles.IssueChallengeText}>
-                      Submit
+                      Log
                   </Text>
               </TouchableHighlight>
           </View>

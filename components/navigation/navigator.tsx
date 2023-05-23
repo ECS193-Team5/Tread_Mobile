@@ -2,7 +2,7 @@ import { NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
-import {Image, Platform} from 'react-native'
+import {AppState, Image, Platform} from 'react-native'
 
 import messaging from "@react-native-firebase/messaging";
 import Login from '../../pages/loginPage';
@@ -95,11 +95,11 @@ function ChallengesStack(){
   return (
   <Stack.Navigator>
     {Platform.OS === 'android' &&
-        <Stack.Screen name = "ChallengesMain" component={Challenge} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Challenges" component={Challenge} options={{ headerShown: false }}/>
     }
 
     {Platform.OS === 'ios' &&
-        <Stack.Screen name = "ChallengesMain" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
     }
 
     <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false}}/>
@@ -111,11 +111,11 @@ function LeaguesStack(){
   return (
   <Stack.Navigator>
     {Platform.OS === 'android' &&
-        <Stack.Screen name = "LeaguesMain" component={LeaguesPage} options={{ headerShown: false}}/>
+        <Stack.Screen name = "Leagues" component={LeaguesPage} options={{ headerShown: false}}/>
     }
 
     {Platform.OS === 'ios' &&
-        <Stack.Screen name = "LeaguesMain" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
+        <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
     }
 
     <Stack.Screen name = "Incoming Leagues" component={IncomingLeaguesPage} options={{ headerShown: false }}/>
@@ -145,11 +145,11 @@ function SearchStack(){
   <Stack.Navigator>
 
     {Platform.OS === 'android' &&
-        <Stack.Screen name = "SearchMain" component={FriendPage} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Search" component={FriendPage} options={{ headerShown: false }}/>
     }
 
     {Platform.OS === 'ios' &&
-        <Stack.Screen name = "SearchMain" component={SearchSwipeStack} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Search" component={SearchSwipeStack} options={{ headerShown: false }}/>
     }
 
     <Stack.Screen name = "Incoming Friends" component={IncomingFriendsPage} options={{ headerShown: false}}/>
@@ -286,8 +286,6 @@ function ShowTabs(){
         await AsyncStorage.setItem('Notifs', JSON.stringify(0))
         dispatch(badgeP_increment(response.data.length))
       } else {
-        console.log('From async storage ' + notifLastTimeString)
-        console.log('Current amount ' + response.data.length)
         var notifLastTime = parseInt(notifLastTimeString, 10)
         if (response.data.length <= notifLastTime){
           dispatch(badgeP_increment(0))
@@ -325,9 +323,33 @@ function ShowTabs(){
         color : '#014421'
       })
     });
-
+    
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    messaging().onNotificationOpenedApp(async remoteMessage => {
+      console.log('Opened this when app was in background to get badges')
+      getBadgeChallenge()
+      getBadgeLeague()
+      getBadgeFriend()
+      getBadgeProfile()
+    })
+  })
+
+  const handleAppRefresh = function(){
+    getBadgeChallenge()
+    getBadgeLeague()
+    getBadgeFriend()
+    getBadgeProfile()
+  }
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleAppRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const [loadBadge, setLoadBadge] = useState(false)
 
@@ -369,7 +391,8 @@ function ShowTabs(){
           ? "https://imgur.com/6mdmwb6.png"
           : "https://imgur.com/OdvBddd.png"
         } else if (route.name === 'Profile') {
-          iconName = picture
+          // iconName = picture
+          iconName = "https://imgur.com/6mdmwb6.png"
           borderColor = focused
           ? "#F9A800"
           : "#014421"
@@ -400,9 +423,10 @@ function Navigator(){
   return (
 		<NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false, animation : 'fade'}}/>
         <Stack.Screen name = "Signup" component={Signup} options={{ headerShown: false }}/>
-        <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false}}/>
+        <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false, gestureEnabled : false,  animationTypeForReplace: 'push',
+                                                                              animation:'slide_from_bottom', animationDuration : 375}}/>
         <Stack.Screen name = "CameraView" component={CameraView} options={{ headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>

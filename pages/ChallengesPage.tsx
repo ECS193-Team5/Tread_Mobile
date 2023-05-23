@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
-  StatusBar, Image
+  StatusBar, Image, AppState
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
@@ -14,6 +14,7 @@ import axios from 'axios';
 import {BACKEND_URL} from '@env';
 
 import ListenerComponentHealthKit from '../components/Sensors/healthKit';
+import messaging from "@react-native-firebase/messaging";
 import ListenerComponentHealthConnect from '../components/Sensors/healthConnect';
 import ZeroItem from '../components/shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
@@ -21,11 +22,22 @@ import { useFocusEffect } from '@react-navigation/native';
 function ChallengesPage(props): JSX.Element {
   const [update, setUpdate] = useState(true);
   useEffect(() => {
-    // Get the deep link used to open the app
     props.navigation.addListener('focus', () => {
       setUpdate(true);
     });
   }, [props.navigation]);
+
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+    
+    return unsubscribe;
+  }, []);
 
   const getChallengeData = function(){
     var config = {
@@ -131,9 +143,8 @@ function ChallengesPage(props): JSX.Element {
     } else {
       getGlobalChallengeData()
     }
+    getIncomingImage()
   }
-
-
 
   const [titleName, setTitleName] = useState('Current')
   const [count, setCount] = useState(0)
@@ -153,6 +164,14 @@ function ChallengesPage(props): JSX.Element {
       getIncomingImage()
     }, [isCurrent])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
+
   return (
     <View style = {styles.container}>
       <StatusBar
@@ -188,6 +207,7 @@ function ChallengesPage(props): JSX.Element {
             ChallengeData={ChallengeData}
             isCurrent = {isCurrent}
             onRefresh = {handleRefresh}
+            reRender = {reRender}
           />
         :
         <ZeroItem

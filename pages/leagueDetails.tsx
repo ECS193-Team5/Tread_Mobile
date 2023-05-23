@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   Alert,
   Keyboard,
+  AppState,
 } from 'react-native';
 
 import Modal from "react-native-modal"
@@ -253,7 +254,7 @@ function LeagueDetails(props): JSX.Element {
           color : '#F9A800',
         })
         props.route.params.refresh()
-        props.navigation.navigate("LeaguesMain")
+        props.navigation.navigate("Leagues")
       })
       .catch(function (error) {
         console.log(error)
@@ -295,7 +296,7 @@ function LeagueDetails(props): JSX.Element {
           color : '#F9A800',
         })
         props.route.params.refresh()
-        props.navigation.navigate("LeaguesMain")
+        props.navigation.navigate("Leagues")
       })
       .catch(function (error) {
         console.log(error)
@@ -339,6 +340,12 @@ function LeagueDetails(props): JSX.Element {
     }, [isMembers])
   );
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const handleRefresh = function() {
     if (isMembers === 0){

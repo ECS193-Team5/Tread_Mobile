@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,8 @@ import {
   LayoutAnimation,
   Platform,
   UIManager,
-  RefreshControl
+  RefreshControl,
+  AppState
 } from 'react-native';
 
 import axios from 'axios';
@@ -21,6 +22,7 @@ import IncomingSwap from '../components/shared/IncomingSwap';
 import ChallengeInviteCard from '../components/shared/ChallengeInviteCard';
 import { createProfilePictureURL } from '../components/Helpers/CloudinaryURLHelper';
 import ZeroItem from '../components/shared/ZeroItem';
+import messaging from "@react-native-firebase/messaging";
 import { useFocusEffect } from '@react-navigation/native';
 
 import {useDispatch } from 'react-redux';
@@ -114,6 +116,25 @@ function IncomingChallengesPage(props): JSX.Element {
     }, [pageTitle])
   );
 
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+    
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
+
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
     setPageTitle(selectedItem)
@@ -201,6 +222,7 @@ function IncomingChallengesPage(props): JSX.Element {
           <FlatList
             data = {ChallengeData}
             renderItem = {renderInvite}
+            extraData = {reRender}
             refreshControl ={
               <RefreshControl 
                 refreshing = {refreshing} 

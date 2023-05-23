@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   LayoutAnimation,
   Platform,
-  UIManager
+  UIManager,
+  AppState
 } from 'react-native';
 
 import {styles} from "../css/challenges/Style"
@@ -25,8 +26,23 @@ const options = [
 
 import { useDispatch } from 'react-redux';
 import {badgeF_increment, badgeF_decrement} from '../redux/actions/badgeF_actions'
+import messaging from "@react-native-firebase/messaging";
+
 
 function IncomingFriendsPage(props): JSX.Element {
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+    
+    return unsubscribe;
+  }, []);
+
+
   const dispatch = useDispatch()
 
   const getReceivedRequests = function() {
@@ -118,6 +134,13 @@ function IncomingFriendsPage(props): JSX.Element {
     }, [pageTitle])
   );
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
+
   const handleRefresh = function(){
     if (pageTitle === 'Received'){
       getReceivedRequests()
@@ -167,6 +190,7 @@ function IncomingFriendsPage(props): JSX.Element {
             handler = {deleteItem}
             UserRole = {pageTitle}
             onRefresh = {handleRefresh}
+            reRender = {reRender}
           />
         :
           <ZeroItem

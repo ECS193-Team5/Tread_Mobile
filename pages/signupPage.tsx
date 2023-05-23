@@ -137,7 +137,10 @@ function Signup({route, navigation}): JSX.Element {
         <Text style={styles.accountText}>
           Signed in with: {route.params.email}
         </Text>
-        <TouchableHighlight onPress={handleSwitchAccount}>
+        <TouchableHighlight onPress={handleSwitchAccount}
+          underlayColor = 'rgba(0,0,0,0.15)'
+          style = {styles.switchText}
+        >
           <Text style={styles.switchText}>
             Switch Accounts
           </Text>

@@ -123,7 +123,13 @@ const LoginStyles = StyleSheet.create({
 		position: "absolute",
 		top: '15%',
 		left: '35%'
-	}
+	},
+
+  logo : {
+    height: '100%',
+		width: '100%',
+    resizeMode: 'contain',
+  }
 });
 
 export {LoginStyles}
