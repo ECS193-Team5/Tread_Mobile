@@ -7,15 +7,10 @@ import {
 } from 'react-native';
 
 import {styles} from '../../css/add/home/Style';
-// import LinearGradient from 'react-native-linear-gradient';
 
 function AddButton({onPress, title, description, imageUrl}) {
 	return (
-			<TouchableHighlight onPress = {onPress} style = {styles.Button}>
-			{/*	<LinearGradient*/}
-          {/*colors={['rgba(1, 63, 33,1)', 'rgba(1, 63, 33,0.5)', 'rgb(1, 100, 0)']}*/}
-          {/*style={styles.GradientStyle}*/}
-			{/*		>*/}
+			<TouchableHighlight onPress = {onPress} style = {styles.Button} testID="button">
 				<View style={styles.GradientStyle}>
 					<View style = {styles.IconContainer}>
 						<Image
@@ -38,7 +33,6 @@ function AddButton({onPress, title, description, imageUrl}) {
 
 				</View>
 
-				{/*</LinearGradient>*/}
 			</TouchableHighlight>
 	)
 }

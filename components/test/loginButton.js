@@ -10,9 +10,6 @@ import axios from "axios";
 import loginConfig from "../../routes/login/login";
 
 import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
-// const messaging = require("@react-native-firebase/messaging")
-// import messaging from "@react-native-firebase/messaging";
-import {PermissionsAndroid} from 'react-native';
 
 function LoginButton({filled, text, navigation, isLogin}) {
     // let autoLogin = true;
@@ -22,12 +19,10 @@ function LoginButton({filled, text, navigation, isLogin}) {
         GoogleSignin.isSignedIn().then((response) => {
             if(response) {
                 if(filled) {
-                    console.log("Already signed in")
                     configureGoogleSignIn();
                     signInGoogleSilently();
                 }
             } else {
-                console.log("Not signed in yet")
                 setAutoLogin(false)
             }
         })
@@ -77,18 +72,6 @@ function LoginButton({filled, text, navigation, isLogin}) {
     }
 
     const getFCMToken = async() => {
-        // const authorizationStatus = await messaging().hasPermission()
-        // if(authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
-        //     console.log("Permissions is enabled")
-        //     const token = await messaging().getToken({vapidKey: VAPID_KEY})
-        //     return token
-        // } else {
-        //     console.log("Permissions not enabled")
-        //     await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
-        //     await messaging().requestPermission()
-        //     const token = await messaging().getToken({vapidKey: VAPID_KEY})
-        //     return token
-        // }
         return ""
     }
 
@@ -98,11 +81,9 @@ function LoginButton({filled, text, navigation, isLogin}) {
             .then((response) => {
                 const hasUsername = response.data['hasUsername'];
                 if(hasUsername) {
-                    // console.log("has")
                     setAutoLogin(false);
                     navigation.navigate('Challenge')
                 } else {
-                    // console.log("doesnt have")
                     setAutoLogin(false);
                     navigation.navigate('Signup',{
                         email: email,

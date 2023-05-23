@@ -5,7 +5,6 @@ import renderer, {act} from 'react-test-renderer';
 import { fireEvent, render, screen } from "@testing-library/react-native"
 import { toHaveStyle } from "@testing-library/jest-native";
 import AddButton from "../components/test/addButton";
-import LoginButton from "../components/test/loginButton";
 expect.extend({ toHaveStyle });
 
 it('Correct Render', () => {
@@ -21,4 +20,18 @@ it('Correct Render', () => {
     })
 
     expect(tree).toMatchSnapshot();
+});
+
+it('Test onPress', () => {
+    const onPress = jest.fn()
+
+    render(
+        <AddButton
+            onPress={onPress}
+        />
+    );
+
+    const element = screen.getByTestId('button')
+    fireEvent(element, 'onPress', "Testing");
+    expect(onPress).toBeCalled()
 });
