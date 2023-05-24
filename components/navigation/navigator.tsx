@@ -298,13 +298,6 @@ function ShowTabs(){
       getBadgeLeague()
       getBadgeFriend()
       getBadgeProfile()
-      showMessage({
-        message : remoteMessage['notification']['body'],
-        duration	: 3000,
-        icon: props => <Image source={{uri: 'https://imgur.com/T3dcr1T.png'}} {...props} />,
-        backgroundColor : '#F9A800',
-        color : '#014421'
-      })
     });
     
     return unsubscribe;
