@@ -36,7 +36,7 @@ function ProfileInbox(props): JSX.Element {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      handleRefresh()
+      handleRefreshLive()
       setRender(!reRender)
       console.log('make list rerender')
     });
@@ -95,6 +95,27 @@ function ProfileInbox(props): JSX.Element {
         console.log(error)
       })
   }
+
+  const getNotifsLive = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'notifications/get_notifications',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(async function (response) {
+        setNotifs(response.data)
+        setNotifsCount(response.data.length)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
   
   const [notifs, setNotifs] = useState(getNotifs)
   const [countNotifs, setNotifsCount] = useState(0)
@@ -120,6 +141,10 @@ function ProfileInbox(props): JSX.Element {
     setTimeout(() => {
       dispatch(badgeP_increment(0))
       }, 4000);
+  }
+
+  const handleRefreshLive = function(){
+    getNotifsLive()
   }
 
   var imageUrl = "https://imgur.com/nFRNXOB.png"
