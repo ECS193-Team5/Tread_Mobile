@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   View,
-  Text, Image, ActivityIndicator
+  Text, Image, ActivityIndicator, Platform
 } from 'react-native';
 
 import "../components/Sensors/healthKit";
@@ -13,17 +13,18 @@ import {GoogleSignin} from "@react-native-google-signin/google-signin";
 import axios from "axios";
 import loginConfig from "../routes/login/login";
 
-import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
+import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY, APPLE_SIGN_IN_CLIENT_ID, APPLE_SIGN_IN_REDIRECT_URL} from '@env';
 import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
 import Logo from '../assets/logorenderflipped.png'
 import { useFocusEffect } from '@react-navigation/native';
+import uuid from 'react-native-uuid'
 
 import { getPageToNavigateOnNotif } from '../components/Helpers/getPageToNavigateOnNotif';
 import { showMessage } from 'react-native-flash-message';
 import CheckBox from '@react-native-community/checkbox';
-import appleAuth from '@invertase/react-native-apple-authentication';
+import appleAuth, { appleAuthAndroid } from '@invertase/react-native-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Login({route, navigation}): JSX.Element {
@@ -81,8 +82,6 @@ function Login({route, navigation}): JSX.Element {
   }, []);
   
   const GoogleLogIn = async function(){
-    var isLoggedInApple = await AsyncStorage.getItem('Apple')
-    var appleAuthResponseUser =  await AsyncStorage.getItem('AppleUser')
     GoogleSignin.isSignedIn().then((response) => {
       if(response) {
           console.log("Already signed in Google")
@@ -98,15 +97,34 @@ function Login({route, navigation}): JSX.Element {
   const AppleLogIn = async function() {
     var isLoggedInApple = await AsyncStorage.getItem('Apple')
     var appleAuthResponseUser =  await AsyncStorage.getItem('AppleUser')
+    var appleAuthResponse = JSON.parse(appleAuthResponseUser)
+    const rawNonce = uuid.v4()
+
     if (isLoggedInApple === "true"){
-      console.log(appleAuthResponseUser)
-      const credentialState = await appleAuth.getCredentialStateForUser(appleAuthResponseUser)
-      // call login
-      if (credentialState){
-        console.log('auto login with apple')
-      } else {
-        console.log("Not signed in apple yet")
-        setIsSignedInApple(false)
+      if (Platform.OS === 'ios'){
+        const credentialState = await appleAuth.getCredentialStateForUser(appleAuthResponse.user)
+        if (credentialState){
+          console.log('auto login with apple')
+          // call login
+        } else {
+          console.log("Not signed in apple yet")
+          setIsSignedInApple(false)
+        }
+      }else {
+        console.log('here')
+        console.log(APPLE_SIGN_IN_CLIENT_ID)
+        console.log(APPLE_SIGN_IN_REDIRECT_URL)
+        appleAuthAndroid.configure({
+          clientId : APPLE_SIGN_IN_CLIENT_ID,
+          redirectUri : APPLE_SIGN_IN_REDIRECT_URL,
+          responseType : appleAuthAndroid.ResponseType.ALL,
+          scope : appleAuthAndroid.Scope.ALL,
+          nonce : rawNonce
+        });
+  
+        const response = await appleAuthAndroid.signIn()
+        console.log(response)
+        // call login 
       }
     } else {
       console.log("Not signed in apple yet")

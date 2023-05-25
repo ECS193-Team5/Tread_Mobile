@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
+	Platform,
 	Text,
   TouchableHighlight,
   View
@@ -11,13 +12,12 @@ import {GoogleSignin} from "@react-native-google-signin/google-signin";
 import axios from "axios";
 import loginConfig from "../../routes/login/login";
 
-import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
+import uuid from 'react-native-uuid'
+import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY, APPLE_SIGN_IN_CLIENT_ID, APPLE_SIGN_IN_REDIRECT_URL} from '@env';
 import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
-import {appleAuth} from '@invertase/react-native-apple-authentication'
-import jwt_decode from 'jwt-decode';
-
+import {appleAuth, appleAuthAndroid} from '@invertase/react-native-apple-authentication'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function LoginButton({isGoogle, text, navigation}): JSX.Element {
@@ -29,33 +29,60 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 
   useEffect(() => {
     // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
-    return appleAuth.onCredentialRevoked(async () => {
-      console.log('If this function executes, User Credentials have been Revoked');
-    });
+    if (Platform.OS === 'ios'){
+      return appleAuth.onCredentialRevoked(async () => {
+        console.log('If this function executes, User Credentials have been Revoked');
+      });
+    }
   }, []);
 
   const onLoginPressApple = async function () {
-    const appleAuthRequestResponse = await appleAuth.performRequest({
-      requestedOperation : appleAuth.Operation.LOGIN,
-      requestedScopes : [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
-    })
+    const rawNonce = uuid.v4()
+    console.log(rawNonce)
+    
+    if (Platform.OS === 'ios'){
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation : appleAuth.Operation.LOGIN,
+        requestedScopes : [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+        nonce : rawNonce
+      })
+  
+  
+      const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
+      if (credentialState === appleAuth.State.AUTHORIZED){
+        console.log('worked')
+  
+        console.log(appleAuthRequestResponse)
+        // console.log(nonce)
+        // console.log(email)
+        // console.log(email_verified)
+        // console.log(is_private_email)
+        // console.log(sub)
+  
+        await AsyncStorage.setItem('Apple', JSON.stringify(true))
+        await AsyncStorage.setItem('AppleUser', JSON.stringify(appleAuthRequestResponse))
+  
+        // call login function, where the entire request response is passed
+        // need to pass rawNonce, idtoken, givenName, familyName 
+  
+        // login(email, appleAuthRequestResponse.identityToken, "https://imgur.com/FA5aXVD.png")
+      }
+    } else {
+      appleAuthAndroid.configure({
+        clientId : APPLE_SIGN_IN_CLIENT_ID,
+        redirectUri : APPLE_SIGN_IN_REDIRECT_URL,
+        responseType : appleAuthAndroid.ResponseType.ALL,
+        scope : appleAuthAndroid.Scope.ALL,
+        nonce : rawNonce
+      });
 
-    const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
-    const {email, email_verified, is_private_email, sub} = jwt_decode(appleAuthRequestResponse.identityToken)
-    if (credentialState === appleAuth.State.AUTHORIZED){
-      console.log('worked')
-      // console.log(appleAuthRequestResponse)
-      // console.log(email)
-      // console.log(email_verified)
-      // console.log(is_private_email)
-      // console.log(sub)
-
+      const response = await appleAuthAndroid.signIn()
       await AsyncStorage.setItem('Apple', JSON.stringify(true))
-      await AsyncStorage.setItem('AppleUser', appleAuthRequestResponse.user)
 
-      // call login function, where the entire request response is passed
-      // login(email, appleAuthRequestResponse.identityToken, "https://imgur.com/FA5aXVD.png")
+      // call login 
     }
+
+
 	}
 
 	const configureGoogleSignIn = function() {
