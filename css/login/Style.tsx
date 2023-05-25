@@ -24,7 +24,7 @@ const LoginStyles = StyleSheet.create({
   },
 
   titleContainer : {
-  	flex: 20,
+  	flex: 18,
   	justifyContent: 'flex-end'
   },
 
@@ -41,7 +41,7 @@ const LoginStyles = StyleSheet.create({
   },
 
   separatorContainer : {
-  	flex: 10,
+  	flex: 7,
   	flexDirection: 'row',
   	alignItems: 'center'
   },
@@ -89,7 +89,7 @@ const LoginStyles = StyleSheet.create({
 	},
 
 	signupButton : {
-		backgroundColor: 'transparent',
+		backgroundColor: 'white',
 		borderRadius: 50,
 		borderWidth: 2,
 		borderColor: 'white',
@@ -98,12 +98,6 @@ const LoginStyles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-
-  signupButtonText: {
-    fontSize: 20,
-    color: "#ffffff",
-    fontWeight: "700"
-  },
 
 	pushupImage: {
 		height: '75%',

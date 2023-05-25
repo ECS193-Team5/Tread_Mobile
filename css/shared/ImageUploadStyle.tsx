@@ -16,9 +16,11 @@ const ImageUploadStyles = StyleSheet.create({
   ImagePreview: {
     height: 130,
     width: 130,
+    resizeMode: 'contain' ,
     borderWidth: 2,
     borderRadius : 65,
-    borderColor: '#014421'
+    borderColor: '#014421',
+    backgroundColor : '#FFFFFF'
   },
 
   ChoosePicContainer: {

@@ -4,7 +4,7 @@ import {
     Button,
     StyleSheet,
     Image,
-    Text, Pressable, TouchableHighlight, AppState
+    Text, Pressable, TouchableHighlight, AppState, PermissionsAndroid
 } from 'react-native';
 
 import {ProfileStyles} from "../css/profile/Style";
@@ -20,17 +20,53 @@ import MenuPopUp from "../components/profile/MenuPopUp";
 import {modalstyle} from "../css/shared/modalStyle";
 import SwitchSelector from "react-native-switch-selector";
 import MedalScroll from "../components/profile/medalScroll";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { cardStyles } from '../css/cards/Style';
 import {createProfilePictureURL} from "../components/Helpers/CloudinaryURLHelper";
 import { useFocusEffect } from '@react-navigation/native';
 import IncomingSwap from '../components/shared/IncomingSwap';
 import {styles} from "../css/challenges/Style"
+import messaging from "@react-native-firebase/messaging";
+import {VAPID_KEY} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 function ProfilePage(props): JSX.Element {
-	const signOut = async () => {
+	
+	const getFCMToken = async() => {
+    const token = await messaging().getToken({vapidKey: VAPID_KEY})
+    return token
+	}
+  
+  const signOut = async () => {
+    const token = await getFCMToken()
+    await AsyncStorage.setItem('Apple', JSON.stringify(false))
+    await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
+    
 		try {
-			await GoogleSignin.signOut();
+      var config = {
+        method: 'post',
+        url: BACKEND_URL + 'auth/logout',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+        },
+        data: {
+          deviceToken: token
+        }
+      };
+
+      axios(config)
+			.then(async (response) => {
+        console.log("logout done")
+			})
+			.catch(function (error) {
+        console.log("logout didnt work")
+				console.log(error);
+			});
+
+      await GoogleSignin.signOut();
+
 		} catch (error) {
 			console.error(error);
 		}

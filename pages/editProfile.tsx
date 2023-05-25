@@ -99,6 +99,8 @@ function EditProfile({route, navigation}): JSX.Element {
     };
 
     const deleteAccount = async function() {
+      await AsyncStorage.setItem('Apple', JSON.stringify(false))
+      await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
         var config = {
             method: 'delete',
             url: BACKEND_URL + 'delete_user',
