@@ -97,10 +97,10 @@ function Login({route, navigation}): JSX.Element {
   const AppleLogIn = async function() {
     var isLoggedInApple = await AsyncStorage.getItem('Apple')
     var appleAuthResponseUser =  await AsyncStorage.getItem('AppleUser')
-    var appleAuthResponse = JSON.parse(appleAuthResponseUser)
     const rawNonce = uuid.v4()
 
     if (isLoggedInApple === "true"){
+      var appleAuthResponse = JSON.parse(appleAuthResponseUser)
       if (Platform.OS === 'ios'){
         const credentialState = await appleAuth.getCredentialStateForUser(appleAuthResponse.user)
         if (credentialState){
