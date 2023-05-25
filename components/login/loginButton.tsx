@@ -11,6 +11,7 @@ import {LoginStyles} from '../../css/login/Style';
 import {GoogleSignin} from "@react-native-google-signin/google-signin";
 import axios from "axios";
 import loginConfig from "../../routes/login/login";
+import loginConfigApple from '../../routes/login/loginApple';
 
 import uuid from 'react-native-uuid'
 import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY, APPLE_SIGN_IN_CLIENT_ID, APPLE_SIGN_IN_REDIRECT_URL} from '@env';
@@ -38,7 +39,6 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 
   const onLoginPressApple = async function () {
     const rawNonce = uuid.v4()
-    console.log(rawNonce)
     
     if (Platform.OS === 'ios'){
       const appleAuthRequestResponse = await appleAuth.performRequest({
@@ -47,25 +47,12 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
         nonce : rawNonce
       })
   
-  
       const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
-      if (credentialState === appleAuth.State.AUTHORIZED){
-        console.log('worked')
-  
-        console.log(appleAuthRequestResponse)
-        // console.log(nonce)
-        // console.log(email)
-        // console.log(email_verified)
-        // console.log(is_private_email)
-        // console.log(sub)
-  
+      if (credentialState === appleAuth.State.AUTHORIZED){  
         await AsyncStorage.setItem('Apple', JSON.stringify(true))
         await AsyncStorage.setItem('AppleUser', JSON.stringify(appleAuthRequestResponse))
   
-        // call login function, where the entire request response is passed
-        // need to pass rawNonce, idtoken, givenName, familyName 
-  
-        // login(email, appleAuthRequestResponse.identityToken, "https://imgur.com/FA5aXVD.png")
+        loginApple(appleAuthRequestResponse)
       }
     } else {
       appleAuthAndroid.configure({
@@ -78,8 +65,7 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 
       const response = await appleAuthAndroid.signIn()
       await AsyncStorage.setItem('Apple', JSON.stringify(true))
-
-      // call login 
+      loginAppleAndroid(response)
     }
 
 
@@ -141,6 +127,55 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 				}
 			})
 			.catch(function (error) {
+				console.log(error);
+			});
+	}
+
+  const loginApple = async (authInfo) => {
+		const deviceToken = await getFCMToken()
+		axios(loginConfigApple(authInfo.identityToken , deviceToken, authInfo.nonce, authInfo.fullName))
+			.then(async (response) => {
+				const hasUsername = response.data['hasUsername'];
+				if(hasUsername) {
+					navigation.navigate('Challenge')
+				} else {
+					navigation.navigate('Signup',{
+						email: authInfo.email,
+						photo: "https://imgur.com/FA5aXVD.png",
+						navigation: navigation,
+						deviceToken: deviceToken
+					})
+				}
+			})
+			.catch(async function (error) {
+        await AsyncStorage.setItem('Apple', JSON.stringify(false))
+        await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
+				console.log(error);
+			});
+	}
+
+  const loginAppleAndroid = async (authInfo) => {
+		const deviceToken = await getFCMToken()
+    var fullName = {givenName : null, familyName : null}
+    if (authInfo.user !== undefined){
+      fullName = {givenName : authInfo.user.name.firstName, familyName : authInfo.user.name.lastName}
+    }
+		axios(loginConfigApple(authInfo.id_token , deviceToken, authInfo.nonce, fullName))
+			.then(async (response) => {
+				const hasUsername = response.data['hasUsername'];
+				if(hasUsername) {
+					navigation.navigate('Challenge')
+				} else {
+					navigation.navigate('Signup',{
+						email: authInfo.email,
+						photo: "https://imgur.com/FA5aXVD.png",
+						navigation: navigation,
+						deviceToken: deviceToken
+					})
+				}
+			})
+			.catch(async function (error) {
+        await AsyncStorage.setItem('Apple', JSON.stringify(false))
 				console.log(error);
 			});
 	}
