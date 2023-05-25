@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Image,
 	Text,
-  TouchableHighlight
+  TouchableHighlight,
+  View
 } from 'react-native';
 
 import {LoginStyles} from '../../css/login/Style';
@@ -13,11 +15,47 @@ import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
 import messaging from "@react-native-firebase/messaging";
 import {PermissionsAndroid} from 'react-native';
 
-function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
+import {appleAuth} from '@invertase/react-native-apple-authentication'
+import jwt_decode from 'jwt-decode';
 
-	const onLoginPress = function () {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+function LoginButton({isGoogle, text, navigation}): JSX.Element {
+
+	const onLoginPressGoogle = function () {
     configureGoogleSignIn();
     signInGoogle();
+	}
+
+  useEffect(() => {
+    // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
+    return appleAuth.onCredentialRevoked(async () => {
+      console.log('If this function executes, User Credentials have been Revoked');
+    });
+  }, []);
+
+  const onLoginPressApple = async function () {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation : appleAuth.Operation.LOGIN,
+      requestedScopes : [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    })
+
+    const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
+    const {email, email_verified, is_private_email, sub} = jwt_decode(appleAuthRequestResponse.identityToken)
+    if (credentialState === appleAuth.State.AUTHORIZED){
+      console.log('worked')
+      // console.log(appleAuthRequestResponse)
+      // console.log(email)
+      // console.log(email_verified)
+      // console.log(is_private_email)
+      // console.log(sub)
+
+      await AsyncStorage.setItem('Apple', JSON.stringify(true))
+      await AsyncStorage.setItem('AppleUser', appleAuthRequestResponse.user)
+
+      // call login function, where the entire request response is passed
+      // login(email, appleAuthRequestResponse.identityToken, "https://imgur.com/FA5aXVD.png")
+    }
 	}
 
 	const configureGoogleSignIn = function() {
@@ -32,7 +70,7 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 		GoogleSignin.hasPlayServices().then((hasPlayService) => {
 			if (hasPlayService) {
 				GoogleSignin.signIn().then((userInfo) => {
-						login(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo']);
+						loginGoogle(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo']);
 				}).catch((e) => {
 					console.log("ERROR IS A: " + JSON.stringify(e));
 				})
@@ -57,12 +95,14 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 		}
 	}
 
-	const login = async (email, authToken, photo) => {
+	const loginGoogle = async (email, authToken, photo) => {
 		const deviceToken = await getFCMToken()
 		axios(loginConfig(authToken, deviceToken))
-			.then((response) => {
+			.then(async (response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
+          await AsyncStorage.setItem('Apple', JSON.stringify(false))
+          await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
 					navigation.navigate('Challenge')
 				} else {
 					navigation.navigate('Signup',{
@@ -80,11 +120,14 @@ function LoginButton({filled, text, navigation, isLogin}): JSX.Element {
 
 	return (
 		<TouchableHighlight
-			style = {filled ? LoginStyles.loginButton : LoginStyles.signupButton}
-			onPress={onLoginPress}
-      underlayColor = {isLogin ? '#dedfe0' : '#161717'}
+			style = {isGoogle ? LoginStyles.loginButton : LoginStyles.signupButton}
+			onPress={isGoogle ? onLoginPressGoogle : onLoginPressApple}
+      underlayColor = {'#dedfe0'}
 		>
-			<Text style={filled ? LoginStyles.loginButtonText : LoginStyles.signupButtonText}>{text}</Text>
+      <View style = {{flexDirection : 'row', alignItems : 'center'}}>
+        <Image style = {{width : 30, height : 30, resizeMode: 'contain' }} source = {{uri : isGoogle ? "https://imgur.com/DEjJ2GR.png" : "https://imgur.com/b0rZPqQ.png"}}/>
+        <Text style={LoginStyles.loginButtonText}>{'     ' + text}</Text>
+      </View>
 		</TouchableHighlight>
 	)
 }

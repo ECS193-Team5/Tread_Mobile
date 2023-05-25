@@ -23,10 +23,14 @@ import { useFocusEffect } from '@react-navigation/native';
 import { getPageToNavigateOnNotif } from '../components/Helpers/getPageToNavigateOnNotif';
 import { showMessage } from 'react-native-flash-message';
 import CheckBox from '@react-native-community/checkbox';
+import appleAuth from '@invertase/react-native-apple-authentication';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Login({route, navigation}): JSX.Element {
 
-  const [isSignedIn, setIsSignedIn] = useState(true)
+  const [isSignedInGoogle, setIsSignedInGoogle] = useState(true)
+  const [isSignedInApple, setIsSignedInApple] = useState(true)
+
   const [animate, setAnimate] = useState(true)
   const [CheckOn, setCheckOn] = useState(false)
 
@@ -76,21 +80,47 @@ function Login({route, navigation}): JSX.Element {
     return unsubscribe;
   }, []);
   
-  const GoogleLogIn = function(){
+  const GoogleLogIn = async function(){
+    var isLoggedInApple = await AsyncStorage.getItem('Apple')
+    var appleAuthResponseUser =  await AsyncStorage.getItem('AppleUser')
     GoogleSignin.isSignedIn().then((response) => {
       if(response) {
-          console.log("Already signed in")
+          console.log("Already signed in Google")
           configureGoogleSignIn();
           signInGoogleSilently();
       } else {
-        console.log("Not signed in yet")
-        setIsSignedIn(false)
+        console.log("Not signed in yet Google")
+        setIsSignedInGoogle(false)
       }
     })
   }
 
+  const AppleLogIn = async function() {
+    var isLoggedInApple = await AsyncStorage.getItem('Apple')
+    var appleAuthResponseUser =  await AsyncStorage.getItem('AppleUser')
+    if (isLoggedInApple === "true"){
+      console.log(appleAuthResponseUser)
+      const credentialState = await appleAuth.getCredentialStateForUser(appleAuthResponseUser)
+      // call login
+      if (credentialState){
+        console.log('auto login with apple')
+      } else {
+        console.log("Not signed in apple yet")
+        setIsSignedInApple(false)
+      }
+    } else {
+      console.log("Not signed in apple yet")
+      setIsSignedInApple(false)
+    }
+  }
+
+  const AutoLogin = async function(){
+    await GoogleLogIn()
+    await AppleLogIn()
+  }
+
 	useFocusEffect(() => {
-    GoogleLogIn()
+    AutoLogin()
   })
 
   const getFCMToken = async() => {
@@ -112,7 +142,7 @@ function Login({route, navigation}): JSX.Element {
 		GoogleSignin.hasPlayServices().then((hasPlayService) => {
 			if (hasPlayService) {
 				GoogleSignin.signInSilently().then((userInfo) => {
-						login(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo']);
+						loginGoogle(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo']);
 				}).catch((e) => {
 					console.log("ERROR IS A: " + JSON.stringify(e));
 				})
@@ -122,12 +152,14 @@ function Login({route, navigation}): JSX.Element {
 		})
 	}
 
-  const login = async (email, authToken, photo) => {
+  const loginGoogle = async (email, authToken, photo) => {
 		const deviceToken = await getFCMToken()
 		axios(loginConfig(authToken, deviceToken))
-			.then((response) => {
+			.then(async (response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
+          await AsyncStorage.setItem('Apple', JSON.stringify(false))
+          await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
           setAnimate(false)
           setTimeout(() => {
             setCheckOn(true);
@@ -136,7 +168,7 @@ function Login({route, navigation}): JSX.Element {
             navigation.navigate('Challenge', paramsForNavigate);
           }, 500);
 				}else {
-          setIsSignedIn(false)
+          setIsSignedInGoogle(false)
         }
 			})
 			.catch(function (error) {
@@ -156,7 +188,7 @@ function Login({route, navigation}): JSX.Element {
 
   return (
     <View >
-      {isSignedIn ? 
+      {isSignedInGoogle? 
         <LinearGradient
           colors = {['#014421', '#000000']}
           style = {LoginStyles.linearGradientAuto}
@@ -211,10 +243,9 @@ function Login({route, navigation}): JSX.Element {
           </View>
           <View style = {LoginStyles.loginContainer}>
             <LoginButton
-              filled={true}
-              text={'Log In'}
+              isGoogle={true}
+              text={'Continue With Google'}
               navigation={navigation}
-              isLogin = {true}
             >
             </LoginButton>
           </View>
@@ -231,10 +262,9 @@ function Login({route, navigation}): JSX.Element {
           </View>
           <View style = {LoginStyles.signUpContainer}>
             <LoginButton
-              filled={false}
-              text={'Sign Up'}
+              isGoogle={false}
+              text={'Continue With Apple'}
               navigation={navigation}
-              isLogin = {false}
             >
             </LoginButton>
           </View>
