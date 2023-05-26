@@ -16,55 +16,12 @@ import { reduceExercisesToUnique, sendExerciseList } from './sensorHelperFunctio
 
 const ListenerComponentHealthKit = (props) =>{
     useEffect(() => {
-
-
         if(props.update){
             props.setUpdate(false);
         try{
-        AppleHealthKit.isAvailable((err: Object, available: boolean) => {
-            if (err) {
-                throw err;
-            }
+
         })
 
-        new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
-            'healthKit:Cycling:new',
-            async () => {
-                pullSamples();
-            },
-        );
-
-        new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
-            'healthKit:Running:new',
-            async () => {
-                pullSamples();
-            },
-        );
-
-        new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
-            'healthKit:StairClimbing:new',
-            async () => {
-                pullSamples();
-            },
-        );
-        new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
-            'healthKit:Swimming:new',
-            async () => {
-                pullSamples();
-            },
-        );
-        new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
-            'healthKit:Walking:new',
-            async () => {
-                pullSamples();
-            },
-        );
-        new NativeEventEmitter(NativeModules.AppleHealthKit).addListener(
-            'healthKit:Workout:new',
-            async () => {
-                pullSamples();
-            },
-        );
         pullSamples();
         }
         catch(err){
@@ -73,38 +30,7 @@ const ListenerComponentHealthKit = (props) =>{
     }
     }, [props.update]);
 
-        const permissions = {
-            permissions: {
-                read: [AppleHealthKit.Constants.Permissions.ActivitySummary,
-                AppleHealthKit.Constants.Permissions.Workout,
-                AppleHealthKit.Constants.Permissions.DistanceCycling,
-                AppleHealthKit.Constants.Permissions.DistanceSwimming,
-                AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
-                AppleHealthKit.Constants.Permissions.FlightsClimbed,
-                AppleHealthKit.Constants.Permissions.StepCount,
-                AppleHealthKit.Constants.Permissions.Steps],
-                write: [AppleHealthKit.Constants.Permissions.ActivitySummary,
-                    AppleHealthKit.Constants.Permissions.Workout,
-                    AppleHealthKit.Constants.Permissions.DistanceCycling,
-                    AppleHealthKit.Constants.Permissions.DistanceSwimming,
-                    AppleHealthKit.Constants.Permissions.DistanceWalkingRunning,
-                    AppleHealthKit.Constants.Permissions.FlightsClimbed,
-                    AppleHealthKit.Constants.Permissions.StepCount,
-                    AppleHealthKit.Constants.Permissions.Steps]
 
-            },
-        } as HealthKitPermissions;
-
-        try{
-        AppleHealthKit.getAuthStatus(permissions, (err, results) => {
-            if (err){
-                throw err
-            }
-        });
-        }
-        catch(err){
-            console.log("Error in HealthKit - Either this is not an apple device or permissions was not given");
-        }
 
         function getMostRecentDateRead(){
             var config = {

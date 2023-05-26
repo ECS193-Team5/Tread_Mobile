@@ -15,7 +15,7 @@ import {BACKEND_URL} from '@env';
 
 import ListenerComponentHealthKit from '../components/Sensors/healthKit';
 import messaging from "@react-native-firebase/messaging";
-import ListenerComponentHealthConnect from '../components/Sensors/healthConnect';
+import ListenerHealthSensor from '../components/Sensors/healthConnect';
 import ZeroItem from '../components/shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -35,7 +35,7 @@ function ChallengesPage(props): JSX.Element {
       setRender(!reRender)
       console.log('make list rerender')
     });
-    
+
     return unsubscribe;
   }, []);
 
@@ -172,13 +172,16 @@ function ChallengesPage(props): JSX.Element {
     }
   }, [])
 
+  const refreshPage = () => {
+    console.log("The challenge page would refresh");
+  }
+
   return (
     <View style = {styles.container}>
       <StatusBar
         barStyle="dark-content"
       />
-      <ListenerComponentHealthConnect update={update} setUpdate = {setUpdate}/>
-      <ListenerComponentHealthKit update = {update} setUpdate = {setUpdate}/>
+      <ListenerHealthSensor type="Challenges" update={update} setUpdate = {setUpdate} refreshFunction = {refreshPage}/>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}

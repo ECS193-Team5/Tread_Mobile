@@ -28,20 +28,29 @@ import {styles} from "../css/challenges/Style"
 import messaging from "@react-native-firebase/messaging";
 import {VAPID_KEY} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import ListenerHealthSensor from '../components/Sensors/healthConnect';
 
 function ProfilePage(props): JSX.Element {
-	
+    const [update, setUpdate] = useState(true);
+    useEffect(() => {
+      props.navigation.addListener('focus', () => {
+        setUpdate(true);
+      });
+    }, [props.navigation]);
+
+    const refreshPage = () => {
+      console.log("The profile page would refresh");
+    }
 	const getFCMToken = async() => {
     const token = await messaging().getToken({vapidKey: VAPID_KEY})
     return token
 	}
-  
+
   const signOut = async () => {
     const token = await getFCMToken()
     await AsyncStorage.setItem('Apple', JSON.stringify(false))
     await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
-    
+
 		try {
       var config = {
         method: 'post',
@@ -339,10 +348,10 @@ function ProfilePage(props): JSX.Element {
     const handleQRModal = function(){
       if(openQR){
         setModalVisibleQR(true)
-      } 
+      }
       setOpenQR(false)
     }
-  
+
     const switchRef = useRef(null)
 
     const getIncomingImage = function(){
@@ -355,7 +364,7 @@ function ProfilePage(props): JSX.Element {
           Accept: 'application/json',
         }
       };
-  
+
       axios(config)
         .then(function (response) {
           if (response.data.length > 0){
@@ -368,12 +377,13 @@ function ProfilePage(props): JSX.Element {
           console.log(error)
         })
     }
-    
+
     const [IncomingImage, setIncomingImage] = useState(getIncomingImage)
 
 
     return (
       <View style={ProfileStyles.Background}>
+        <ListenerHealthSensor type="Profile" update={update} setUpdate = {setUpdate} refreshFunction = {refreshPage}/>
             <Modal
                 isVisible={modalVisibleQR}
                 hasBackdrop = {true}
@@ -424,7 +434,7 @@ function ProfilePage(props): JSX.Element {
                   </Pressable>
                 </View>
               </View>
-              
+
               <View style={ProfileStyles.ProfileTopContainer}>
                   <View style={ProfileStyles.ProfileImageContainer}>
                       <Image
@@ -456,7 +466,7 @@ function ProfilePage(props): JSX.Element {
                         underlayColor = 'rgba(0,0,0,0.15)'
                         >
                         <Text style={ProfileStyles.OtherInfoText}>
-                          {numFriends.toString()}  
+                          {numFriends.toString()}
                           <Text style = {ProfileStyles.SecondaryText}>
                               {(numFriends === 1 ? " Friend" : " Friends")}
                           </Text>
@@ -470,7 +480,7 @@ function ProfilePage(props): JSX.Element {
                         underlayColor = 'rgba(0,0,0,0.15)'
                         >
                         <Text style={ProfileStyles.OtherInfoText}>
-                          {numLeagues.toString()}  
+                          {numLeagues.toString()}
                           <Text style = {ProfileStyles.SecondaryText}>
                               {(numLeagues === 1 ? " League" : " Leagues")}
                           </Text>
@@ -484,7 +494,7 @@ function ProfilePage(props): JSX.Element {
                         underlayColor = 'rgba(0,0,0,0.15)'
                         >
                         <Text style={ProfileStyles.OtherInfoText}>
-                          {numMedals.toString()}  
+                          {numMedals.toString()}
                           <Text style = {ProfileStyles.SecondaryText}>
                               {(numMedals === 1 ? " Medal" : " Medals")}
                           </Text>

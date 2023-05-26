@@ -66,7 +66,8 @@ function ProgressChallenge(): JSX.Element {
             // dueDate: endDate.valueOf(),
             unit: valueUnits,
             amount: challengeAmount,
-            exerciseName: (customTextEditable ? customActivity : value)
+            exerciseName: (customTextEditable ? customActivity : value),
+            dataOrigin: "mobile"
         }
 
         var config = {
