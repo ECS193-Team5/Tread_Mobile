@@ -4,7 +4,7 @@ DropDownPicker.setListMode("MODAL")
 import mappedChallengeList from "./challengeList";
 import unitList from "./unitList";
 import {styles} from '../../css/add/challenge/Style';
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from './numericInput';
 import DatePicker from 'react-native-date-picker'
 import SwitchSelector from "react-native-switch-selector";
 import axios from "axios";
@@ -96,7 +96,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
     const [itemsLeagues, setItemsLeagues] = useState([]);
 
     const [load, setLoad] = useState(false)
-    
+
     useEffect(() => {
       if(!load){
         loadIcons();
@@ -105,7 +105,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
       }
 
     }, [load])
-    
+
 
     useEffect(() => {
         getFriends()
@@ -270,7 +270,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
       if (data === 'NA'){
         return;
       }
-      
+
       setValue(data.exerciseName)
       setValueUnits(data.unit)
       setStartDate(data.issueDate)
@@ -280,7 +280,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
 
     const [showRecommendMessage, setShowRecommendMessage] = useState(false)
     const [RecMessage, setRecMessage] = useState("")
-  
+
     return (
       <View style = {styles.ChallengeContainer} >
             <RecommendChallenge
@@ -289,7 +289,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
               setShowRecommendMessage = {setShowRecommendMessage}
               setRecMessage = {setRecMessage}
             />
-            {showRecommendMessage ? 
+            {showRecommendMessage ?
               <View style = {[styles.RecommendTextContainer]}>
                 <Text style={styles.RecommendMessageText}>
                     {RecMessage}
