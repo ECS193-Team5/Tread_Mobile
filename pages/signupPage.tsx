@@ -1,8 +1,8 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   View,
   Text,
-  Keyboard, 
+  Keyboard,
   TouchableHighlight,
 } from 'react-native';
 
@@ -18,6 +18,8 @@ import CheckBox from '@react-native-community/checkbox';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import {GoogleSignin} from "@react-native-google-signin/google-signin";
 
+import {names} from "../components/SignUp/randomName.json";
+
 function Signup({route, navigation}): JSX.Element {
 
   const [displayName, setDisplayName] = useState("");
@@ -30,6 +32,19 @@ function Signup({route, navigation}): JSX.Element {
   const [validPicture, setValidPicture] = useState(true);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
+  useEffect(() => {
+    if(route.params.firstName){
+      console.log("The use effect in sign up page gets", route.params.firstName);
+      setDisplayName(route.params.firstName);
+      setUserName(route.params.firstName);
+    }else{
+      let name = pickRandomName();
+      console.log("picked rand name");
+      setDisplayName(name);
+      setUserName(name);
+    }
+  }, []);
+
   const handleOnPress = async function() {
     axios(signupConfig(userName, displayName, picture, route.params.deviceToken))
     .then(function (response) {
@@ -41,6 +56,12 @@ function Signup({route, navigation}): JSX.Element {
     });
   }
 
+  const pickRandomName = () => {
+    const arrLength = names.length;
+    const randomIndex = Math.floor(Math.random()*arrLength);
+    const name = names[randomIndex];
+    return name;
+  }
   const signOut = async () => {
     try {
       await GoogleSignin.signOut();
@@ -51,7 +72,7 @@ function Signup({route, navigation}): JSX.Element {
 
   const handleSwitchAccount = async function() {
     signOut().then(response => {
-      navigation.navigate('Login')
+      navigation.navigate('Login');
     })
   }
 
@@ -59,7 +80,7 @@ function Signup({route, navigation}): JSX.Element {
   return (
     <GestureRecognizer
       onSwipeDown = {() => Keyboard.dismiss()}
-      style={styles.mainContainer}      
+      style={styles.mainContainer}
     >
 			<View style = {styles.titleContainer}>
 				<Text style = {styles.title}>

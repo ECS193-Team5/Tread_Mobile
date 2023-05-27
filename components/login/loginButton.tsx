@@ -39,19 +39,19 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 
   const onLoginPressApple = async function () {
     const rawNonce = uuid.v4()
-    
+
     if (Platform.OS === 'ios'){
       const appleAuthRequestResponse = await appleAuth.performRequest({
         requestedOperation : appleAuth.Operation.LOGIN,
         requestedScopes : [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
         nonce : rawNonce
       })
-  
+
       const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user)
-      if (credentialState === appleAuth.State.AUTHORIZED){  
+      if (credentialState === appleAuth.State.AUTHORIZED){
         await AsyncStorage.setItem('Apple', JSON.stringify(true))
         await AsyncStorage.setItem('AppleUser', JSON.stringify(appleAuthRequestResponse))
-  
+
         loginApple(appleAuthRequestResponse)
       }
     } else {
@@ -114,8 +114,8 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 			.then(async (response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
-          await AsyncStorage.setItem('Apple', JSON.stringify(false))
-          await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
+          				await AsyncStorage.setItem('Apple', JSON.stringify(false))
+          				await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
 					navigation.navigate('Challenge')
 				} else {
 					navigation.navigate('Signup',{
@@ -133,17 +133,23 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 
   const loginApple = async (authInfo) => {
 		const deviceToken = await getFCMToken()
-		axios(loginConfigApple(authInfo.identityToken , deviceToken, authInfo.nonce, authInfo.fullName))
+		var fullName = {givenName : null, familyName : null}
+		if (authInfo.user !== undefined){
+		fullName = {givenName : authInfo.user.name.firstName, familyName : authInfo.user.name.lastName}
+		}
+		axios(loginConfigApple(authInfo.identityToken , deviceToken, authInfo.nonce, fullName))
 			.then(async (response) => {
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
 					navigation.navigate('Challenge')
 				} else {
+					console.log("full name", authInfo.fullName)
 					navigation.navigate('Signup',{
 						email: authInfo.email,
 						photo: "https://imgur.com/FA5aXVD.png",
 						navigation: navigation,
-						deviceToken: deviceToken
+						deviceToken: deviceToken,
+						firstName: fullName.givenName
 					})
 				}
 			})
@@ -156,12 +162,13 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 
   const loginAppleAndroid = async (authInfo) => {
 		const deviceToken = await getFCMToken()
-    var fullName = {givenName : null, familyName : null}
-    if (authInfo.user !== undefined){
-      fullName = {givenName : authInfo.user.name.firstName, familyName : authInfo.user.name.lastName}
-    }
+    	var fullName = {givenName : null, familyName : null}
+		if (authInfo.user !== undefined){
+		fullName = {givenName : authInfo.user.name.firstName, familyName : authInfo.user.name.lastName}
+		}
 		axios(loginConfigApple(authInfo.id_token , deviceToken, authInfo.nonce, fullName))
 			.then(async (response) => {
+				console.log("Got a response though");
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
 					navigation.navigate('Challenge')
@@ -170,7 +177,8 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 						email: authInfo.email,
 						photo: "https://imgur.com/FA5aXVD.png",
 						navigation: navigation,
-						deviceToken: deviceToken
+						deviceToken: deviceToken,
+						firstName:fullName.givenName
 					})
 				}
 			})

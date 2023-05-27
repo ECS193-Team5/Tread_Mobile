@@ -25,7 +25,7 @@ function InputForm(props) {
           setCurStyle(InputFormStyle.InvalidInputInit)
         } else{
           setCurStyle(InputFormStyle.InvalidInputDesc)
-        }      
+        }
       }
     }
   })
