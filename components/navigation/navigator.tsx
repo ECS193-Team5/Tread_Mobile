@@ -345,7 +345,7 @@ function ShowTabs(){
   <Tab.Navigator
     screenOptions={({route}) => ({
       tabBarIcon:({focused, color, size}) => {
-        let iconName = undefined;
+        let iconName = 'https://imgur.com/a/5IVD5Ew';
         let boolIsProfile;
         let borderColor;
 

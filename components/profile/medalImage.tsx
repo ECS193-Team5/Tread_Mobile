@@ -11,7 +11,7 @@ function MedalImage({level}): JSX.Element{
     const imageGold = 'https://i.imgur.com/o2XvWn9.png';
     const imageSilver = 'https://i.imgur.com/72N0DMU.png';
     const imageBronze = 'https://i.imgur.com/iCqnM41.png';
-    var imageUrl = '';
+    var imageUrl = 'https://imgur.com/a/5IVD5Ew';
 
     if(level === 3) {
         imageUrl = imageGold

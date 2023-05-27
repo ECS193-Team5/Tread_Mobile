@@ -4,7 +4,7 @@ DropDownPicker.setListMode("MODAL")
 import mappedChallengeList from "./challengeList";
 import unitList from "./unitList";
 import {styles} from '../../css/add/challenge/Style';
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from './numericInput'
 import DatePicker from 'react-native-date-picker'
 import axios from "axios";
 import {BACKEND_URL} from '@env';
@@ -66,7 +66,8 @@ function ProgressChallenge(): JSX.Element {
             // dueDate: endDate.valueOf(),
             unit: valueUnits,
             amount: challengeAmount,
-            exerciseName: (customTextEditable ? customActivity : value)
+            exerciseName: (customTextEditable ? customActivity : value),
+            dataOrigin: "mobile"
         }
 
         var config = {
@@ -165,7 +166,7 @@ function ProgressChallenge(): JSX.Element {
                           initValue = {challengeAmount}
                           rounded={true}
                           inputStyle={{borderColor: '#014421'}}
-                          iconStyle={{color: 'white'}}
+                          iconStyle={{color: '#F9A800', fontWeight:'bold', fontSize:30}}
                           textColor="black"
                           rightButtonBackgroundColor="#014421"
                           leftButtonBackgroundColor="#014421"

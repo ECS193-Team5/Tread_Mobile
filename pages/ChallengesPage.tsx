@@ -12,20 +12,22 @@ import ChallengeScroll from '../components/shared/ChallengeScroll';
 
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
-
-import ListenerComponentHealthKit from '../components/Sensors/healthKit';
 import messaging from "@react-native-firebase/messaging";
-import ListenerComponentHealthConnect from '../components/Sensors/healthConnect';
+import ListenerHealthSensor from '../components/Sensors/ListenerHealthSensor';
 import ZeroItem from '../components/shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
 
 function ChallengesPage(props): JSX.Element {
-  const [update, setUpdate] = useState(true);
+  const [update, setUpdate] = useState(false);
   useEffect(() => {
+    console.log("add listener");
+
     props.navigation.addListener('focus', () => {
+      console.log("focus")
+      console.log(update);
       setUpdate(true);
     });
-  }, [props.navigation]);
+  }, []);
 
   const [reRender, setRender] = useState(true)
 
@@ -35,7 +37,7 @@ function ChallengesPage(props): JSX.Element {
       setRender(!reRender)
       console.log('make list rerender')
     });
-    
+
     return unsubscribe;
   }, []);
 
@@ -177,8 +179,7 @@ function ChallengesPage(props): JSX.Element {
       <StatusBar
         barStyle="dark-content"
       />
-      <ListenerComponentHealthConnect update={update} setUpdate = {setUpdate}/>
-      <ListenerComponentHealthKit update = {update} setUpdate = {setUpdate}/>
+      <ListenerHealthSensor type="Challenges" update={update} setUpdate = {setUpdate} refreshPage = {handleRefresh}/>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}

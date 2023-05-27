@@ -70,12 +70,12 @@ function Signup({route, navigation}): JSX.Element {
 
         <ImageUpload
           flex = {50}
-          // placeholder = {route.params.photo}
+          placeholder = {route.params.photo}
           picture={picture}
           setPicture={setPicture}
           valid={validPicture}
           setValidPicture={setValidPicture}
-
+          //placeholder={'https://imgur.com/a/5IVD5Ew'}
         ></ImageUpload>
 
 

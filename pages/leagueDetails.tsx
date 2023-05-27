@@ -32,6 +32,7 @@ import { showMessage } from 'react-native-flash-message';
 import ZeroItem from '../components/shared/ZeroItem';
 import LeagueLeaderboard from '../components/Leagues/LeagueLeaderboard';
 import { useFocusEffect } from '@react-navigation/native';
+import ListenerHealthSensor from '../components/Sensors/ListenerHealthSensor';
 
 const options = [
   { label : "Members" , value : 0},
@@ -40,6 +41,16 @@ const options = [
 ]
 
 function LeagueDetails(props): JSX.Element {
+  const [update, setUpdate] = useState(true);
+  useEffect(() => {
+    props.navigation.addListener('focus', () => {
+      setUpdate(true);
+    });
+  }, [props.navigation]);
+
+  const refreshPage = () => {
+    console.log("The league page would refresh");
+  }
   const getChallengeData = function(){
     var config = {
       method: 'post',
@@ -98,7 +109,7 @@ function LeagueDetails(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log(response.data)
@@ -124,7 +135,7 @@ function LeagueDetails(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log(response.data)
@@ -311,7 +322,7 @@ function LeagueDetails(props): JSX.Element {
   const handleDelete = function() {
     console.log('Delete')
     setModalVisiblePopUp(false)
-    Alert.alert('Delete ' + name + ' ?', 
+    Alert.alert('Delete ' + name + ' ?',
     'This will permanently delete your league. You will lose all the previous challenges, leaderboard, and history. There will be no recovery',
     [
       {
@@ -319,7 +330,7 @@ function LeagueDetails(props): JSX.Element {
         style: 'cancel',
       },
       {
-        text: 'Delete League', 
+        text: 'Delete League',
         onPress: deleteLeague,
         style : 'destructive'
       },
@@ -452,7 +463,7 @@ function LeagueDetails(props): JSX.Element {
         leagueID : props.route.params.leagueData._id
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setLeaderboardInfo(response.data)
@@ -475,9 +486,10 @@ function LeagueDetails(props): JSX.Element {
       getLeagueInfo()
     }
   }, [load])
-  
+
   return (
     <View style = {styles.container}>
+        <ListenerHealthSensor type="League" update={update} setUpdate = {setUpdate} refreshFunction = {handleRefresh}/>
         <Modal
           isVisible={modalVisibleQR}
           hasBackdrop = {true}
@@ -536,7 +548,7 @@ function LeagueDetails(props): JSX.Element {
             >
               <Image style ={ImageStyles.Options} source={{uri: 'https://imgur.com/G0SHXKl.png'}}/>
             </Pressable>
-            
+
             <View style = {LeagueStyles.ToggleContainer}>
               <SwitchSelector
                 initial= {0}
@@ -582,6 +594,7 @@ function LeagueDetails(props): JSX.Element {
               isCurrent = {true}
               onRefresh = {handleRefresh}
             />
+
           :
           <ZeroItem
             promptText='There are no challenges at the moment'

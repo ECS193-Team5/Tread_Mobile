@@ -4,7 +4,7 @@ DropDownPicker.setListMode("MODAL")
 import mappedChallengeList from "./challengeList";
 import unitList from "./unitList";
 import {styles} from '../../css/add/challenge/Style';
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from './numericInput';
 import DatePicker from 'react-native-date-picker'
 import SwitchSelector from "react-native-switch-selector";
 import axios from "axios";
@@ -26,20 +26,21 @@ import Octicons                 from 'react-native-vector-icons/Octicons'
 import SimpleLineIcons          from 'react-native-vector-icons/SimpleLineIcons'
 import Zocial                   from 'react-native-vector-icons/Zocial'
 
-Ionicons.loadFont()            
-AntDesign.loadFont()                       
-Entypo.loadFont()                          
-Feather.loadFont()                         
-FontAwesome.loadFont()                     
-// FontAwesome5.loadFont()                    
-Fontisto.loadFont()                        
-Foundation.loadFont()                      
-MaterialCommunityIcons.loadFont()          
-MaterialIcons.loadFont()                   
-Octicons.loadFont()                        
-SimpleLineIcons.loadFont()                 
-Zocial.loadFont()                          
-
+async function  loadIcons(){
+    await Ionicons.loadFont()            
+    await AntDesign.loadFont()                       
+    await Entypo.loadFont()                          
+    await Feather.loadFont()                         
+    await FontAwesome.loadFont()                     
+    // FontAwesome5.loadFont()                    
+    await Fontisto.loadFont()                        
+    await Foundation.loadFont()                      
+    await MaterialCommunityIcons.loadFont()          
+    await MaterialIcons.loadFont()                   
+    await Octicons.loadFont()                        
+    await SimpleLineIcons.loadFont()                 
+    await Zocial.loadFont()                          
+}
 import {
     View,
     Text,
@@ -95,15 +96,16 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
     const [itemsLeagues, setItemsLeagues] = useState([]);
 
     const [load, setLoad] = useState(false)
-    
+
     useEffect(() => {
       if(!load){
+        loadIcons();
         setLoad(true)
         endDate.setDate(new Date().getDate() + 1)
       }
 
     }, [load])
-    
+
 
     useEffect(() => {
         getFriends()
@@ -268,7 +270,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
       if (data === 'NA'){
         return;
       }
-      
+
       setValue(data.exerciseName)
       setValueUnits(data.unit)
       setStartDate(data.issueDate)
@@ -278,7 +280,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
 
     const [showRecommendMessage, setShowRecommendMessage] = useState(false)
     const [RecMessage, setRecMessage] = useState("")
-  
+
     return (
       <View style = {styles.ChallengeContainer} >
             <RecommendChallenge
@@ -287,7 +289,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
               setShowRecommendMessage = {setShowRecommendMessage}
               setRecMessage = {setRecMessage}
             />
-            {showRecommendMessage ? 
+            {showRecommendMessage ?
               <View style = {[styles.RecommendTextContainer]}>
                 <Text style={styles.RecommendMessageText}>
                     {RecMessage}
@@ -343,10 +345,12 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             minValue={0}
                             rounded={true}
                             inputStyle={{borderColor: '#014421'}}
-                            iconStyle={{color: 'white'}}
+                            iconStyle={{color: '#F9A800', fontWeight:'bold', fontSize:30}}
                             textColor="black"
-                            rightButtonBackgroundColor="#014421"
-                            leftButtonBackgroundColor="#014421"
+                            backgroundColor =  "black"
+                            rightButtonBackgroundColor='#014421' 
+                            leftButtonBackgroundColor='#014221'
+                        
                         />
                     </View>
 
