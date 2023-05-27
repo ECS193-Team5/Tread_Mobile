@@ -12,35 +12,6 @@ import {showMessage} from 'react-native-flash-message'
 import {BACKEND_URL} from '@env';
 import RecommendChallenge from './recommendChallenge';
 
-import Ionicons                 from 'react-native-vector-icons/Ionicons'
-import AntDesign                from 'react-native-vector-icons/AntDesign'
-import Entypo                   from 'react-native-vector-icons/Entypo'
-import Feather                  from 'react-native-vector-icons/Feather'
-import FontAwesome              from 'react-native-vector-icons/FontAwesome'
-import FontAwesome5             from 'react-native-vector-icons/FontAwesome5Pro'
-import Fontisto                 from 'react-native-vector-icons/Fontisto'
-import Foundation               from 'react-native-vector-icons/Foundation'
-import MaterialCommunityIcons   from 'react-native-vector-icons/MaterialCommunityIcons'
-import MaterialIcons            from 'react-native-vector-icons/MaterialIcons'
-import Octicons                 from 'react-native-vector-icons/Octicons'
-import SimpleLineIcons          from 'react-native-vector-icons/SimpleLineIcons'
-import Zocial                   from 'react-native-vector-icons/Zocial'
-
-async function  loadIcons(){
-    await Ionicons.loadFont()            
-    await AntDesign.loadFont()                       
-    await Entypo.loadFont()                          
-    await Feather.loadFont()                         
-    await FontAwesome.loadFont()                     
-    // FontAwesome5.loadFont()                    
-    await Fontisto.loadFont()                        
-    await Foundation.loadFont()                      
-    await MaterialCommunityIcons.loadFont()          
-    await MaterialIcons.loadFont()                   
-    await Octicons.loadFont()                        
-    await SimpleLineIcons.loadFont()                 
-    await Zocial.loadFont()                          
-}
 import {
     View,
     Text,
@@ -99,7 +70,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
 
     useEffect(() => {
       if(!load){
-        loadIcons();
         setLoad(true)
         endDate.setDate(new Date().getDate() + 1)
       }
