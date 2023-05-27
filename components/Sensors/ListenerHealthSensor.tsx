@@ -97,8 +97,11 @@ const ListenerHealthSensor = (props) => {
     }
 
     const checkAppleAvailability = async () => {
+        console.log("check Apple availability  was called");
         AppleHealthKit.isAvailable((err: Object, available: boolean) => {
             if (err) {
+                console.log("err  in  apple health kit  availability");
+                console.log(err);
                 return false;
             }
             setSensorType("healthKit");
@@ -129,23 +132,31 @@ const ListenerHealthSensor = (props) => {
     }
 
     const callPermissionsApple = async () => {
+        console.log("apple persmissions  were called");
+
         const permissions = {
             permissions: {
                 read: [
-                AppleHealthKit.Constants.Permissions.Workout
-            ]
-            },
-        } as HealthKitPermissions;
+                AppleHealthKit.Constants.Permissions.Workout,
+                ],
+                write: [
+                AppleHealthKit.Constants.Permissions.Workout,
+                ],
+            }
+            } as HealthKitPermissions
 
         try {
             AppleHealthKit.getAuthStatus(permissions, (err, results) => {
                 if (err) {
+                    console.log(err, "console log no permission?");
                     return false;
                 }
+                console.log("got apple permissions")
                 setPermissions(true);
             });
         }
         catch (err) {
+            console.log(err, "fail the try?")
             return false;
         }
     }
@@ -194,7 +205,8 @@ const ListenerHealthSensor = (props) => {
     }
 
     const getExercisesApple = async (data) => {
-        let startDate = getEarliestDate();
+        console.log("I  would start getting exercises basedon ", data);
+        /*let startDate = getEarliestDate();
         let endDate = new Date().toISOString();
         let anchor = "";
 
@@ -217,7 +229,7 @@ const ListenerHealthSensor = (props) => {
             }
             console.log(results.data)
             console.log(results.anchor)
-        });
+        });*/
 
         //TODO
         /*
@@ -316,7 +328,7 @@ const ListenerHealthSensor = (props) => {
 
         return (<View></View>)
     }*/
-        setDataResults([results, anchor]);
+        //setDataResults([results, anchor]);
     }
 
     const readSampleData = async () => {

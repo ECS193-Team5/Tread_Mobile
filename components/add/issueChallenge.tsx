@@ -26,20 +26,21 @@ import Octicons                 from 'react-native-vector-icons/Octicons'
 import SimpleLineIcons          from 'react-native-vector-icons/SimpleLineIcons'
 import Zocial                   from 'react-native-vector-icons/Zocial'
 
-Ionicons.loadFont()            
-AntDesign.loadFont()                       
-Entypo.loadFont()                          
-Feather.loadFont()                         
-FontAwesome.loadFont()                     
-// FontAwesome5.loadFont()                    
-Fontisto.loadFont()                        
-Foundation.loadFont()                      
-MaterialCommunityIcons.loadFont()          
-MaterialIcons.loadFont()                   
-Octicons.loadFont()                        
-SimpleLineIcons.loadFont()                 
-Zocial.loadFont()                          
-
+async function  loadIcons(){
+    await Ionicons.loadFont()            
+    await AntDesign.loadFont()                       
+    await Entypo.loadFont()                          
+    await Feather.loadFont()                         
+    await FontAwesome.loadFont()                     
+    // FontAwesome5.loadFont()                    
+    await Fontisto.loadFont()                        
+    await Foundation.loadFont()                      
+    await MaterialCommunityIcons.loadFont()          
+    await MaterialIcons.loadFont()                   
+    await Octicons.loadFont()                        
+    await SimpleLineIcons.loadFont()                 
+    await Zocial.loadFont()                          
+}
 import {
     View,
     Text,
@@ -98,6 +99,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
     
     useEffect(() => {
       if(!load){
+        loadIcons();
         setLoad(true)
         endDate.setDate(new Date().getDate() + 1)
       }
@@ -345,8 +347,8 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             inputStyle={{borderColor: '#014421'}}
                             iconStyle={{color: 'white'}}
                             textColor="black"
-                            rightButtonBackgroundColor="#014421"
-                            leftButtonBackgroundColor="#014421"
+                            upDownButtonsBackgroundColor='#06D6A0'
+                            type = "up-down"
                         />
                     </View>
 
