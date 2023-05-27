@@ -154,7 +154,9 @@ export default class NumericInput extends Component {
         this.setState({ lastValid: this.state.value })
         this.props.onFocus && this.props.onFocus()
     }
-
+//<Text name='md-add' size={fontSize} style={[...iconStyle, maxReached ? this.props.reachMaxIncIconStyle : {}, minReached ? this.props.reachMinIncIconStyle : {}]}/>{"+"}<Text/>
+         //<Icon name='md-remove-circle' size={fontSize} style={[...iconStyle, maxReached ? this.props.reachMaxDecIconStyle : {}, minReached ? this.props.reachMinDecIconStyle : {}]} />
+                       
     render() {
         const editable = this.props.editable
         const sepratorWidth = (typeof this.props.separatorWidth === 'undefined') ? this.props.sepratorWidth : this.props.separatorWidth;//supporting old property name sepratorWidth
@@ -165,6 +167,7 @@ export default class NumericInput extends Component {
         const inputWidth = this.props.type === 'up-down' ? (totalWidth * 0.6) : (totalWidth * 0.4)
         const borderRadiusTotal = totalHeight * 0.18
         const fontSize = totalHeight * 0.38
+        const iconSize = totalHeight * 4
         const textColor = this.props.textColor
         const maxReached = this.state.value === this.props.maxValue
         const minReached = this.state.value === this.props.minValue
@@ -231,14 +234,14 @@ export default class NumericInput extends Component {
         else return (
             <View style={inputContainerStyle}>
                 <Button onPress={this.dec} style={leftButtonStyle}>
-                    <Icon name='md-remove' size={fontSize} style={[...iconStyle, maxReached ? this.props.reachMaxDecIconStyle : {}, minReached ? this.props.reachMinDecIconStyle : {}]} />
-                </Button>
+                <Text name='md-add' style={[...iconStyle, maxReached ? this.props.reachMaxIncIconStyle : {}, minReached ? this.props.reachMinIncIconStyle : {}]}>-</Text> 
+                    </Button>
                 <View style={[inputWraperStyle]}>
                     <TextInput {...this.props.extraTextInputProps} editable={editable} returnKeyType='done' underlineColorAndroid='rgba(0,0,0,0)' keyboardType='numeric' value={this.state.stringValue} onChangeText={this.onChange} style={inputStyle} ref={ref => this.ref = ref} onBlur={this.onBlur} onFocus={this.onFocus} />
                 </View>
                 <Button onPress={this.inc} style={rightButtonStyle}>
-                    <Icon name='md-add' size={fontSize} style={[...iconStyle, maxReached ? this.props.reachMaxIncIconStyle : {}, minReached ? this.props.reachMinIncIconStyle : {}]} />
-                </Button>
+                <Text name='md-remove-circle' size={iconSize} style={[...iconStyle, maxReached ? this.props.reachMaxDecIconStyle : {}, minReached ? this.props.reachMinDecIconStyle : {}]}>+</Text> 
+                    </Button>
             </View>)
 
 

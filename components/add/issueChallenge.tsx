@@ -345,10 +345,12 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             minValue={0}
                             rounded={true}
                             inputStyle={{borderColor: '#014421'}}
-                            iconStyle={{color: 'white'}}
+                            iconStyle={{color: '#F9A800', fontWeight:'bold', fontSize:30}}
                             textColor="black"
-                            upDownButtonsBackgroundColor='#06D6A0'
-                            type = "up-down"
+                            backgroundColor =  "black"
+                            rightButtonBackgroundColor='#014421' 
+                            leftButtonBackgroundColor='#014221'
+                        
                         />
                     </View>
 
