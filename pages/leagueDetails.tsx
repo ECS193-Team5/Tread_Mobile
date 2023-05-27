@@ -32,7 +32,7 @@ import { showMessage } from 'react-native-flash-message';
 import ZeroItem from '../components/shared/ZeroItem';
 import LeagueLeaderboard from '../components/Leagues/LeagueLeaderboard';
 import { useFocusEffect } from '@react-navigation/native';
-import ListenerHealthSensor from '../components/Sensors/healthConnect';
+import ListenerHealthSensor from '../components/Sensors/ListenerHealthSensor';
 
 const options = [
   { label : "Members" , value : 0},
@@ -489,7 +489,7 @@ function LeagueDetails(props): JSX.Element {
 
   return (
     <View style = {styles.container}>
-        <ListenerHealthSensor type="League" update={update} setUpdate = {setUpdate} refreshFunction = {refreshPage}/>
+        <ListenerHealthSensor type="League" update={update} setUpdate = {setUpdate} refreshFunction = {handleRefresh}/>
         <Modal
           isVisible={modalVisibleQR}
           hasBackdrop = {true}

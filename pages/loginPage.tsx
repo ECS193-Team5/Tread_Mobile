@@ -4,7 +4,6 @@ import {
   Text, Image, ActivityIndicator, Platform
 } from 'react-native';
 
-import "../components/Sensors/healthKit";
 import LinearGradient from 'react-native-linear-gradient';
 import LoginButton from '../components/login/loginButton';
 import {LoginStyles} from '../css/login/Style';
@@ -63,7 +62,7 @@ function Login({route, navigation}): JSX.Element {
         console.log(paramsForNavigate)
         navigation.navigate('Challenge', paramsForNavigate)
      }
-    }) 
+    })
   })
 
   useEffect(() => {
@@ -78,10 +77,10 @@ function Login({route, navigation}): JSX.Element {
         onPress : () => {navigation.navigate('Challenge', getPageToNavigateOnNotif(message))}
       })
     });
-    
+
     return unsubscribe;
   }, []);
-  
+
   const GoogleLogIn = async function(){
     GoogleSignin.isSignedIn().then((response) => {
       if(response) {
@@ -120,7 +119,7 @@ function Login({route, navigation}): JSX.Element {
           scope : appleAuthAndroid.Scope.ALL,
           nonce : rawNonce
         });
-  
+
         const response = await appleAuthAndroid.signIn()
         console.log(response)
         loginAppleAndroid(response)
@@ -262,7 +261,7 @@ function Login({route, navigation}): JSX.Element {
 
   return (
     <View >
-      {isSignedInGoogle || isSignedInApple? 
+      {isSignedInGoogle || isSignedInApple?
         <LinearGradient
           colors = {['#014421', '#000000']}
           style = {LoginStyles.linearGradientAuto}
@@ -272,7 +271,7 @@ function Login({route, navigation}): JSX.Element {
             src={default_image}
             style={LoginStyles.logo}
           />
-          {animate ? 
+          {animate ?
             <ActivityIndicator size = 'large' color = "#F9A800" animating = {animate}/>
             :
             <CheckBox
@@ -286,7 +285,7 @@ function Login({route, navigation}): JSX.Element {
               style = {{alignSelf : 'center'}}
             />
           }
-    
+
         </LinearGradient>
 
       :

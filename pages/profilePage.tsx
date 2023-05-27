@@ -28,7 +28,7 @@ import {styles} from "../css/challenges/Style"
 import messaging from "@react-native-firebase/messaging";
 import {VAPID_KEY} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ListenerHealthSensor from '../components/Sensors/healthConnect';
+import ListenerHealthSensor from '../components/Sensors/ListenerHealthSensor';
 
 function ProfilePage(props): JSX.Element {
     const [update, setUpdate] = useState(true);
@@ -383,7 +383,7 @@ function ProfilePage(props): JSX.Element {
 
     return (
       <View style={ProfileStyles.Background}>
-        <ListenerHealthSensor type="Profile" update={update} setUpdate = {setUpdate} refreshFunction = {refreshPage}/>
+        <ListenerHealthSensor type="Profile" update={update} setUpdate = {setUpdate} refreshFunction = {handleRefresh}/>
             <Modal
                 isVisible={modalVisibleQR}
                 hasBackdrop = {true}
