@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, TextInput, StyleSheet, Text } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import Button from './Button'
 import PropTypes from 'prop-types'
 import { create, PREDEF_RES } from 'react-native-pixel-perfect'
@@ -154,8 +153,6 @@ export default class NumericInput extends Component {
         this.setState({ lastValid: this.state.value })
         this.props.onFocus && this.props.onFocus()
     }
-//<Text name='md-add' size={fontSize} style={[...iconStyle, maxReached ? this.props.reachMaxIncIconStyle : {}, minReached ? this.props.reachMinIncIconStyle : {}]}/>{"+"}<Text/>
-         //<Icon name='md-remove-circle' size={fontSize} style={[...iconStyle, maxReached ? this.props.reachMaxDecIconStyle : {}, minReached ? this.props.reachMinDecIconStyle : {}]} />
                        
     render() {
         const editable = this.props.editable
@@ -218,20 +215,7 @@ export default class NumericInput extends Component {
             borderRightWidth: sepratorWidth,
             borderRightColor: borderColor
         }
-        if (this.props.type === 'up-down')
-            return (
-                <View style={inputContainerStyle}>
-                    <TextInput {...this.props.extraTextInputProps} editable={editable} returnKeyType='done' underlineColorAndroid='rgba(0,0,0,0)' keyboardType='numeric' value={this.state.stringValue} onChangeText={this.onChange} style={inputStyle} ref={ref => this.ref = ref} onBlur={this.onBlur} onFocus={this.onFocus} />
-                    <View style={upDownStyle}>
-                        <Button onPress={this.inc} style={{ flex: 1, width: '100%', alignItems: 'center' }}>
-                            <Icon name='ios-arrow-up' size={fontSize} style={[...iconStyle, maxReached ? this.props.reachMaxIncIconStyle : {}, minReached ? this.props.reachMinIncIconStyle : {}]} />
-                        </Button>
-                        <Button onPress={this.dec} style={{ flex: 1, width: '100%', alignItems: 'center' }}>
-                            <Icon name='ios-arrow-down' size={fontSize} style={[...iconStyle, maxReached ? this.props.reachMaxDecIconStyle : {}, minReached ? this.props.reachMinDecIconStyle : {}]} />
-                        </Button>
-                    </View>
-                </View>)
-        else return (
+        return (
             <View style={inputContainerStyle}>
                 <Button onPress={this.dec} style={leftButtonStyle}>
                 <Text name='md-add' style={[...iconStyle, maxReached ? this.props.reachMaxIncIconStyle : {}, minReached ? this.props.reachMinIncIconStyle : {}]}>-</Text> 
