@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for css/add/home/Style.tsx</title>
+    <title>Code coverage report for testPages/loginPage.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../../prettify.css" />
-    <link rel="stylesheet" href="../../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../../sort-arrow-sprite.png);
+            background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">css/add/home</a> Style.tsx</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">testPages</a> loginPage.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
@@ -158,7 +158,36 @@
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
 <a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -242,113 +271,111 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Platform, StyleSheet } from 'react-native';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text, Image, ActivityIndicator, Platform
+} from 'react-native';
 &nbsp;
-const styles = StyleSheet.create({
+import LoginButton from "../testComps/login/loginButton";
+import {LoginStyles} from '../css/login/Style';
 &nbsp;
-	HomePage : {
-		flexDirection: 'column',
-		flex: 1,
-		backgroundColor : "#E0E7E3"
-	},
+import Logo from '../assets/logorenderflipped.png'
 &nbsp;
-	ButtonContainer : {
-		flex: 20,
-		marginRight: '5%',
-		marginLeft: '5%',
-		flexDirection: 'column'
-	},
+import CheckBox from '@react-native-community/checkbox';
+function Login({route, navigation}) {
 &nbsp;
-	Separator : {
-		flex: 10,
-// 		backgroundColor: 'green',
-		flexDirection: 'row',
-		alignItems: 'center',
-		marginRight: '5%',
-		marginLeft: '5%',
+  const [isSignedInGoogle, setIsSignedInGoogle] = useState(true)
+  const [isSignedInApple, setIsSignedInApple] = useState(true)
 &nbsp;
-	},
+  const [animate, setAnimate] = useState(true)
+  const [CheckOn, setCheckOn] = useState(false)
 &nbsp;
-	Button : {
-		height: '100%',
-		width: '100%',
-		borderRadius: 20,
-		backgroundColor: 'yellow',
-	},
+  const default_image = Image.resolveAssetSource(Logo).uri
 &nbsp;
-  Image : {
-    height: '55%',
-    width: '55%',
-//     backgroundColor: 'blue',
-    resizeMode: 'contain'
-  },
+  return (
+    &lt;View &gt;
+      {isSignedInGoogle || <span class="branch-1 cbranch-no" title="branch not covered" >isSignedInApple?</span>
+        &lt;View
+          style = {LoginStyles.linearGradientAuto}
+        &gt;
+          &lt;Image
+            src={default_image}
+            style={LoginStyles.logo}
+          /&gt;
+          {animate ?
+            &lt;ActivityIndicator size = 'large' color = "#F9A800" animating = {animate}/&gt;
+            :
+<span class="branch-1 cbranch-no" title="branch not covered" >            &lt;CheckBox</span>
+              disabled={false}
+              value={CheckOn}
+              boxType = {'circle'}
+              onFillColor = '#F9A800'
+              onCheckColor= '#ffffff'
+              animationDuration={0.5}
+              lineWidth = {2}
+              style = {{alignSelf : 'center'}}
+            /&gt;
+          }
 &nbsp;
-	SeparatorLine: {
-		flex: 1,
-		backgroundColor: '#F9A800',
-		height: '2%'
-	},
+        &lt;/View&gt;
 &nbsp;
-	GradientStyle : {
-		borderRadius: 20,
-		flex: 1,
-		flexDirection: 'row',
-    backgroundColor : "#014421",
-	},
+      :
+<span class="branch-1 cbranch-no" title="branch not covered" >      &lt;View</span>
+        style = {LoginStyles.linearGradient}
+      &gt;
+        &lt;Image
+          src={'https://i.imgur.com/FTHVwBA.png'}
+          style={LoginStyles.pushupImage}
+        /&gt;
 &nbsp;
-	IconContainer: {
-		flex: 40,
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: 0
-// 		backgroundColor: 'blue'
-	},
+        &lt;Image
+          src={'https://i.imgur.com/7z2WZm7.png'}
+          style={LoginStyles.liftingImage}
+        /&gt;
 &nbsp;
-	TextContainer: {
-// 		backgroundColor: 'blue',
-		flex: 60,
-		flexDirection: 'column'
-	},
+        &lt;Image
+          src={'https://i.imgur.com/JqkFVQC.png'}
+          style={LoginStyles.skiImage}
+        /&gt;
+        &lt;View style = {LoginStyles.mainContainer}&gt;
+          &lt;View style = {LoginStyles.titleContainer}&gt;
+            &lt;Text style = {LoginStyles.titleText}&gt;
+              Tread
+            &lt;/Text&gt;
+          &lt;/View&gt;
+          &lt;View style = {LoginStyles.loginContainer}&gt;
+            &lt;LoginButton
+              filled={true}
+            &gt;
+            &lt;/LoginButton&gt;
+          &lt;/View&gt;
+          &lt;View style = {LoginStyles.separatorContainer}&gt;
+              &lt;View style = {LoginStyles.outsideSeparator}&gt;
+              &lt;/View&gt;
+              &lt;View style = {LoginStyles.middleSeparator}&gt;
+                &lt;Text style = {LoginStyles.orText}&gt;
+                    or
+                &lt;/Text&gt;
+              &lt;/View&gt;
+              &lt;View style = {LoginStyles.outsideSeparator}&gt;
+              &lt;/View&gt;
+          &lt;/View&gt;
+          &lt;View style = {LoginStyles.signUpContainer}&gt;
+            &lt;LoginButton
+              filled={false}
+            &gt;
+            &lt;/LoginButton&gt;
+          &lt;/View&gt;
+        &lt;/View&gt;
 &nbsp;
-	TitleContainer: {
-		justifyContent: 'flex-end',
-		flex: 50
-	},
+      &lt;/View&gt;
+      }
+    &lt;/View&gt;
+  )
+}
 &nbsp;
-	DescContainer: {
-		flex: 50
-	},
-&nbsp;
-	Title: {
-		color: 'white',
-		fontSize: 26,
-		fontWeight: 700
-	},
-&nbsp;
-	Description: {
-		color: '#F9A800',
-		fontWeight: 400,
-		fontSize: 15,
-		marginTop: '2%'
-	}
-&nbsp;
-&nbsp;
-&nbsp;
-});
-&nbsp;
-export {styles}</pre></td></tr></table></pre>
+export default Login;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
@@ -357,14 +384,14 @@ export {styles}</pre></td></tr></table></pre>
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at 2023-05-28T21:37:06.091Z
             </div>
-        <script src="../../../prettify.js"></script>
+        <script src="../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../../sorter.js"></script>
-        <script src="../../../block-navigation.js"></script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
     </body>
 </html>
     

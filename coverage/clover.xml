@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1685298102046" clover="3.2.0">
-  <project timestamp="1685298102046" name="All files">
-    <metrics statements="69" coveredstatements="54" conditionals="48" coveredconditionals="32" methods="24" coveredmethods="16" elements="141" coveredelements="102" complexity="0" loc="69" ncloc="69" packages="6" files="8" classes="8"/>
+<coverage generated="1685309826170" clover="3.2.0">
+  <project timestamp="1685309826170" name="All files">
+    <metrics statements="76" coveredstatements="61" conditionals="54" coveredconditionals="35" methods="25" coveredmethods="17" elements="155" coveredelements="113" complexity="0" loc="76" ncloc="76" packages="8" files="10" classes="10"/>
+    <package name="assets">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="logorenderflipped.png" path="C:\Users\pdkainth\Documents\College_Work\ECS_193A\Tread_Mobile\assets\logorenderflipped.png">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+      </file>
+    </package>
     <package name="css.add.home">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="Style.tsx" path="C:\Users\pdkainth\Documents\College_Work\ECS_193A\Tread_Mobile\css\add\home\Style.tsx">
@@ -13,7 +20,7 @@
       <metrics statements="1" coveredstatements="1" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
       <file name="Style.tsx" path="C:\Users\pdkainth\Documents\College_Work\ECS_193A\Tread_Mobile\css\login\Style.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
-        <line num="3" count="1" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
       </file>
     </package>
     <package name="css.shared">
@@ -111,6 +118,18 @@
         <line num="50" count="5" type="stmt"/>
         <line num="51" count="5" type="stmt"/>
         <line num="54" count="28" type="stmt"/>
+      </file>
+    </package>
+    <package name="testPages">
+      <metrics statements="6" coveredstatements="6" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="1"/>
+      <file name="loginPage.js" path="C:\Users\pdkainth\Documents\College_Work\ECS_193A\Tread_Mobile\testPages\loginPage.js">
+        <metrics statements="6" coveredstatements="6" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
       </file>
     </package>
   </project>
