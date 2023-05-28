@@ -101,7 +101,6 @@ const ListenerHealthSensor = (props) => {
     }
 
     const checkAppleAvailability = async () => {
-        console.log("check apple availability");
         AppleHealthKit.isAvailable((err: Object, available: boolean) => {
             if (err) {
                 console.log(err);
@@ -135,7 +134,6 @@ const ListenerHealthSensor = (props) => {
     }
 
     const callPermissionsApple = async () => {
-        console.log("calling permissions apple");
         const permissions = {
             permissions: {
                 read: [
@@ -153,7 +151,6 @@ const ListenerHealthSensor = (props) => {
                     console.log(err);
                     return false;
                 }
-                console.log("get permissions");
                 setPermissions(true);
             });
         }
