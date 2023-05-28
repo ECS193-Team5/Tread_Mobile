@@ -206,7 +206,6 @@ const ListenerHealthSensor = (props) => {
     const getExercisesApple = async (data) => {
         
         let anchor = "";
-
         if(data && data.healthKitAnchor){
             anchor = data.healthKitAnchor;
         } 
