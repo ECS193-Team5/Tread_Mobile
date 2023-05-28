@@ -134,9 +134,10 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
   const loginApple = async (authInfo) => {
 		const deviceToken = await getFCMToken()
 		var fullName = {givenName : null, familyName : null}
-		if (authInfo.user !== undefined){
-		fullName = {givenName : authInfo.user.name.firstName, familyName : authInfo.user.name.lastName}
+		if (authInfo && authInfo.user !== undefined && authInfo.user.name){
+		 fullName = {givenName : authInfo.user.name.firstName, familyName : authInfo.user.name.lastName}
 		}
+
 		axios(loginConfigApple(authInfo.identityToken , deviceToken, authInfo.nonce, fullName))
 			.then(async (response) => {
 				const hasUsername = response.data['hasUsername'];
@@ -163,9 +164,10 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
   const loginAppleAndroid = async (authInfo) => {
 		const deviceToken = await getFCMToken()
     	var fullName = {givenName : null, familyName : null}
-		if (authInfo.user !== undefined){
-		fullName = {givenName : authInfo.user.name.firstName, familyName : authInfo.user.name.lastName}
+		if (authInfo && authInfo.user !== undefined && authInfo.user.name){
+			fullName = {givenName : authInfo.user.name.firstName, familyName : authInfo.user.name.lastName}
 		}
+		console.log("Should not be called");
 		axios(loginConfigApple(authInfo.id_token , deviceToken, authInfo.nonce, fullName))
 			.then(async (response) => {
 				console.log("Got a response though");
