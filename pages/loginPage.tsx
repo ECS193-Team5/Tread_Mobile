@@ -35,6 +35,8 @@ function Login({route, navigation}): JSX.Element {
   const [animate, setAnimate] = useState(true)
   const [CheckOn, setCheckOn] = useState(false)
 
+  var paramsForNavigate
+
   useEffect(() => {
     messaging().getInitialNotification().then(async remoteMessage => {
       if(remoteMessage){
@@ -79,7 +81,7 @@ function Login({route, navigation}): JSX.Element {
     return unsubscribe;
   }, []);
 
-  const loginAutoGoogle = async function(){
+  const GoogleLogIn = async function(){
     GoogleSignin.isSignedIn().then((response) => {
       if(response) {
           console.log("Already signed in Google")
@@ -92,42 +94,57 @@ function Login({route, navigation}): JSX.Element {
     })
   }
 
-  const loginAutoApple = async function() {
-    var isLoggedInApple = await AsyncStorage.getItem('Apple');
-    var appleAuthResponseUser =  await AsyncStorage.getItem('AppleUser');
+  const AppleLogIn = async function() {
+    var isLoggedInApple = await AsyncStorage.getItem('Apple')
+    var appleAuthResponseUser =  await AsyncStorage.getItem('AppleUser')
+    const rawNonce = uuid.v4()
 
     if (isLoggedInApple === "true"){
       var appleAuthResponse = JSON.parse(appleAuthResponseUser)
       if (Platform.OS === 'ios'){
         const credentialState = await appleAuth.getCredentialStateForUser(appleAuthResponse.user)
         if (credentialState){
-          navigation.navigate('Challenge')
-
+          loginApple(appleAuthResponse)
         } else {
           setIsSignedInApple(false)
         }
-      }else {
-        navigation.navigate('Challenge')
+      } else {
+        navigation.navigate('Challenge', paramsForNavigate);
       }
     } else {
       setIsSignedInApple(false)
     }
   }
 
-  const loginAuto = async function(){
-    await loginAutoGoogle()
-    await loginAutoApple()
+  const AutoLogin = async function(){
+    await GoogleLogIn()
+    await AppleLogIn()
   }
 
 	useFocusEffect(() => {
-    loginAuto()
+    AutoLogin()
   })
+
+  const getFCMToken = async() => {
+		const authorizationStatus = await messaging().hasPermission()
+		if(authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+			console.log("Permissions is enabled")
+			const token = await messaging().getToken({vapidKey: VAPID_KEY})
+			return token
+		} else {
+			console.log("Permissions not enabled")
+			await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+			await messaging().requestPermission()
+			const token = await messaging().getToken({vapidKey: VAPID_KEY})
+			return token
+		}
+	}
 
   const signInGoogleSilently = function () {
 		GoogleSignin.hasPlayServices().then((hasPlayService) => {
 			if (hasPlayService) {
 				GoogleSignin.signInSilently().then((userInfo) => {
-            navigation.navigate('Challenge')
+						loginGoogle(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo']);
 				}).catch((e) => {
 					console.log("ERROR IS A: " + JSON.stringify(e));
 				})
@@ -135,6 +152,59 @@ function Login({route, navigation}): JSX.Element {
 		}).catch((e) => {
 			console.log("ERROR IS B: " + JSON.stringify(e));
 		})
+	}
+
+  const loginGoogle = async (email, authToken, photo) => {
+		const deviceToken = await getFCMToken()
+		axios(loginConfig(authToken, deviceToken))
+			.then(async (response) => {
+				const hasUsername = response.data['hasUsername'];
+				if(hasUsername) {
+          await AsyncStorage.setItem('Apple', JSON.stringify(false))
+          await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
+          setAnimate(false)
+          setTimeout(() => {
+            setCheckOn(true);
+          }, 20);
+          setTimeout(() => {
+            navigation.navigate('Challenge', paramsForNavigate);
+          }, 500);
+				}else {
+          setIsSignedInGoogle(false)
+        }
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+
+  const loginApple = async (authInfo) => {
+		const deviceToken = await getFCMToken()
+		axios(loginConfigApple(authInfo.identityToken , deviceToken, authInfo.nonce, authInfo.fullName))
+			.then(async (response) => {
+				const hasUsername = response.data['hasUsername'];
+				if(hasUsername) {
+          setAnimate(false)
+          setTimeout(() => {
+            setCheckOn(true);
+          }, 20);
+          setTimeout(() => {
+            navigation.navigate('Challenge', paramsForNavigate);
+          }, 500);
+				} else {
+					navigation.navigate('Signup',{
+						email: authInfo.email,
+						photo: "https://imgur.com/FA5aXVD.png",
+						navigation: navigation,
+						deviceToken: deviceToken
+					})
+				}
+			})
+			.catch(async function (error) {
+        await AsyncStorage.setItem('Apple', JSON.stringify(false))
+        await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
+				console.log(error);
+			});
 	}
 
   const configureGoogleSignIn = function() {
