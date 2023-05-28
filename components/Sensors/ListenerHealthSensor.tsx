@@ -46,7 +46,6 @@ const ListenerHealthSensor = (props) => {
 
     useEffect(() => {
         if ((load && props.update)) {
-            console.log("trigger through props.update")
             if(permissions){
                 readSampleData();
             }
@@ -57,7 +56,6 @@ const ListenerHealthSensor = (props) => {
 
     useEffect(() => {
         if (load && firstLoad && permissions ) {
-            console.log("trigger through firstLoad", permissions);
             if(permissions){
                 readSampleData();
             }
@@ -169,17 +167,13 @@ const ListenerHealthSensor = (props) => {
         try {
             AppleHealthKit.getAuthStatus(permissions, (err, results) => {
                 if (err) {
-                    console.log("Auth status failed in getAuthStatus error");
                     console.log(err);
                     return false;
                 }
-                console.log("The permissions are", results);
-                console.log("permissions shoudl have worked");
                 setPermissions(true);
             });
         }
         catch (err) {
-            console.log("Auth status failed in the try-catch of atuh status");
             console.log(err);
             return false;
         }
@@ -229,7 +223,7 @@ const ListenerHealthSensor = (props) => {
     }
 
     const getExercisesApple = async (data) => {
-        console.log("The data is ", data);
+
         let anchor = "";
         if(data && data.healthKitAnchor){
             anchor = data.healthKitAnchor;
@@ -242,25 +236,20 @@ const ListenerHealthSensor = (props) => {
         if(anchor.length>0){
             options["anchor"] = anchor;
         }
-        console.log("The options are ", options);
-        console.log("attempt to pull data");
+
         AppleHealthKit.getAnchoredWorkouts(options, (err: Object, results: AnchoredQueryResults) => {
             if (err) {
-                console.log("get anchored workout failed");
                 console.log(err);
               return;
             }
 
             let data = results.data;
             let newAnchor  = results.anchor;
-            console.log("These results are gotten from the sending health information", results);
-            console.log("This is the new anchor", newAnchor);
             setDataResults([data, newAnchor]);
         });
     }
 
     const readSampleData = async () => {
-        console.log("try to read sample data");
         if(!permissions){
             return;
         }
