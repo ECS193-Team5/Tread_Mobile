@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1685294290109" clover="3.2.0">
-  <project timestamp="1685294290109" name="All files">
-    <metrics statements="64" coveredstatements="49" conditionals="46" coveredconditionals="31" methods="22" coveredmethods="14" elements="132" coveredelements="94" complexity="0" loc="64" ncloc="64" packages="6" files="6" classes="6"/>
+<coverage generated="1685298102046" clover="3.2.0">
+  <project timestamp="1685298102046" name="All files">
+    <metrics statements="69" coveredstatements="54" conditionals="48" coveredconditionals="32" methods="24" coveredmethods="16" elements="141" coveredelements="102" complexity="0" loc="69" ncloc="69" packages="6" files="8" classes="8"/>
     <package name="css.add.home">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="Style.tsx" path="C:\Users\pdkainth\Documents\College_Work\ECS_193A\Tread_Mobile\css\add\home\Style.tsx">
@@ -17,7 +17,11 @@
       </file>
     </package>
     <package name="css.shared">
-      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="ImageUploadStyle.tsx" path="C:\Users\pdkainth\Documents\College_Work\ECS_193A\Tread_Mobile\css\shared\ImageUploadStyle.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+      </file>
       <file name="InputFormStyle.tsx" path="C:\Users\pdkainth\Documents\College_Work\ECS_193A\Tread_Mobile\css\shared\InputFormStyle.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="3" count="1" type="stmt"/>
@@ -72,7 +76,14 @@
       </file>
     </package>
     <package name="testComps.shared">
-      <metrics statements="25" coveredstatements="22" conditionals="24" coveredconditionals="19" methods="4" coveredmethods="4"/>
+      <metrics statements="29" coveredstatements="26" conditionals="26" coveredconditionals="20" methods="6" coveredmethods="6"/>
+      <file name="ImageUpload.js" path="C:\Users\pdkainth\Documents\College_Work\ECS_193A\Tread_Mobile\testComps\shared\ImageUpload.js">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+      </file>
       <file name="InputForm.js" path="C:\Users\pdkainth\Documents\College_Work\ECS_193A\Tread_Mobile\testComps\shared\InputForm.js">
         <metrics statements="25" coveredstatements="22" conditionals="24" coveredconditionals="19" methods="4" coveredmethods="4"/>
         <line num="7" count="28" type="stmt"/>
