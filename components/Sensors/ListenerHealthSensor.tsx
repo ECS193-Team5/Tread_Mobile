@@ -101,6 +101,7 @@ const ListenerHealthSensor = (props) => {
     }
 
     const checkAppleAvailability = async () => {
+        console.log("check apple availability");
         AppleHealthKit.isAvailable((err: Object, available: boolean) => {
             if (err) {
                 console.log(err);
@@ -134,7 +135,7 @@ const ListenerHealthSensor = (props) => {
     }
 
     const callPermissionsApple = async () => {
-
+        console.log("calling permissions apple");
         const permissions = {
             permissions: {
                 read: [
@@ -149,12 +150,15 @@ const ListenerHealthSensor = (props) => {
         try {
             AppleHealthKit.getAuthStatus(permissions, (err, results) => {
                 if (err) {
+                    console.log(err);
                     return false;
                 }
+                console.log("get permissions");
                 setPermissions(true);
             });
         }
         catch (err) {
+            console.log(err);
             return false;
         }
     }
@@ -204,11 +208,15 @@ const ListenerHealthSensor = (props) => {
 
     const getExercisesApple = async (data) => {
         
-        let anchor = data.healthKitAnchor;
+        let anchor = "";
+
+        if(data && data.healthKitAnchor){
+            anchor = data.healthKitAnchor;
+        } 
 
         let options = {
             type: 'Workout'
-          };
+        };
 
         if(anchor.length>0){
             options["anchor"] = anchor;

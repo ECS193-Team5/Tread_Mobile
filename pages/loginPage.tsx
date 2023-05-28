@@ -100,13 +100,23 @@ function Login({route, navigation}): JSX.Element {
     const rawNonce = uuid.v4()
 
     if (isLoggedInApple === "true"){
+      console.log("says apple is logged in");
       var appleAuthResponse = JSON.parse(appleAuthResponseUser)
+      console.log(appleAuthResponse)
       if (Platform.OS === 'ios'){
+        console.log("gets into ios");
+        try{
         const credentialState = await appleAuth.getCredentialStateForUser(appleAuthResponse.user)
         if (credentialState){
+          console.log(credentialState, appleAuthResponse);
           loginApple(appleAuthResponse)
         } else {
+          console.log("Try no signedin");
           setIsSignedInApple(false)
+        }
+        }
+        catch(err){
+          setIsSignedInApple(false);
         }
       } else {
         navigation.navigate('Challenge', paramsForNavigate);
@@ -180,8 +190,10 @@ function Login({route, navigation}): JSX.Element {
 
   const loginApple = async (authInfo) => {
 		const deviceToken = await getFCMToken()
+    console.log("Gets  into loggin anpple");
 		axios(loginConfigApple(authInfo.identityToken , deviceToken, authInfo.nonce, authInfo.fullName))
 			.then(async (response) => {
+        console.log("then from the login");
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
           setAnimate(false)
@@ -201,6 +213,7 @@ function Login({route, navigation}): JSX.Element {
 				}
 			})
 			.catch(async function (error) {
+        console.log("fails login apple");
         await AsyncStorage.setItem('Apple', JSON.stringify(false))
         await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
 				console.log(error);
