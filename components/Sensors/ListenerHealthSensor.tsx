@@ -134,7 +134,6 @@ const ListenerHealthSensor = (props) => {
     }
 
     const callPermissionsApple = async () => {
-
         const permissions = {
             permissions: {
                 read: [
@@ -149,12 +148,14 @@ const ListenerHealthSensor = (props) => {
         try {
             AppleHealthKit.getAuthStatus(permissions, (err, results) => {
                 if (err) {
+                    console.log(err);
                     return false;
                 }
                 setPermissions(true);
             });
         }
         catch (err) {
+            console.log(err);
             return false;
         }
     }
@@ -204,11 +205,14 @@ const ListenerHealthSensor = (props) => {
 
     const getExercisesApple = async (data) => {
         
-        let anchor = data.healthKitAnchor;
+        let anchor = "";
+        if(data && data.healthKitAnchor){
+            anchor = data.healthKitAnchor;
+        } 
 
         let options = {
             type: 'Workout'
-          };
+        };
 
         if(anchor.length>0){
             options["anchor"] = anchor;
