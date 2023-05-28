@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   StatusBar, Image, AppState
@@ -18,7 +18,8 @@ import ZeroItem from '../components/shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
 
 function ChallengesPage(props): JSX.Element {
-  const [update, setUpdate] = useState(false);
+  const [update, setUpdate] = useState(true);
+  
   useEffect(() => {
     console.log("add listener");
 
@@ -28,7 +29,6 @@ function ChallengesPage(props): JSX.Element {
       setUpdate(true);
     });
   }, []);
-
   const [reRender, setRender] = useState(true)
 
   useEffect(() => {
