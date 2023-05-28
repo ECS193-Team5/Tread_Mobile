@@ -6,6 +6,8 @@ import {
 
 import {LoginStyles} from '../../css/login/Style';
 import {GoogleSignin} from "@react-native-google-signin/google-signin";
+
+
 // import axios from "axios";
 // import loginConfig from "../../routes/login/login";
 
@@ -13,13 +15,11 @@ import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
 import {log} from "qrcode/lib/core/galois-field";
 
 
-function LoginButton({filled, text, isLogin, loginMock}) {
+function LoginButton({filled, text, isLogin, loginMock, navigate}) {
     // let autoLogin = true;
     const [autoLogin, setAutoLogin] = useState(true);
-    const navigationMock = (value) => {}
 
     useEffect(() => {
-        navigationMock()
         GoogleSignin.isSignedIn().then((response) => {
             if(response) {
                 if(filled) {
@@ -80,15 +80,17 @@ function LoginButton({filled, text, isLogin, loginMock}) {
     }
 
     const login =  () => {
-        console.log("In login")
+
         const deviceToken =  getFCMToken()
         if(loginMock !== null) {
             if(loginMock) {
                 // setAutoLogin(false);
-                navigation('Challenge')
+
+
             } else {
                 // setAutoLogin(false);
-                navigation('Signup')
+
+
             }
         }
     }
