@@ -6,7 +6,7 @@ import {
 import {styles} from "../../css/challenges/Style"
 import ChallengeCard from '../Challenges/ChallengeCard';
 
-function ChallengeScroll({ChallengeData, isCurrent, onRefresh}): JSX.Element {
+function ChallengeScroll({ChallengeData, isCurrent, onRefresh, reRender}): JSX.Element {
   const [refreshing, setRefreshing] = useState(false)
 
   const renderChallenge = ({item}) => {
@@ -30,6 +30,7 @@ function ChallengeScroll({ChallengeData, isCurrent, onRefresh}): JSX.Element {
       data = {ChallengeData}
       renderItem = {renderChallenge}
       contentContainerStyle = {styles.FlatListContainer}
+      extraData = {reRender}
       refreshControl ={
         <RefreshControl 
           refreshing = {refreshing} 

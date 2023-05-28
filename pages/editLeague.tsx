@@ -213,6 +213,7 @@ function EditLeaguePage(props): JSX.Element {
               setPicture={setPicture}
               valid={validPicture}
               setValidPicture={setValidPicture}
+              placeholder={'https://imgur.com/a/5IVD5Ew'}
             ></ImageUpload>
           </View>
 

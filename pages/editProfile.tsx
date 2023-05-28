@@ -17,6 +17,7 @@ import InputForm from "../components/shared/InputForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {GoogleSignin} from "@react-native-google-signin/google-signin";
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { showMessage } from 'react-native-flash-message';
 
 function EditProfile({route, navigation}): JSX.Element {
 
@@ -36,6 +37,13 @@ function EditProfile({route, navigation}): JSX.Element {
         if(validPicture) {
             updatePicture()
         }
+
+        showMessage({
+          floating : true,
+          message : 'Updated your information. Reload the app to see new changes',
+          backgroundColor : '#014421',
+          color : '#F9A800',
+        })
     }
 
     const makeSure = function() {
@@ -91,6 +99,8 @@ function EditProfile({route, navigation}): JSX.Element {
     };
 
     const deleteAccount = async function() {
+      await AsyncStorage.setItem('Apple', JSON.stringify(false))
+      await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
         var config = {
             method: 'delete',
             url: BACKEND_URL + 'delete_user',

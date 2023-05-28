@@ -4,41 +4,13 @@ DropDownPicker.setListMode("MODAL")
 import mappedChallengeList from "./challengeList";
 import unitList from "./unitList";
 import {styles} from '../../css/add/challenge/Style';
-import NumericInput from 'react-native-numeric-input'
+import NumericInput from './numericInput';
 import DatePicker from 'react-native-date-picker'
 import SwitchSelector from "react-native-switch-selector";
 import axios from "axios";
 import {showMessage} from 'react-native-flash-message'
 import {BACKEND_URL} from '@env';
 import RecommendChallenge from './recommendChallenge';
-
-import Ionicons                 from 'react-native-vector-icons/Ionicons'
-import AntDesign                from 'react-native-vector-icons/AntDesign'
-import Entypo                   from 'react-native-vector-icons/Entypo'
-import Feather                  from 'react-native-vector-icons/Feather'
-import FontAwesome              from 'react-native-vector-icons/FontAwesome'
-import FontAwesome5             from 'react-native-vector-icons/FontAwesome5Pro'
-import Fontisto                 from 'react-native-vector-icons/Fontisto'
-import Foundation               from 'react-native-vector-icons/Foundation'
-import MaterialCommunityIcons   from 'react-native-vector-icons/MaterialCommunityIcons'
-import MaterialIcons            from 'react-native-vector-icons/MaterialIcons'
-import Octicons                 from 'react-native-vector-icons/Octicons'
-import SimpleLineIcons          from 'react-native-vector-icons/SimpleLineIcons'
-import Zocial                   from 'react-native-vector-icons/Zocial'
-
-Ionicons.loadFont()            
-AntDesign.loadFont()                       
-Entypo.loadFont()                          
-Feather.loadFont()                         
-FontAwesome.loadFont()                     
-// FontAwesome5.loadFont()                    
-Fontisto.loadFont()                        
-Foundation.loadFont()                      
-MaterialCommunityIcons.loadFont()          
-MaterialIcons.loadFont()                   
-Octicons.loadFont()                        
-SimpleLineIcons.loadFont()                 
-Zocial.loadFont()                          
 
 import {
     View,
@@ -95,7 +67,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
     const [itemsLeagues, setItemsLeagues] = useState([]);
 
     const [load, setLoad] = useState(false)
-    
+
     useEffect(() => {
       if(!load){
         setLoad(true)
@@ -103,7 +75,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
       }
 
     }, [load])
-    
+
 
     useEffect(() => {
         getFriends()
@@ -268,7 +240,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
       if (data === 'NA'){
         return;
       }
-      
+
       setValue(data.exerciseName)
       setValueUnits(data.unit)
       setStartDate(data.issueDate)
@@ -278,7 +250,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
 
     const [showRecommendMessage, setShowRecommendMessage] = useState(false)
     const [RecMessage, setRecMessage] = useState("")
-  
+
     return (
       <View style = {styles.ChallengeContainer} >
             <RecommendChallenge
@@ -287,7 +259,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
               setShowRecommendMessage = {setShowRecommendMessage}
               setRecMessage = {setRecMessage}
             />
-            {showRecommendMessage ? 
+            {showRecommendMessage ?
               <View style = {[styles.RecommendTextContainer]}>
                 <Text style={styles.RecommendMessageText}>
                     {RecMessage}
@@ -343,10 +315,12 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             minValue={0}
                             rounded={true}
                             inputStyle={{borderColor: '#014421'}}
-                            iconStyle={{color: 'white'}}
+                            iconStyle={{color: '#F9A800', fontWeight:'bold', fontSize:30}}
                             textColor="black"
-                            rightButtonBackgroundColor="#014421"
-                            leftButtonBackgroundColor="#014421"
+                            backgroundColor =  "black"
+                            rightButtonBackgroundColor='#014421' 
+                            leftButtonBackgroundColor='#014221'
+                        
                         />
                     </View>
 
@@ -495,7 +469,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                     underlayColor = '#013319'
                 >
                     <Text style={styles.IssueChallengeText}>
-                        Issue
+                        Send
                     </Text>
                 </TouchableHighlight>
             </View>

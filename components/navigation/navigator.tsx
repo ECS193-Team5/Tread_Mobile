@@ -2,7 +2,7 @@ import { NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
-import {Image, Platform} from 'react-native'
+import {AppState, Image, Platform} from 'react-native'
 
 import messaging from "@react-native-firebase/messaging";
 import Login from '../../pages/loginPage';
@@ -51,6 +51,9 @@ function ChallengesSwipeStack() {
   return (
     <TopTab.Navigator
       tabBarPosition='bottom'
+      screenOptions={{
+        swipeEnabled: Platform.OS === 'android' ? false : true
+      }}
     >
       <TopTab.Screen name = "Challenges" component= {Challenge}/>
       <TopTab.Screen name = "Incoming Challenges" component = {IncomingChallengesPage}/>
@@ -62,6 +65,9 @@ function LeaguesSwipeStack() {
   return (
     <TopTab.Navigator
       tabBarPosition='bottom'
+      screenOptions={{
+        swipeEnabled: Platform.OS === 'android' ? false : true
+      }}
     >
       <TopTab.Screen name = "Leagues" component= {LeaguesPage}/>
       <TopTab.Screen name = "Incoming Leagues" component = {IncomingLeaguesPage}/>
@@ -73,6 +79,9 @@ function SearchSwipeStack() {
   return (
     <TopTab.Navigator
       tabBarPosition='bottom'
+      screenOptions={{
+        swipeEnabled: Platform.OS === 'android' ? false : true
+      }}
     >
       <TopTab.Screen name = "Search" component= {FriendPage}/>
       <TopTab.Screen name = "Incoming Friends" component = {IncomingFriendsPage}/>
@@ -84,6 +93,9 @@ function ProfileSwipeStack() {
   return (
     <TopTab.Navigator
       tabBarPosition='bottom'
+      screenOptions={{
+        swipeEnabled: Platform.OS === 'android' ? false : true
+      }}
     >
       <TopTab.Screen name = "Profile" component= {ProfilePage}/>
       <TopTab.Screen name = "Profile Inbox" component = {ProfileInbox}/>
@@ -94,14 +106,7 @@ function ProfileSwipeStack() {
 function ChallengesStack(){
   return (
   <Stack.Navigator>
-    {Platform.OS === 'android' &&
-        <Stack.Screen name = "ChallengesMain" component={Challenge} options={{ headerShown: false }}/>
-    }
-
-    {Platform.OS === 'ios' &&
-        <Stack.Screen name = "ChallengesMain" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
-    }
-
+    <Stack.Screen name = "Challenges" component={ChallengesSwipeStack} options={{ headerShown: false }}/>
     <Stack.Screen name = "Incoming Challenges" component={IncomingChallengesPage} options={{ headerShown: false}}/>
   </Stack.Navigator>
   )
@@ -110,14 +115,7 @@ function ChallengesStack(){
 function LeaguesStack(){
   return (
   <Stack.Navigator>
-    {Platform.OS === 'android' &&
-        <Stack.Screen name = "LeaguesMain" component={LeaguesPage} options={{ headerShown: false}}/>
-    }
-
-    {Platform.OS === 'ios' &&
-        <Stack.Screen name = "LeaguesMain" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
-    }
-
+    <Stack.Screen name = "Leagues" component={LeaguesSwipeStack} options={{ headerShown: false}}/>
     <Stack.Screen name = "Incoming Leagues" component={IncomingLeaguesPage} options={{ headerShown: false }}/>
     <Stack.Screen name = "EditLeague" component={EditLeaguePage} options={{ headerShown: false }}/>
     <Stack.Screen name = "League Details" component={LeagueDetails} options={{headerShown: false ,
@@ -143,15 +141,7 @@ function AddStack(){
 function SearchStack(){
   return (
   <Stack.Navigator>
-
-    {Platform.OS === 'android' &&
-        <Stack.Screen name = "SearchMain" component={FriendPage} options={{ headerShown: false }}/>
-    }
-
-    {Platform.OS === 'ios' &&
-        <Stack.Screen name = "SearchMain" component={SearchSwipeStack} options={{ headerShown: false }}/>
-    }
-
+    <Stack.Screen name = "Search" component={SearchSwipeStack} options={{ headerShown: false }}/>
     <Stack.Screen name = "Incoming Friends" component={IncomingFriendsPage} options={{ headerShown: false}}/>
   </Stack.Navigator>
   )
@@ -160,14 +150,7 @@ function SearchStack(){
 function ProfileStack(){
   return (
   <Stack.Navigator>
-
-    {Platform.OS === 'android' &&
-        <Stack.Screen name = "Profile" component={ProfilePage} options={{ headerShown: false }}/>
-    }
-
-    {Platform.OS === 'ios' &&
-        <Stack.Screen name = "Profile" component={ProfileSwipeStack} options={{ headerShown: false }}/>
-    }
+    <Stack.Screen name = "Profile" component={ProfileSwipeStack} options={{ headerShown: false }}/>
     <Stack.Screen name = "EditProfile" component={EditProfile} options={{ headerShown: false }}/>
     <Stack.Screen name = "Profile Inbox" component = {ProfileInbox}  options={{ headerShown: false }}/>
   </Stack.Navigator>
@@ -286,8 +269,6 @@ function ShowTabs(){
         await AsyncStorage.setItem('Notifs', JSON.stringify(0))
         dispatch(badgeP_increment(response.data.length))
       } else {
-        console.log('From async storage ' + notifLastTimeString)
-        console.log('Current amount ' + response.data.length)
         var notifLastTime = parseInt(notifLastTimeString, 10)
         if (response.data.length <= notifLastTime){
           dispatch(badgeP_increment(0))
@@ -317,17 +298,34 @@ function ShowTabs(){
       getBadgeLeague()
       getBadgeFriend()
       getBadgeProfile()
-      showMessage({
-        message : remoteMessage['notification']['body'],
-        duration	: 3000,
-        icon: props => <Image source={{uri: 'https://imgur.com/T3dcr1T.png'}} {...props} />,
-        backgroundColor : '#F9A800',
-        color : '#014421'
-      })
     });
-
+    
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    messaging().onNotificationOpenedApp(async remoteMessage => {
+      console.log('Opened this when app was in background to get badges')
+      getBadgeChallenge()
+      getBadgeLeague()
+      getBadgeFriend()
+      getBadgeProfile()
+    })
+  })
+
+  const handleAppRefresh = function(){
+    getBadgeChallenge()
+    getBadgeLeague()
+    getBadgeFriend()
+    getBadgeProfile()
+  }
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleAppRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
 
   const [loadBadge, setLoadBadge] = useState(false)
 
@@ -347,7 +345,7 @@ function ShowTabs(){
   <Tab.Navigator
     screenOptions={({route}) => ({
       tabBarIcon:({focused, color, size}) => {
-        let iconName = undefined;
+        let iconName = 'https://imgur.com/a/5IVD5Ew';
         let boolIsProfile;
         let borderColor;
 
@@ -400,9 +398,10 @@ function Navigator(){
   return (
 		<NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false }}/>
+        <Stack.Screen name = "Login" component = {Login} options={{ headerShown: false, animation : 'fade'}}/>
         <Stack.Screen name = "Signup" component={Signup} options={{ headerShown: false }}/>
-        <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false}}/>
+        <Stack.Screen name = "Challenge" component={ShowTabs} options={{ headerShown: false, gestureEnabled : false,  animationTypeForReplace: 'push',
+                                                                              animation:'slide_from_bottom', animationDuration : 375}}/>
         <Stack.Screen name = "CameraView" component={CameraView} options={{ headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>

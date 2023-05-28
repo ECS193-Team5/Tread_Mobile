@@ -4,7 +4,7 @@ import {
     Button,
     StyleSheet,
     Image,
-    Text, Pressable, TouchableHighlight
+    Text, Pressable, TouchableHighlight, AppState, PermissionsAndroid
 } from 'react-native';
 
 import {ProfileStyles} from "../css/profile/Style";
@@ -20,17 +20,62 @@ import MenuPopUp from "../components/profile/MenuPopUp";
 import {modalstyle} from "../css/shared/modalStyle";
 import SwitchSelector from "react-native-switch-selector";
 import MedalScroll from "../components/profile/medalScroll";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { cardStyles } from '../css/cards/Style';
 import {createProfilePictureURL} from "../components/Helpers/CloudinaryURLHelper";
 import { useFocusEffect } from '@react-navigation/native';
 import IncomingSwap from '../components/shared/IncomingSwap';
 import {styles} from "../css/challenges/Style"
+import messaging from "@react-native-firebase/messaging";
+import {VAPID_KEY} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ListenerHealthSensor from '../components/Sensors/ListenerHealthSensor';
 
 function ProfilePage(props): JSX.Element {
-	const signOut = async () => {
+    const [update, setUpdate] = useState(true);
+    useEffect(() => {
+      props.navigation.addListener('focus', () => {
+        setUpdate(true);
+      });
+    }, [props.navigation]);
+
+    const refreshPage = () => {
+      console.log("The profile page would refresh");
+    }
+	const getFCMToken = async() => {
+    const token = await messaging().getToken({vapidKey: VAPID_KEY})
+    return token
+	}
+
+  const signOut = async () => {
+    const token = await getFCMToken()
+    await AsyncStorage.setItem('Apple', JSON.stringify(false))
+    await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
+
 		try {
-			await GoogleSignin.signOut();
+      var config = {
+        method: 'post',
+        url: BACKEND_URL + 'auth/logout',
+        withCredentials: true,
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+        },
+        data: {
+          deviceToken: token
+        }
+      };
+
+      axios(config)
+			.then(async (response) => {
+        console.log("logout done")
+			})
+			.catch(function (error) {
+        console.log("logout didnt work")
+				console.log(error);
+			});
+
+      await GoogleSignin.signOut();
+
 		} catch (error) {
 			console.error(error);
 		}
@@ -58,6 +103,16 @@ function ProfilePage(props): JSX.Element {
     const [medalInfoProgress, setMedalInfoProgress] = useState([])
     const [medalInfoEarned, setMedalInfoEarned] = useState([])
 
+    const handleAppRefresh = function(){
+      getIncomingImage()
+      getDisplayName()
+      getUserName()
+      getFriends()
+      getLeagues()
+      getMedalsEarned()
+      getMedalsProgress()
+    }
+
     useEffect(() => {
         getIncomingImage()
         getDisplayName()
@@ -80,6 +135,13 @@ function ProfilePage(props): JSX.Element {
         getMedalsProgress()
       }, [])
     );
+
+    useEffect(() => {
+      const subscription = AppState.addEventListener('change', handleAppRefresh)
+      return () => {
+        subscription.remove()
+      }
+    }, [])
 
     useEffect(() => {
         if(props.route.params !== undefined && props.route.params.refresh) {
@@ -286,10 +348,10 @@ function ProfilePage(props): JSX.Element {
     const handleQRModal = function(){
       if(openQR){
         setModalVisibleQR(true)
-      } 
+      }
       setOpenQR(false)
     }
-  
+
     const switchRef = useRef(null)
 
     const getIncomingImage = function(){
@@ -302,7 +364,7 @@ function ProfilePage(props): JSX.Element {
           Accept: 'application/json',
         }
       };
-  
+
       axios(config)
         .then(function (response) {
           if (response.data.length > 0){
@@ -315,12 +377,13 @@ function ProfilePage(props): JSX.Element {
           console.log(error)
         })
     }
-    
+
     const [IncomingImage, setIncomingImage] = useState(getIncomingImage)
 
 
     return (
       <View style={ProfileStyles.Background}>
+        <ListenerHealthSensor type="Profile" update={update} setUpdate = {setUpdate} refreshFunction = {handleRefresh}/>
             <Modal
                 isVisible={modalVisibleQR}
                 hasBackdrop = {true}
@@ -371,7 +434,7 @@ function ProfilePage(props): JSX.Element {
                   </Pressable>
                 </View>
               </View>
-              
+
               <View style={ProfileStyles.ProfileTopContainer}>
                   <View style={ProfileStyles.ProfileImageContainer}>
                       <Image
@@ -403,7 +466,7 @@ function ProfilePage(props): JSX.Element {
                         underlayColor = 'rgba(0,0,0,0.15)'
                         >
                         <Text style={ProfileStyles.OtherInfoText}>
-                          {numFriends.toString()}  
+                          {numFriends.toString()}
                           <Text style = {ProfileStyles.SecondaryText}>
                               {(numFriends === 1 ? " Friend" : " Friends")}
                           </Text>
@@ -417,7 +480,7 @@ function ProfilePage(props): JSX.Element {
                         underlayColor = 'rgba(0,0,0,0.15)'
                         >
                         <Text style={ProfileStyles.OtherInfoText}>
-                          {numLeagues.toString()}  
+                          {numLeagues.toString()}
                           <Text style = {ProfileStyles.SecondaryText}>
                               {(numLeagues === 1 ? " League" : " Leagues")}
                           </Text>
@@ -431,7 +494,7 @@ function ProfilePage(props): JSX.Element {
                         underlayColor = 'rgba(0,0,0,0.15)'
                         >
                         <Text style={ProfileStyles.OtherInfoText}>
-                          {numMedals.toString()}  
+                          {numMedals.toString()}
                           <Text style = {ProfileStyles.SecondaryText}>
                               {(numMedals === 1 ? " Medal" : " Medals")}
                           </Text>

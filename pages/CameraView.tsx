@@ -4,6 +4,7 @@ import {
   Pressable,
   StatusBar,
   Image,
+  SafeAreaView,
 } from 'react-native';
 
 import {CameraScreen} from 'react-native-camera-kit';
@@ -16,14 +17,14 @@ function CameraView(props): JSX.Element {
       <StatusBar
         barStyle="light-content"
       />
-      <View style = {[styles.TitleContainer, {backgroundColor : 'black', flex: 10, marginHorizontal : 0}]}>
+      <SafeAreaView style = {[styles.TitleContainer, {backgroundColor : 'black', flex:3, marginHorizontal : 0}]}>
           <Pressable
-            onPress={() => props.route.params.handleBack('test')}
+            onPress={() => props.route.params.handleBack()}
           >
             <Image style ={{width : 20, height : 20, alignSelf : 'flex-start', margin : '3%'}} source={{uri: 'https://imgur.com/opW6uxv.png'}}/>
           </Pressable>
 
-      </View>
+      </SafeAreaView>
       <View style = {{flex : 100}}>
         <CameraScreen
         hideControls

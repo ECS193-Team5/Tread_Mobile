@@ -4,7 +4,7 @@ import React from 'react';
 import renderer, {act} from 'react-test-renderer';
 import { fireEvent, render, screen } from "@testing-library/react-native"
 import { toHaveStyle } from "@testing-library/jest-native";
-import AddButton from "../components/test/addButton";
+import AddButton from "../testComps/add/addButton";
 expect.extend({ toHaveStyle });
 
 it('Correct Render', () => {
@@ -32,6 +32,6 @@ it('Test onPress', () => {
     );
 
     const element = screen.getByTestId('button')
-    fireEvent(element, 'onPress', "Testing");
+    fireEvent(element, 'onPress');
     expect(onPress).toBeCalled()
 });

@@ -7,7 +7,7 @@ import {
 import UserCard from './UserCard';
 import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
-function UserScroll({UserData, Blocked, Friends,  handler, UserRole, props, onRefresh}): JSX.Element {
+function UserScroll({UserData, Blocked, Friends,  handler, UserRole, props, onRefresh, reRender}): JSX.Element {
   const [refreshing, setRefreshing] = useState(false)
 
   const Refresh = function() {
@@ -42,6 +42,7 @@ function UserScroll({UserData, Blocked, Friends,  handler, UserRole, props, onRe
     <FlatList
       data = {UserData}
       renderItem = {renderUser}
+      extraData = {reRender}
       refreshControl ={
         <RefreshControl 
           refreshing = {refreshing} 

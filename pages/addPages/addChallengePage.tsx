@@ -16,7 +16,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 function AddChallengePage(props): JSX.Element {
 
   const switchOptions = [
-    {label: 'Issue', value: 'issue'},
+    {label: 'Send', value: 'issue'},
     {label: 'Log', value: 'progress'}
   ];
 

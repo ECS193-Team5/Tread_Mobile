@@ -13,7 +13,7 @@ function MedalCard({MedalData}): JSX.Element {
     const [modalVisible, setModalVisible] = useState(false)
     // var images = []
     var currentAmount = MedalData['progress'];
-    var targetAmount = MedalData['exercise']['amount'];
+    var targetAmount = MedalData['exercise']['convertedAmount'];
     var ProgressPercent = Math.min(100,Math.round(currentAmount / targetAmount * 100))
 
     return (

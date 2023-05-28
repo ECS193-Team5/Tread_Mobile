@@ -2,10 +2,13 @@ import 'react-native';
 import React from 'react';
 // Note: test renderer must be required after react-native.
 import renderer, {act} from 'react-test-renderer';
-import LoginButton from "../components/test/loginButton";
+import LoginButton from "../testComps/login/loginButton";
 import { fireEvent, render, screen } from "@testing-library/react-native"
 import { toHaveStyle } from "@testing-library/jest-native";
+
 expect.extend({ toHaveStyle });
+
+
 it('Correct Render', () => {
     let tree = null;
 
@@ -51,7 +54,7 @@ it('Test signup button', () => {
     const element = screen.getByTestId('button')
 
     expect(element).toHaveStyle({
-        backgroundColor: 'transparent',
+        backgroundColor: 'white',
         borderRadius: 50,
         borderWidth: 2,
         borderColor: 'white',

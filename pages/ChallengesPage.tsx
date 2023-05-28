@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
-  StatusBar, Image
+  StatusBar, Image, AppState
 } from 'react-native';
 import { Text } from 'react-native-elements';
 import IncomingSwap from '../components/shared/IncomingSwap';
@@ -12,20 +12,34 @@ import ChallengeScroll from '../components/shared/ChallengeScroll';
 
 import axios from 'axios';
 import {BACKEND_URL} from '@env';
-
-import ListenerComponentHealthKit from '../components/Sensors/healthKit';
-import ListenerComponentHealthConnect from '../components/Sensors/healthConnect';
+import messaging from "@react-native-firebase/messaging";
+import ListenerHealthSensor from '../components/Sensors/ListenerHealthSensor';
 import ZeroItem from '../components/shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
 
 function ChallengesPage(props): JSX.Element {
-  const [update, setUpdate] = useState(true);
+  const [update, setUpdate] = useState(false);
   useEffect(() => {
-    // Get the deep link used to open the app
+    console.log("add listener");
+
     props.navigation.addListener('focus', () => {
+      console.log("focus")
+      console.log(update);
       setUpdate(true);
     });
-  }, [props.navigation]);
+  }, []);
+
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+
+    return unsubscribe;
+  }, []);
 
   const getChallengeData = function(){
     var config = {
@@ -131,9 +145,8 @@ function ChallengesPage(props): JSX.Element {
     } else {
       getGlobalChallengeData()
     }
+    getIncomingImage()
   }
-
-
 
   const [titleName, setTitleName] = useState('Current')
   const [count, setCount] = useState(0)
@@ -153,13 +166,20 @@ function ChallengesPage(props): JSX.Element {
       getIncomingImage()
     }, [isCurrent])
   );
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
+
   return (
     <View style = {styles.container}>
       <StatusBar
         barStyle="dark-content"
       />
-      <ListenerComponentHealthConnect update={update} setUpdate = {setUpdate}/>
-      <ListenerComponentHealthKit update = {update} setUpdate = {setUpdate}/>
+      <ListenerHealthSensor type="Challenges" update={update} setUpdate = {setUpdate} refreshPage = {handleRefresh}/>
       <View style = {styles.topRightClickContainer}>
         <IncomingSwap
           props = {props}
@@ -188,6 +208,7 @@ function ChallengesPage(props): JSX.Element {
             ChallengeData={ChallengeData}
             isCurrent = {isCurrent}
             onRefresh = {handleRefresh}
+            reRender = {reRender}
           />
         :
         <ZeroItem

@@ -3,7 +3,8 @@ import {
   View,
   Text,
   FlatList,
-  RefreshControl
+  RefreshControl,
+  AppState
 } from 'react-native';
 
 import LeagueCard from '../components/Leagues/LeagueCard';
@@ -15,6 +16,7 @@ import axios from 'axios';
 import {BACKEND_URL} from '@env';
 import ZeroItem from '../components/shared/ZeroItem';
 import { useFocusEffect } from '@react-navigation/native';
+import messaging from "@react-native-firebase/messaging";
 
 const options = [
   { label : "All" , value : 'All'},
@@ -22,6 +24,19 @@ const options = [
 ]
 
 function LeaguesPage(props): JSX.Element {
+
+  const [reRender, setRender] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      handleRefresh()
+      setRender(!reRender)
+      console.log('make list rerender')
+    });
+    
+    return unsubscribe;
+  }, []);
+
   const getAllLeagueData = function() {
     var config = {
       method: 'post',
@@ -117,6 +132,13 @@ function LeaguesPage(props): JSX.Element {
     }, [currentView])
   );
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', handleRefresh)
+    return () => {
+      subscription.remove()
+    }
+  }, [])
+
   const handleRefresh = function(){
     if(currentView === 'All'){
       getAllLeagueData()
@@ -172,6 +194,7 @@ function LeaguesPage(props): JSX.Element {
             data = {LeagueData}
             renderItem = {renderLeague}
             contentContainerStyle = {styles.FlatListContainer}
+            extraData ={reRender}
             refreshControl ={
               <RefreshControl 
                 refreshing = {refreshing} 
