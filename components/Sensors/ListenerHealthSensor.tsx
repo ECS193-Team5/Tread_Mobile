@@ -23,6 +23,7 @@ const ListenerHealthSensor = (props) => {
     const [sensorType, setSensorType] = useState("none");
     const [permissions, setPermissions] = useState(false);
     const [dataResults, setDataResults] = useState([]);
+    const [firstLoad, setFirstLoad] = useState(true);
 
     useEffect(() => {
         if (!load && props.type === "Challenges") {
@@ -44,13 +45,26 @@ const ListenerHealthSensor = (props) => {
     }, [sensorType])
 
     useEffect(() => {
-        if (load && props.update) {
+        if ((load && props.update)) {
+            console.log("trigger through props.update")
             if(permissions){
                 readSampleData();
             }
             props.setUpdate(false);
+            setFirstLoad(false);
         }
     }, [props.update]);
+
+    useEffect(() => {
+        if (load && firstLoad && permissions ) {
+            console.log("trigger through firstLoad", permissions);
+            if(permissions){
+                readSampleData();
+            }
+            props.setUpdate(false);
+            setFirstLoad(false);
+        }
+    }, [load, firstLoad, permissions]);
 
     useEffect(() => {
         if(dataResults.length > 0 && dataResults[0].length > 0){
@@ -137,24 +151,35 @@ const ListenerHealthSensor = (props) => {
         const permissions = {
             permissions: {
                 read: [
-                AppleHealthKit.Constants.Permissions.Workout,
-                ],
+                AppleHealthKit.Constants.Permissions.Workout],
                 write: [
-                AppleHealthKit.Constants.Permissions.Workout,
-                ],
+                    AppleHealthKit.Constants.Permissions.Workout]
             }
-            } as HealthKitPermissions
-
+        } as HealthKitPermissions;
+    
+        try{
+            AppleHealthKit.initHealthKit(permissions, (error:string) => {
+                console.log(error);
+            })
+        }
+        catch(error){
+            return false;
+        }
+    
         try {
             AppleHealthKit.getAuthStatus(permissions, (err, results) => {
                 if (err) {
+                    console.log("Auth status failed in getAuthStatus error");
                     console.log(err);
                     return false;
                 }
+                console.log("The permissions are", results);
+                console.log("permissions shoudl have worked");
                 setPermissions(true);
             });
         }
         catch (err) {
+            console.log("Auth status failed in the try-catch of atuh status");
             console.log(err);
             return false;
         }
@@ -204,7 +229,7 @@ const ListenerHealthSensor = (props) => {
     }
 
     const getExercisesApple = async (data) => {
-        
+        console.log("The data is ", data);
         let anchor = "";
         if(data && data.healthKitAnchor){
             anchor = data.healthKitAnchor;
@@ -217,20 +242,25 @@ const ListenerHealthSensor = (props) => {
         if(anchor.length>0){
             options["anchor"] = anchor;
         }
-        
+        console.log("The options are ", options);
+        console.log("attempt to pull data");
         AppleHealthKit.getAnchoredWorkouts(options, (err: Object, results: AnchoredQueryResults) => {
             if (err) {
+                console.log("get anchored workout failed");
                 console.log(err);
               return;
             }
 
             let data = results.data;
             let newAnchor  = results.anchor;
+            console.log("These results are gotten from the sending health information", results);
+            console.log("This is the new anchor", newAnchor);
             setDataResults([data, newAnchor]);
         });
     }
 
     const readSampleData = async () => {
+        console.log("try to read sample data");
         if(!permissions){
             return;
         }
