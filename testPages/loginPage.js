@@ -4,9 +4,8 @@ import {
   Text, Image, ActivityIndicator, Platform
 } from 'react-native';
 
-import LoginButton from '../components/login/loginButton';
+import LoginButton from "../testComps/login/loginButton";
 import {LoginStyles} from '../css/login/Style';
-
 
 import Logo from '../assets/logorenderflipped.png'
 
@@ -74,9 +73,7 @@ function Login({route, navigation}) {
           </View>
           <View style = {LoginStyles.loginContainer}>
             <LoginButton
-              isGoogle={true}
-              text={'Continue With Google'}
-              navigation={navigation}
+              filled={true}
             >
             </LoginButton>
           </View>
@@ -93,9 +90,7 @@ function Login({route, navigation}) {
           </View>
           <View style = {LoginStyles.signUpContainer}>
             <LoginButton
-              isGoogle={false}
-              text={'Continue With Apple'}
-              navigation={navigation}
+              filled={false}
             >
             </LoginButton>
           </View>
