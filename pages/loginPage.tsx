@@ -100,32 +100,28 @@ function Login({route, navigation}): JSX.Element {
     const rawNonce = uuid.v4()
 
     if (isLoggedInApple === "true"){
+      console.log("says apple is logged in");
       var appleAuthResponse = JSON.parse(appleAuthResponseUser)
+      console.log(appleAuthResponse)
       if (Platform.OS === 'ios'){
+        console.log("gets into ios");
+        try{
         const credentialState = await appleAuth.getCredentialStateForUser(appleAuthResponse.user)
         if (credentialState){
-          console.log('auto login with apple')
+          console.log(credentialState, appleAuthResponse);
           loginApple(appleAuthResponse)
-
         } else {
-          console.log("Not signed in apple yet")
+          console.log("Try no signedin");
           setIsSignedInApple(false)
         }
-      }else {
-        appleAuthAndroid.configure({
-          clientId : APPLE_SIGN_IN_CLIENT_ID,
-          redirectUri : APPLE_SIGN_IN_REDIRECT_URL,
-          responseType : appleAuthAndroid.ResponseType.ALL,
-          scope : appleAuthAndroid.Scope.ALL,
-          nonce : rawNonce
-        });
-
-        const response = await appleAuthAndroid.signIn()
-        console.log(response)
-        loginAppleAndroid(response)
+        }
+        catch(err){
+          setIsSignedInApple(false);
+        }
+      } else {
+        navigation.navigate('Challenge', paramsForNavigate);
       }
     } else {
-      console.log("Not signed in apple yet")
       setIsSignedInApple(false)
     }
   }
@@ -194,8 +190,10 @@ function Login({route, navigation}): JSX.Element {
 
   const loginApple = async (authInfo) => {
 		const deviceToken = await getFCMToken()
+    console.log("Gets  into loggin anpple");
 		axios(loginConfigApple(authInfo.identityToken , deviceToken, authInfo.nonce, authInfo.fullName))
 			.then(async (response) => {
+        console.log("then from the login");
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
           setAnimate(false)
@@ -215,36 +213,9 @@ function Login({route, navigation}): JSX.Element {
 				}
 			})
 			.catch(async function (error) {
+        console.log("fails login apple");
         await AsyncStorage.setItem('Apple', JSON.stringify(false))
         await AsyncStorage.setItem('AppleUser', JSON.stringify(false))
-				console.log(error);
-			});
-	}
-
-  const loginAppleAndroid = async (authInfo) => {
-		const deviceToken = await getFCMToken()
-    var fullName = {givenName : null, familyName : null}
-    if (authInfo.user !== undefined){
-      console.log('in here')
-      fullName = {givenName : authInfo.user.name.firstName, familyName : authInfo.user.name.lastName}
-    }
-    console.log(fullName)
-		axios(loginConfigApple(authInfo.id_token , deviceToken, authInfo.nonce, fullName))
-			.then(async (response) => {
-				const hasUsername = response.data['hasUsername'];
-				if(hasUsername) {
-					navigation.navigate('Challenge')
-				} else {
-					navigation.navigate('Signup',{
-						email: authInfo.email,
-						photo: "https://imgur.com/FA5aXVD.png",
-						navigation: navigation,
-						deviceToken: deviceToken
-					})
-				}
-			})
-			.catch(async function (error) {
-        await AsyncStorage.setItem('Apple', JSON.stringify(false))
 				console.log(error);
 			});
 	}
