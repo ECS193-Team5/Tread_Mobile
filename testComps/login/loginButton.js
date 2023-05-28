@@ -6,16 +6,20 @@ import {
 
 import {LoginStyles} from '../../css/login/Style';
 import {GoogleSignin} from "@react-native-google-signin/google-signin";
-import axios from "axios";
-import loginConfig from "../../routes/login/login";
+// import axios from "axios";
+// import loginConfig from "../../routes/login/login";
 
 import {ANDROID_CLIENT, WEB_CLIENT, IOS_CLIENT, VAPID_KEY} from '@env';
+import {log} from "qrcode/lib/core/galois-field";
 
-function LoginButton({filled, text, navigation, isLogin}) {
+
+function LoginButton({filled, text, isLogin, loginMock}) {
     // let autoLogin = true;
     const [autoLogin, setAutoLogin] = useState(true);
+    const navigationMock = (value) => {}
 
     useEffect(() => {
+        navigationMock()
         GoogleSignin.isSignedIn().then((response) => {
             if(response) {
                 if(filled) {
@@ -61,7 +65,7 @@ function LoginButton({filled, text, navigation, isLogin}) {
         GoogleSignin.hasPlayServices().then((hasPlayService) => {
             if (hasPlayService) {
                 GoogleSignin.signInSilently().then((userInfo) => {
-                    login(userInfo['user']['email'], userInfo['idToken'], userInfo['user']['photo']);
+                    login();
                 }).catch((e) => {
                     console.log("ERROR IS A: " + JSON.stringify(e));
                 })
@@ -75,28 +79,18 @@ function LoginButton({filled, text, navigation, isLogin}) {
         return ""
     }
 
-    const login = async (email, authToken, photo) => {
-        const deviceToken = await getFCMToken()
-        axios(loginConfig(authToken, deviceToken))
-            .then((response) => {
-                const hasUsername = response.data['hasUsername'];
-                if(hasUsername) {
-                    setAutoLogin(false);
-                    navigation.navigate('Challenge')
-                } else {
-                    setAutoLogin(false);
-                    navigation.navigate('Signup',{
-                        email: email,
-                        photo: photo,
-                        navigation: navigation,
-                        deviceToken: deviceToken
-                    })
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-
+    const login =  () => {
+        console.log("In login")
+        const deviceToken =  getFCMToken()
+        if(loginMock !== null) {
+            if(loginMock) {
+                // setAutoLogin(false);
+                navigation('Challenge')
+            } else {
+                // setAutoLogin(false);
+                navigation('Signup')
+            }
+        }
     }
 
 

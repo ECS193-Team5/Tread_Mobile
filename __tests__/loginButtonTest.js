@@ -2,7 +2,7 @@ import 'react-native';
 import React from 'react';
 // Note: test renderer must be required after react-native.
 import renderer, {act} from 'react-test-renderer';
-import LoginButton from "../components/test/loginButton";
+import LoginButton, {navigationMock} from "../testComps/login/loginButton";
 import { fireEvent, render, screen } from "@testing-library/react-native"
 import { toHaveStyle } from "@testing-library/jest-native";
 expect.extend({ toHaveStyle });
@@ -51,7 +51,7 @@ it('Test signup button', () => {
     const element = screen.getByTestId('button')
 
     expect(element).toHaveStyle({
-        backgroundColor: 'transparent',
+        backgroundColor: 'white',
         borderRadius: 50,
         borderWidth: 2,
         borderColor: 'white',
@@ -61,3 +61,19 @@ it('Test signup button', () => {
         alignItems: 'center'
     })
 });
+
+// it('Test signup navigation', (object, method) => {
+//
+//     jest.spyOn(LoginButton, 'navigationMock')
+//
+//     render(
+//         <LoginButton
+//             filled={true}
+//             loginMock={true}
+//             navigationMock={navigationMock}
+//         />
+//     );
+//
+//     expect(navigationMock).toBeCalled()
+//
+// });
