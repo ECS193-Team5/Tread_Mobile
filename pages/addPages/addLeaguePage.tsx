@@ -91,7 +91,7 @@ function AddLeaguePage(props): JSX.Element {
           backgroundColor : '#014421',
           color : '#F9A800',
         })
-      }  
+      }
       )
   }
 
@@ -269,7 +269,7 @@ function AddLeaguePage(props): JSX.Element {
   const layoutAnimConfig = {
     duration: 1000,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut, 
+      type: LayoutAnimation.Types.easeInEaseOut,
     },
     delete: {
       duration: 200,
@@ -345,14 +345,14 @@ function AddLeaguePage(props): JSX.Element {
             <Text style = {styles.Title}>
                 Suggested Leagues
             </Text>
-          </View> 
+          </View>
           <View style = {styles.SuggestedLeagueContainer}>
           {count > 0 ?
-            <LeagueInviteScroll 
-              LeagueData={suggestedLeagues} 
-              handler={deleteItem} 
-              onRefresh={handleRefresh} 
-              pageTitle='suggested'          
+            <LeagueInviteScroll
+              LeagueData={suggestedLeagues}
+              handler={deleteItem}
+              onRefresh={handleRefresh}
+              pageTitle='suggested'
             />
             :
             <ZeroItem
@@ -363,9 +363,9 @@ function AddLeaguePage(props): JSX.Element {
               defaultView={false}
               fromLeague = {false}
               props = {props}
-            />    
+            />
           }
-          </View> 
+          </View>
         </View>
       </View>
     )
@@ -378,7 +378,7 @@ function AddLeaguePage(props): JSX.Element {
       />
 
       {openScanner ?
-        props.navigation.navigate("CameraView", { qrValue: qrValue, setQrValue: setQrValue, openScanner: openScanner, 
+        props.navigation.navigate("CameraView", { qrValue: qrValue, setQrValue: setQrValue, openScanner: openScanner,
           setOpenScanner, onBarcodeScan: onBarcodeScan, handleBack: handleBack })
         :
         <View style={{ flex: 1 }}>

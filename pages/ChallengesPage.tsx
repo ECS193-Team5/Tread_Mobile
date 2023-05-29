@@ -19,7 +19,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 function ChallengesPage(props): JSX.Element {
   const [update, setUpdate] = useState(true);
-  
+
   useEffect(() => {
     console.log("add listener");
 
