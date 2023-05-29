@@ -6,80 +6,31 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import {BACKEND_URL} from '@env';
-import axios from 'axios';
-
 import {styles} from '../css/signup/Style';
 import InputForm from "../components/shared/InputForm";
-import ImageUpload from "../components/shared/ImageUpload";
+import ImageUpload from "../testComps/shared/ImageUpload";
 import signupConfig from "../routes/signup/signup";
 
 import CheckBox from '@react-native-community/checkbox';
-import GestureRecognizer from 'react-native-swipe-gestures';
-import {GoogleSignin} from "@react-native-google-signin/google-signin";
+// import GestureRecognizer from 'react-native-swipe-gestures';
+// import {GoogleSignin} from "@react-native-google-signin/google-signin";
 
 import {names} from "../components/SignUp/randomName.json";
 
-function Signup({route, navigation}) {
+function Signup({route, navigation, handleOnPress, handleSwitchAccount}) {
 
   const [displayName, setDisplayName] = useState("");
   const [userName, setUserName] = useState("");
 
-  const [validDisplayName, setValidDisplayName] = useState(false);
-  const [validUserName, setValidUserName] = useState(false);
+  const [validDisplayName, setValidDisplayName] = useState(true);
+  const [validUserName, setValidUserName] = useState(true);
 
-  const [picture, setPicture] = useState(route.params.photo);
+  const [picture, setPicture] = useState("");
   const [validPicture, setValidPicture] = useState(true);
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
-
-  useEffect(() => {
-    if(route.params.firstName){
-      console.log("The use effect in sign up page gets", route.params.firstName);
-      setDisplayName(route.params.firstName);
-      setUserName(route.params.firstName);
-    }else{
-      let name = pickRandomName();
-      console.log("picked rand name");
-      setDisplayName(name);
-      setUserName(name);
-    }
-  }, []);
-
-  const handleOnPress = async function() {
-    axios(signupConfig(userName, displayName, picture, route.params.deviceToken))
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-      navigation.navigate("Challenge");
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
-  const pickRandomName = () => {
-    const arrLength = names.length;
-    const randomIndex = Math.floor(Math.random()*arrLength);
-    const name = names[randomIndex];
-    return name;
-  }
-  const signOut = async () => {
-    try {
-      await GoogleSignin.signOut();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleSwitchAccount = async function() {
-    signOut().then(response => {
-      navigation.navigate('Login');
-    })
-  }
-
+  const [toggleCheckBox, setToggleCheckBox] = useState(true);
 
   return (
-    <GestureRecognizer
-      onSwipeDown = {() => Keyboard.dismiss()}
+    <View
       style={styles.mainContainer}
     >
 			<View style = {styles.titleContainer}>
@@ -91,12 +42,12 @@ function Signup({route, navigation}) {
 
         <ImageUpload
           flex = {50}
-          placeholder = {route.params.photo}
+          // placeholder = {route.params.photo}
           picture={picture}
           setPicture={setPicture}
           valid={validPicture}
           setValidPicture={setValidPicture}
-          //placeholder={'https://imgur.com/a/5IVD5Ew'}
+          placeholder={'https://imgur.com/a/5IVD5Ew'}
         ></ImageUpload>
 
 
@@ -146,8 +97,9 @@ function Signup({route, navigation}) {
 			<View style = {styles.signupContainer}>
 				<TouchableHighlight style = {validUserName && validDisplayName && toggleCheckBox? styles.validSignupButton : styles.invalidSignupButton}
 					disabled = {!(validUserName && validDisplayName && toggleCheckBox)}
-          underlayColor = '#013319'
-          onPress = {handleOnPress}>
+                    underlayColor = '#013319'
+                    onPress = {handleOnPress}
+                    testID="output">
 					<Text style = {styles.signupText}>
 						Sign Up
 					</Text>
@@ -156,18 +108,19 @@ function Signup({route, navigation}) {
 
       <View style={styles.accountContainer}>
         <Text style={styles.accountText}>
-          Signed in with: {route.params.email}
+          Signed in with: email
         </Text>
         <TouchableHighlight onPress={handleSwitchAccount}
           underlayColor = 'rgba(0,0,0,0.15)'
           style = {styles.switchText}
+            testID="switch"
         >
           <Text style={styles.switchText}>
             Switch Accounts
           </Text>
         </TouchableHighlight>
       </View>
-		</GestureRecognizer>
+		</View>
   )
 }
 
