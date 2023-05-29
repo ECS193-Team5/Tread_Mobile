@@ -264,6 +264,7 @@ function ProfileInbox(props): JSX.Element {
               promptText={'No notifications'}
               defaultView = {false}
               navigateToText=""
+              SecondaryPrompt=""
             />
          }
       </View>

@@ -38,7 +38,7 @@ function IncomingLeaguesPage(props): JSX.Element {
       setRender(!reRender)
       console.log('make list rerender')
     });
-    
+
     return unsubscribe;
   }, []);
 
@@ -185,20 +185,21 @@ function IncomingLeaguesPage(props): JSX.Element {
       <View style = {styles.ChallengesContainer}>
 
       {count > 0 ?
-        <LeagueInviteScroll 
-          LeagueData={LeagueData} 
-          handler={deleteItem} 
-          onRefresh={handleRefresh} 
-          pageTitle={pageTitle}    
-          reRender = {reRender}      
+        <LeagueInviteScroll
+          LeagueData={LeagueData}
+          handler={deleteItem}
+          onRefresh={handleRefresh}
+          pageTitle={pageTitle}
+          reRender = {reRender}
         />
         :
           <ZeroItem
             promptText={'You have not ' + (pageTitle === 'Received' ? 'received any' : 'sent any') + ' league invites'}
-            navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
+            navigateToText={pageTitle === 'Received' ? "" :  'Send one here'}
             navigateToPage={'AddLeague'}
             props = {props}
             defaultView = {false}
+            SecondaryPrompt=""
           />
         }
       </View>

@@ -254,7 +254,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
                 navigateToText = ""
               />
             :
-            null
+            <></>
           }
         </View>
       )
@@ -278,7 +278,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
         :
         <ZeroItem
           promptText={currentView === 'pending' || currentView === 'sent' ? ('No ' + currentView + ' invites') : ('No banned users')}
-          SecondaryPrompt = {currentView === 'sent' ? 'Invite more people in the Add User Tab' : null}
+          SecondaryPrompt = {currentView === 'sent' ? 'Invite more people in the Add User Tab' : ""}
           props={props}
           navigateToText = ""
         />
