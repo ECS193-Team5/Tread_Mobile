@@ -7,15 +7,16 @@ import {
 } from 'react-native';
 
 import {styles} from '../css/signup/Style';
-import InputForm from "../components/shared/InputForm";
+// import InputForm from "../components/shared/InputForm";
+import InputForm from "../testComps/shared/InputForm";
 import ImageUpload from "../testComps/shared/ImageUpload";
-import signupConfig from "../routes/signup/signup";
+// import signupConfig from "../routes/signup/signup";
 
 import CheckBox from '@react-native-community/checkbox';
 // import GestureRecognizer from 'react-native-swipe-gestures';
 // import {GoogleSignin} from "@react-native-google-signin/google-signin";
 
-import {names} from "../components/SignUp/randomName.json";
+// import {names} from "../components/SignUp/randomName.json";
 
 function Signup({route, navigation, handleOnPress, handleSwitchAccount}) {
 
