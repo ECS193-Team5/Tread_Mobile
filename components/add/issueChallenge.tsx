@@ -161,8 +161,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
             receivedUser = valueLeagues
         }
 
-        console.log(receivedUser)
-
         const data = {
             receivedUser: receivedUser,
             issueDate: startDate.valueOf(),
@@ -185,7 +183,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                console.log(response.data)
                 setValue(null)
                 setValueUnits(null)
                 setChallengeAmount(Number(0))
@@ -360,8 +357,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             date={startDate}
                             minimumDate = {new Date(new Date().setHours(0,0,0))}
                             onConfirm={(date) => {
-                                console.log('start')
-                                console.log(date)
 
                                 setStartDate(date)
                                 setStartDateSet(true)
@@ -396,8 +391,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             minimumDate={minEndDate}
                             date={endDate}
                             onConfirm={(date) => {
-                                console.log('start')
-                                console.log(date)
                                 setShowEndDatePicker(false)
                                 setEndDate(date)
                             }}

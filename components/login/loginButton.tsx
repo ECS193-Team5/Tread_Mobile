@@ -144,7 +144,6 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 				if(hasUsername) {
 					navigation.navigate('Challenge')
 				} else {
-					console.log("full name", authInfo.fullName)
 					navigation.navigate('Signup',{
 						email: authInfo.email,
 						photo: "https://imgur.com/FA5aXVD.png",
@@ -167,10 +166,10 @@ function LoginButton({isGoogle, text, navigation}): JSX.Element {
 		if (authInfo && authInfo.user !== undefined && authInfo.user.name){
 			fullName = {givenName : authInfo.user.name.firstName, familyName : authInfo.user.name.lastName}
 		}
-		console.log("Should not be called");
+
 		axios(loginConfigApple(authInfo.id_token , deviceToken, authInfo.nonce, fullName))
 			.then(async (response) => {
-				console.log("Got a response though");
+
 				const hasUsername = response.data['hasUsername'];
 				if(hasUsername) {
 					navigation.navigate('Challenge')

@@ -34,9 +34,9 @@ const options = [
 
 function getRequests() {
   return ([])
-} 
+}
 
-function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props, onRefresh, count, setCount}): JSX.Element {  
+function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props, onRefresh, count, setCount}): JSX.Element {
   const getLeagueRole = function(){
     var config = {
       method: 'post',
@@ -50,7 +50,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
         leagueID : props.route.params.leagueData._id
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setIsAdminOwnerParticipant(response.data)
@@ -73,7 +73,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
         leagueID : props.route.params.leagueData._id
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setRequests(response.data)
@@ -83,7 +83,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
         console.log(error)
       )
   }
-  
+
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -93,7 +93,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
   const layoutAnimConfig = {
     duration: 1000,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut, 
+      type: LayoutAnimation.Types.easeInEaseOut,
     },
     delete: {
       duration: 200,
@@ -121,7 +121,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
     updateRequests(route)
   }
 
-  
+
   const typeOfUser = function(userType) {
     if(userType === 'owner' || userType === 'admin') {
       return (
@@ -140,26 +140,26 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
       return null
     }
   }
-  
-  const deleteItem = function(mData) {    
+
+  const deleteItem = function(mData) {
     console.log(mData.username)
     console.log("deleted")
     const filteredData = requests.filter(item => item.username !== mData.username);
     setRequests(filteredData)
-    filteredData.length === 0 ? setCountRequests(0) : null 
-    LayoutAnimation.configureNext(layoutAnimConfig) 
+    filteredData.length === 0 ? setCountRequests(0) : null
+    LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
-  const deleteMember = function(mData) {    
+  const deleteMember = function(mData) {
     console.log(mData.username)
     console.log("deleted")
     // when writing the backend call instead of setting the filtered data, set the actual member list to update everything accordingly
     const filteredData = MemberData.filter(item => item.username !== mData.username);
-    filteredData.length === 1 ? setCount(1) : null 
+    filteredData.length === 1 ? setCount(1) : null
     setLeagueMembers(filteredData)
-    LayoutAnimation.configureNext(layoutAnimConfig) 
+    LayoutAnimation.configureNext(layoutAnimConfig)
   }
-    
+
   const renderInvite = ({item, index}) => {
     return (
     <LeagueUserCard
@@ -246,28 +246,29 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
             Blocked = {Blocked}
             Friends = {Friends}
           />
-          {count === 1 ? 
+          {count === 1 ?
             <ZeroItem
                 promptText='You are the only member'
                 SecondaryPrompt = 'Invite more people in the Add User Tab or tell your friends!'
-                props={props}     
+                props={props}
+                navigateToText = ""
               />
             :
-            null 
+            null
           }
         </View>
       )
     } else if (currentView !== 'invite'){
       return (
         <View>
-        {countRequests > 0 ? 
+        {countRequests > 0 ?
           <FlatList
           data = {requests}
           renderItem = {renderInvite}
           refreshControl ={
-            <RefreshControl 
-              refreshing = {refreshing} 
-              onRefresh = {Refresh} 
+            <RefreshControl
+              refreshing = {refreshing}
+              onRefresh = {Refresh}
               colors = {['#014421']}
               tintColor = {'#014421'}
               progressViewOffset = {-10}
@@ -278,8 +279,9 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
         <ZeroItem
           promptText={currentView === 'pending' || currentView === 'sent' ? ('No ' + currentView + ' invites') : ('No banned users')}
           SecondaryPrompt = {currentView === 'sent' ? 'Invite more people in the Add User Tab' : null}
-          props={props}     
-        />  
+          props={props}
+          navigateToText = ""
+        />
       }
       </View>
       )
@@ -289,7 +291,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
         onSwipeDown = {() => Keyboard.dismiss()}
         style = {{flex : 1}}
         >
-          <View style =  {{flex : 50}}> 
+          <View style =  {{flex : 50}}>
             <Invite
               text = 'Invite to League'
               config={config}
@@ -315,5 +317,3 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
 }
 
 export default LeagueMemberView
-
-
