@@ -19,13 +19,17 @@ import { useFocusEffect } from '@react-navigation/native';
 
 function ChallengesPage(props): JSX.Element {
   const [update, setUpdate] = useState(true);
+  const [titleName, setTitleName] = useState('Current')
+  const [count, setCount] = useState(0)
+  const [ChallengeData, setChallengeData] = useState([])
+  const [globalChallengeData, setGlobalChallengeData] = useState([])
+  const [availableCount, setAvailableCount] = useState('')
+  const [isCurrent, setIsCurrent] = useState(true)
+  const [challengeImage, setChallengeImage] = useState("https://imgur.com/2BHAmsN.png")
+  const [IncomingImage, setIncomingImage] = useState(getIncomingImage)
 
   useEffect(() => {
-    console.log("add listener");
-
     props.navigation.addListener('focus', () => {
-      console.log("focus")
-      console.log(update);
       setUpdate(true);
     });
   }, []);
@@ -40,6 +44,20 @@ function ChallengesPage(props): JSX.Element {
 
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    if(isCurrent){
+      setTitleName("Current")
+      getChallengeData()
+      setChallengeImage("https://imgur.com/2BHAmsN.png")
+    }
+    else{
+      setTitleName("Weekly")
+      getGlobalChallengeData()
+      setChallengeImage("https://imgur.com/j33n2DQ.png")
+    }
+    getIncomingImage()
+  }, [isCurrent]);
 
   const getChallengeData = function(){
     var config = {
@@ -63,7 +81,29 @@ function ChallengesPage(props): JSX.Element {
       )
   }
 
-  const getIncomingImage = function(){
+  const getGlobalChallengeData = function(){
+    var config = {
+      method: 'post',
+      url: BACKEND_URL + 'global_challenge/get_challenges',
+      withCredentials: true,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        setAvailableCount(response.data.length + ' available')
+        setGlobalChallengeData(response.data)
+        setCount(response.data.length)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
+  function getIncomingImage (){
     var config = {
       method: 'post',
       url: BACKEND_URL + 'challenges/received_challenges',
@@ -87,57 +127,13 @@ function ChallengesPage(props): JSX.Element {
       })
   }
 
-  const getGlobalChallengeData = function(){
-    var config = {
-      method: 'post',
-      url: BACKEND_URL + 'global_challenge/get_challenges',
-      withCredentials: true,
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-      }
-    };
-
-    axios(config)
-      .then(function (response) {
-        setAvailableCount(response.data.length + ' available')
-        setChallengeData(response.data)
-        setCount(response.data.length)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  }
-
   const handleOnPressSwap = function(){
     if (titleName === 'Current') {
       setIsCurrent(false)
-      setTitleName("Weekly")
-
-      getGlobalChallengeData()
-      getIncomingImage()
-
-      setAvailableCount('')
-      setChallengeData()
-
-
-      setChallengeImage("https://imgur.com/j33n2DQ.png")
     } else {
       setIsCurrent(true)
-      setTitleName("Current")
-
-      getChallengeData()
-      getIncomingImage()
-
-      setAvailableCount('')
-      setChallengeData()
-
-      setChallengeImage("https://imgur.com/2BHAmsN.png")
     }
   }
-
-  // Check for invitations and update icon, but for now
-  var IncomingImageUrl = "https://imgur.com/ULlEPhH.png"
 
   const handleRefresh = function(){
     if (isCurrent === true) {
@@ -148,13 +144,7 @@ function ChallengesPage(props): JSX.Element {
     getIncomingImage()
   }
 
-  const [titleName, setTitleName] = useState('Current')
-  const [count, setCount] = useState(0)
-  const [ChallengeData, setChallengeData] = useState(getChallengeData)
-  const [availableCount, setAvailableCount] = useState('')
-  const [isCurrent, setIsCurrent] = useState(true)
-  const [challengeImage, setChallengeImage] = useState("https://imgur.com/2BHAmsN.png")
-  const [IncomingImage, setIncomingImage] = useState(getIncomingImage)
+
 
   useFocusEffect(
     React.useCallback(() => {
@@ -203,14 +193,7 @@ function ChallengesPage(props): JSX.Element {
       <View style = {styles.seperator}/>
 
       <View style = {styles.ChallengesContainer}>
-        {count > 0 ?
-          <ChallengeScroll
-            ChallengeData={ChallengeData}
-            isCurrent = {isCurrent}
-            onRefresh = {handleRefresh}
-            reRender = {reRender}
-          />
-        :
+        {count <= 0 ?
         <ZeroItem
           promptText='You have no accepted Challenges'
           navigateToText='Make one here'
@@ -219,8 +202,23 @@ function ChallengesPage(props): JSX.Element {
           defaultView={true}
           fromLeague = {false}
           props = {props}
+        /> :<></>}
+        { (isCurrent && count > 0) ?
+          <ChallengeScroll
+          ChallengeData={ChallengeData}
+          isCurrent = {true}
+          onRefresh = {handleRefresh}
+          reRender = {reRender}
+        />
+        :
+        <ChallengeScroll
+          ChallengeData={globalChallengeData}
+          isCurrent = {false}
+          onRefresh = {handleRefresh}
+          reRender = {reRender}
         />
         }
+
       </View>
 
     </View>
