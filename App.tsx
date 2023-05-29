@@ -104,11 +104,6 @@ function App(): JSX.Element {
     getUrl();
   });
 
-  useEffect(() => {
-    // Get the deep link used to open the app
-    console.log("This use effect is triggered in app.tsx");
-  });
-
   return (
     <Provider store = {store}>
       <View style ={{flex:1}}>
