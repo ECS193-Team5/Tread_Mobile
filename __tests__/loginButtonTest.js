@@ -8,7 +8,6 @@ import { toHaveStyle } from "@testing-library/jest-native";
 
 expect.extend({ toHaveStyle });
 
-
 it('Correct Render', () => {
     let tree = null;
 
