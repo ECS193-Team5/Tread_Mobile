@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 DropDownPicker.setListMode("MODAL")
-import mappedChallengeList from "./challengeList";
+import mappedChallengeList, { challengeList }  from "./challengeList";
 import unitList from "./unitList";
 import {styles} from '../../css/add/challenge/Style';
 import NumericInput from './numericInput';
@@ -241,33 +241,37 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
         return;
       }
 
-      setValue(data.exerciseName)
+      if(challengeList.includes(data.exerciseName)){
+        setCustomTextEditable(false);
+        setValue(data.exerciseName)
+      }
+      else{
+        setCustomTextEditable(true);
+        setValue("Enter your own")
+        setCustomActivity(data.exerciseName);
+      }
+
       setValueUnits(data.unit)
       setStartDate(data.issueDate)
       setEndDate(data.dueDate)
       setChallengeAmount(data.amount)
     }
 
-    const [showRecommendMessage, setShowRecommendMessage] = useState(false)
+
     const [RecMessage, setRecMessage] = useState("")
 
     return (
       <View style = {styles.ChallengeContainer} >
             <RecommendChallenge
               updateInputs={updateInputs}
-              showMessage = {showRecommendMessage}
-              setShowRecommendMessage = {setShowRecommendMessage}
               setRecMessage = {setRecMessage}
             />
-            {showRecommendMessage ?
               <View style = {[styles.RecommendTextContainer]}>
                 <Text style={styles.RecommendMessageText}>
                     {RecMessage}
                 </Text>
               </View>
-              :
-              null
-            }
+
             <View style={styles.ChallengeDropContainer}>
                 <Text style={styles.ActivityTitle}>
                     Activity
@@ -318,9 +322,9 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             iconStyle={{color: '#F9A800', fontWeight:'bold', fontSize:30}}
                             textColor="black"
                             backgroundColor =  "black"
-                            rightButtonBackgroundColor='#014421' 
+                            rightButtonBackgroundColor='#014421'
                             leftButtonBackgroundColor='#014221'
-                        
+
                         />
                     </View>
 
