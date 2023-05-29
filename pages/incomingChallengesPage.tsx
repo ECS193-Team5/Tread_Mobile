@@ -241,6 +241,7 @@ function IncomingChallengesPage(props): JSX.Element {
             defaultView={true}
             fromLeague = {false}
             props = {props}
+            SecondaryPrompt=""
           />
         }
       </View>

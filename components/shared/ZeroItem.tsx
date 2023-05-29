@@ -13,7 +13,7 @@ function ZeroItem({promptText, SecondaryPrompt, navigateToText, navigateToPage, 
     <View>
       <Image style ={ImageStyles.ZeroImage} source={{uri: 'https://imgur.com/q4Uysme.png'}}/>
       <Text style = {SharedStyles.ZeroTextStyle}> {promptText} </Text>
-      {SecondaryPrompt !== undefined ? <Text style = {SharedStyles.SecondaryPromptStyle}> {SecondaryPrompt} </Text>: null}
+      {SecondaryPrompt !== "" ? <Text style = {SharedStyles.SecondaryPromptStyle}> {SecondaryPrompt} </Text>: <></>}
       {navigateToText !== "" ?
         <TouchableHighlight
           onPress={() => props.navigation.navigate('Add', {screen : navigateToPage, initial : false, params : {defaultView : defaultView , fromLeague : fromLeague, id : id}})}

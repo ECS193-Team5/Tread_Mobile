@@ -140,6 +140,7 @@ function AddFriendPage(props): JSX.Element {
           <ZeroItem
             promptText={'No recommended friends yet'}
             navigateToText=""
+            SecondaryPrompt=""
           />
         }
       </View>
