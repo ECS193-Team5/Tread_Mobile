@@ -4,14 +4,14 @@ import {styles} from '../../css/add/challenge/Style';
 import {BACKEND_URL} from '@env';
 import axios from "axios";
 
-function RecommendChallenge({updateInputs,showMessage, setShowRecommendMessage, setRecMessage}): JSX.Element {
+function RecommendChallenge({updateInputs, setRecMessage}): JSX.Element {
 
   const [load, setLoad] = useState(false);
   const [exerciseIndex, setExerciseIndex] = useState(0);
   const [suggestedExercises, setSuggestedExercises] = useState([]);
   const [ButtonText, setButtonText] = useState('Recommend Challenge');
 
-  
+
   const calculateDueDate = function(exercise){
     let issueDate = new Date(exercise.issueDate).valueOf();
     let originalDueDate = new Date(exercise.dueDate).valueOf();
@@ -33,31 +33,31 @@ function RecommendChallenge({updateInputs,showMessage, setShowRecommendMessage, 
 
   const createExercise = function(exercise){
     let progressPercent = exercise.progress/exercise.exercise.convertedAmount;
-    var suggestion = {};
+    var suggestion = {"data":{}, "message":""};
 
 
     if(progressPercent >= 1){
-      suggestion = {data : recreateChallengeData(exercise, Math.round(exercise.exercise.amount * 1.1))};
-      suggestion = {message :"This challenge reflects on one you have already completed. See if you can go a little further!"};
+      suggestion.data =  recreateChallengeData(exercise, Math.round(exercise.exercise.amount * 1.1));
+      suggestion.message = "This challenge reflects on one you have already completed. See if you can go a little further!";
     }
     else if(progressPercent >= .9){
-      suggestion = {data : recreateChallengeData(exercise, exercise.exercise.amount)}
-      suggestion = {message : "You were so close last time!"};
+      suggestion.data = recreateChallengeData(exercise, exercise.exercise.amount);
+      suggestion.message = "You were so close last time!";
     }
     else if(Math.round(progressPercent * exercise.exercise.amount)>0){
-      suggestion = {data : recreateChallengeData(exercise, Math.round(progressPercent * exercise.exercise.amount))}
-      suggestion = {message : "You can do this!"};
+      suggestion.data = recreateChallengeData(exercise, Math.round(progressPercent * exercise.exercise.amount))
+      suggestion.message =  "You can do this!";
     }
 
-    return;
+    return suggestion;
 
   }
 
   const createExerciseList = function(response){
     var results = [];
-    for(let i = 0; i<response.data.length; i++){
-        let result = createExercise(response.data[i]);
-        if (result){
+    for(let i = 0; i<response.length; i++){
+        let result = createExercise(response[i]);
+        if (result.message.length > 0){
             results.push(result);
         }
     }
@@ -78,14 +78,14 @@ function RecommendChallenge({updateInputs,showMessage, setShowRecommendMessage, 
 
     axios(config)
       .then(function (response) {
-          createExerciseList(response);
+          createExerciseList(response.data);
       })
       .catch(function (error) {
           console.log(error);
       });
   }
 
-  
+
   useEffect(
     () => {
         if (!load) {
@@ -95,27 +95,19 @@ function RecommendChallenge({updateInputs,showMessage, setShowRecommendMessage, 
     }, [load]
   );
 
-  
+
 
   const handleRecommendPress = function(){
-    
-    if (showMessage) {
-      setShowRecommendMessage(false) 
-      setButtonText('Recommend Challenge')
-    } else {
-      setShowRecommendMessage(true) 
-
-      if (suggestedExercises.length <= 0) {
+      if (suggestedExercises.length === 0) {
         updateInputs("NA");
         setRecMessage("We do not currently have enough data to recommend a challenge.");
-        setButtonText('Hide Message')
         return;
       }
-
+      console.log(suggestedExercises);
       setRecMessage(suggestedExercises[exerciseIndex].message);
       updateInputs(suggestedExercises[exerciseIndex].data);
       setExerciseIndex((exerciseIndex + 1) % suggestedExercises.length);
-    }
+
   }
 
   return(
