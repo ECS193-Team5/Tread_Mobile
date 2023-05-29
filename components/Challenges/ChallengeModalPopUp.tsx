@@ -63,7 +63,6 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
 
     axios(config)
       .then(function (response) {
-        // console.log(response.data)
         setUsername(response.data)
       })
       .catch((error) =>
@@ -108,7 +107,10 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
     )
   }
 
-  var time_left = Math.round((new Date(Challenge.dueDate)-new Date())/(1000*60*60*24))
+  var time_left_due = Math.round((new Date(Challenge.dueDate)-new Date())/(1000*60*60*24))
+  var time_left_issue = Math.round((new Date(Challenge.issueDate)-new Date())/(1000*60*60*24))
+  var time_left = (time_left_issue > 0 ? time_left_issue : time_left_due)
+  let timeLeftTitle = (time_left_issue > 0 ? "Starting: " : "Time Left: ")
   var title = ''
   var sentUser = ''
   if (!isWeekly){
@@ -140,7 +142,7 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
         </View>
 
         <View style = {modalstyle.ChallengeInfoIndividualContainer}>
-          <Text style = {modalstyle.InfoTypeTextStyle}>Time Left           :
+          <Text style = {modalstyle.InfoTypeTextStyle}>{timeLeftTitle}
             <Text style = {modalstyle.InfoTextStyle}>{"      " + time_left + "d"}</Text>
           </Text>
         </View>
