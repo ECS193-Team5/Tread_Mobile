@@ -170,7 +170,7 @@ function IncomingFriendsPage(props): JSX.Element {
           imageUrl = {NavImageUrl}/>
       </View>
       <View style = {styles.titleContainer}>
-        <Text style = {styles.TitleText}>{pageTitle} Requests</Text>
+        <Text style = {styles.TitleText}>Requests</Text>
       </View>
       <View style = {styles.filterContainer}>
         <SwitchSelector

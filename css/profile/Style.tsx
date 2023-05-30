@@ -65,21 +65,44 @@ const ProfileStyles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
 
-    DisplayNameText: {
+    DisplayNameTextLarge: {
         fontWeight: "600",
-        fontSize: 28,
+        fontSize: 20,
         color: '#014421'
     },
 
+    DisplayNameTextMedium: {
+        fontWeight: "600",
+        fontSize: 15,
+        color: '#014421'
+    },
+
+    DisplayNameTextSmall: {
+        fontWeight: "600",
+        fontSize: 9,
+        color: '#014421'
+    },
     UsernameContainer: {
         flex: 25,
         width: '100%',
     },
 
-    UsernameText: {
+    UsernameTextSmall: {
       fontWeight: "300",
-      fontSize: 16,
+      fontSize: 9,
       color: '#F9A800'
+    },
+
+    UsernameTextMedium: {
+        fontWeight: "300",
+        fontSize: 15,
+        color: '#F9A800'
+    },
+
+    UsernameTextLarge: {
+    fontWeight: "300",
+    fontSize: 20,
+    color: '#F9A800'
     },
 
     OtherInfoContainer: {
@@ -150,4 +173,3 @@ const ProfileStyles = StyleSheet.create({
 });
 
 export {ProfileStyles};
-
