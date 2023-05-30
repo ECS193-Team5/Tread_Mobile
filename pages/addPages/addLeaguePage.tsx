@@ -53,6 +53,8 @@ function AddLeaguePage(props): JSX.Element {
 
   const [isCreate, setIsCreate] = useState(props.route.params.defaultView)
 
+  let referenceCam;
+
   const switchOptions = [
     { label: 'Private', value: 'private' },
     { label: 'Public', value: 'public' }
@@ -117,35 +119,57 @@ function AddLeaguePage(props): JSX.Element {
     props.navigation.navigate("AddLeague", { defaultView: false })
   }
 
-  const onOpenScanner = function () {
-    if (Platform.OS === 'android') {
-      async function requestCameraPermission() {
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.CAMERA,
-            {
-              title: 'Camera Permission',
-              message: 'App needs permission for camera access',
-            },
-          );
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            setQrValue('');
-            setOpenScanner(true);
-          } else {
-            alert('CAMERA permission denied');
-          }
-        } catch (err) {
-          alert('Camera permission err', err);
-          console.warn(err);
-        }
+
+  async function requestAndroidCameraPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'Camera Permission',
+          message: 'App needs permission for camera access',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        setQrValue('');
+        setOpenScanner(true);
+      } else {
+        alert('CAMERA permission denied');
       }
-      requestCameraPermission();
-    } else {
-      setQrValue('');
-      setOpenScanner(true);
+    } catch (err) {
+      alert('Camera permission err', err);
+      console.warn(err);
     }
   }
 
+  async function requestAppleCameraPermission() {
+    try {
+      let isCameraAuthorized = await referenceCam.requestDeviceCameraAuthorization();
+      
+      if(isCameraAuthorized === -1 || isCameraAuthorized === false){
+        isCameraAuthorized = await referenceCam.requestDeviceCameraAuthorization();
+      }
+
+      if(isCameraAuthorized === true){
+        setQrValue('');
+        setOpenScanner(true);
+      }
+      else{
+        alert('Camera permission denied. Check your iphone settings');
+      }
+    }
+    catch (err) {
+      alert('Camera permission denied. Check your iphone settings');
+    }
+  }
+
+
+  const onOpenScanner = function () {
+    if (Platform.OS === 'android') {
+      requestAndroidCameraPermission();
+    } else {
+      requestAppleCameraPermission();
+    }
+  }
 
   const handleDropDown = function (selectedItem) {
     console.log(selectedItem)
@@ -332,6 +356,7 @@ function AddLeaguePage(props): JSX.Element {
   const getJoinCode = function(){
     return(
       <View style ={{flex : 1}}>
+         <Camera style= {{visibility:'hidden'}} ref={(ref) => (referenceCam = ref)} />
         <View style={styles.InputContainer}>
           <LeagueInvite
             text='Join League'
