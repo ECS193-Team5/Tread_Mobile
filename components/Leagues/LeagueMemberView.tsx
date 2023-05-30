@@ -134,6 +134,7 @@ function LeagueMemberView({MemberData, Blocked, Friends, setLeagueMembers, props
           buttonColor = {'#014421'}
           hasPadding
           options = {options}
+          fontSize = {11}
         />
       </View>)
     } else {

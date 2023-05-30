@@ -558,6 +558,7 @@ function LeagueDetails(props): JSX.Element {
                 buttonColor = {'#014421'}
                 hasPadding
                 options = {options}
+                fontSize = {11}
               />
             </View>
 

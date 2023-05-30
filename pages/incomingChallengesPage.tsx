@@ -204,7 +204,7 @@ function IncomingChallengesPage(props): JSX.Element {
           imageUrl = {NavImageUrl}/>
       </View>
       <View style = {styles.titleContainer}>
-        <Text style = {styles.TitleText}>{pageTitle} Challenges</Text>
+        <Text style = {styles.TitleText}>Challenges</Text>
       </View>
       <View style = {styles.filterContainer}>
         <SwitchSelector

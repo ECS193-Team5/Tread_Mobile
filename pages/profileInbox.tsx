@@ -222,7 +222,7 @@ function ProfileInbox(props): JSX.Element {
       </View>
       <View style = {styles.NotificationTitleContainer}>
         <View style = {styles.NotificationNameContainer}>
-          <Text style = {styles.TitleText }>Notifications </Text>
+          <Text style = {styles.NotificationTitleText }>Notifications </Text>
         </View>
         <View style = {styles.NotificationCountContainer}>
           {count > 0 ?

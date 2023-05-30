@@ -169,7 +169,7 @@ function IncomingLeaguesPage(props): JSX.Element {
           imageUrl = {imageUrl}/>
       </View>
       <View style = {styles.titleContainer}>
-        <Text style = {styles.TitleText}>{pageTitle} Invitations</Text>
+        <Text style = {styles.TitleText}>Invitations</Text>
       </View>
       <View style = {styles.filterContainer}>
       <SwitchSelector
