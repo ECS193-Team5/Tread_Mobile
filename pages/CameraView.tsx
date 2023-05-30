@@ -5,6 +5,7 @@ import {
   StatusBar,
   Image,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 
 import {CameraScreen} from 'react-native-camera-kit';
