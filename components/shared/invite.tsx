@@ -104,7 +104,7 @@ function Invite({ text, config, props, pagetoNav }): JSX.Element {
   const onOpenScanner = function () {
     if (Platform.OS === 'android') {
       requestAndroidCameraPermission();
-    } else {
+    } else if(Platform.OS === "ios") {
       requestAppleCameraPermission();
     }
   }

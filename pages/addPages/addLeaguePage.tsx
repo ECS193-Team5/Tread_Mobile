@@ -168,8 +168,7 @@ function AddLeaguePage(props): JSX.Element {
   const onOpenScanner = function () {
     if (Platform.OS === 'android') {
       requestAndroidCameraPermission();
-    } else {
-      console.log("request apple permission");
+    } else if(Platform.OS === "ios") {
       requestAppleCameraPermission();
     }
   }
