@@ -29,6 +29,7 @@ import LeagueInviteScroll from '../../components/shared/LeagueInviteScroll';
 import ZeroItem from '../../components/shared/ZeroItem';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useFocusEffect } from '@react-navigation/native';
+import { Camera } from 'react-native-camera-kit';
 
 const options = [
   { label: "Create", value: true },
@@ -143,6 +144,7 @@ function AddLeaguePage(props): JSX.Element {
 
   async function requestAppleCameraPermission() {
     try {
+      console.log(referenceCam);
       let isCameraAuthorized = await referenceCam.requestDeviceCameraAuthorization();
       
       if(isCameraAuthorized === -1 || isCameraAuthorized === false){
@@ -167,6 +169,7 @@ function AddLeaguePage(props): JSX.Element {
     if (Platform.OS === 'android') {
       requestAndroidCameraPermission();
     } else {
+      console.log("request apple permission");
       requestAppleCameraPermission();
     }
   }
