@@ -37,8 +37,6 @@ const options = [
 ]
 
 function AddLeaguePage(props): JSX.Element {
-  const [qrValue, setQrValue] = useState('')
-  const [openScanner, setOpenScanner] = useState(false)
   const [defaultTab, setDefaultTab] = useState(!props.route.params.defaultView)
 
   const [picture, setPicture] = useState('https://i.imgur.com/sXwXq45.png');
@@ -80,14 +78,14 @@ function AddLeaguePage(props): JSX.Element {
         props.navigation.navigate("Leagues", { defaultView: false })
         showMessage({
           floating : true,
-          message : 'Joined League',
+          message : 'Sent League Request',
           backgroundColor : '#014421',
           color : '#F9A800',
         })
       })
       .catch((error) =>{
         console.log(error);
-        setQrValue("Already joined this league")
+
         showMessage({
           floating : true,
           message : 'Already in this League',
@@ -98,7 +96,8 @@ function AddLeaguePage(props): JSX.Element {
       )
   }
 
-  const onBarcodeScan = function (qrvalue) {
+  const onBarcodeScan = function (event) {
+    let qrvalue = event.nativeEvent.codeStringValue;
     if(qrvalue.startsWith("https://tread.run/requestLeague?")){
       qrvalue = qrvalue.split("?")[1];
       sendLeagueRequest(qrvalue);
@@ -109,69 +108,9 @@ function AddLeaguePage(props): JSX.Element {
         type : 'danger',
       })
     }
-
-    setQrValue(qrvalue)
-    setOpenScanner(false)
-    props.navigation.navigate("AddLeague", {defaultView : false})
   }
 
-  const handleBack = function (qrValue) {
-    setOpenScanner(false)
-    props.navigation.navigate("AddLeague", { defaultView: false })
-  }
-
-
-  async function requestAndroidCameraPermission() {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: 'Camera Permission',
-          message: 'App needs permission for camera access',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        setQrValue('');
-        setOpenScanner(true);
-      } else {
-        alert('CAMERA permission denied');
-      }
-    } catch (err) {
-      alert('Camera permission err', err);
-      console.warn(err);
-    }
-  }
-
-  async function requestAppleCameraPermission() {
-    try {
-      console.log(referenceCam);
-      let isCameraAuthorized = await referenceCam.requestDeviceCameraAuthorization();
-      
-      if(isCameraAuthorized === -1 || isCameraAuthorized === false){
-        isCameraAuthorized = await referenceCam.requestDeviceCameraAuthorization();
-      }
-
-      if(isCameraAuthorized === true){
-        setQrValue('');
-        setOpenScanner(true);
-      }
-      else{
-        alert('Camera permission denied. Check your iphone settings');
-      }
-    }
-    catch (err) {
-      alert('Camera permission denied. Check your iphone settings');
-    }
-  }
-
-
-  const onOpenScanner = function () {
-    if (Platform.OS === 'android') {
-      requestAndroidCameraPermission();
-    } else if(Platform.OS === "ios") {
-      requestAppleCameraPermission();
-    }
-  }
+  const handleBack = function () {}
 
   const handleDropDown = function (selectedItem) {
     console.log(selectedItem)
@@ -355,15 +294,17 @@ function AddLeaguePage(props): JSX.Element {
   const [suggestedLeagues, setSuggestedLeagues] = useState(getReccLeagues);
   const [count, setCount] = useState(0);
 
+  const goCameraViewPage =  () =>{
+    props.navigation.navigate("CameraView", { onBarcodeScan: onBarcodeScan, handleBack: handleBack, navigation:props.navigation, pageToNav: "AddLeague" , pageProps: props})
+  }
+
   const getJoinCode = function(){
     return(
       <View style ={{flex : 1}}>
-         <Camera style= {{visibility:'hidden'}} ref={(ref) => (referenceCam = ref)} />
         <View style={styles.InputContainer}>
           <LeagueInvite
             text='Join League'
-            onPress={onOpenScanner}
-            qrValue={qrValue}
+            goCameraViewPage={goCameraViewPage}
           />
         </View>
         <View style={styles.SuggestedSeparatorContainer}>
@@ -403,11 +344,6 @@ function AddLeaguePage(props): JSX.Element {
       <StatusBar
         barStyle="dark-content"
       />
-
-      {openScanner ?
-        props.navigation.navigate("CameraView", { qrValue: qrValue, setQrValue: setQrValue, openScanner: openScanner,
-          setOpenScanner, onBarcodeScan: onBarcodeScan, handleBack: handleBack })
-        :
         <View style={{ flex: 1 }}>
           <View style={styles.TitleContainer}>
             <SwitchSelector
@@ -420,10 +356,8 @@ function AddLeaguePage(props): JSX.Element {
               options={options}
             />
           </View>
-
           {isCreate ? getCreateCode() : getJoinCode() }
         </View>
-      }
     </View>
   )
 }

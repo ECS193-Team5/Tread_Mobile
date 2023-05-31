@@ -21,7 +21,6 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { useFocusEffect } from '@react-navigation/native';
 
 function AddFriendPage(props): JSX.Element {
-
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -109,6 +108,7 @@ function AddFriendPage(props): JSX.Element {
   <View
     style = {[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}
   >
+
     <GestureRecognizer
       onSwipeDown = {() => Keyboard.dismiss()}
       style = {{flex : 32}}
@@ -117,7 +117,7 @@ function AddFriendPage(props): JSX.Element {
         text = 'Add Friend'
         config = {config}
         props = {props}
-        pagetoNav = "AddFriend"
+        pageToNav = "AddFriend"
       />
     </GestureRecognizer>
 
