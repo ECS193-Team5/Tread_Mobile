@@ -52,8 +52,6 @@ function AddLeaguePage(props): JSX.Element {
 
   const [isCreate, setIsCreate] = useState(props.route.params.defaultView)
 
-  let referenceCam;
-
   const switchOptions = [
     { label: 'Private', value: 'private' },
     { label: 'Public', value: 'public' }
