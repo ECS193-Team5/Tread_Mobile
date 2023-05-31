@@ -23,40 +23,11 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
     return entry
   }
 
-  const selfInTop5 = function(top5, selfData) {
-    var myUsername = selfData.username;
-
-    for (let i = 0; i < top5.length; i++) {
-        if (myUsername === top5[i].username) {
-            return true;
-        }
-    }
-    return false;
-  }
-
   const buildGlobalLeaderboard= function(response) {
 
-    response = {};
-    response.data = [[{"_id": "645065e2a2ea9157c6e5d559", "progress": 14050, "username": "batman#6380"},
-     {"_id": "64768cd535359551c8f3a121", "progress": 460, "username": "Bhhh#5877"},
-      {"_id": "64599f4938e992bbd64236fa", "progress": 300, "username": "uj#8667"},
-       {"_id": "646723c5d11be074a67b492d", "progress": 240, "username": "Kauboy#9630"},
-       {"_id": "646723c5d11be074a67b492d", "progress": 240, "username": "Kauboy#9630"},
-       {"_id": "646723c5d11be074a67b492d", "progress": 240, "username": "Kauboy#9630"}], {"_id": "64747a40a5da8dec6e2d31e4", "progress": 0, "username": "AwesomeAnteater#7250"}]
-    console.log("build")
     let top5 = response.data[0];
-    let selfData = response.data[1];
-
     let top5Info = top5.map(makeProgressObj);
 
-    if (!selfInTop5(top5, selfData)) {
-      console.log("self is not in top 5")
-        let item = makeProgressObj(selfData, 6);
-        item["level"] = " - ";
-        top5Info.push(item);
-    }
-
-    console.log("info", top5Info)
     setProgressInfo(top5Info);
   }
 
@@ -100,7 +71,7 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
       .then(function (response) {
         console.log(response.data);
         isWeekly ? buildGlobalLeaderboard(response) :
-        setProgressInfo(response.data.map(makeProgressObj))
+        setProgressInfo(response.data.slice(0,5).map(makeProgressObj))
       })
       .catch((error) =>
         console.log(error)
