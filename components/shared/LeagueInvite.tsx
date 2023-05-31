@@ -8,7 +8,7 @@ import {
 import {styles} from '../../css/add/friend/Style';
 
 
-function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {
+function LeagueInvite({text, goCameraViewPage}): JSX.Element {
   return (
       <View style = {[styles.Background, {paddingTop : '0%'}]}>
         <View style = {styles.LeagueTitleContainer}>
@@ -19,7 +19,7 @@ function LeagueInvite({text, config, onPress, qrValue}): JSX.Element {
         <View style = {[styles.InputContainer, {flex: 90, marginTop : '0%', marginHorizontal : '0%'}]}>
           <View style = {[styles.SubmitContainer,{justifyContent : 'center'}]}>
             <TouchableHighlight style = {styles.ButtonValid}
-              onPress = {onPress}
+              onPress = {goCameraViewPage}
               underlayColor = '#013319'
             >
               <Text style = {styles.RequestText}>

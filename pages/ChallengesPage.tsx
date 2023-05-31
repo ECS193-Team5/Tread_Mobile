@@ -203,20 +203,21 @@ function ChallengesPage(props): JSX.Element {
           fromLeague = {false}
           props = {props}
         /> :<></>}
-        { (isCurrent && count > 0) ?
+        { (isCurrent && ChallengeData.length > 0) ?
           <ChallengeScroll
           ChallengeData={ChallengeData}
           isCurrent = {true}
           onRefresh = {handleRefresh}
           reRender = {reRender}
         />
-        :
+        : <></>}
+        { (!isCurrent && globalChallengeData.length > 0) ?
         <ChallengeScroll
           ChallengeData={globalChallengeData}
           isCurrent = {false}
           onRefresh = {handleRefresh}
           reRender = {reRender}
-        />
+        /> :<></>
         }
 
       </View>
