@@ -13,14 +13,14 @@ import {styles} from '../css/add/friend/Style';
 import { ImageStyles } from '../css/imageCluster/Style';
 
 function CameraView(props): JSX.Element {
-  return (
+  return(
     <View style = {{height : '100%'}}>
       <StatusBar
         barStyle="light-content"
       />
       <SafeAreaView style = {[styles.TitleContainer, {backgroundColor : 'black', flex:3, marginHorizontal : 0}]}>
           <Pressable
-            onPress={() => props.route.params.handleBack()}
+            onPress={props.handleBack}
           >
             <Image style ={{width : 20, height : 20, alignSelf : 'flex-start', margin : '3%'}} source={{uri: 'https://imgur.com/opW6uxv.png'}}/>
           </Pressable>
@@ -28,15 +28,15 @@ function CameraView(props): JSX.Element {
       </SafeAreaView>
       <View style = {{flex : 100}}>
         <CameraScreen
-        hideControls
+        hideControls={false}
         showFrame={true}
         scanBarcode={true}
         laserColor={'#014421'}
         frameColor={'#F9A800'}
         colorForScannerFrame={'black'}
-        onReadCode={(event) =>
-          props.route.params.onBarcodeScan(event.nativeEvent.codeStringValue)
-        }
+        onReadCode={props.onBarCodeScan}
+        actions={{ rightButtonText: 'Done', leftButtonText: 'Cancel' }}
+        onBottomButtonPressed={props.handleBack}
       />
       </View>
     </View>

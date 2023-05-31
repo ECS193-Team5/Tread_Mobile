@@ -126,7 +126,7 @@ const modalstyle = StyleSheet.create({
     backgroundColor : '#E0E7E3',
     position : 'relative',
     bottom : '18.5%',
-    left : '12%', 
+    left : '12%',
     width : '35%',
     borderRadius : 20,
     borderWidth : 1,

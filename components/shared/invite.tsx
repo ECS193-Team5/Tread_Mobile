@@ -6,27 +6,38 @@ import {
   Text,
   TextInput,
   Pressable,
+  StatusBar,
   Platform,
   PermissionsAndroid,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  SafeAreaView
 } from 'react-native';
-import { Camera, CameraType } from 'react-native-camera-kit';
+import { Camera, CameraScreen } from 'react-native-camera-kit';
 import { styles } from '../../css/add/friend/Style';
 import axios from "axios";
 import { ImageStyles } from '../../css/imageCluster/Style';
 import { BACKEND_URL } from '@env';
 import { showMessage } from 'react-native-flash-message'
-
+import CameraView from '../../pages/CameraView';
 import { useDispatch } from 'react-redux';
 import { badgeF_decrement } from '../../redux/actions/badgeF_actions'
 
 function Invite({ text, config, props, pagetoNav }): JSX.Element {
   let referenceCam;
-  const [qrValue, setQrValue] = useState('')
+  //const [qrValue, setQrValue] = useState('')
   const [openScanner, setOpenScanner] = useState(false)
+  const [friendID, setFriendID] = useState("");
+  const [validID, setValidID] = useState(false);
 
-  const onBarcodeScan = function (qrvalue) {
+  useEffect(() => {
+    if (openScanner) {
+      console.log(openScanner);
+      }
+  }, [openScanner])
+  const onBarcodeScan = function (event) {
+    let qrvalue = event.nativeEvent.codeStringValue;
+    console.log("On bar code scan called");
     if (!qrvalue.startsWith("https://tread.run/requestFriend?")) {
       qrvalue = "";
       showMessage({
@@ -39,17 +50,22 @@ function Invite({ text, config, props, pagetoNav }): JSX.Element {
       qrvalue = qrvalue.split("?")[1];
     }
 
+    console.log("friend values being set");
     setFriendID(qrvalue)
     setValidID(true)
     setOpenScanner(false)
+
     if (pagetoNav == 'League Details') {
+      console.log("Navigate to league with ", props.route.params.leagueData)
       props.navigation.navigate(pagetoNav, { leagueData: props.route.params.leagueData })
     } else {
+      console.log("navigate to ", pagetoNav);
       props.navigation.navigate(pagetoNav)
     }
   }
 
-  const handleBack = function (qrValue) {
+  const handleBack = function () {
+    console.log("Handle back called");
     setOpenScanner(false)
     setValidID(false)
     if (pagetoNav == 'League Details') {
@@ -61,6 +77,7 @@ function Invite({ text, config, props, pagetoNav }): JSX.Element {
 
   async function requestAndroidCameraPermission() {
     try {
+      console.log("Trying to request permissions");
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
@@ -69,30 +86,35 @@ function Invite({ text, config, props, pagetoNav }): JSX.Element {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        setQrValue('');
+        console.log("Permissions granted");
+        console.log(granted);
+        //setQrValue('');
         setOpenScanner(true);
       } else {
+        console.log("Permissions not granted");
         alert('CAMERA permission denied');
       }
     } catch (err) {
+      console.log("Get permissios failed")
       alert('Camera permission err', err);
       console.warn(err);
     }
   }
 
   async function requestAppleCameraPermission() {
+    console.log("Tries to call apple permissions??")
     try {
       let isCameraAuthorized = await referenceCam.requestDeviceCameraAuthorization();
-      
-      if(isCameraAuthorized === -1 || isCameraAuthorized === false){
+
+      if (isCameraAuthorized === -1 || isCameraAuthorized === false) {
         isCameraAuthorized = await referenceCam.requestDeviceCameraAuthorization();
       }
 
-      if(isCameraAuthorized === true){
-        setQrValue('');
+      if (isCameraAuthorized === true) {
+        //setQrValue('');
         setOpenScanner(true);
       }
-      else{
+      else {
         alert('Camera permission denied. Check your iphone settings');
       }
     }
@@ -102,15 +124,15 @@ function Invite({ text, config, props, pagetoNav }): JSX.Element {
   }
 
   const onOpenScanner = function () {
+    console.log("calls open scanner", openScanner)
     if (Platform.OS === 'android') {
       requestAndroidCameraPermission();
-    } else if(Platform.OS === "ios") {
+    } else if (Platform.OS === "ios") {
       requestAppleCameraPermission();
     }
   }
 
-  const [friendID, setFriendID] = useState("");
-  const [validID, setValidID] = useState(false);
+
 
   const onFriendChange = function (id) {
     setFriendID(id);
@@ -191,10 +213,9 @@ function Invite({ text, config, props, pagetoNav }): JSX.Element {
 
   return (
     <View style={styles.Background}>
-      <Camera style= {{visibility:'hidden'}} ref={(ref) => (referenceCam = ref)} />
-      {openScanner ?
-        props.navigation.navigate("CameraView", { qrValue: qrValue, setQrValue: setQrValue, openScanner: openScanner, setOpenScanner, onBarcodeScan: onBarcodeScan, handleBack: handleBack })
-        :
+      <Camera style={{ visibility: 'hidden' }} ref={(ref) => { referenceCam = ref }} />
+
+      {openScanner ? <CameraView handleBack={handleBack} onBarCodeScan={onBarcodeScan} /> :
         <View style={{ flex: 1 }}>
           <View style={styles.TitleContainer}>
             <Text style={styles.Title}>
@@ -232,8 +253,7 @@ function Invite({ text, config, props, pagetoNav }): JSX.Element {
               </TouchableHighlight>
             </View>
           </View>
-        </View>
-      }
+        </View>}
     </View>
   )
 

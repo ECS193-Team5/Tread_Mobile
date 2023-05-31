@@ -231,8 +231,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
         return activitySelected && unitSelected && validDate && targetSelected && validAmount;
     }
 
-
-
     const updateInputs = function(data){
       if (data === 'NA'){
         return;
@@ -253,7 +251,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
       setEndDate(data.dueDate)
       setChallengeAmount(data.amount)
     }
-
 
     const [RecMessage, setRecMessage] = useState("")
 
