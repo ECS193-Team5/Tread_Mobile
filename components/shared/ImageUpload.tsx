@@ -39,23 +39,22 @@ function ImageUpload(props): JSX.Element {
           props.setValidPicture(true);
         }
       });
+      setImagePermission(false);
     }
   },[imagePermission])
+
   async function requestAndroidImageLibraryPermission() {
     try {
       console.log("Trying to request permissions");
       const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        {
-          title: 'Title',
-          message: 'Message',
-        },
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
       );
 
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         setImagePermission(true);
       } else {
-        alert('Image permission denied');
+        console.log(granted);
+        alert('Image permission denied. Please check your settings to allow image permissions again.');
         setImagePermission(false);
       }
     } catch (err) {
