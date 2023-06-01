@@ -37,7 +37,6 @@ function getRequests() {
 }
 
 function LeagueMemberView({ MemberData, Blocked, Friends, setLeagueMembers, props, onRefresh, count, setCount }): JSX.Element {
-  console.log("league member view", props);
   const getLeagueRole = function () {
     var config = {
       method: 'post',
@@ -104,22 +103,19 @@ function LeagueMemberView({ MemberData, Blocked, Friends, setLeagueMembers, prop
   };
 
   function handleDropDown(selectedItem) {
-    console.log(selectedItem)
     setCurrentView(selectedItem)
-    var route = ''
     if (selectedItem === 'all') {
       onRefresh()
       return
-    } else if (selectedItem === 'pending') {
-      route = 'league/get_pending_request_list'
-    } else if (selectedItem === 'sent') {
-      route = 'league/get_sent_invite_list'
-    } else if (selectedItem === 'banned') {
-      route = 'league/get_banned_list'
     }
+    let route = convertViewToRoute(selectedItem);
+
     setRequests([])
     setCountRequests(1)
-    updateRequests(route)
+
+    if(route){
+      updateRequests(route)
+    }
   }
 
 
@@ -182,28 +178,28 @@ function LeagueMemberView({ MemberData, Blocked, Friends, setLeagueMembers, prop
 
   useFocusEffect(
     React.useCallback(() => {
-      var route = ''
-      if (currentView === 'pending') {
-        route = 'league/get_pending_request_list'
-      } else if (currentView === 'sent') {
-        route = 'league/get_sent_invite_list'
-      } else if (currentView === 'banned') {
-        route = 'league/get_banned_list'
-      }
-      updateRequests(route)
+      handleRefresh(currentView);
     }, [currentView])
   );
 
-  function handleRefresh() {
-    var route = ''
+  function convertViewToRoute(currentView){
     if (currentView === 'pending') {
-      route = 'league/get_pending_request_list'
+      return 'league/get_pending_request_list'
     } else if (currentView === 'sent') {
-      route = 'league/get_sent_invite_list'
+      return 'league/get_sent_invite_list'
     } else if (currentView === 'banned') {
-      route = 'league/get_banned_list'
+      return 'league/get_banned_list'
     }
-    updateRequests(route)
+    return ""
+  }
+
+  function handleRefresh() {
+    var route = convertViewToRoute(currentView)
+
+    if(route){
+      updateRequests(route)
+    }
+
   }
 
   useEffect(() => {

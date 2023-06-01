@@ -9,7 +9,6 @@ import { createProfilePictureURL } from '../Helpers/CloudinaryURLHelper';
 
 function UserScroll({UserData, Blocked, Friends,  handler, UserRole, props, onRefresh, reRender}): JSX.Element {
   const [refreshing, setRefreshing] = useState(false)
-
   const Refresh = function() {
     setRefreshing(true);
     setTimeout(() => {
@@ -21,10 +20,10 @@ function UserScroll({UserData, Blocked, Friends,  handler, UserRole, props, onRe
   const getImage = function(item) {
     return createProfilePictureURL(item.username)
   }
-  
-  const renderUser = ({item, index}) => {    
+
+  const renderUser = ({item, index}) => {
     return (
-    <UserCard 
+    <UserCard
       UserInfo = {item}
       index = {index}
       handler = {handler}
@@ -44,9 +43,9 @@ function UserScroll({UserData, Blocked, Friends,  handler, UserRole, props, onRe
       renderItem = {renderUser}
       extraData = {reRender}
       refreshControl ={
-        <RefreshControl 
-          refreshing = {refreshing} 
-          onRefresh = {Refresh} 
+        <RefreshControl
+          refreshing = {refreshing}
+          onRefresh = {Refresh}
           colors = {['#014421']}
           tintColor = {'#014421'}
           progressViewOffset = {-10}

@@ -138,7 +138,7 @@ function LeagueDetails(props): JSX.Element {
 
     axios(config)
       .then(function (response) {
-        console.log(response.data)
+        console.log("Friend", response.data)
         setFriends(response.data)
       })
       .catch(function (error) {
