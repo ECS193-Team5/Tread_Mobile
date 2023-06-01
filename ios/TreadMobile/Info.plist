@@ -50,15 +50,13 @@
 	<key>NSAppTransportSecurity</key>
 	<dict/>
 	<key>NSCameraUsageDescription</key>
-	<string>Tread would like to use your camera to scan QR codes to add friends and join leagues</string>
+	<string>Tread would like to use your camera to scan QR codes to add friends and join leagues.</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Read and understand health data.</string>
+	<string>Tread would like to use your workouts to update your progress in challenges and medals.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Share workout data with other apps.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Tread would like to access your photos to let you pick pictures for leagues and your profile</string>
+	<string>Tread would like to access your photos to let you upload your own league icons and profile pictures for other users to see.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
