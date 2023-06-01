@@ -13,6 +13,7 @@ import {Camera, CameraScreen} from 'react-native-camera-kit';
 import {styles} from '../css/add/friend/Style';
 import { ImageStyles } from '../css/imageCluster/Style';
 import { useIsFocused } from '@react-navigation/native';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 function CameraView(props): JSX.Element {
   const isFocused = useIsFocused();
@@ -71,35 +72,25 @@ function CameraView(props): JSX.Element {
   }
 
   async function requestAppleCameraPermission() {
+    const cameraPermission = PERMISSIONS.IOS.CAMERA;
     console.log(referenceCam);
     console.log("about to ask for permissions", permissions);
     try {
-      const isCameraAuthorized = await referenceCam.checkDeviceCameraAuthorizationStatus();
-      console.log(isCameraAuthorized, " already authorized");
-      if (isCameraAuthorized === true) {
+      const cameraPermissionStatus = await check(cameraPermission);
+      console.log(cameraPermissionStatus, " already authorized");
+      if (cameraPermissionStatus === RESULTS.GRANTED) {
         console.log("got  camera permissions");
         setPermissions(true);
       }
       else {
-        const isUserAuthorizedCamera = await referenceCam.requestDeviceCameraAuthorization();
+        const cameraPermissionRequestResult = await request(cameraPermission);
         
-        if(isUserAuthorizedCamera === true){
+        if(cameraPermissionRequestResult === RESULTS.GRANTED){
           console.log("got camera permissions via prompt");
           setPermissions(true)
-        }
-        else{
-          let isCameraAuthorized = await referenceCam.checkDeviceCameraAuthorizationStatus();
-          while (isCameraAuthorized === -1){
-            isCameraAuthorized = await referenceCam.checkDeviceCameraAuthorizationStatus();
-          }
-          console.log(isCameraAuthorized);
-          if(isCameraAuthorized === true){
-            setPermissions(true);
-          }
-          else{ 
-            alert('Camera permission denied. Check your iphone settings');
-            returnToPreviousPage();
-          }
+        }else{ 
+          alert('Camera permission denied. Check your iphone settings');
+          returnToPreviousPage();
         }
       }
     }
