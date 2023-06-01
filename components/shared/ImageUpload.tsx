@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Image, TouchableHighlight, PermissionsAndroid, Platform} from "react-native";
 import {ImageUploadStyles} from "../../css/shared/ImageUploadStyle";
-import {launchImageLibrary} from 'react-native-image-picker';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import ImagePicker from 'react-native-image-crop-picker';
 
 function ImageUpload(props): JSX.Element {
   const [image, setImage] = useState(<Image/>);
@@ -19,33 +19,28 @@ function ImageUpload(props): JSX.Element {
   },[])
 
   useEffect(() => {
-    const options = {
-    'includeBase64': true,
-    'maxWidth': 200,
-    'maxHeight': 200
-  }
     if(imagePermission){
-      launchImageLibrary(options, (response) => {
-        if(!response['didCancel']) {
-          const source = response['assets'][0]["base64"];
-          setImage(
-            <Image
-              style={ImageUploadStyles.ImagePreview}
-              source={{uri: ("data:image/jpeg;base64," + source)}}
-            >
-            </Image>
-          )
-          props.setPicture("data:image/jpeg;base64," + source)
-          props.setValidPicture(true);
-        }
+      ImagePicker.openPicker({
+        width: 200,
+        height: 200,
+        cropping: true,
+        includeBase64: true
+      }).then(image => {
+        let base64Image = "data:image/jpeg;base64,"+image.data;
+        
+        setImage(
+          <Image style={ImageUploadStyles.ImagePreview} source={{uri: base64Image}} />
+        )
+        props.setPicture(base64Image)
+        props.setValidPicture(true);
       });
+
       setImagePermission(false);
     }
   },[imagePermission])
 
   async function requestAndroidImageLibraryPermission() {
     try {
-      console.log("Trying to request permissions");
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
       );
@@ -68,7 +63,7 @@ function ImageUpload(props): JSX.Element {
     try {
       const permissionStatus = await check(libraryPermission);
 
-      if (permissionStatus === RESULTS.GRANTED) {
+      if (permissionStatus === RESULTS.GRANTED || permissionStatus === RESULTS.LIMITED) {
         setImagePermission(true);
         return;
       } else if (permissionStatus === RESULTS.UNAVAILABLE
@@ -76,19 +71,18 @@ function ImageUpload(props): JSX.Element {
           alert('Image permission denied');
           setImagePermission(false);
           return;
-      }
-
-      //request permission
-
+      } 
+     
       const requestedPermissionResult = await request(libraryPermission);
 
-      if (requestedPermissionResult === RESULTS.GRANTED) {
+      if (requestedPermissionResult === RESULTS.GRANTED || requestedPermissionResult === RESULTS.LIMITED) {
         setImagePermission(true);
-      } else {
+        return;
+      }  else {
         alert('Image permission denied');
         setImagePermission(false);
+        return;
       }
-
 
     } catch {
       alert('Image Permission Err');
@@ -97,17 +91,12 @@ function ImageUpload(props): JSX.Element {
   }
 
   const onChoosePicPress = async function() {
-
-
     if(Platform.OS === "android"){
       await requestAndroidImageLibraryPermission()
     }
     else{
       await requestAppleImageLibraryPermission()
     }
-
-
-
   }
 
   return (
