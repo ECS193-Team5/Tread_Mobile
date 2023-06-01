@@ -11,7 +11,6 @@ import {
 
 import { styles } from '../css/add/league/Style';
 
-import { launchImageLibrary } from 'react-native-image-picker';
 import SwitchSelector from "react-native-switch-selector";
 
 import { BACKEND_URL } from '@env';
