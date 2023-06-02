@@ -9,9 +9,8 @@ import {
   PermissionsAndroid
 } from 'react-native';
 
-import {Camera, CameraScreen} from 'react-native-camera-kit';
+import { CameraScreen} from 'react-native-camera-kit';
 import {styles} from '../css/add/friend/Style';
-import { ImageStyles } from '../css/imageCluster/Style';
 import { useIsFocused } from '@react-navigation/native';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
@@ -19,13 +18,12 @@ function CameraView(props): JSX.Element {
   const isFocused = useIsFocused();
   const [leave, setLeave] = useState(false);
   const [permissions, setPermissions] = useState(false);
-  let referenceCam;
   
   useEffect(() => {
-    if(isFocused && referenceCam){
+    if(isFocused){
       askPermissions();
     }
-  }, [isFocused, referenceCam])
+  }, [isFocused])
   
   useEffect(() => {
     if(isFocused && leave && !permissions){
@@ -73,7 +71,6 @@ function CameraView(props): JSX.Element {
 
   async function requestAppleCameraPermission() {
     const cameraPermission = PERMISSIONS.IOS.CAMERA;
-    console.log(referenceCam);
     console.log("about to ask for permissions", permissions);
     try {
       const cameraPermissionStatus = await check(cameraPermission);
@@ -125,8 +122,6 @@ function CameraView(props): JSX.Element {
   if(isFocused){
   return(
       <View style = {{height : '100%'}}>
-        <Camera style={{ visibility: 'hidden' }}  ref={(ref) => { console.log("Ref  went off");  referenceCam = ref; }} /> 
-        
         <StatusBar
           barStyle="light-content"
         />
