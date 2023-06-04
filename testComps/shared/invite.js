@@ -37,6 +37,7 @@ function Invite({ text, onFriendChange, onSubmit, goCameraViewPage }) {
                             style={styles.Input}
                             onChangeText={onFriendChange}
                             value={friendID}
+                            testID="friend"
                         >
                         </TextInput>
                         <View>

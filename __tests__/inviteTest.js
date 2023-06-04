@@ -5,6 +5,7 @@ import renderer, {act} from 'react-test-renderer';
 import Invite from "../testComps/shared/invite";
 import { fireEvent, render, screen } from "@testing-library/react-native"
 import { toHaveStyle } from "@testing-library/jest-native";
+import InputForm from "../testComps/shared/InputForm";
 expect.extend({ toHaveStyle });
 
 it('Correct Render', () => {
@@ -19,4 +20,19 @@ it('Correct Render', () => {
     })
 
     expect(tree).toMatchSnapshot();
+});
+
+it('Test onFriendChange', () => {
+    const onFriendChangeMock = jest.fn()
+
+    render(
+        <Invite
+            text={"test"}
+            onFriendChange={onFriendChangeMock}
+        />
+    );
+
+    const element = screen.getByTestId('friend')
+    fireEvent(element, 'onChangeText', "Testing");
+    expect(onFriendChangeMock).toBeCalledWith('Testing')
 });
