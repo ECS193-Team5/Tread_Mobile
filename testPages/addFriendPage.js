@@ -12,7 +12,7 @@ import {
 import {styles} from '../../css/add/friend/Style';
 import { SharedStyles } from '../../css/shared/Style';
 import {BACKEND_URL} from '@env';
-import Invite from '../../components/shared/invite';
+import Invite from "../testComps/shared/invite";
 import axios from 'axios';
 import getReccFriend from "../../routes/add/recommend_friend";
 import UserScroll from '../../components/shared/UserScroll';
@@ -115,9 +115,6 @@ function AddFriendPage(props) {
             >
                 <Invite
                     text = 'Add Friend'
-                    config = {config}
-                    props = {props}
-                    pageToNav = "AddFriend"
                 />
             </GestureRecognizer>
 
