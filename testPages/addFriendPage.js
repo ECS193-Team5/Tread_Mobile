@@ -9,16 +9,11 @@ import {
     AppState
 } from 'react-native';
 
-import {styles} from '../../css/add/friend/Style';
-import { SharedStyles } from '../../css/shared/Style';
-import {BACKEND_URL} from '@env';
+import {styles} from '../css/add/friend/Style';
+import { SharedStyles } from '../css/shared/Style';
 import Invite from "../testComps/shared/invite";
-import axios from 'axios';
-import getReccFriend from "../../routes/add/recommend_friend";
 import UserScroll from "../testComps/shared/UserScroll";
-import ZeroItem from '../../components/shared/ZeroItem';
-import GestureRecognizer from 'react-native-swipe-gestures';
-import { useFocusEffect } from '@react-navigation/native';
+import ZeroItem from "../testComps/shared/ZeroItem";
 
 function AddFriendPage(props) {
     if (Platform.OS === 'android') {
@@ -39,50 +34,6 @@ function AddFriendPage(props) {
         },
     };
 
-    const deleteItem = function(mData) {
-        console.log(mData.username)
-        console.log("deleted request")
-        const filteredData = mutuals.filter(item => item.username !== mData.username);
-        setMutuals(filteredData)
-        filteredData.length === 0 ? setCount(0) : null
-        LayoutAnimation.configureNext(layoutAnimConfig)
-    }
-
-    // const handleRefresh = function(){
-    //     getMutualFriends()
-    // }
-
-    // const getMutualFriends = function(){
-    //     axios(getReccFriend())
-    //         .then(function (response) {
-    //             // console.log(response.data[0])
-    //             var recommendedFriends = []
-    //             for (let user of response.data){
-    //                 var data = {
-    //                     username : user[0],
-    //                     mutuals :  user[1]
-    //                 }
-    //                 recommendedFriends.push(data)
-    //             }
-    //             console.log(recommendedFriends)
-    //             setMutuals(recommendedFriends)
-    //             setCount(recommendedFriends.length)
-    //         })
-    //         .catch((error) => {
-    //                 console.log(error);
-    //             }
-    //         )
-    // }
-
-    const [mutuals, setMutuals] = useState([]);
-
-    // useFocusEffect(
-    //     React.useCallback(() => {
-    //         getMutualFriends()
-    //     }, [])
-    // );
-
-
     const [count, setCount] = useState(0);
 
     return (
@@ -90,14 +41,13 @@ function AddFriendPage(props) {
             style = {[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}
         >
 
-            <GestureRecognizer
-                onSwipeDown = {() => Keyboard.dismiss()}
+            <View
                 style = {{flex : 32}}
             >
                 <Invite
                     text = 'Add Friend'
                 />
-            </GestureRecognizer>
+            </View>
 
             <View style = {styles.SeparatorContainer}>
                 <View style = {SharedStyles.seperator}/>
@@ -110,11 +60,7 @@ function AddFriendPage(props) {
                     {count > 0 ?
                         <UserScroll/>
                         :
-                        <ZeroItem
-                            promptText={'No recommended friends yet'}
-                            navigateToText=""
-                            SecondaryPrompt=""
-                        />
+                        <ZeroItem/>
                     }
                 </View>
             </View>
