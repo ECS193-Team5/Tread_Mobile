@@ -51,3 +51,18 @@ it('Test onSubmit', () => {
     fireEvent(element, 'onPress');
     expect(onSubmitMock).toBeCalled();
 });
+
+it('Test camera view', () => {
+    const cameraViewMock = jest.fn()
+
+    render(
+        <Invite
+            text={"test"}
+            goCameraViewPage={cameraViewMock}
+        />
+    );
+
+    const element = screen.getByTestId('camera')
+    fireEvent(element, 'onPress');
+    expect(cameraViewMock).toBeCalled();
+});
