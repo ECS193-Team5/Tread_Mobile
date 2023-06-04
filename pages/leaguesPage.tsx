@@ -33,7 +33,7 @@ function LeaguesPage(props): JSX.Element {
       setRender(!reRender)
       console.log('make list rerender')
     });
-    
+
     return unsubscribe;
   }, []);
 
@@ -47,7 +47,7 @@ function LeaguesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
@@ -68,7 +68,7 @@ function LeaguesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setLeagueData(response.data)
@@ -89,14 +89,14 @@ function LeaguesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         if (response.data.length > 0){
           setImage('https://imgur.com/gMqz2UZ.png')
         } else {
           setImage('https://imgur.com/ULlEPhH.png')
-        }     
+        }
       })
       .catch((error) =>
         console.log(error)
@@ -120,7 +120,7 @@ function LeaguesPage(props): JSX.Element {
       getAdminLeagueData()
     }
   }
-  
+
   useFocusEffect(
     React.useCallback(() => {
       if(currentView === 'All'){
@@ -157,7 +157,7 @@ function LeaguesPage(props): JSX.Element {
 
   const renderLeague = ({item}) => {
     return (
-    <LeagueCard 
+    <LeagueCard
       LeagueData = {item}
       props = {props}
       refresh = {handleRefresh}
@@ -189,16 +189,16 @@ function LeaguesPage(props): JSX.Element {
         />
       </View>
       <View style = {styles.ChallengesContainer}>
-        {count > 0 ? 
+        {count > 0 ?
           <FlatList
             data = {LeagueData}
             renderItem = {renderLeague}
             contentContainerStyle = {styles.FlatListContainer}
             extraData ={reRender}
             refreshControl ={
-              <RefreshControl 
-                refreshing = {refreshing} 
-                onRefresh = {Refresh} 
+              <RefreshControl
+                refreshing = {refreshing}
+                onRefresh = {Refresh}
                 colors = {['#014421']}
                 tintColor = {'#014421'}
                 progressViewOffset = {-10}
@@ -206,15 +206,16 @@ function LeaguesPage(props): JSX.Element {
             }
           />
          :
-          <ZeroItem 
+          <ZeroItem
               promptText={'You ' + (currentView === 'All' ? 'have not joined any' : 'are not an admin for any') + ' Leagues'}
              navigateToText={currentView === 'All' ? 'Join or make one here' :  'Make one here'}
              navigateToPage={'AddLeague'}
              props = {props}
              defaultView = {true}
-           />    
-        } 
-      </View> 
+             SecondaryPrompt=""
+           />
+        }
+      </View>
 
     </View>
   )

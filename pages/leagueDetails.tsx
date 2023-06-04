@@ -138,7 +138,7 @@ function LeagueDetails(props): JSX.Element {
 
     axios(config)
       .then(function (response) {
-        console.log(response.data)
+        console.log("Friend", response.data)
         setFriends(response.data)
       })
       .catch(function (error) {
@@ -558,6 +558,7 @@ function LeagueDetails(props): JSX.Element {
                 buttonColor = {'#014421'}
                 hasPadding
                 options = {options}
+                fontSize = {11}
               />
             </View>
 
@@ -598,8 +599,8 @@ function LeagueDetails(props): JSX.Element {
           :
           <ZeroItem
             promptText='There are no challenges at the moment'
-            navigateToText= {role === 'admin' || role === 'owner' ? 'Make one here' : null}
-            SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': undefined}
+            navigateToText= {role === 'admin' || role === 'owner' ? 'Make one here' : ""}
+            SecondaryPrompt = {role === 'participant' ? 'Let the owners or admins know that you want a challenge!': ""}
             navigateToPage="AddChallenge"
             defaultView={true}
             fromLeague={true}
@@ -621,6 +622,7 @@ function LeagueDetails(props): JSX.Element {
           <ZeroItem
             promptText='No Leaderboard Yet'
             SecondaryPrompt = 'Tell the members to start completing challenges!'
+            navigateToText= ""
           />
           }
        </View>

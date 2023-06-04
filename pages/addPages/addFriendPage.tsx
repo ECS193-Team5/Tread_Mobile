@@ -21,7 +21,6 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { useFocusEffect } from '@react-navigation/native';
 
 function AddFriendPage(props): JSX.Element {
-
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -31,7 +30,7 @@ function AddFriendPage(props): JSX.Element {
   const layoutAnimConfig = {
     duration: 1000,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut, 
+      type: LayoutAnimation.Types.easeInEaseOut,
     },
     delete: {
       duration: 200,
@@ -40,13 +39,13 @@ function AddFriendPage(props): JSX.Element {
     },
   };
 
-  const deleteItem = function(mData) {    
+  const deleteItem = function(mData) {
     console.log(mData.username)
     console.log("deleted request")
     const filteredData = mutuals.filter(item => item.username !== mData.username);
     setMutuals(filteredData)
     filteredData.length === 0 ? setCount(0) : null
-    LayoutAnimation.configureNext(layoutAnimConfig) 
+    LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
   const handleRefresh = function(){
@@ -107,8 +106,9 @@ function AddFriendPage(props): JSX.Element {
 
   return (
   <View
-    style = {[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}  
+    style = {[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}
   >
+
     <GestureRecognizer
       onSwipeDown = {() => Keyboard.dismiss()}
       style = {{flex : 32}}
@@ -117,7 +117,7 @@ function AddFriendPage(props): JSX.Element {
         text = 'Add Friend'
         config = {config}
         props = {props}
-        pagetoNav = "AddFriend"
+        pageToNav = "AddFriend"
       />
     </GestureRecognizer>
 
@@ -127,7 +127,7 @@ function AddFriendPage(props): JSX.Element {
       <Text style = {styles.Title}>
           Suggested Friends
         </Text>
-      </View> 
+      </View>
       <View style = {styles.SuggestedUserContainer}>
         {count > 0 ?
           <UserScroll
@@ -139,9 +139,11 @@ function AddFriendPage(props): JSX.Element {
         :
           <ZeroItem
             promptText={'No recommended friends yet'}
-          />    
+            navigateToText=""
+            SecondaryPrompt=""
+          />
         }
-      </View> 
+      </View>
     </View>
   </View>
   )

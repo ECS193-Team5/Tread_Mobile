@@ -11,7 +11,6 @@ import {
 
 import { styles } from '../css/add/league/Style';
 
-import { launchImageLibrary } from 'react-native-image-picker';
 import SwitchSelector from "react-native-switch-selector";
 
 import { BACKEND_URL } from '@env';
@@ -31,7 +30,7 @@ const switchOptions = [
 function EditLeaguePage(props): JSX.Element {
   const [picture, setPicture] = useState(createLeaguePictureURL(props.route.params.leagueData._id));
   const [validPicture, setValidPicture] = useState(false);
- 
+
   const [oldleagueName, setOldLeagueName] = useState(props.route.params.name);
   const [leagueName, setLeagueName] = useState(props.route.params.name);
   const [validLeagueName, setValidLeagueName] = useState(true);
@@ -46,9 +45,6 @@ function EditLeaguePage(props): JSX.Element {
   const [submitError, setSubmitError] = useState('')
 
   const submitNewPhoto = function(){
-    var formData = new FormData()
-    formData.append('leaguePicture', picture)
-    formData.append('leagueID', props.route.params.leagueData._id)
 
     var config = {
       method: 'post',
@@ -58,15 +54,14 @@ function EditLeaguePage(props): JSX.Element {
       },
       withCredentials: true,
       credentials: 'include',
-      data: formData
+      data: {leaguePicture: picture, leagueID: props.route.params.leagueData._id}
     };
 
     axios(config)
       .then(function (response) {
-        console.log(response.data)
+        //console.log(response.data)
       })
       .catch(function(error){
-        console.log(error)
         showMessage({
           floating : true,
           message : 'Error updating League Photo',
@@ -196,7 +191,7 @@ function EditLeaguePage(props): JSX.Element {
   return (
     <GestureRecognizer
     onSwipeDown = {() => Keyboard.dismiss()}
-    style={[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]} 
+    style={[styles.Background, {paddingTop:(Platform.OS === 'ios') ? "12%" : 0}]}
     >
       <StatusBar
         barStyle="dark-content"

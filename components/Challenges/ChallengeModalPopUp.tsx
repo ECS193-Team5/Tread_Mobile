@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  FlatList,  
+  FlatList,
 } from 'react-native';
 
 import { modalstyle } from '../../css/shared/modalStyle';
@@ -18,34 +18,15 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
     var entry = {}
     entry['level'] = index + 1
     entry['name'] = item['username']
-    entry['complete'] = item['progress'] / totalBaseUnits * 100 
+    entry['complete'] = item['progress'] / totalBaseUnits * 100
     entry['score'] = calculateProgress(item['progress'], Challenge.exercise.unit)
     return entry
   }
-  
-  const selfInTop5 = function(top5, selfData) {
-    var myUsername = selfData.username;
-
-    for (let i = 0; i < top5.length; i++) {
-        if (myUsername === top5[i].username) {
-            return true;
-        }
-    }
-    return false;
-  }
 
   const buildGlobalLeaderboard= function(response) {
-    
+
     let top5 = response.data[0];
-    let selfData = response.data[1];
-
     let top5Info = top5.map(makeProgressObj);
-
-    if (!selfInTop5(top5, selfData)) {
-        let item = selfData.map(makeProgressObj);
-        item[0]["level"] = " - ";
-        top5Info.push(item[0]);
-    }
 
     setProgressInfo(top5Info);
   }
@@ -60,10 +41,9 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
         Accept: 'application/json',
       }
     }
-  
+
     axios(config)
       .then(function (response) {
-        // console.log(response.data)
         setUsername(response.data)
       })
       .catch((error) =>
@@ -86,17 +66,18 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
         challengeID : challengeID
       }
     };
-  
+
     axios(config)
       .then(function (response) {
+        console.log(response.data);
         isWeekly ? buildGlobalLeaderboard(response) :
-        setProgressInfo(response.data.map(makeProgressObj))
+        setProgressInfo(response.data.slice(0,5).map(makeProgressObj))
       })
       .catch((error) =>
         console.log(error)
       )
   }
-  
+
   const [ProgressInfo, setProgressInfo] = useState(getProgressInfo)
   const [username, setUsername] = useState(getUsername)
 
@@ -108,7 +89,10 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
     )
   }
 
-  var time_left = Math.round((new Date(Challenge.dueDate)-new Date())/(1000*60*60*24))
+  var time_left_due = Math.round((new Date(Challenge.dueDate)-new Date())/(1000*60*60*24))
+  var time_left_issue = Math.round((new Date(Challenge.issueDate)-new Date())/(1000*60*60*24))
+  var time_left = (time_left_issue > 0 ? time_left_issue : time_left_due)
+  let timeLeftTitle = (time_left_issue > 0 ? "Starting: " : "Time Left: ")
   var title = ''
   var sentUser = ''
   if (!isWeekly){
@@ -117,7 +101,6 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
   } else {
     title = 'Global Challenge'
     sentUser = '     Tread Mobile'
-
   }
   return(
     <View style={modalstyle.container}>
@@ -128,20 +111,20 @@ function ChallengeModalPopUp({Challenge, isWeekly, totalBaseUnits}) {
         <Text style = {modalstyle.TitleTextStyle}>{title}</Text>
       </View>
       <View style = {modalstyle.PopUpChallengeDescriptionContainer}>
-        <View style = {modalstyle.ChallengeInfoIndividualContainer}> 
-          <Text style = {modalstyle.InfoTypeTextStyle}>Description       :     
+        <View style = {modalstyle.ChallengeInfoIndividualContainer}>
+          <Text style = {modalstyle.InfoTypeTextStyle}>Description       :
             <Text style = {modalstyle.InfoTextStyle}> {"     " + Challenge.exercise.exerciseName + " " + Challenge.exercise.amount + " " + Challenge.exercise.unit}</Text>
           </Text>
         </View>
-        
-        <View style = {modalstyle.ChallengeInfoIndividualContainer}> 
-          <Text style = {modalstyle.InfoTypeTextStyle}>Assigned by      :     
+
+        <View style = {modalstyle.ChallengeInfoIndividualContainer}>
+          <Text style = {modalstyle.InfoTypeTextStyle}>Assigned by      :
             <Text style = {modalstyle.InfoTextStyle}>{sentUser}</Text>
           </Text>
         </View>
-        
-        <View style = {modalstyle.ChallengeInfoIndividualContainer}> 
-          <Text style = {modalstyle.InfoTypeTextStyle}>Time Left           :     
+
+        <View style = {modalstyle.ChallengeInfoIndividualContainer}>
+          <Text style = {modalstyle.InfoTypeTextStyle}>{timeLeftTitle}
             <Text style = {modalstyle.InfoTextStyle}>{"      " + time_left + "d"}</Text>
           </Text>
         </View>

@@ -29,7 +29,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         Accept: 'application/json',
       }
     }
-  
+
     axios(config)
       .then(function (response) {
         console.log(response.data)
@@ -39,7 +39,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         console.log(error)
       )
   }
-  
+
   const [SenderOrReceiver , setSenderOrReceiver] = useState("To")
   const [cardRole, setCardRole] = useState('')
   const [currentUser, setCurrentUser] = useState(getUsername)
@@ -143,7 +143,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
   }
 
   const clickedUnfriend = function(){
-    Alert.alert('Unfriend ' + UserInfo.username + ' ?', 
+    Alert.alert('Unfriend ' + UserInfo.username + ' ?',
     'If you change your mind you will have to request to be friends with ' + UserInfo.username + ' again',
     [
       {
@@ -151,7 +151,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         style: 'cancel',
       },
       {
-        text: 'Unfriend', 
+        text: 'Unfriend',
         onPress: RemoveFriend,
         style : 'destructive'
       },
@@ -171,7 +171,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         friendName : UserInfo.username
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log('blocked user ' +  UserInfo.displayName)
@@ -198,7 +198,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
   }
 
   const clickedBlock = function(){
-    Alert.alert('Block ' + UserInfo.username + ' ?', 
+    Alert.alert('Block ' + UserInfo.username + ' ?',
     'If you change your mind you will have to unblock ' + UserInfo.username + ' later',
     [
       {
@@ -206,7 +206,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         style: 'cancel',
       },
       {
-        text: 'Block', 
+        text: 'Block',
         onPress: BlockUser,
         style : 'destructive'
       },
@@ -229,7 +229,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         leagueName : props.route.params.leagueData.leagueName
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log('kicked user ' +  UserInfo.displayName)
@@ -252,7 +252,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
   }
 
   const clickedKick = function(){
-    Alert.alert('Kick ' + UserInfo.username + ' ?', 
+    Alert.alert('Kick ' + UserInfo.username + ' ?',
     'This will remove ' + UserInfo.username + ' from your league',
     [
       {
@@ -260,7 +260,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         style: 'cancel',
       },
       {
-        text: 'Kick', 
+        text: 'Kick',
         onPress: KickUser,
         style : 'destructive'
       },
@@ -283,7 +283,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         leagueName : props.route.params.leagueData.leagueName
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log('banned user ' +  UserInfo.displayName)
@@ -306,7 +306,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
   }
 
   const clickedBan = function(){
-    Alert.alert('Ban ' + UserInfo.username + ' ?', 
+    Alert.alert('Ban ' + UserInfo.username + ' ?',
     'This will remove and ban ' + UserInfo.username + ' from your league',
     [
       {
@@ -314,7 +314,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         style: 'cancel',
       },
       {
-        text: 'Ban', 
+        text: 'Ban',
         onPress: BanUser,
         style : 'destructive'
       },
@@ -334,7 +334,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         friendName : UserInfo.username
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log('unblock user friend ' +  UserInfo.displayName)
@@ -374,7 +374,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         friendName : UserInfo.username
       }
     };
-    
+
     axios(config)
       .then(function (response) {
         showMessage({
@@ -409,7 +409,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         friendName : UserInfo.username
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log('added user friend ' +  UserInfo.displayName)
@@ -446,7 +446,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         leagueName : props.route.params.leagueData.leagueName
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log('added admin ' +  UserInfo.displayName)
@@ -469,7 +469,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
   }
 
   const clickedAddAdmin = function(){
-    Alert.alert('Make ' + UserInfo.username + ' an admin ?', 
+    Alert.alert('Make ' + UserInfo.username + ' an admin ?',
     'This will allow ' + UserInfo.username + ' to issue challenges and manage users and requests',
     [
       {
@@ -477,7 +477,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         style: 'cancel',
       },
       {
-        text: 'Make admin', 
+        text: 'Make admin',
         onPress: AdminAdd,
         style : 'default'
       },
@@ -499,7 +499,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         leagueName : props.route.params.leagueData.leagueName
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log('removed admin ' +  UserInfo.displayName)
@@ -520,9 +520,9 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         })
       })
   }
-  
+
   const clickedRemoveAdmin = function(){
-    Alert.alert('Remove ' + UserInfo.username + ' an admin ?', 
+    Alert.alert('Remove ' + UserInfo.username + ' an admin ?',
     'This will remove ' + UserInfo.username + '\'s ability to issue challenges and manage users and requests',
     [
       {
@@ -530,7 +530,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         style: 'cancel',
       },
       {
-        text: 'Remove admin', 
+        text: 'Remove admin',
         onPress: AdminRemove,
         style : 'destructive'
       },
@@ -552,7 +552,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         leagueID : props.route.params.leagueData._id,
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log('removed admin ' +  UserInfo.displayName)
@@ -575,7 +575,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
   }
 
   const clickedRemoveSelfAdmin = function(){
-    Alert.alert('Give up admin status ?', 
+    Alert.alert('Give up admin status ?',
     'This will remove your ability to issue challenges and manage users and requests',
     [
       {
@@ -583,7 +583,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         style: 'cancel',
       },
       {
-        text: 'Give up admin rights', 
+        text: 'Give up admin rights',
         onPress: AdminRemoveSelf,
         style : 'destructive'
       },
@@ -597,8 +597,8 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
-        </Pressable>   
-    ); 
+        </Pressable>
+    );
   }
 
   const unfriend = function() {
@@ -608,8 +608,8 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/iD9p5iH.png'}}/>
-        </Pressable>   
-    ); 
+        </Pressable>
+    );
   }
 
   const block = function() {
@@ -619,7 +619,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/U7hfisP.png'}}/>
-        </Pressable>   
+        </Pressable>
     );
   }
 
@@ -630,7 +630,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ngSIL5J.png'}}/>
-        </Pressable>   
+        </Pressable>
     );
   }
 
@@ -641,7 +641,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/nDGURiM.png'}}/>
-        </Pressable>   
+        </Pressable>
     );
   }
 
@@ -652,7 +652,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/q7fgVdM.png'}}/>
-        </Pressable>   
+        </Pressable>
     );
   }
 
@@ -663,7 +663,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/cQntMzs.png'}}/>
-        </Pressable>   
+        </Pressable>
     );
   }
 
@@ -674,7 +674,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
-        </Pressable>   
+        </Pressable>
     );
   }
 
@@ -686,7 +686,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           style = {{margin : "4%"}}
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
-        </Pressable>   
+        </Pressable>
     );
   }
 
@@ -697,7 +697,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         style = {{margin : "4%"}}
       >
         <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
-      </Pressable>   
+      </Pressable>
     );
   }
 
@@ -718,7 +718,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
       onPress={AcceptInvite}
     >
       <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
-    </Pressable>  
+    </Pressable>
     )
   }
 
@@ -729,7 +729,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
       return (addAdmin())
     }
   }
-  
+
   const renderRightActions = (progress, dragX, handler) => {
     if (currentUser === UserInfo.username) {
       if(cardRole === 'admin'){
@@ -763,11 +763,11 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
     else {
       return (
         <View style={[SharedStyles.MultipleRightSliderContainer, {width : "28%"}]}>
-          {Friends.includes(UserInfo.username) ? unfriend() : addFriend()}
-          {Blocked.includes(UserInfo.username) ? unblock() : block()}
+          {(Friends && Friends.length > 0 && Friends.includes(UserInfo.username)) ? unfriend() : addFriend()}
+          {(Blocked && Blocked.length > 0 && Blocked.includes(UserInfo.username)) ? unblock() : block()}
         </View>
       )
-    } 
+    }
   };
 
   const renderLeftActions = (progress, dragX, handler) => {
@@ -799,9 +799,9 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
 
   const getUserInfo = function(){
     return (
-      <View style = {[cardStyles.ChallengeNameContainer, {flexDirection : 'column'}]}>            
-        {UserRole === 'Mutual' ? 
-        null 
+      <View style = {[cardStyles.ChallengeNameContainer, {flexDirection : 'column'}]}>
+        {UserRole === 'Mutual' ?
+        null
         :
         <Text style = {cardStyles.ChallengeNameText}>
           {UserInfo.displayName}
@@ -809,7 +809,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         }
         <Text style = {[cardStyles.ChallengeNameText, {color : "#F9A800"}]}>
           {UserInfo.username}
-        </Text> 
+        </Text>
       </View>
     )
   }
@@ -817,7 +817,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
   const UserInfoOrRecipientInfo = function(){
     if (UserRole === 'Sent' || UserRole === 'Received'){
       return (
-        <View style = {[cardStyles.ChallengeNameContainer, {flexDirection : 'column', flex : 40}]}>            
+        <View style = {[cardStyles.ChallengeNameContainer, {flexDirection : 'column', flex : 40}]}>
           <Text style = {cardStyles.ChallengeNameText}>
             {SenderOrReceiver + " : "}
           </Text>
@@ -840,7 +840,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
             {UserInfo.mutuals + (UserInfo.mutuals === 1 ? ' Mutual Friend' : ' Mutual Friends')}
           </Text>
         </View>
-      )          
+      )
     } else {
       return (
         <View style = {[cardStyles.ChallengeNameContainer, {alignItems : 'center'}]}>
@@ -849,7 +849,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
           </Text>
         </View>
       )
-    } 
+    }
   }
 
   return(

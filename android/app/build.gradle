@@ -98,8 +98,9 @@ android {
         applicationId "com.treadmobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 12
-        versionName "1.0.11"
+        vectorDrawables.useSupportLibrary = true
+        versionCode 18
+        versionName "1.0.17"
     }
 
     splits {

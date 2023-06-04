@@ -339,10 +339,6 @@ PODS:
     - glog
   - react-native-date-picker (4.2.13):
     - React-Core
-  - react-native-image-picker (5.4.0):
-    - React-Core
-  - react-native-ionicons (4.6.5):
-    - React
   - react-native-pager-view (6.2.0):
     - React-Core
   - react-native-safe-area-context (4.5.3):
@@ -454,10 +450,21 @@ PODS:
     - FirebaseCoreExtension (= 10.7.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.10.1):
+  - RNGestureHandler (2.10.2):
     - React-Core
   - RNGoogleSignin (9.1.0):
     - GoogleSignIn (~> 6.2)
+    - React-Core
+  - RNImageCropPicker (0.40.0):
+    - React-Core
+    - React-RCTImage
+    - RNImageCropPicker/QBImagePickerController (= 0.40.0)
+    - TOCropViewController
+  - RNImageCropPicker/QBImagePickerController (0.40.0):
+    - React-Core
+    - React-RCTImage
+    - TOCropViewController
+  - RNPermissions (3.8.0):
     - React-Core
   - RNScreens (3.20.0):
     - React-Core
@@ -466,6 +473,7 @@ PODS:
     - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
+  - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -493,8 +501,6 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
-  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
-  - react-native-ionicons (from `../node_modules/react-native-ionicons`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -519,6 +525,8 @@ DEPENDENCIES:
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
@@ -543,6 +551,7 @@ SPEC REPOS:
     - libevent
     - nanopb
     - PromisesObjC
+    - TOCropViewController
 
 EXTERNAL SOURCES:
   boost:
@@ -589,10 +598,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-date-picker:
     :path: "../node_modules/react-native-date-picker"
-  react-native-image-picker:
-    :path: "../node_modules/react-native-image-picker"
-  react-native-ionicons:
-    :path: "../node_modules/react-native-ionicons"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
@@ -641,6 +646,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
@@ -690,8 +699,6 @@ SPEC CHECKSUMS:
   React-jsinspector: d5ce2ef3eb8fd30c28389d0bc577918c70821bd6
   React-logger: 9332c3e7b4ef007a0211c0a9868253aac3e1da82
   react-native-date-picker: 04e866ba4e7857f83abd504ad42e787f0f02ae00
-  react-native-image-picker: 709d04e7df67bd3a90f376c3eedb2e8b8334dd04
-  react-native-ionicons: 7ce04a8e61c6de2fc3b6798e8b9621b865cb18b1
   react-native-pager-view: 0ccb8bf60e2ebd38b1f3669fa3650ecce81db2df
   react-native-safe-area-context: b8979f5eda6ed5903d4dbc885be3846ea3daa753
   React-perflogger: 43392072a5b867a504e2b4857606f8fc5a403d7f
@@ -714,11 +721,14 @@ SPEC CHECKSUMS:
   RNCCheckbox: 43bcc6493611468af0e19f19f029dab3da8561c4
   RNFBApp: d59efa0872fff4e27de03cca3c528c203a436ae5
   RNFBMessaging: 216693dd5ba4f18ba65fb39fc73a44a23c26190f
-  RNGestureHandler: 42ec7c28dd02d540ed6c9159c57a98ff016492dc
+  RNGestureHandler: f75d81410b40aaa99e71ae8f8bb7a88620c95042
   RNGoogleSignin: c15bdaa7e8a9e190b6169d9c96a4e8380a740f22
+  RNImageCropPicker: 486e2f7e2b0461ce24321f751410dce1b3b49e6d
+  RNPermissions: 3dae5a683e39cb7031dd771a434788008ac1cfbb
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
+  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: ba09b6b11e6139e3df8229238aa794205ca6a02a
 
 PODFILE CHECKSUM: 72e1b5dbdd8d5aaa157797d3a1c40eda26c209c7

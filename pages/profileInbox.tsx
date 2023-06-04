@@ -40,7 +40,7 @@ function ProfileInbox(props): JSX.Element {
       setRender(!reRender)
       console.log('make list rerender')
     });
-    
+
     return unsubscribe;
   }, []);
 
@@ -116,7 +116,7 @@ function ProfileInbox(props): JSX.Element {
         console.log(error)
       })
   }
-  
+
   const [notifs, setNotifs] = useState(getNotifs)
   const [countNotifs, setNotifsCount] = useState(0)
 
@@ -208,7 +208,7 @@ function ProfileInbox(props): JSX.Element {
         />
       )
     }
-    
+
 
   }
 
@@ -222,7 +222,7 @@ function ProfileInbox(props): JSX.Element {
       </View>
       <View style = {styles.NotificationTitleContainer}>
         <View style = {styles.NotificationNameContainer}>
-          <Text style = {styles.TitleText }>Notifications </Text>
+          <Text style = {styles.NotificationTitleText }>Notifications </Text>
         </View>
         <View style = {styles.NotificationCountContainer}>
           {count > 0 ?
@@ -233,13 +233,13 @@ function ProfileInbox(props): JSX.Element {
             null
           }
         </View>
-        <TouchableHighlight 
+        <TouchableHighlight
           onPress={clearAll}
           style = {countNotifs > 0 ? styles.ClearContainerValid : styles.ClearContainerInvalid}
           disabled = {!countNotifs}
           underlayColor = '#013319'
         >
-          <Text style = {styles.ClearAllText}>Clear All </Text> 
+          <Text style = {styles.ClearAllText}>Clear All </Text>
         </TouchableHighlight>
       </View>
 
@@ -250,9 +250,9 @@ function ProfileInbox(props): JSX.Element {
             renderItem = {renderNotif}
             extraData = {reRender}
             refreshControl ={
-             <RefreshControl 
-               refreshing = {refreshing} 
-               onRefresh = {Refresh} 
+             <RefreshControl
+               refreshing = {refreshing}
+               onRefresh = {Refresh}
                colors = {['#014421']}
                tintColor = {'#014421'}
                progressViewOffset = {-10}
@@ -263,6 +263,8 @@ function ProfileInbox(props): JSX.Element {
             <ZeroItem
               promptText={'No notifications'}
               defaultView = {false}
+              navigateToText=""
+              SecondaryPrompt=""
             />
          }
       </View>

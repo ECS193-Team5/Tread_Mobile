@@ -38,7 +38,7 @@ function IncomingFriendsPage(props): JSX.Element {
       setRender(!reRender)
       console.log('make list rerender')
     });
-    
+
     return unsubscribe;
   }, []);
 
@@ -55,7 +55,7 @@ function IncomingFriendsPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setRequests(response.data)
@@ -77,7 +77,7 @@ function IncomingFriendsPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         console.log(response.data)
@@ -89,7 +89,7 @@ function IncomingFriendsPage(props): JSX.Element {
       })
   }
 
-  var NavImageUrl = "https://imgur.com/nFRNXOB.png"  
+  var NavImageUrl = "https://imgur.com/nFRNXOB.png"
   const [RequestData, setRequests] = useState(getReceivedRequests)
   const [pageTitle, setPageTitle] = useState('Received')
   const [count, setCount] = useState(0)
@@ -103,7 +103,7 @@ function IncomingFriendsPage(props): JSX.Element {
   const layoutAnimConfig = {
     duration: 1000,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut, 
+      type: LayoutAnimation.Types.easeInEaseOut,
     },
     delete: {
       duration: 200,
@@ -111,7 +111,7 @@ function IncomingFriendsPage(props): JSX.Element {
       property: LayoutAnimation.Properties.opacity,
     },
   };
-  
+
 
   const handleDropDown = function(selectedItem){
     console.log(selectedItem)
@@ -123,7 +123,7 @@ function IncomingFriendsPage(props): JSX.Element {
       getSentRequests()
     }
   }
-  
+
   useFocusEffect(
     React.useCallback(() => {
       if (pageTitle === 'Received'){
@@ -148,8 +148,8 @@ function IncomingFriendsPage(props): JSX.Element {
       getSentRequests()
     }
   }
-  
-  const deleteItem = function(rData, isReceived) {    
+
+  const deleteItem = function(rData, isReceived) {
     console.log(rData.username)
     console.log("deleted request")
     const filteredData = RequestData.filter(item => item.username !== rData.username);
@@ -158,7 +158,7 @@ function IncomingFriendsPage(props): JSX.Element {
     if(isReceived){
       dispatch(badgeF_decrement())
     }
-    LayoutAnimation.configureNext(layoutAnimConfig) 
+    LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
   return (
@@ -170,7 +170,7 @@ function IncomingFriendsPage(props): JSX.Element {
           imageUrl = {NavImageUrl}/>
       </View>
       <View style = {styles.titleContainer}>
-        <Text style = {styles.TitleText}>{pageTitle} Requests</Text>
+        <Text style = {styles.TitleText}>Requests</Text>
       </View>
       <View style = {styles.filterContainer}>
         <SwitchSelector
@@ -195,10 +195,11 @@ function IncomingFriendsPage(props): JSX.Element {
         :
           <ZeroItem
             promptText={'You have ' + (pageTitle === 'Received' ? 'not received any' : 'not sent any') + ' friend requests'}
-            navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
+            navigateToText={pageTitle === 'Received' ? "" :  'Send one here'}
             navigateToPage='AddFriend'
             props = {props}
-          />    
+            SecondaryPrompt=""
+          />
         }
       </View>
 
