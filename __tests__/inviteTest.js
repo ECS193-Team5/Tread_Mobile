@@ -36,3 +36,18 @@ it('Test onFriendChange', () => {
     fireEvent(element, 'onChangeText', "Testing");
     expect(onFriendChangeMock).toBeCalledWith('Testing')
 });
+
+it('Test onSubmit', () => {
+    const onSubmitMock = jest.fn()
+
+    render(
+        <Invite
+            text={"test"}
+            onSubmit={onSubmitMock}
+        />
+    );
+
+    const element = screen.getByTestId('submit')
+    fireEvent(element, 'onPress');
+    expect(onSubmitMock).toBeCalled();
+});

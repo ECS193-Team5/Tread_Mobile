@@ -43,6 +43,7 @@ function Invite({ text, onFriendChange, onSubmit, goCameraViewPage }) {
                         <View>
                             <Pressable
                                 onPress={goCameraViewPage}
+                                testID="camera"
                             >
                                 <Image style={ImageStyles.QR} source={{ uri: 'https://imgur.com/zw0xwNA.png' }} />
                             </Pressable>
@@ -53,7 +54,9 @@ function Invite({ text, onFriendChange, onSubmit, goCameraViewPage }) {
                         <TouchableHighlight style={validID ? styles.ButtonValid : styles.ButtonInvalid}
                                             onPress={onSubmit}
                                             underlayColor='#013319'
-                                            disabled={!validID}>
+                                            disabled={false}
+                                            testID="submit"
+                        >
                             <Text style={styles.RequestText}>
                                 Send Request
                             </Text>
