@@ -15,7 +15,7 @@ import {BACKEND_URL} from '@env';
 import Invite from "../testComps/shared/invite";
 import axios from 'axios';
 import getReccFriend from "../../routes/add/recommend_friend";
-import UserScroll from '../../components/shared/UserScroll';
+import UserScroll from "../testComps/shared/UserScroll";
 import ZeroItem from '../../components/shared/ZeroItem';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useFocusEffect } from '@react-navigation/native';
@@ -82,27 +82,8 @@ function AddFriendPage(props) {
     //     }, [])
     // );
 
-    useEffect(() => {
-        const subscription = AppState.addEventListener('change', handleRefresh)
-        return () => {
-            subscription.remove()
-        }
-    }, [])
 
     const [count, setCount] = useState(0);
-
-    var config = {
-        method: 'post',
-        url: BACKEND_URL + 'friend_list/send_friend_request',
-        withCredentials: true,
-        credentials: 'include',
-        headers: {
-            Accept: 'application/json',
-        },
-        data: {
-            'friendName' : '',
-        }
-    };
 
     return (
         <View
@@ -127,12 +108,7 @@ function AddFriendPage(props) {
                 </View>
                 <View style = {styles.SuggestedUserContainer}>
                     {count > 0 ?
-                        <UserScroll
-                            UserData={mutuals}
-                            handler = {deleteItem}
-                            UserRole = 'Mutual'
-                            onRefresh = {handleRefresh}
-                        />
+                        <UserScroll/>
                         :
                         <ZeroItem
                             promptText={'No recommended friends yet'}
