@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1685911750333" clover="3.2.0">
-  <project timestamp="1685911750333" name="All files">
-    <metrics statements="87" coveredstatements="71" conditionals="62" coveredconditionals="43" methods="28" coveredmethods="19" elements="177" coveredelements="133" complexity="0" loc="87" ncloc="87" packages="9" files="13" classes="13"/>
+<coverage generated="1685944565451" clover="3.2.0">
+  <project timestamp="1685944565451" name="All files">
+    <metrics statements="126" coveredstatements="103" conditionals="102" coveredconditionals="64" methods="38" coveredmethods="28" elements="266" coveredelements="195" complexity="0" loc="126" ncloc="126" packages="14" files="24" classes="24"/>
     <package name="assets">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="logorenderflipped.png" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\assets\logorenderflipped.png">
@@ -9,11 +9,39 @@
         <line num="1" count="2" type="stmt"/>
       </file>
     </package>
+    <package name="css.add.friend">
+      <metrics statements="1" coveredstatements="1" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
+      <file name="Style.tsx" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\css\add\friend\Style.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
+        <line num="3" count="2" type="stmt"/>
+      </file>
+    </package>
     <package name="css.add.home">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="Style.tsx" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\css\add\home\Style.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="3" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="css.cards">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="Style.tsx" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\css\cards\Style.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="css.challenges">
+      <metrics statements="1" coveredstatements="1" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
+      <file name="Style.tsx" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\css\challenges\Style.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
+        <line num="3" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="css.imageCluster">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="Style.tsx" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\css\imageCluster\Style.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="6" type="stmt"/>
       </file>
     </package>
     <package name="css.login">
@@ -24,14 +52,18 @@
       </file>
     </package>
     <package name="css.shared">
-      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="ImageUploadStyle.tsx" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\css\shared\ImageUploadStyle.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="3" count="2" type="stmt"/>
       </file>
       <file name="InputFormStyle.tsx" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\css\shared\InputFormStyle.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="3" count="2" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+      </file>
+      <file name="Style.tsx" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\css\shared\Style.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="4" type="stmt"/>
       </file>
     </package>
     <package name="css.signup">
@@ -46,6 +78,14 @@
       <file name="addButton.js" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\testComps\add\addButton.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="12" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="testComps.league">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="leagueCard.js" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\testComps\league\leagueCard.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
       </file>
     </package>
     <package name="testComps.login">
@@ -90,7 +130,7 @@
       </file>
     </package>
     <package name="testComps.shared">
-      <metrics statements="29" coveredstatements="26" conditionals="26" coveredconditionals="21" methods="6" coveredmethods="6"/>
+      <metrics statements="55" coveredstatements="47" conditionals="54" coveredconditionals="37" methods="14" coveredmethods="13"/>
       <file name="ImageUpload.js" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\testComps\shared\ImageUpload.js">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="6" count="10" type="stmt"/>
@@ -126,9 +166,56 @@
         <line num="51" count="5" type="stmt"/>
         <line num="54" count="46" type="stmt"/>
       </file>
+      <file name="UserCard.js" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\testComps\shared\UserCard.js">
+        <metrics statements="18" coveredstatements="14" conditionals="22" coveredconditionals="13" methods="4" coveredmethods="4"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="45" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="59" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="61" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="63" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+      </file>
+      <file name="UserScroll.js" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\testComps\shared\UserScroll.js">
+        <metrics statements="4" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+      </file>
+      <file name="ZeroItem.js" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\testComps\shared\ZeroItem.js">
+        <metrics statements="1" coveredstatements="1" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="12" count="3" type="stmt"/>
+      </file>
+      <file name="invite.js" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\testComps\shared\invite.js">
+        <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
+      </file>
     </package>
     <package name="testPages">
-      <metrics statements="16" coveredstatements="15" conditionals="14" coveredconditionals="10" methods="4" coveredmethods="3"/>
+      <metrics statements="22" coveredstatements="19" conditionals="22" coveredconditionals="13" methods="5" coveredmethods="4"/>
+      <file name="addFriendPage.js" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\testPages\addFriendPage.js">
+        <metrics statements="6" coveredstatements="4" conditionals="8" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="19" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+      </file>
       <file name="addPage.js" path="C:\Users\pdkainth\Documents\College_work\ECS193A\Tread_Mobile\testPages\addPage.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="13" count="1" type="stmt"/>
