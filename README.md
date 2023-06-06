@@ -37,14 +37,14 @@ The relevant directories in the source code are as follows:
 
 
 
-* **./assets - **This folder contains all the assets required for the app to run. This includes all the icons in the app, the splash screen and other elements
-* **./components - **This folder contains all the modular components of our app. It is internally structured by grouping the components to which page they belong on. (SignUp, login etc.)
-* **./css - **This folder contains all the CSS for all the pages. It is internally structured the same way the **./components **folder is structured, with the CSS grouped by which page they belong on
-* **./pages - **This folder contains the main .tsx files for each page off the app. (Login Page, Challenges Page etc.)
-* **./redux - **This folder contains the redux files to keep track of variables app wide. It is used to to keep track of things such as the number to be displayed on badges etc. 
-* **./routes - **This folder contains individual exports for different backend call configurations. 
-* **./testComps **- This folder contains the Jest Tests written for each component
-* **./testPages - **This folder contains the Jest Tests written for each page.
+* **./assets -** This folder contains all the assets required for the app to run. This includes all the icons in the app, the splash screen and other elements
+* **./components -** This folder contains all the modular components of our app. It is internally structured by grouping the components to which page they belong on. (SignUp, login etc.)
+* **./css -** This folder contains all the CSS for all the pages. It is internally structured the same way the **./components** folder is structured, with the CSS grouped by which page they belong on
+* **./pages -** This folder contains the main .tsx files for each page off the app. (Login Page, Challenges Page etc.)
+* **./redux -** This folder contains the redux files to keep track of variables app wide. It is used to to keep track of things such as the number to be displayed on badges etc. 
+* **./routes -** This folder contains individual exports for different backend call configurations. 
+* **./testComps -** This folder contains the Jest Tests written for each component
+* **./testPages -** This folder contains the Jest Tests written for each page.
 
 
 ## Testing
