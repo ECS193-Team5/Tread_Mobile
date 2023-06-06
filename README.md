@@ -9,7 +9,7 @@ git clone https://github.com/ECS193-Team5/Tread_Mobile.git
 ```
 
 
-Navigate to the project folder and install the required dependencies;
+Navigate to the project folder and install the required dependencies.
 
 
 ```
@@ -62,10 +62,10 @@ Jest –coverage
 
 
 
-# Sensors
+## Sensors
 
 
-## Flow
+### Flow
 
 Both HealthKit and HealthConnect are combined into one component: ListenerHealthSensor. This sensor can be found in /src/components/Sensors/ListenerHealthSensor.
 
@@ -82,7 +82,7 @@ Once permissions have been requested the first time, the sensor will pull data e
 Important Note: Health Data takes a few minutes to become viewable to Tread itself, so there is a latency that cannot be shortened.
 
 
-## Modules
+### Modules
 
 [HealthConnect](https://www.npmjs.com/package/react-native-health-connect)
 
