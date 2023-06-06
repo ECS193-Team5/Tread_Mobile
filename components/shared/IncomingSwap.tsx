@@ -12,6 +12,7 @@ function IncomingSwap({props, PageToSwap, imageUrl}): JSX.Element {
     <View>
       <Pressable
         onPress = {() => props.navigation.navigate(PageToSwap)}
+        testID = "incoming swap"
       >
         <Image style ={{width : 35, height : 35}}
         source={{uri: imageUrl }}/>
