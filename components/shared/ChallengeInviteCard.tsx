@@ -140,6 +140,7 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle, image}):
       <View style={SharedStyles.RightSliderContainer}>
         <Pressable
           onPress={RejectInvite}
+          testID = "reject invite"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
         </Pressable>   
@@ -155,6 +156,7 @@ function ChallengeInviteCard({ChallengeData, index, handler, pageTitle, image}):
         <View style={SharedStyles.LeftSliderContainer}>
           <Pressable
             onPress={AcceptInvite}
+            testID = "accept invite"
           >
             <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
           </Pressable>   

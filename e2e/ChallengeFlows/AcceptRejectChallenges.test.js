@@ -9,17 +9,20 @@ describe('Accept and Reject and Delete sent and received challenges', () => {
     await expect(element(by.text('Sent'))).toBeVisible();
   });
 
-  it('Check Received Challenge', async () => {
-    await expect(element(by.text('From : '))).toBeVisible();
+  it('Check Accept Received Challenge', async () => {
+    await element(by.text('From : ')).atIndex(0).swipe('right');
+    await expect(element(by.id('accept invite')).atIndex(0)).toBeVisible();
   });
 
-  it('Check Sent Challenge', async () => {
+  it('Check Reject Received Challenge', async () => {
+    await element(by.text('From : ')).atIndex(0).swipe('left');
+    await element(by.text('From : ')).atIndex(0).swipe('left');
+    await expect(element(by.id('reject invite')).atIndex(0)).toBeVisible();
+  });
+
+  it('Check Delete Sent Challenge', async () => {
     await (element(by.text('Sent'))).tap();
-    await expect(element(by.text('To : '))).toBeVisible();
-  });
-
-  it('Go back to main challenge Page', async () => {
-    await (element(by.id('incoming swap'))).tap();
-    await expect(element(by.text('Current'))).toBeVisible();
+    await element(by.text('To : ')).atIndex(0).swipe('left');
+    await expect(element(by.id('reject invite')).atIndex(0)).toBeVisible();
   });
 });
