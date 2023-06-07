@@ -606,6 +606,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedUnfriend}
           style = {{margin : "4%"}}
+          testID = "unfriend"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/iD9p5iH.png'}}/>
         </Pressable>
@@ -617,6 +618,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedBlock}
           style = {{margin : "4%"}}
+          testID = "block"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/U7hfisP.png'}}/>
         </Pressable>
@@ -650,6 +652,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={unblockUser}
           style = {{margin : "4%"}}
+          testID = "unblock"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/q7fgVdM.png'}}/>
         </Pressable>
@@ -695,6 +698,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
       <Pressable
         onPress={RejectInvite}
         style = {{margin : "4%"}}
+        testID = 'Reject'
       >
         <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
       </Pressable>
@@ -716,6 +720,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
     return(
       <Pressable
       onPress={AcceptInvite}
+      testID = "Accept"
     >
       <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
     </Pressable>

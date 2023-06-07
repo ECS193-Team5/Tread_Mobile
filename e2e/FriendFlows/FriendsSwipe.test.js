@@ -1,4 +1,4 @@
-describe('Incoming Challenge Flow', () => {
+describe('Friend Swipe Flow', () => {
     beforeAll(async () => {
         await device.launchApp();
     });
@@ -34,5 +34,4 @@ describe('Incoming Challenge Flow', () => {
         await expect(element(by.text('All'))).toBeVisible();
         await expect(element(by.text('Blocked'))).toBeVisible();
     });
-
 });
