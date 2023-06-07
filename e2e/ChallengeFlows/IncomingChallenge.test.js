@@ -14,12 +14,12 @@ describe('Incoming Challenge Flow', () => {
   });
 
   it('Check Received Challenge', async () => {
-    await expect(element(by.text('From : '))).toBeVisible();
+    await expect(element(by.text('From : ')).atIndex(0)).toBeVisible();
   });
 
   it('Check Sent Challenge', async () => {
     await (element(by.text('Sent'))).tap();
-    await expect(element(by.text('To : '))).toBeVisible();
+    await expect(element(by.text('To : ')).atIndex(0)).toBeVisible();
   });
 
   it('Go back to main challenge Page', async () => {
