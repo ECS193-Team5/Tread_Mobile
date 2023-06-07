@@ -10,12 +10,12 @@ describe('Friend Reject Flow', () => {
 
     it('Tap on inbox icon', async () => {
         await (element(by.id('incoming swap'))).tap();
-        await expect(element(by.text('All'))).toBeVisible();
-        await expect(element(by.text('Blocked'))).toBeVisible();
+        await expect(element(by.text('Received'))).toBeVisible();
+        await expect(element(by.text('Sent'))).toBeVisible();
     });
 
     it('Check Reject Friend', async () => {
-        //await element(by.text('From : ')).atIndex(0).swipe('right');
+        await element(by.text('KauboyTest')).atIndex(0).swipe('right');
         await expect(element(by.id('Reject')).atIndex(0)).toBeVisible();
     });
 
