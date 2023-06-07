@@ -318,6 +318,7 @@ function ProfilePage(props): JSX.Element {
                 onPress={handleEdit}
                 style = {{borderTopRightRadius : 20, borderTopLeftRadius : 20}}
                 underlayColor = 'rgba(0,0,0,0.15)'
+                testID='edit clickable'
             >
                 <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
                     <Text style = {[modalstyle.PopUpOptionText , {flex : 50}]}> Edit </Text>
@@ -340,6 +341,7 @@ function ProfilePage(props): JSX.Element {
                 onPress={handleLogout}
                 style = {{borderBottomRightRadius : 20, borderBottomLeftRadius : 20}}
                 underlayColor = 'rgba(0,0,0,0.15)'
+                testID='logout clickable'
             >
                 <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
                     <Text style = {[modalstyle.PopUpOptionText , {flex : 50, color : 'red'}]}> Logout </Text>
@@ -358,6 +360,7 @@ function ProfilePage(props): JSX.Element {
             <TouchableHighlight
                 onPress={handleQRClick}
                 underlayColor = 'rgba(0,0,0,0.15)'
+                testID='qr clickable'
             >
                 <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
                     <Text style = {[modalstyle.PopUpOptionText , {flex : 50}]}> Show QR </Text>
