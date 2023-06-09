@@ -3,7 +3,7 @@ describe('Add Navigation Test', () => {
         await device.launchApp();
     });
 
-    it('Switch to Profile Tab', async () => {
+    it('Switch to Add Tab', async () => {
         await element(by.label('Add Nav')).tap()
         await expect(element(by.text('Challenge'))).toBeVisible();
         await expect(element(by.text('Friend'))).toBeVisible();
@@ -12,7 +12,7 @@ describe('Add Navigation Test', () => {
 
     it('Click on Challenge', async () => {
         await element(by.text('Challenge')).tap()
-        await expect(element(by.text('Send'))).toBeVisible();
+        await expect(element(by.text('Send')).atIndex(0)).toBeVisible();
         await expect(element(by.text('Log'))).toBeVisible();
     });
 

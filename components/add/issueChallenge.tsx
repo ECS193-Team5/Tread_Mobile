@@ -318,7 +318,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             backgroundColor =  "black"
                             rightButtonBackgroundColor='#014421'
                             leftButtonBackgroundColor='#014221'
-
                         />
                     </View>
 
