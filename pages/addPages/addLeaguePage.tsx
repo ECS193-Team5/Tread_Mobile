@@ -210,6 +210,7 @@ function AddLeaguePage(props): JSX.Element {
               onPress={onSubmit}
               underlayColor = '#013319'
               disabled={!(validPicture && validLeagueName && validLeagueDesc)}
+              testID = {(validPicture && validLeagueName && validLeagueDesc) ? "valid submit" : "invalid submit"}
             >
               <Text style={styles.ChoosePicText}>
                 Submit

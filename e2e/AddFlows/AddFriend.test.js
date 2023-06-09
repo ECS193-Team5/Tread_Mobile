@@ -1,4 +1,4 @@
-describe('Log Activity Test', () => {
+describe('Add Friend Test', () => {
     beforeAll(async () => {
         await device.launchApp();
     });
