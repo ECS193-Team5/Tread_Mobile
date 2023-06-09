@@ -195,6 +195,7 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
         <View style={SharedStyles.RightSliderContainer}>
         <Pressable
           onPress={SendInvite}
+          testID = 'send league group invite'
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/JP8ae2t.png'}}/>
         </Pressable>   
@@ -206,6 +207,7 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
         <View style={SharedStyles.RightSliderContainer}>
           <Pressable
             onPress={RejectInvite}
+            testID = 'reject league group invite'
           >
             <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
           </Pressable>   
@@ -222,6 +224,7 @@ function LeagueInviteCard({LeagueData, index, handler, pageTitle}): JSX.Element 
         <View style={SharedStyles.LeftSliderContainer}>
           <Pressable
             onPress={AcceptInvite}
+            testID = 'accept league group invite'
           >
             <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
           </Pressable>   

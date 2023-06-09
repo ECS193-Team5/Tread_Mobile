@@ -168,11 +168,12 @@ function Invite({ text, config, props, pageToNav }): JSX.Element {
               <TouchableHighlight style={validID ? styles.ButtonValid : styles.ButtonInvalid}
                 onPress={onSubmit}
                 underlayColor='#013319'
-                disabled={!validID}>
+                disabled={!validID}
+                testID = {validID ? "valid send" : "invalid send"}
+                >
                 <Text style={styles.RequestText}>
                   Send Request
                 </Text>
-                testID = {validID ? "valid send" : "invalid send"}
               </TouchableHighlight>
             </View>
           </View>

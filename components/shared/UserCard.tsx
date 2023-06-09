@@ -590,17 +590,6 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
     ]);
   }
 
-  const friend = function() {
-    return (
-        <Pressable
-          onPress={AddFriend}
-          style = {{margin : "4%"}}
-        >
-          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
-        </Pressable>
-    );
-  }
-
   const unfriend = function() {
     return (
         <Pressable
@@ -630,6 +619,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedKick}
           style = {{margin : "4%"}}
+          testID = "kick"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ngSIL5J.png'}}/>
         </Pressable>
@@ -641,6 +631,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedBan}
           style = {{margin : "4%"}}
+          testID = "ban"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/nDGURiM.png'}}/>
         </Pressable>
@@ -664,6 +655,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedAddAdmin}
           style = {{margin : "4%"}}
+          testID = "add admin"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/cQntMzs.png'}}/>
         </Pressable>
@@ -675,6 +667,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedRemoveAdmin}
           style = {{margin : "4%"}}
+          testID = "remove admin"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
         </Pressable>
@@ -687,6 +680,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedRemoveSelfAdmin}
           style = {{margin : "4%"}}
+          testID = "remove self admin"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
         </Pressable>
@@ -710,6 +704,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
     <Pressable
       onPress={AddFriend}
       style = {{margin : "4%"}}
+      testID = "add friend"
     >
       <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
     </Pressable>

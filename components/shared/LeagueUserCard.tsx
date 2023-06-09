@@ -194,6 +194,7 @@ function LeagueUserCard({MemberData, index, handler, pageTitle, id}): JSX.Elemen
         <View style={SharedStyles.RightSliderContainer}>
           <Pressable
             onPress={UnbanUser}
+            testID = 'unban league user'
           >
             <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/q7fgVdM.png'}}/>
           </Pressable>   
@@ -204,6 +205,7 @@ function LeagueUserCard({MemberData, index, handler, pageTitle, id}): JSX.Elemen
         <View style={SharedStyles.RightSliderContainer}>
           <Pressable
             onPress={RejectInvite}
+            testID = "reject league invite"
           >
             <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
           </Pressable>   
@@ -220,6 +222,7 @@ function LeagueUserCard({MemberData, index, handler, pageTitle, id}): JSX.Elemen
         <View style={SharedStyles.LeftSliderContainer}>
           <Pressable
             onPress={AcceptInvite}
+            testID = "accept league invite"
           >
             <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
           </Pressable>   

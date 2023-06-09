@@ -14,6 +14,7 @@ describe('Check for Leagues and Admin Leagues', () => {
 
   it('Tap on Admin Tab and Check admin League', async () => {
     await (element(by.text('Admin'))).aap();
-    await expect(element(by.text('Test League'))).toBeVisible();
+    await expect(element(by.text('End to End Owner'))).toBeVisible();
+    await expect(element(by.text('End to End Admin'))).toBeVisible();
   });
 });
