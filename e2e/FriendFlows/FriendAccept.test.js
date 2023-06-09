@@ -10,17 +10,21 @@ describe('Friend Accept Flow', () => {
 
     it('Tap on inbox icon', async () => {
         await (element(by.id('incoming swap'))).tap();
-        await expect(element(by.text('All'))).toBeVisible();
-        await expect(element(by.text('Blocked'))).toBeVisible();
+        await expect(element(by.text('Received'))).toBeVisible();
+        await expect(element(by.text('Sent'))).toBeVisible();
     });
 
     it('Check Accept Friend', async () => {
-        //await element(by.text('From : ')).atIndex(0).swipe('right');
+        await element(by.text('From : ')).atIndex(0).swipe('right');
         await expect(element(by.id('Accept')).atIndex(0)).toBeVisible();
     });
 
     it('Accept Friend', async () => {
-        await element(by.id('Accept')).atIndex(0).tap();
-        // click on confirm
+      await element(by.id('Accept')).atIndex(0).tap();
+    });
+
+    it('Check if Friend is there', async () => {
+      await element(by.text('Requests')).swipe('right');
+      await expect(element(by.text('KauboyTest'))).toBeVisible();
     });
 });

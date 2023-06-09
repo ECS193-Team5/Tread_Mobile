@@ -11,13 +11,13 @@ describe('Profile QR Flow', () => {
 
     it('Click on Settings button', async () => {
         await (element(by.id('settings'))).tap();
-        await expect(element(by.text('Edit'))).toBeVisible();
-        await expect(element(by.text('Show QR'))).toBeVisible();
-        await expect(element(by.text('Logout'))).toBeVisible();
+        await expect(element(by.id('edit clickable'))).toBeVisible();
+        await expect(element(by.id('logout clickable'))).toBeVisible();
+        await expect(element(by.id('qr clickable'))).toBeVisible();
     });
 
     it('Click on QR button', async () => {
-        await (element(by.text('Show QR'))).tap();
+        await (element(by.id('qr clickable'))).tap();
         await expect(element(by.text('Scan to add friend'))).toBeVisible();
     });
 

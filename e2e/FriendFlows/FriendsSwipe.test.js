@@ -15,8 +15,8 @@ describe('Friend Swipe Flow', () => {
 
     it('Tap on inbox icon', async () => {
         await (element(by.id('incoming swap'))).tap();
-        await expect(element(by.text('All'))).toBeVisible();
-        await expect(element(by.text('Blocked'))).toBeVisible();
+        await expect(element(by.text('Received'))).toBeVisible();
+        await expect(element(by.text('Sent'))).toBeVisible();
     });
 
     it('Tap to Sent', async () => {

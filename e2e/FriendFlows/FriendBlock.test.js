@@ -9,13 +9,18 @@ describe('Friend Block Flow', () => {
     });
 
     it('Check Block Friend', async () => {
-        //await element(by.text('From : ')).atIndex(0).swipe('left');
+        await element(by.text('KauboyTest')).atIndex(0).swipe('left');
         await expect(element(by.id('block')).atIndex(0)).toBeVisible();
     });
 
     it('Block Friend', async () => {
         await element(by.id('block')).atIndex(0).tap();
-        // click on confirm
+        await element(by.text('Block')).tap();
     });
+
+    it('Check if blocked Friend', async () => {
+      await element(by.text('Blocked')).atIndex(0).tap();
+      await expect(element(by.text('KauboyTest'))).toBeVisible();
+  });
 
 });

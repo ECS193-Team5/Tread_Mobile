@@ -5,9 +5,8 @@ describe('Scroll through Current Challenges and check leaderboard', () => {
   });
 
   it('Scroll Down ', async () => {
-    await element(by.id('Challenge Scroll')).scrollTo('bottom')
-    await expect(element(by.text('Aikido 488 ct'))).toBeVisible();
-   
+    await element(by.id('Challenge Scroll')).scroll(200, 'down')
+    await expect(element(by.text('Bocce 1 ct'))).toBeVisible();
   });
 
   it('Scroll Up ', async () => {
@@ -16,9 +15,9 @@ describe('Scroll through Current Challenges and check leaderboard', () => {
   });
 
   it('Tap Challenge ', async () => {
-    await element(by.text('Baseball 6 hr')).atIndex(1).tap();
+    await element(by.text('Baseball 6 hr')).tap();
     await expect(element(by.text('League Challenge'))).toBeVisible();
-    await expect(element(by.text('KaushikTest#4388'))).toBeVisible();
+    await expect(element(by.text('SocialFitness#1786'))).toBeVisible();
   });
 
   it('Swipe Away Leaderboard ', async () => {
