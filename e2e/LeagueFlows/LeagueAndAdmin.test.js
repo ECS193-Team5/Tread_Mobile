@@ -9,7 +9,7 @@ describe('Check for Leagues and Admin Leagues', () => {
   });
 
   it('Check for Leagues', async () => {
-    await expect(element(by.text('justice!!!'))).toBeVisible();
+    await expect(element(by.text('End to End Owner'))).toBeVisible();
   });
 
   it('Tap on Admin Tab and Check admin League', async () => {
