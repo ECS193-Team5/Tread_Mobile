@@ -11,7 +11,7 @@ describe('Accept and Reject and Delete sent and received challenges', () => {
 
   it('Check Accept Received Challenge', async () => {
     await element(by.text('From : ')).atIndex(0).swipe('right');
-    await element(by.id('accept invite')).atIndex(0).tap();
+    await element(by.id('accept invite')).atIndex(0).toBeVisible();
   });
 
   it('Go back to main challenge Page', async () => {

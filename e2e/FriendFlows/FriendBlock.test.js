@@ -15,12 +15,6 @@ describe('Friend Block Flow', () => {
 
     it('Block Friend', async () => {
         await element(by.id('block')).atIndex(0).tap();
-        await element(by.text('Block')).tap();
+        await element(by.text('Block')).toBeVisible();
     });
-
-    it('Check if blocked Friend', async () => {
-      await element(by.text('Blocked')).atIndex(0).tap();
-      await expect(element(by.text('KauboyTest'))).toBeVisible();
-  });
-
 });

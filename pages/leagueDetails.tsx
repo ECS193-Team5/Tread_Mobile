@@ -171,7 +171,6 @@ function LeagueDetails(props): JSX.Element {
       )
   }
 
-
   var imageUrl = "https://imgur.com/nFRNXOB.png"
   var LeagueImage = createLeaguePictureURL(props.route.params.leagueData._id)
 
@@ -398,6 +397,7 @@ function LeagueDetails(props): JSX.Element {
         onPress={clickedLeave}
         style = {{borderRadius : 20}}
         underlayColor = 'rgba(0,0,0,0.15)'
+        testID = 'league leave'
       >
         <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
           <Text style = {[modalstyle.PopUpOptionText, {color:'red', flex : 50}]}> Leave </Text>
@@ -413,6 +413,7 @@ function LeagueDetails(props): JSX.Element {
       onPress={handleEdit}
       style = {{borderTopLeftRadius : 20, borderTopRightRadius : 20}}
       underlayColor = 'rgba(0,0,0,0.15)'
+      testID = 'league edit'
       >
         <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
           <Text style = {[modalstyle.PopUpOptionText , {flex : 50}]}> Edit </Text>
@@ -428,6 +429,7 @@ function LeagueDetails(props): JSX.Element {
       onPress={handleDelete}
       style = {{borderBottomLeftRadius : 20, borderBottomRightRadius : 20}}
       underlayColor = 'rgba(0,0,0,0.15)'
+      testID = 'league delete'
       >
         <View style = {{flexDirection : 'row', marginVertical : '2%'}} >
           <Text style = {[modalstyle.PopUpOptionText , {flex : 50, color : 'red'}]}> Delete </Text>
@@ -487,6 +489,10 @@ function LeagueDetails(props): JSX.Element {
     }
   }, [load])
 
+  useEffect(() => {
+    getLeagueInfo()
+  })
+
   return (
     <View style = {styles.container}>
         <ListenerHealthSensor type="League" update={update} setUpdate = {setUpdate} refreshFunction = {handleRefresh}/>
@@ -545,6 +551,7 @@ function LeagueDetails(props): JSX.Element {
           <View style = {[LeagueStyles.ToggleContainer]}>
             <Pressable
               onPress={handlePopup}
+              testID = 'league options'
             >
               <Image style ={ImageStyles.Options} source={{uri: 'https://imgur.com/G0SHXKl.png'}}/>
             </Pressable>
@@ -564,6 +571,7 @@ function LeagueDetails(props): JSX.Element {
 
             <Pressable
               onPress={() => handleQR()}
+              testID = "league qr"
             >
               <Image style ={ImageStyles.QR} source={{uri: 'https://imgur.com/cC2QHxO.png'}}/>
             </Pressable>

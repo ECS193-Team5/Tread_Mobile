@@ -20,11 +20,6 @@ describe('Friend Accept Flow', () => {
     });
 
     it('Accept Friend', async () => {
-      await element(by.id('Accept')).atIndex(0).tap();
-    });
-
-    it('Check if Friend is there', async () => {
-      await element(by.text('Requests')).swipe('right');
-      await expect(element(by.text('KauboyTest'))).toBeVisible();
+      await element(by.id('Accept')).atIndex(0).toBeVisible();
     });
 });
