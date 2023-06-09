@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for css/login/Style.tsx</title>
+    <title>Code coverage report for css/challenges/Style.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">css/login</a> Style.tsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">css/challenges</a> Style.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -198,7 +198,24 @@
 <a name='L133'></a><a href='#L133'>133</a>
 <a name='L134'></a><a href='#L134'>134</a>
 <a name='L135'></a><a href='#L135'>135</a>
-<a name='L136'></a><a href='#L136'>136</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -333,142 +350,176 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Platform, StyleSheet } from 'react-native';
 &nbsp;
-const LoginStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   container : {
-    paddingTop:(Platform.OS === 'ios') ? "12%" : <span class="branch-1 cbranch-no" title="branch not covered" >0</span>
-  },
-  
-  linearGradient : {
-    height : '100%',
-    width : '100%',
+    paddingTop:(Platform.OS === 'ios') ? "12%" : <span class="branch-1 cbranch-no" title="branch not covered" >0,</span>
+    backgroundColor : "#E0E7E3",
+    flex :1
   },
 &nbsp;
-  linearGradientAuto : {
-    height : '100%',
-    width : '100%',
-    justifyContent : 'center'
-  },
-&nbsp;
-  mainContainer : {
-		flexDirection: 'column',
-		flex: 1,
-		marginLeft: '12.5%',
-		marginRight: '12.5%',
+  topRightClickContainer : {
+    position : 'relative',
+    height : '5%',
+    width : "90%",
+  	alignItems: 'flex-end',
+    alignSelf : 'center',
+    justifyContent : 'center',
   },
 &nbsp;
   titleContainer : {
-  	flex: 18,
-  	justifyContent: 'flex-end'
+    position : 'relative',
+    height : '10%',
+    width : "90%",
+  	alignItems: 'flex-start',
+    alignSelf : 'center',
+    justifyContent : 'center',
   },
 &nbsp;
-  titleText: {
-  	color: '#F9A800',
-  	fontSize: 55,
-  	fontWeight: '400'
+  tabswitchContainer : {
+    flex: 12,
+    width : "100%",
+    justifyContent : 'center',
+    alignItems : 'center'
   },
 &nbsp;
-  loginContainer : {
- 		flex: 50,
- 		alignItems: 'center',
- 		justifyContent: 'flex-end',
-  },
-&nbsp;
-  separatorContainer : {
-  	flex: 7,
-  	flexDirection: 'row',
-  	alignItems: 'center'
-  },
-&nbsp;
-  outsideSeparator: {
+  ChallengesContainer : {
     flex: 40,
-    backgroundColor: '#F9A800',
-    height: '1%'
+    marginBottom : "7.5%",
   },
 &nbsp;
-  middleSeparator: {
-    flex: 20,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+  FlatListContainer : {
+    alignItems : "center",
   },
 &nbsp;
-  orText: {
-    fontSize: 15,
-    fontWeight: 400,
-    color: '#F9A800'
+  filterContainer : {
+    flex : 1.5,
+    width : "90%",
+    alignSelf : 'center',
+    alignItems : 'flex-end',
+    justifyContent : 'center',
+    marginBottom : '5%'
   },
 &nbsp;
-  signUpContainer: {
-  	flex: 20,
-  	alignItems: 'center',
-  	justifyContent: 'flex-start'
+  seperator : {
+    borderWidth : 0.5,
+    borderColor : "#F9A800",
+    alignSelf: 'stretch',
+    justifyContent : 'center',
+    margin : "4.5%",
   },
 &nbsp;
-	loginButton : {
-		backgroundColor: 'white',
-		borderRadius: 50,
-		borderWidth: 2,
-		borderColor: 'white',
-		width: '100%',
-		height: '12.5%',
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
+  TitleText : {
+    fontWeight : "700",
+    fontSize : 32.5,
+    lineHeight : 34,
+    color : "#014421"
+  },
 &nbsp;
-	loginButtonText: {
-		fontSize: 20,
-		color: "#012412",
-		fontWeight: "700"
-	},
+  TabNavigatorPlaceHolder : {
+    flex : 20
+  },
 &nbsp;
-	signupButton : {
-		backgroundColor: 'white',
-		borderRadius: 50,
-		borderWidth: 2,
-		borderColor: 'white',
-		width: '100%',
-		height: '31.25%',
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
+  FilterText: {
+    color: "#014421"
+  },
 &nbsp;
-	pushupImage: {
-		height: '75%',
-		width: '75%',
-		resizeMode: 'contain',
-		position: "absolute",
-		left: '55%',
-		bottom: '40%'
-	},
+  NotificationCountText : {
+    fontWeight : "700",
+    fontSize : 15,
+    lineHeight : 34,
+    color : "white",
+  },
 &nbsp;
-	liftingImage: {
-		height: '75%',
-		width: '75%',
-		resizeMode: 'contain',
-		position: "absolute",
-		right: '55%'
-	},
+  NotificationTitleText : {
+    fontWeight : "700",
+    fontSize : 27,
+    lineHeight : 34,
+    color : "#014421",
+    width: 210
+  },
 &nbsp;
-	skiImage: {
-		height: '75%',
-		width: '75%',
-		resizeMode: 'contain',
-		position: "absolute",
-		top: '15%',
-		left: '35%'
-	},
-&nbsp;
-  logo : {
-    height: '50%',
-		width: '50%',
-    resizeMode: 'contain',
+  ClearAllText : {
+    fontWeight : "700",
+    fontSize : 15,
+    lineHeight : 34,
+    color : "white",
+    marginHorizontal : '5%',
     alignSelf : 'center'
-  }
+  },
+&nbsp;
+  NotificationTitleContainer : {
+    position : 'relative',
+    height : '10%',
+    width : "90%",
+    flexDirection : 'row',
+    alignItems: 'center',
+    alignSelf : 'center'
+  },
+&nbsp;
+  NotificationNameContainer : {
+    flexDirection : 'row',
+    alignItems: 'center',
+    alignSelf : 'center',
+    flex : 33
+  },
+&nbsp;
+  NotificationCountContainer : {
+    flexDirection : 'row',
+    alignItems: 'center',
+    alignSelf : 'center',
+    flex : 15
+  },
+&nbsp;
+  ClearContainerInvalid : {
+    alignItems: 'center',
+    alignSelf : 'center',
+    backgroundColor : '#9B9595',
+    borderColor : '#9B9595',
+    borderWidth : 2,
+    borderRadius : 16,
+    flex : 15
+  },
+&nbsp;
+  ClearContainerValid : {
+    alignItems: 'center',
+    alignSelf : 'center',
+    backgroundColor : '#014421',
+    borderColor : '#014421',
+    borderWidth : 2,
+    borderRadius : 16,
+    flex : 15
+  },
+&nbsp;
+  NotificationCountCircle : {
+    justifyContent: 'center',
+    alignItems : 'center',
+    width :32,
+    height : 32 ,
+    borderRadius : 16,
+    backgroundColor : '#014421',
+  },
 });
 &nbsp;
-export {LoginStyles}</pre></td></tr></table></pre>
+export { styles}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

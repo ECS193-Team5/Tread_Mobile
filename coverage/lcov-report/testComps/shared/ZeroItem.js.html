@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for testComps/add/addButton.js</title>
+    <title>Code coverage report for testComps/shared/ZeroItem.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">testComps/add</a> addButton.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">testComps/shared</a> ZeroItem.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
@@ -95,14 +95,7 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -113,11 +106,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -138,49 +127,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useEffect, useState } from 'react';
 import {
-	Text,
-	View,
-	Image,
-  TouchableHighlight
+    Image,
+    View,
+    Text,
+    TouchableHighlight,
 } from 'react-native';
 &nbsp;
-import {styles} from '../../css/add/home/Style';
-&nbsp;
-function AddButton({onPress, title, description, imageUrl}) {
-	return (
-			&lt;TouchableHighlight onPress = {onPress} style = {styles.Button} testID="button"&gt;
-				&lt;View style={styles.GradientStyle}&gt;
-					&lt;View style = {styles.IconContainer}&gt;
-						&lt;Image
-							src = {imageUrl}
-							style = {styles.Image}
-						&gt;
-						&lt;/Image&gt;
-					&lt;/View&gt;
-&nbsp;
-					&lt;View style = {styles.TextContainer}&gt;
-						&lt;View style = {styles.TitleContainer}&gt;
-							&lt;Text style = {styles.Title}&gt;{title}&lt;/Text&gt;
-						&lt;/View&gt;
-&nbsp;
-						&lt;View style = {styles.DescContainer}&gt;
-							&lt;Text style = {styles.Description}&gt;{description}&lt;/Text&gt;
-						&lt;/View&gt;
-&nbsp;
-					&lt;/View&gt;
-&nbsp;
-				&lt;/View&gt;
-&nbsp;
-			&lt;/TouchableHighlight&gt;
-	)
+import {ImageStyles} from '../../css/imageCluster/Style'
+import {SharedStyles} from '../../css/shared/Style'
+function ZeroItem({promptText, SecondaryPrompt, navigateToText, onPress}) {
+    return (
+        &lt;View&gt;
+            &lt;Image style ={ImageStyles.ZeroImage} source={{uri: 'https://imgur.com/q4Uysme.png'}}/&gt;
+            &lt;Text style = {SharedStyles.ZeroTextStyle}&gt; {promptText} &lt;/Text&gt;
+            {SecondaryPrompt !== "" ? &lt;Text style = {SharedStyles.SecondaryPromptStyle}&gt; {SecondaryPrompt} &lt;/Text&gt;: <span class="branch-1 cbranch-no" title="branch not covered" >&lt;&gt;&lt;/&gt;}</span>
+            {navigateToText !== "" ?
+                &lt;TouchableHighlight
+                    onPress={onPress}
+                    style = {{alignSelf : 'center', marginTop : '2%', borderRadius : 20}}
+                    underlayColor = 'rgba(0,0,0,0.15)'
+                    testID="test"
+                &gt;
+                    &lt;Text style = {SharedStyles.NavigatePrompt}&gt; {navigateToText} &lt;/Text&gt;
+                &lt;/TouchableHighlight&gt;
+                :
+<span class="branch-1 cbranch-no" title="branch not covered" >                &lt;&gt;&lt;/&gt;</span>
+            }
+        &lt;/View&gt;
+    )
 }
 &nbsp;
-export default AddButton;</pre></td></tr></table></pre>
+export default ZeroItem</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

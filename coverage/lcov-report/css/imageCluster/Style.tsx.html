@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for css/login/Style.tsx</title>
+    <title>Code coverage report for css/imageCluster/Style.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">css/login</a> Style.tsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">css/imageCluster</a> Style.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -190,25 +190,9 @@
 <a name='L125'></a><a href='#L125'>125</a>
 <a name='L126'></a><a href='#L126'>126</a>
 <a name='L127'></a><a href='#L127'>127</a>
-<a name='L128'></a><a href='#L128'>128</a>
-<a name='L129'></a><a href='#L129'>129</a>
-<a name='L130'></a><a href='#L130'>130</a>
-<a name='L131'></a><a href='#L131'>131</a>
-<a name='L132'></a><a href='#L132'>132</a>
-<a name='L133'></a><a href='#L133'>133</a>
-<a name='L134'></a><a href='#L134'>134</a>
-<a name='L135'></a><a href='#L135'>135</a>
-<a name='L136'></a><a href='#L136'>136</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L128'></a><a href='#L128'>128</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -335,140 +319,132 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Platform, StyleSheet } from 'react-native';
 &nbsp;
-const LoginStyles = StyleSheet.create({
-  container : {
-    paddingTop:(Platform.OS === 'ios') ? "12%" : <span class="branch-1 cbranch-no" title="branch not covered" >0</span>
+const ImageStyles = StyleSheet.create({
+  first : {
+    width :39, 
+    height : 39 , 
+    borderRadius : 19.5, 
+    borderWidth : 2, 
+    borderColor : '#014421',
+    backgroundColor : '#FFFFFF'
   },
   
-  linearGradient : {
-    height : '100%',
-    width : '100%',
+  second: {
+    width :39, 
+    height : 39 , 
+    borderRadius : 19.5, 
+    borderWidth : 2, 
+    borderColor : '#014421', 
+    marginLeft : -12,
+    backgroundColor : '#FFFFFF'
   },
 &nbsp;
-  linearGradientAuto : {
-    height : '100%',
-    width : '100%',
-    justifyContent : 'center'
-  },
-&nbsp;
-  mainContainer : {
-		flexDirection: 'column',
-		flex: 1,
-		marginLeft: '12.5%',
-		marginRight: '12.5%',
-  },
-&nbsp;
-  titleContainer : {
-  	flex: 18,
-  	justifyContent: 'flex-end'
-  },
-&nbsp;
-  titleText: {
-  	color: '#F9A800',
-  	fontSize: 55,
-  	fontWeight: '400'
-  },
-&nbsp;
-  loginContainer : {
- 		flex: 50,
- 		alignItems: 'center',
- 		justifyContent: 'flex-end',
-  },
-&nbsp;
-  separatorContainer : {
-  	flex: 7,
-  	flexDirection: 'row',
-  	alignItems: 'center'
-  },
-&nbsp;
-  outsideSeparator: {
-    flex: 40,
-    backgroundColor: '#F9A800',
-    height: '1%'
-  },
-&nbsp;
-  middleSeparator: {
-    flex: 20,
-    flexDirection: 'column',
+  third : {
     justifyContent: 'center',
-    alignItems: 'center'
+    width :39, 
+    height : 39 , 
+    borderRadius : 19.5, 
+    borderWidth : 2, 
+    borderColor : '#014421', 
+    backgroundColor : '#000000',
+    marginLeft : -12
   },
 &nbsp;
-  orText: {
-    fontSize: 15,
-    fontWeight: 400,
-    color: '#F9A800'
+  medal : {
+    width :60,
+    height : 60 ,
+    borderRadius : 30,
+    borderWidth : 2,
+    borderColor : '#014421'
   },
 &nbsp;
-  signUpContainer: {
-  	flex: 20,
-  	alignItems: 'center',
-  	justifyContent: 'flex-start'
+  thirdText : {
+    width : "80%",
+    alignSelf : 'center',
+    justifyContent : 'center',
+    color : 'white'
   },
 &nbsp;
-	loginButton : {
-		backgroundColor: 'white',
-		borderRadius: 50,
-		borderWidth: 2,
-		borderColor: 'white',
-		width: '100%',
-		height: '12.5%',
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
+  weekly :{
+    width :50, 
+    height : 50
+  },
 &nbsp;
-	loginButtonText: {
-		fontSize: 20,
-		color: "#012412",
-		fontWeight: "700"
-	},
+  single :{
+    width :50, 
+    height : 50,
+    borderRadius : 25, 
+    borderWidth : 2, 
+    borderColor : '#014421'
+  },
 &nbsp;
-	signupButton : {
-		backgroundColor: 'white',
-		borderRadius: 50,
-		borderWidth: 2,
-		borderColor: 'white',
-		width: '100%',
-		height: '31.25%',
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
+  AcceptOrDecline : {
+    width :39, 
+    height : 39 , 
+  },
 &nbsp;
-	pushupImage: {
-		height: '75%',
-		width: '75%',
-		resizeMode: 'contain',
-		position: "absolute",
-		left: '55%',
-		bottom: '40%'
-	},
+  QR : {
+    width :28, 
+    height : 28,
+    paddingHorizontal : '6%',
+    alignSelf : 'center'
+  },
 &nbsp;
-	liftingImage: {
-		height: '75%',
-		width: '75%',
-		resizeMode: 'contain',
-		position: "absolute",
-		right: '55%'
-	},
+  Options : {
+    width :30, 
+    height : 30,
+    alignSelf : 'center',
+    paddingHorizontal : '6%',
+  },
 &nbsp;
-	skiImage: {
-		height: '75%',
-		width: '75%',
-		resizeMode: 'contain',
-		position: "absolute",
-		top: '15%',
-		left: '35%'
-	},
+  Settings : {
+    width :30, 
+    height : 30,
+    alignSelf : 'center',
+    paddingHorizontal : '2%',
+  },
 &nbsp;
-  logo : {
-    height: '50%',
-		width: '50%',
-    resizeMode: 'contain',
+  Leave : {
+    width :24, 
+    height : 24,
+    alignSelf : 'flex-end',
+    margin : '2%',
+    marginRight : '5%'
+  },
+&nbsp;
+  Edit : {
+    width :20, 
+    height : 20,
+    alignSelf : 'flex-end',
+    overflow : 'visible',
+    margin : '4%',
+    marginRight : '5%'
+  },
+&nbsp;
+  LeagueImage : {
+    width :110, 
+    height : 110 , 
+    borderRadius : 55, 
+    borderWidth : 2, 
+    borderColor : '#014421'
+  },
+&nbsp;
+  QRCode : {
+    width :375, 
+    height : 375,
+    alignSelf : 'center'
+  },
+&nbsp;
+  ZeroImage : {
+    width :70, 
+    height : 70,
+    marginTop : '5%', 
     alignSelf : 'center'
   }
+&nbsp;
 });
 &nbsp;
-export {LoginStyles}</pre></td></tr></table></pre>
+export {ImageStyles} </pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

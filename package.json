@@ -88,7 +88,8 @@
     "preset": "react-native",
     "setupFiles": [
       "./node_modules/@react-native-google-signin/google-signin/jest/build/setup.js"
-    ]
+    ],
+    "modulePathIgnorePatterns": ["e2e"]
   },
   "overrides": {
     "react-native-health": {

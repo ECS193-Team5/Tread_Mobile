@@ -8,11 +8,8 @@ import {
     TouchableHighlight,
 } from 'react-native';
 import { styles } from '../../css/add/friend/Style';
-import axios from "axios";
 import { ImageStyles } from '../../css/imageCluster/Style';
-// import { showMessage } from 'react-native-flash-message'
-import { useDispatch } from 'react-redux';
-import { badgeF_decrement } from '../../redux/actions/badgeF_actions'
+
 
 function Invite({ text, onFriendChange, onSubmit, goCameraViewPage }) {
 
