@@ -230,6 +230,7 @@ function ProgressChallenge(): JSX.Element {
                   onPress={handleIssuePress}
                   disabled={!validInfo()}
                   underlayColor = '#013319'
+                  testID={validInfo() ? "Valid Log" : "Invalid Log"}
               >
                   <Text style={styles.IssueChallengeText}>
                       Log
