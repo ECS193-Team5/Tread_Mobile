@@ -14,10 +14,10 @@ describe('Friend Unblock Flow', () => {
     });
 
     it('Check Blocked Friend', async () => {
-        await element(by.text('KauboyTest')).atIndex(0).swipe('left');
+        await element(by.text('batman#6380')).atIndex(0).swipe('left');
     });
 
     it('Unblock Friend', async () => {
-        await element(by.id('unblock')).atIndex(0).toBeVisible();
+        await expect(element(by.id('unblock')).atIndex(0)).toBeVisible();
     });
 });

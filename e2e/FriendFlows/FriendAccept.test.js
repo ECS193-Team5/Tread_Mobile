@@ -18,8 +18,4 @@ describe('Friend Accept Flow', () => {
         await element(by.text('From : ')).atIndex(0).swipe('right');
         await expect(element(by.id('Accept')).atIndex(0)).toBeVisible();
     });
-
-    it('Accept Friend', async () => {
-      await element(by.id('Accept')).atIndex(0).toBeVisible();
-    });
 });

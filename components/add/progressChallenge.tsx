@@ -145,6 +145,7 @@ function ProgressChallenge(): JSX.Element {
                           editable={customTextEditable}
                           value={customActivity}
                           onChangeText={handleCustomActivityChange}
+                          testID = "enter own"
                       >
                       </TextInput>
                   </View>
@@ -230,9 +231,8 @@ function ProgressChallenge(): JSX.Element {
                   onPress={handleIssuePress}
                   disabled={!validInfo()}
                   underlayColor = '#013319'
-                  testID={validInfo() ? "Valid Log" : "Invalid Log"}
               >
-                  <Text style={styles.IssueChallengeText}>
+                  <Text style={styles.IssueChallengeText} testID={validInfo() ? "Valid Log" : "Invalid Log"}>
                       Log
                   </Text>
               </TouchableHighlight>

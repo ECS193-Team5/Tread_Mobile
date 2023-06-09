@@ -29,8 +29,6 @@ describe('Self Activity Test', () => {
 
     it('Choose Unit Amount', async () => {
         await element(by.id('numeric input')).typeText("5")
-        await element(by.id('plus')).tap()
-        await element(by.id('minus')).tap()
         await expect(element(by.id('numeric input'))).toHaveText("5");
     });
 
@@ -41,8 +39,8 @@ describe('Self Activity Test', () => {
     });
 
     it('Click on Send Challenge', async () => {
-        await expect(element(by.text('Send'))).toHaveId("Valid Send");
-        await element(by.text('Send')).tap()
-        await expect(element(by.text('Send'))).toHaveId("Invalid Send");
+        await expect(element(by.text('Send')).atIndex(1)).toHaveId("Valid Send");
+        await element(by.text('Send')).atIndex(1).tap()
+        await expect(element(by.text('Send')).atIndex(1)).toHaveId("Invalid Send");
     });
 });

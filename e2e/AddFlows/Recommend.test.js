@@ -19,11 +19,13 @@ describe('Recommend Challenge Test', () => {
 
     it('Click on Recommend Challenge', async () => {
         await element(by.text('Recommend Challenge')).tap()
-        await expect(element(by.text('Send')).atIndex(1)).toHaveId("Valid Send");
+        await expect(element(by.text('Send')).atIndex(1)).toHaveId("Invalid Send");
+        await expect(element(by.text('We do not currently have enough data to recommend a challenge.')).atIndex(0)).toBeVisible();
+
     });
 
     it('Click on Send Challenge', async () => {
-        await element(by.text('Send')).tap()
+        await element(by.text('Send')).atIndex(1).tap()
         await expect(element(by.text('Send')).atIndex(1)).toHaveId("Invalid Send");
     });
 });

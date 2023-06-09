@@ -20,7 +20,7 @@ describe('Click through owner league Details', () => {
 
   it('Scroll through and check members', async () => {
     await element(by.id('user scroll')).scrollTo('bottom')
-    await expect(element(by.text('Kauboy'))).toBeVisible();
+    await expect(element(by.text('SocialFitness#1786'))).toBeVisible();
   });
 
   it('Check member options non friend', async () => {

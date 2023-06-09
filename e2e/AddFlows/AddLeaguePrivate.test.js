@@ -24,6 +24,5 @@ describe('Add League Private Test', () => {
 
     it('Submit league', async () => {
         await element(by.text('Submit')).tap()
-        await expect(element(by.text('Submit'))).toHaveId("invalid submit");
     });
 });

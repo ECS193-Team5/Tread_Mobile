@@ -169,9 +169,8 @@ function Invite({ text, config, props, pageToNav }): JSX.Element {
                 onPress={onSubmit}
                 underlayColor='#013319'
                 disabled={!validID}
-                testID = {validID ? "valid send" : "invalid send"}
                 >
-                <Text style={styles.RequestText}>
+                <Text style={styles.RequestText} testID = {validID ? "valid send" : "invalid send"}>
                   Send Request
                 </Text>
               </TouchableHighlight>

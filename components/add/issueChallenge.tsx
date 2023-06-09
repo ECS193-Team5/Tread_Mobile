@@ -458,12 +458,11 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
             <View style = {styles.SubmitContainer}>
                 <TouchableHighlight
                     style={validInfo() ? styles.EnterButtonValid : styles.EnterButtonInvalid}
-                    testID={validInfo() ? "Valid Send" : "Invalid Send"}
                     onPress={handleIssuePress}
                     disabled={!validInfo()}
                     underlayColor = '#013319'
                 >
-                    <Text style={styles.IssueChallengeText}>
+                  <Text style={styles.IssueChallengeText} testID={validInfo() ? "Valid Send" : "Invalid Send"}>
                         Send
                     </Text>
                 </TouchableHighlight>

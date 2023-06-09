@@ -16,11 +16,11 @@ describe('Friend Delete Flow', () => {
   });
 
     it('Check Delete Friend', async () => {
-        await element(by.text('KauboyTest')).atIndex(0).swipe('left');
+        await element(by.text('To : ')).atIndex(0).swipe('left');
     });
 
     it('Delete Friend', async () => {
-        await element(by.id('Reject')).atIndex(0).toBeVisible();
+        await expect(element(by.id('Reject')).atIndex(0)).toBeVisible();
     });
 
 

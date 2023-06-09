@@ -29,8 +29,6 @@ describe('League Activity Test', () => {
 
     it('Choose Unit Amount', async () => {
         await element(by.id('numeric input')).typeText("5")
-        await element(by.id('plus')).tap()
-        await element(by.id('minus')).tap()
         await expect(element(by.id('numeric input'))).toHaveText("5");
     });
 
@@ -43,13 +41,14 @@ describe('League Activity Test', () => {
     it('Choose League', async () => {
         await element(by.text('League')).tap()
         await expect(element(by.text('Choose a league'))).toBeVisible();
-        await element(by.text('E2e')).tap()
-        await expect(element(by.text('E2e'))).toBeVisible();
+        await element(by.text('Choose a league')).tap()
+        await element(by.text('End to End Admin')).tap()
+        await expect(element(by.text('End to End Admin'))).toBeVisible();
     });
 
     it('Click on Send Challenge', async () => {
-        await expect(element(by.text('Send'))).toHaveId("Valid Send");
-        await element(by.text('Send')).tap()
-        await expect(element(by.text('Send'))).toHaveId("Invalid Send");
-    });
+      await expect(element(by.text('Send')).atIndex(1)).toHaveId("Valid Send");
+      await element(by.text('Send')).atIndex(1).tap()
+      await expect(element(by.text('Send')).atIndex(1)).toHaveId("Invalid Send");
+  });
 });

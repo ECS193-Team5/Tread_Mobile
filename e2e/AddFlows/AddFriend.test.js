@@ -13,7 +13,7 @@ describe('Add Friend Test', () => {
     it('Click on Friend', async () => {
         await element(by.text('Friend')).tap()
         await expect(element(by.text('Add Friend'))).toBeVisible();
-        await expect(element(by.text('Suggested Friend'))).toBeVisible();
+        await expect(element(by.text('Suggested Friends'))).toBeVisible();
     });
 
     it('Enter Friend id', async () => {
@@ -25,5 +25,10 @@ describe('Add Friend Test', () => {
     it('Send Friend request', async () => {
         await element(by.text('Send Request')).tap()
         await expect(element(by.text('Send Request'))).toHaveId("invalid send");
+    });
+
+    it('Check suggested', async () => {
+      await element(by.text('Bhhh#5877')).atIndex(0).swipe('left');
+      await expect(element(by.id('add friend')).atIndex(0)).toBeVisible();
     });
 });

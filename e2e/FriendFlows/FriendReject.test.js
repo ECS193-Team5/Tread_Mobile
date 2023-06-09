@@ -15,10 +15,10 @@ describe('Friend Reject Flow', () => {
     });
 
     it('Check Reject Friend', async () => {
-        await element(by.text('KauboyTest')).atIndex(0).swipe('right');
+        await element(by.text('From : ')).atIndex(0).swipe('left');
     });
 
     it('Reject Friend', async () => {
-        await element(by.id('Reject')).atIndex(0).toBeVisible();
+        await expect(element(by.id('Reject')).atIndex(0)).toBeVisible();
     });
 });

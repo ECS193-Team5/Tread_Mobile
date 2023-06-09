@@ -20,11 +20,11 @@ describe('Click through admin league Details', () => {
 
   it('Scroll through and check members', async () => {
     await element(by.id('user scroll')).scrollTo('bottom')
-    await expect(element(by.text('Kauboy'))).toBeVisible();
+    await expect(element(by.text('SocialFitness#1786'))).toBeVisible();
   });
 
   it('Check remove admin', async () => {
-    await element(by.text('Kauboy')).atIndex(0).swipe('left');
+    await element(by.text('SocialFitness#1786')).atIndex(0).swipe('left');
     await expect(element(by.id('remove self admin')).atIndex(0)).toBeVisible();
   });
 

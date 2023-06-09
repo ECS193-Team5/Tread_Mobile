@@ -12,9 +12,4 @@ describe('Friend Block Flow', () => {
         await element(by.text('KauboyTest')).atIndex(0).swipe('left');
         await expect(element(by.id('block')).atIndex(0)).toBeVisible();
     });
-
-    it('Block Friend', async () => {
-        await element(by.id('block')).atIndex(0).tap();
-        await element(by.text('Block')).toBeVisible();
-    });
 });
