@@ -80,7 +80,13 @@ const styles = StyleSheet.create({
     color : "white",
   },
 
-
+  NotificationTitleText : {
+    fontWeight : "700",
+    fontSize : 27,
+    lineHeight : 34,
+    color : "#014421",
+    width: 210
+  },
 
   ClearAllText : {
     fontWeight : "700",
@@ -137,9 +143,9 @@ const styles = StyleSheet.create({
   NotificationCountCircle : {
     justifyContent: 'center',
     alignItems : 'center',
-    width :32, 
-    height : 32 , 
-    borderRadius : 16, 
+    width :32,
+    height : 32 ,
+    borderRadius : 16,
     backgroundColor : '#014421',
   },
 });

@@ -33,7 +33,7 @@ function LeaguesPage(props): JSX.Element {
       setRender(!reRender)
       console.log('make list rerender')
     });
-    
+
     return unsubscribe;
   }, []);
   const getIncomingImage = function(){
@@ -46,7 +46,7 @@ function LeaguesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         if (response.data.length > 0){
@@ -59,9 +59,9 @@ function LeaguesPage(props): JSX.Element {
         console.log(error)
       })
   }
-  
-  
-  
+
+
+
   const getFriends = function() {
     var config = {
       method: 'post',
@@ -72,7 +72,7 @@ function LeaguesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setFriendData(response.data)
@@ -93,7 +93,7 @@ function LeaguesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setFriendData(response.data)
@@ -103,7 +103,7 @@ function LeaguesPage(props): JSX.Element {
         console.log(error)
       })
   }
-  
+
   const [IncomingImageUrl, setIncomingImage] = useState(getIncomingImage)
   const [FriendData, setFriendData] = useState(getFriends)
   const [friendType, setFriendType] = useState('All Friends')
@@ -118,7 +118,7 @@ function LeaguesPage(props): JSX.Element {
   const layoutAnimConfig = {
     duration: 1000,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut, 
+      type: LayoutAnimation.Types.easeInEaseOut,
     },
     delete: {
       duration: 200,
@@ -126,7 +126,7 @@ function LeaguesPage(props): JSX.Element {
       property: LayoutAnimation.Properties.opacity,
     },
   };
-  
+
   const handleDropDown = function(selectedItem){
     setFriendType(selectedItem)
     setFriendData()
@@ -163,14 +163,14 @@ function LeaguesPage(props): JSX.Element {
     }
   }
 
-  const deleteMember = function(fData) {    
-    console.log(fData.username) 
+  const deleteMember = function(fData) {
+    console.log(fData.username)
     console.log("deleted")
     // when writing the backend call instead of setting the filtered data, set the actual member list to update everything accordingly
     const filteredData = FriendData.filter(item => item.username !== fData.username);
     setFriendData(filteredData)
     filteredData.length === 0 ? setCount(0) : null
-    LayoutAnimation.configureNext(layoutAnimConfig) 
+    LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
   return (
@@ -208,13 +208,14 @@ function LeaguesPage(props): JSX.Element {
           :
           <ZeroItem
             promptText= {'You ' + (friendType === 'All Friends' ? 'don\'t have any friends yet' : 'haven\'t blocked anyone yet')}
-            navigateToText= {friendType === 'All Friends' ? 'Make some here!' : null}
+            navigateToText= {friendType === 'All Friends' ? 'Make some here!' : ""}
             navigateToPage="AddFriend"
             props = {props}
-          />    
+            SecondaryPrompt=""
+          />
         }
 
-      </View> 
+      </View>
 
     </View>
   )

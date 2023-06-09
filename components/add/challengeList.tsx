@@ -1,4 +1,4 @@
-const challengeList = [
+export const challengeList = [
     "Enter your own",
     "Aikido",
     "Archery",
@@ -111,5 +111,6 @@ challengeList.forEach(function(item, index){
         {label: item, value: item}
     )
 })
+
 
 export default mappedChallengeList;

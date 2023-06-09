@@ -32,6 +32,8 @@ import ListenerHealthSensor from '../components/Sensors/ListenerHealthSensor';
 
 function ProfilePage(props): JSX.Element {
     const [update, setUpdate] = useState(true);
+    const [displayTextStyle, setDisplayTextStyle] = useState({});
+    const [usernameTextStyle, setUsernameTextStyle] = useState({});
     useEffect(() => {
       props.navigation.addListener('focus', () => {
         setUpdate(true);
@@ -163,8 +165,18 @@ function ProfilePage(props): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                // console.log(response.data['displayName'])
                 setDisplayName(response.data['displayName'])
+
+
+                if(response.data['displayName'].length <= 11){
+                    setDisplayTextStyle(ProfileStyles.DisplayNameTextLarge);
+                }
+                else if(response.data['displayName'].length <= 15){
+                    setDisplayTextStyle(ProfileStyles.DisplayNameTextMedium);
+                }
+                else{
+                    setDisplayTextStyle(ProfileStyles.DisplayNameTextSmall);
+                }
             })
             .catch((error) =>
                 console.log(error)
@@ -184,7 +196,17 @@ function ProfilePage(props): JSX.Element {
 
         axios(config)
             .then(function (response) {
-                setUserName(response.data)
+                setUserName(response.data);
+
+                if(response.data.length <= 11){
+                    setUsernameTextStyle(ProfileStyles.UsernameTextLarge);
+                }
+                else if(response.data.length <= 15){
+                    setUsernameTextStyle(ProfileStyles.UsernameTextMedium);
+                }
+                else{
+                    setUsernameTextStyle(ProfileStyles.UsernameTextSmall);
+                }
             })
             .catch((error) =>
                 console.log(error)
@@ -446,13 +468,13 @@ function ProfilePage(props): JSX.Element {
 
                   <View style={ProfileStyles.ProfileNameContainer}>
                       <View style={ProfileStyles.DisplayNameContainer}>
-                          <Text style={ProfileStyles.DisplayNameText}>
+                          <Text style={displayTextStyle}>
                               {displayName}
                           </Text>
                       </View>
                       <View style={ProfileStyles.UsernameContainer}>
-                          <Text style={ProfileStyles.UsernameText}>
-                              {'@' + userName}
+                          <Text style={usernameTextStyle}>
+                              {userName}
                           </Text>
                       </View>
 

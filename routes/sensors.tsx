@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export function getDateAnchor (dataOrigin, thenFunc)  {
+  console.log("attempt to get date");
     var config = {
         method: 'post',
         url: 'https://tread-backend-wvh22rj5mq-uw.a.run.app/data_origin/get_origin_anchor',
@@ -29,7 +30,7 @@ export const sendExerciseList = (data, refreshFunc) => {
     console.log("return before doing te thing")
       return;
   }
-
+  console.log("attempt to send exercise list");
   var config = {
       method: 'post',
       url: 'https://tread-backend-wvh22rj5mq-uw.a.run.app/exercise_log/add_exercise_list',

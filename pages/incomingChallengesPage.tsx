@@ -47,7 +47,7 @@ function IncomingChallengesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setChallengeData(response.data)
@@ -69,7 +69,7 @@ function IncomingChallengesPage(props): JSX.Element {
         Accept: 'application/json',
       }
     };
-  
+
     axios(config)
       .then(function (response) {
         setChallengeData(response.data)
@@ -79,9 +79,9 @@ function IncomingChallengesPage(props): JSX.Element {
         console.log(error)
       })
   }
-  
-  
-  var NavImageUrl = "https://imgur.com/nFRNXOB.png"  
+
+
+  var NavImageUrl = "https://imgur.com/nFRNXOB.png"
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -92,7 +92,7 @@ function IncomingChallengesPage(props): JSX.Element {
   const layoutAnimConfig = {
     duration: 1000,
     update: {
-      type: LayoutAnimation.Types.easeInEaseOut, 
+      type: LayoutAnimation.Types.easeInEaseOut,
     },
     delete: {
       duration: 200,
@@ -100,12 +100,12 @@ function IncomingChallengesPage(props): JSX.Element {
       property: LayoutAnimation.Properties.opacity,
     },
   };
-  
+
   const [pageTitle, setPageTitle] = useState('Received')
   const [count, setCount] = useState(0)
   const [ChallengeData, setChallengeData] = useState(getReceivedChallenges)
   const [refreshing, setRefreshing] = useState(false)
-  
+
   useFocusEffect(
     React.useCallback(() => {
       if(pageTitle === 'Received'){
@@ -124,7 +124,7 @@ function IncomingChallengesPage(props): JSX.Element {
       setRender(!reRender)
       console.log('make list rerender')
     });
-    
+
     return unsubscribe;
   }, []);
 
@@ -145,8 +145,8 @@ function IncomingChallengesPage(props): JSX.Element {
       getSentChallenges()
     }
   }
-  
-  const deleteItem = function(cData, isReceived) {    
+
+  const deleteItem = function(cData, isReceived) {
     console.log(cData._id)
     console.log("deleted")
     const filteredData = ChallengeData.filter(item => item._id !== cData._id);
@@ -155,7 +155,7 @@ function IncomingChallengesPage(props): JSX.Element {
     if(isReceived){
       dispatch(badgeC_decrement())
     }
-    LayoutAnimation.configureNext(layoutAnimConfig) 
+    LayoutAnimation.configureNext(layoutAnimConfig)
   }
 
   const getImage = function(item) {
@@ -204,7 +204,7 @@ function IncomingChallengesPage(props): JSX.Element {
           imageUrl = {NavImageUrl}/>
       </View>
       <View style = {styles.titleContainer}>
-        <Text style = {styles.TitleText}>{pageTitle} Challenges</Text>
+        <Text style = {styles.TitleText}>Challenges</Text>
       </View>
       <View style = {styles.filterContainer}>
         <SwitchSelector
@@ -218,15 +218,15 @@ function IncomingChallengesPage(props): JSX.Element {
         />
       </View>
       <View style = {styles.ChallengesContainer}>
-        {count > 0 ? 
+        {count > 0 ?
           <FlatList
             data = {ChallengeData}
             renderItem = {renderInvite}
             extraData = {reRender}
             refreshControl ={
-              <RefreshControl 
-                refreshing = {refreshing} 
-                onRefresh = {Refresh} 
+              <RefreshControl
+                refreshing = {refreshing}
+                onRefresh = {Refresh}
                 colors = {['#014421']}
                 tintColor = {'#014421'}
                 progressViewOffset = {-10}
@@ -236,13 +236,14 @@ function IncomingChallengesPage(props): JSX.Element {
           :
           <ZeroItem
             promptText={'You have ' + (pageTitle === 'Received' ? 'no received' : 'not sent any') + ' Challenges'}
-            navigateToText={pageTitle === 'Received' ? null :  'Send one here'}
+            navigateToText={pageTitle === 'Received' ? "" :  'Send one here'}
             navigateToPage='AddChallenge'
             defaultView={true}
             fromLeague = {false}
             props = {props}
-          />    
-        } 
+            SecondaryPrompt=""
+          />
+        }
       </View>
 
     </View>

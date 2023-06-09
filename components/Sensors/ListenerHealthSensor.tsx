@@ -23,6 +23,7 @@ const ListenerHealthSensor = (props) => {
     const [sensorType, setSensorType] = useState("none");
     const [permissions, setPermissions] = useState(false);
     const [dataResults, setDataResults] = useState([]);
+    const [firstLoad, setFirstLoad] = useState(true);
 
     useEffect(() => {
         if (!load && props.type === "Challenges") {
@@ -44,13 +45,24 @@ const ListenerHealthSensor = (props) => {
     }, [sensorType])
 
     useEffect(() => {
-        if (load && props.update) {
+        if ((load && props.update)) {
             if(permissions){
                 readSampleData();
             }
             props.setUpdate(false);
+            setFirstLoad(false);
         }
     }, [props.update]);
+
+    useEffect(() => {
+        if (load && firstLoad && permissions ) {
+            if(permissions){
+                readSampleData();
+            }
+            props.setUpdate(false);
+            setFirstLoad(false);
+        }
+    }, [load, firstLoad, permissions]);
 
     useEffect(() => {
         if(dataResults.length > 0 && dataResults[0].length > 0){
@@ -137,14 +149,21 @@ const ListenerHealthSensor = (props) => {
         const permissions = {
             permissions: {
                 read: [
-                AppleHealthKit.Constants.Permissions.Workout,
-                ],
+                AppleHealthKit.Constants.Permissions.Workout],
                 write: [
-                AppleHealthKit.Constants.Permissions.Workout,
-                ],
+                    AppleHealthKit.Constants.Permissions.Workout]
             }
-            } as HealthKitPermissions
-
+        } as HealthKitPermissions;
+    
+        try{
+            AppleHealthKit.initHealthKit(permissions, (error:string) => {
+                console.log(error);
+            })
+        }
+        catch(error){
+            return false;
+        }
+    
         try {
             AppleHealthKit.getAuthStatus(permissions, (err, results) => {
                 if (err) {
@@ -204,7 +223,7 @@ const ListenerHealthSensor = (props) => {
     }
 
     const getExercisesApple = async (data) => {
-        
+
         let anchor = "";
         if(data && data.healthKitAnchor){
             anchor = data.healthKitAnchor;
@@ -217,7 +236,7 @@ const ListenerHealthSensor = (props) => {
         if(anchor.length>0){
             options["anchor"] = anchor;
         }
-        
+
         AppleHealthKit.getAnchoredWorkouts(options, (err: Object, results: AnchoredQueryResults) => {
             if (err) {
                 console.log(err);

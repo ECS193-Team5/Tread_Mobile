@@ -168,18 +168,20 @@ function ShowTabs(){
             Accept: 'application/json',
         }
     };
-  
+
     axios(config)
         .then(function (response) {
             setPicture(createProfilePictureURL(response.data))
         })
-        .catch((error) =>
-            console.log(error)
+        .catch((error) =>{
+          console.log(error);
+        }
         )
   }
 
-  const [picture, setPicture] = useState('')
+  const [picture, setPicture] = useState("https://i.imgur.com/jJaPs4q.png")
   const [load, setLoad] = useState(false)
+
   useEffect(() => {
     if(!load){
       setLoad(true)
@@ -282,7 +284,7 @@ function ShowTabs(){
       console.log(error)
     });
   }
-  
+
   const dispatch = useDispatch()
 
   const badgeChallenge = useSelector(state=>state.badgeC_reducer.badgeC)
@@ -299,7 +301,7 @@ function ShowTabs(){
       getBadgeFriend()
       getBadgeProfile()
     });
-    
+
     return unsubscribe;
   }, []);
 
@@ -336,7 +338,7 @@ function ShowTabs(){
         getBadgeChallenge()
         getBadgeLeague()
         getBadgeFriend()
-        getBadgeProfile()        
+        getBadgeProfile()
       }
     }, [loadBadge]
   );
@@ -371,11 +373,11 @@ function ShowTabs(){
           borderColor = focused
           ? "#F9A800"
           : "#014421"
-          boolIsProfile = true 
+          boolIsProfile = true
         }
 
-       return <Image 
-        style ={ boolIsProfile ? {width : 32, height : 32 , borderRadius : 16, borderWidth : 2, borderColor : borderColor} : {width : 30, height : 30}} 
+       return <Image
+        style ={ boolIsProfile ? {width : 32, height : 32 , borderRadius : 16, borderWidth : 2, borderColor : borderColor} : {width : 30, height : 30}}
         source={{uri: iconName}}
         />
       },
