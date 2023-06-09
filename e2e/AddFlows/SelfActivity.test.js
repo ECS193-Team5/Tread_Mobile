@@ -1,4 +1,4 @@
-describe('Add Navigation Test', () => {
+describe('Self Activity Test', () => {
     beforeAll(async () => {
         await device.launchApp();
     });
@@ -27,8 +27,22 @@ describe('Add Navigation Test', () => {
         await expect(element(by.text('Aikido'))).toBeVisible();
     });
 
-    // it('Click on Send Challenge', async () => {
-    //     await element(by.text('Send')).tap()
-    //     await expect(element(by.text('Send'))).toHaveId("Invalid Send");
-    // });
+    it('Choose Unit Amount', async () => {
+        await element(by.id('numeric input')).typeText("5")
+        await element(by.id('plus')).tap()
+        await element(by.id('minus')).tap()
+        await expect(element(by.id('numeric input'))).toHaveText("5");
+    });
+
+    it('Choose Unit', async () => {
+        await element(by.text('Units')).tap()
+        await element(by.text('hour (hr)')).tap()
+        await expect(element(by.text('hour (hr)'))).toBeVisible();
+    });
+
+    it('Click on Send Challenge', async () => {
+        await expect(element(by.text('Send'))).toHaveId("Valid Send");
+        await element(by.text('Send')).tap()
+        await expect(element(by.text('Send'))).toHaveId("Invalid Send");
+    });
 });

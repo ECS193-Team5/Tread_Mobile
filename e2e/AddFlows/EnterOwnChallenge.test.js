@@ -1,4 +1,4 @@
-describe('Friend Activity Test', () => {
+describe('Enter own Activity Test', () => {
     beforeAll(async () => {
         await device.launchApp();
     });
@@ -23,8 +23,13 @@ describe('Friend Activity Test', () => {
     });
 
     it('Choose Activity', async () => {
-        await element(by.text('Aikido')).tap()
-        await expect(element(by.text('Aikido'))).toBeVisible();
+        await element(by.text('Enter your own')).tap()
+        await expect(element(by.text('Enter your own'))).toBeVisible();
+    });
+
+    it('Enter Activity', async () => {
+        await element(by.id('enter own')).typeText("testing")
+        await expect(element(by.text('testing'))).toBeVisible();
     });
 
     it('Choose Unit Amount', async () => {
@@ -40,11 +45,11 @@ describe('Friend Activity Test', () => {
         await expect(element(by.text('hour (hr)'))).toBeVisible();
     });
 
-    it('Choose Friends', async () => {
-        await element(by.text('Friends')).tap()
-        await expect(element(by.text('Choose friend'))).toBeVisible();
-        await element(by.text('Gggg')).tap()
-        await expect(element(by.text('Gggg'))).toBeVisible();
+    it('Choose League', async () => {
+        await element(by.text('League')).tap()
+        await expect(element(by.text('Choose a league'))).toBeVisible();
+        await element(by.text('E2e')).tap()
+        await expect(element(by.text('E2e'))).toBeVisible();
     });
 
     it('Click on Send Challenge', async () => {

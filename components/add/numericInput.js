@@ -217,13 +217,13 @@ export default class NumericInput extends Component {
         }
         return (
             <View style={inputContainerStyle}>
-                <Button onPress={this.dec} style={leftButtonStyle}>
+                <Button onPress={this.dec} style={leftButtonStyle} testID = "minus">
                 <Text name='md-add' style={[...iconStyle, maxReached ? this.props.reachMaxIncIconStyle : {}, minReached ? this.props.reachMinIncIconStyle : {}]}>-</Text> 
                     </Button>
                 <View style={[inputWraperStyle]}>
                     <TextInput {...this.props.extraTextInputProps} editable={editable} returnKeyType='done' underlineColorAndroid='rgba(0,0,0,0)' keyboardType='numeric' value={this.state.stringValue} onChangeText={this.onChange} style={inputStyle} ref={ref => this.ref = ref} onBlur={this.onBlur} onFocus={this.onFocus} testID = "numeric input"/>
                 </View>
-                <Button onPress={this.inc} style={rightButtonStyle}>
+                <Button onPress={this.inc} style={rightButtonStyle} testID = "plus">
                 <Text name='md-remove-circle' size={iconSize} style={[...iconStyle, maxReached ? this.props.reachMaxDecIconStyle : {}, minReached ? this.props.reachMinDecIconStyle : {}]}>+</Text> 
                     </Button>
             </View>)

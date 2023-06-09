@@ -292,6 +292,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             editable={customTextEditable}
                             value={customActivity}
                             onChangeText={handleCustomActivityChange}
+                            testID = "enter own"
                         >
                         </TextInput>
                     </View>

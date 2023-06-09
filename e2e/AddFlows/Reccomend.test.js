@@ -1,4 +1,4 @@
-describe('Add Navigation Test', () => {
+describe('Recommend Challenge Test', () => {
     beforeAll(async () => {
         await device.launchApp();
     });
