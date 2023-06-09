@@ -51,6 +51,7 @@ function UserScroll({UserData, Blocked, Friends,  handler, UserRole, props, onRe
           progressViewOffset = {-10}
         />
       }
+      testID = "user scroll"
   />
   )
 }

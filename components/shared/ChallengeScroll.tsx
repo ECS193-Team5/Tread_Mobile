@@ -40,6 +40,7 @@ function ChallengeScroll({ChallengeData, isCurrent, onRefresh, reRender}): JSX.E
           progressViewOffset = {-10}
         />
       }
+      testID = "Challenge Scroll"
   />
   )
 }

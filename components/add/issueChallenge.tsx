@@ -292,6 +292,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             editable={customTextEditable}
                             value={customActivity}
                             onChangeText={handleCustomActivityChange}
+                            testID = "enter own"
                         >
                         </TextInput>
                     </View>
@@ -318,7 +319,6 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                             backgroundColor =  "black"
                             rightButtonBackgroundColor='#014421'
                             leftButtonBackgroundColor='#014221'
-
                         />
                     </View>
 
@@ -462,7 +462,7 @@ function IssueChallenge({fromLeague, id}): JSX.Element {
                     disabled={!validInfo()}
                     underlayColor = '#013319'
                 >
-                    <Text style={styles.IssueChallengeText}>
+                  <Text style={styles.IssueChallengeText} testID={validInfo() ? "Valid Send" : "Invalid Send"}>
                         Send
                     </Text>
                 </TouchableHighlight>

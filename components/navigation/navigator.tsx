@@ -387,11 +387,11 @@ function ShowTabs(){
     })
   }
   >
-    <Tab.Screen name="Challenges" component={ChallengesStack} options={{ headerShown: false, tabBarBadge : badgeChallenge > 0 ? (badgeChallenge < 99 ? badgeChallenge : '99+') : undefined, tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
-    <Tab.Screen name="Leagues" component={LeaguesStack} options={{ headerShown: false, tabBarBadge : badgeLeague > 0 ? (badgeLeague < 99 ? badgeLeague : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
-    <Tab.Screen name="Add" component={AddStack} options={{headerShown: false}}/>
-    <Tab.Screen name="Friends" component={SearchStack} options={{ headerShown: false, tabBarBadge : badgeFriends > 0 ? (badgeFriends < 99 ? badgeFriends : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
-    <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false, tabBarBadge : badgeProfile > 0 ? (badgeProfile < 99 ? badgeProfile : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
+    <Tab.Screen name="Challenges" component={ChallengesStack} options={{ tabBarAccessibilityLabel : 'Challenges Nav', headerShown: false, tabBarBadge : badgeChallenge > 0 ? (badgeChallenge < 99 ? badgeChallenge : '99+') : undefined, tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
+    <Tab.Screen name="Leagues" component={LeaguesStack} options={{ tabBarAccessibilityLabel : 'Leagues Nav' , headerShown: false, tabBarBadge : badgeLeague > 0 ? (badgeLeague < 99 ? badgeLeague : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
+    <Tab.Screen name="Add" component={AddStack} options={{tabBarAccessibilityLabel : 'Add Nav', headerShown: false}}/>
+    <Tab.Screen name="Friends" component={SearchStack} options={{tabBarAccessibilityLabel : 'Friends Nav', headerShown: false, tabBarBadge : badgeFriends > 0 ? (badgeFriends < 99 ? badgeFriends : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
+    <Tab.Screen name="Profile" component={ProfileStack} options={{tabBarAccessibilityLabel : 'Profile Nav', headerShown: false, tabBarBadge : badgeProfile > 0 ? (badgeProfile < 99 ? badgeProfile : '99+') : undefined , tabBarBadgeStyle: { backgroundColor: '#014421' }}}/>
   </Tab.Navigator>
   )
 }

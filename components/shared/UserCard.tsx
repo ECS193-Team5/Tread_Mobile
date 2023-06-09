@@ -590,22 +590,12 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
     ]);
   }
 
-  const friend = function() {
-    return (
-        <Pressable
-          onPress={AddFriend}
-          style = {{margin : "4%"}}
-        >
-          <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
-        </Pressable>
-    );
-  }
-
   const unfriend = function() {
     return (
         <Pressable
           onPress={clickedUnfriend}
           style = {{margin : "4%"}}
+          testID = "unfriend"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/iD9p5iH.png'}}/>
         </Pressable>
@@ -617,6 +607,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedBlock}
           style = {{margin : "4%"}}
+          testID = "block"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/U7hfisP.png'}}/>
         </Pressable>
@@ -628,6 +619,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedKick}
           style = {{margin : "4%"}}
+          testID = "kick"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ngSIL5J.png'}}/>
         </Pressable>
@@ -639,6 +631,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedBan}
           style = {{margin : "4%"}}
+          testID = "ban"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/nDGURiM.png'}}/>
         </Pressable>
@@ -650,6 +643,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={unblockUser}
           style = {{margin : "4%"}}
+          testID = "unblock"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/q7fgVdM.png'}}/>
         </Pressable>
@@ -661,6 +655,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedAddAdmin}
           style = {{margin : "4%"}}
+          testID = "add admin"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/cQntMzs.png'}}/>
         </Pressable>
@@ -672,6 +667,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedRemoveAdmin}
           style = {{margin : "4%"}}
+          testID = "remove admin"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
         </Pressable>
@@ -684,6 +680,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
         <Pressable
           onPress={clickedRemoveSelfAdmin}
           style = {{margin : "4%"}}
+          testID = "remove self admin"
         >
           <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/7wDqjHS.png'}}/>
         </Pressable>
@@ -695,6 +692,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
       <Pressable
         onPress={RejectInvite}
         style = {{margin : "4%"}}
+        testID = 'Reject'
       >
         <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/Tt2kctJ.png'}}/>
       </Pressable>
@@ -706,6 +704,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
     <Pressable
       onPress={AddFriend}
       style = {{margin : "4%"}}
+      testID = "add friend"
     >
       <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/ggWVwz6.png'}}/>
     </Pressable>
@@ -716,6 +715,7 @@ function UserCard({UserInfo , Blocked, Friends, index, handler, UserRole, props,
     return(
       <Pressable
       onPress={AcceptInvite}
+      testID = "Accept"
     >
       <Image style ={ImageStyles.AcceptOrDecline} source={{uri: 'https://imgur.com/PMJ1WhF.png'}}/>
     </Pressable>

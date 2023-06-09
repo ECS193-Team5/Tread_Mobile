@@ -210,7 +210,7 @@ function EditProfile({route, navigation}): JSX.Element {
                          disabled = {!(((validDisplayName && (displayName !== oldDisplayName)) || validPicture))}
                          underlayColor = '#013319'
                          onPress = {handleOnSubmit}>
-                  <Text style = {styles.signupText}>
+                  <Text style = {styles.signupText} testID={((validDisplayName && (displayName !== oldDisplayName)) || validPicture) ? "Valid Edit" : "Invalid Edit"}>
                       Update Profile
                   </Text>
               </TouchableHighlight>

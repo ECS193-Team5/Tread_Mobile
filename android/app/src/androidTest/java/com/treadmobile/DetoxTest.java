@@ -1,4 +1,4 @@
-package com.treadmobile; // (1)
+package com.treadmobile;
 
 import com.wix.detox.Detox;
 import com.wix.detox.config.DetoxConfig;

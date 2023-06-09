@@ -152,6 +152,7 @@ function Invite({ text, config, props, pageToNav }): JSX.Element {
                 style={styles.Input}
                 onChangeText={onFriendChange}
                 value={friendID}
+                testID = "enter id"
               >
               </TextInput>
               <View>
@@ -167,8 +168,9 @@ function Invite({ text, config, props, pageToNav }): JSX.Element {
               <TouchableHighlight style={validID ? styles.ButtonValid : styles.ButtonInvalid}
                 onPress={onSubmit}
                 underlayColor='#013319'
-                disabled={!validID}>
-                <Text style={styles.RequestText}>
+                disabled={!validID}
+                >
+                <Text style={styles.RequestText} testID = {validID ? "valid send" : "invalid send"}>
                   Send Request
                 </Text>
               </TouchableHighlight>

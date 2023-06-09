@@ -38,6 +38,7 @@ function MedalScroll({MedalData, onRefresh}): JSX.Element {
                     progressViewOffset = {-10}
                 />
             }
+            testID = "Profile Scroll"
         />
     )
 }
