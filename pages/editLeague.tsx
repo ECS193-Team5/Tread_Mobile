@@ -268,7 +268,7 @@ function EditLeaguePage(props): JSX.Element {
               underlayColor = '#013319'
               onPress={onSubmit}
             >
-              <Text style={styles.ChoosePicText}>
+              <Text style={styles.ChoosePicText} testID = {((validLeagueName && (leagueName !== oldleagueName)) || (validLeagueDesc && (leagueDesc !== oldleagueDesc)) || (oldsecurity !== security) || validPicture) ? "Valid Edit" : "Invalid Edit"}>
                 Submit
               </Text>
             </TouchableHighlight>
